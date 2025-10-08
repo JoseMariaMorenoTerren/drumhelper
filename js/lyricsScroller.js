@@ -213,10 +213,10 @@ class LyricsScroller {
         
         if (this.isAutoScrolling) {
             this.autoScrollBtn.classList.add('active');
-            this.autoScrollBtn.textContent = 'AUTO';
+            this.autoScrollBtn.textContent = 'A';
         } else {
             this.autoScrollBtn.classList.remove('active');
-            this.autoScrollBtn.textContent = 'MANUAL';
+            this.autoScrollBtn.textContent = 'M';
         }
     }
     
@@ -224,7 +224,7 @@ class LyricsScroller {
         if (this.isAutoScrolling) {
             this.isAutoScrolling = false;
             this.autoScrollBtn.classList.remove('active');
-            this.autoScrollBtn.textContent = 'MANUAL';
+            this.autoScrollBtn.textContent = 'A';
             
             // Reactivar automáticamente después de 5 segundos de inactividad
             clearTimeout(this.autoScrollResumeTimeout);
