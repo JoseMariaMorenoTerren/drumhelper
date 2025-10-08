@@ -8,6 +8,7 @@ class Metronome {
         
         this.beatIndicator = document.getElementById('beat-indicator');
         this.bpmInput = document.getElementById('bpm-input');
+        this.bpmText = document.getElementById('bpm-text');
         this.tapTempoBtn = document.getElementById('tap-tempo-btn');
         this.bpmMinus1Btn = document.getElementById('bpm-minus-1');
         this.bpmMinus10Btn = document.getElementById('bpm-minus-10');
@@ -16,6 +17,11 @@ class Metronome {
         
         this.initializeEventListeners();
         this.createAudioContext();
+        
+        // Inicializar el texto BPM en el círculo
+        if (this.bpmText) {
+            this.bpmText.textContent = this.bpm;
+        }
     }
     
     createAudioContext() {
@@ -70,6 +76,12 @@ class Metronome {
             
             // Actualizar información en el header
             document.getElementById('current-bpm').textContent = `BPM: ${bpm}`;
+            
+            // Actualizar el texto dentro del círculo del metrónomo
+            const bpmText = document.getElementById('bpm-text');
+            if (bpmText) {
+                bpmText.textContent = bpm;
+            }
             
             // Si está reproduciendo, reiniciar con el nuevo tempo
             if (this.isPlaying) {
