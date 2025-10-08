@@ -80,6 +80,10 @@ class LyricsScroller {
             this.restartTimer();
         });
         
+        this.recordBtn.addEventListener('click', () => {
+            this.toggleRecording();
+        });
+        
         // Escuchar eventos del metrónomo
         window.addEventListener('metronome-beat', (e) => {
             if (this.isAutoScrolling && e.detail.isStrongBeat) {
@@ -442,6 +446,33 @@ class LyricsScroller {
         const seconds = this.elapsedTime % 60;
         const formattedTime = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
         this.timerText.textContent = formattedTime;
+    }
+    
+    toggleRecording() {
+        if (this.isRecording) {
+            this.stopRecording();
+        } else {
+            this.startRecording();
+        }
+    }
+    
+    startRecording() {
+        this.isRecording = true;
+        this.recordBtn.classList.add('recording');
+        this.recordBtn.textContent = '⏹️';
+        
+        // Reiniciar siempre el temporizador desde 0 cuando se inicie la grabación
+        this.restartTimer();
+        this.startTimer();
+    }
+    
+    stopRecording() {
+        this.isRecording = false;
+        this.recordBtn.classList.remove('recording');
+        this.recordBtn.textContent = '🔴';
+        
+        // Pausar el temporizador cuando se detenga la grabación
+        this.pauseTimer();
     }
 }
 
