@@ -5,6 +5,7 @@ class LyricsScroller {
         this.scrollUpBtn = document.getElementById('scroll-up-btn');
         this.scrollDownBtn = document.getElementById('scroll-down-btn');
         this.autoScrollBtn = document.getElementById('auto-scroll-btn');
+        this.scrollToTopBtn = document.getElementById('scroll-to-top-btn');
         this.scrollSpeedInput = document.getElementById('scroll-speed');
         this.fontSizeMinusBtn = document.getElementById('font-size-minus');
         this.fontSizePlusBtn = document.getElementById('font-size-plus');
@@ -50,6 +51,10 @@ class LyricsScroller {
         
         this.autoScrollBtn.addEventListener('click', () => {
             this.toggleAutoScroll();
+        });
+        
+        this.scrollToTopBtn.addEventListener('click', () => {
+            this.scrollToTop();
         });
         
         this.scrollSpeedInput.addEventListener('input', (e) => {
@@ -215,6 +220,16 @@ class LyricsScroller {
     scrollDown() {
         this.scrollPosition += 30;
         this.updateScrollPosition();
+    }
+    
+    scrollToTop() {
+        this.scrollPosition = 0;
+        this.updateScrollPosition();
+        
+        // Pausar auto-scroll temporalmente cuando se usa el botón
+        if (this.isAutoScrolling) {
+            this.pauseAutoScroll();
+        }
     }
     
     autoScroll() {
