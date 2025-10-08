@@ -179,6 +179,15 @@ class LyricsScroller {
         processedText = processedText.replace(/\/1(.*?)1\//g, '<span class="highlight-blue">$1</span>');
         // Convertir texto entre /3 y 3/ a HTML resaltado verde
         processedText = processedText.replace(/\/3(.*?)3\//g, '<span class="highlight-green">$1</span>');
+        
+        // Aplicar colores cuando el código está al principio de línea (sin cierre)
+        // /0 al principio = resto de línea en amarillo
+        processedText = processedText.replace(/^\/0(.*)$/g, '<span class="highlight-yellow">$1</span>');
+        // /1 al principio = resto de línea en azul
+        processedText = processedText.replace(/^\/1(.*)$/g, '<span class="highlight-blue">$1</span>');
+        // /3 al principio = resto de línea en verde
+        processedText = processedText.replace(/^\/3(.*)$/g, '<span class="highlight-green">$1</span>');
+        
         return processedText;
     }
     
