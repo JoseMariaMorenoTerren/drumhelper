@@ -114,6 +114,16 @@ class LyricsScroller {
         this.resetScroll();
     }
     
+    processTextHighlights(text) {
+        // Convertir texto entre /0 y 0/ a HTML resaltado amarillo
+        let processedText = text.replace(/\/0(.*?)0\//g, '<span class="highlight-yellow">$1</span>');
+        // Convertir texto entre /1 y 1/ a HTML resaltado azul
+        processedText = processedText.replace(/\/1(.*?)1\//g, '<span class="highlight-blue">$1</span>');
+        // Convertir texto entre /3 y 3/ a HTML resaltado verde
+        processedText = processedText.replace(/\/3(.*?)3\//g, '<span class="highlight-green">$1</span>');
+        return processedText;
+    }
+    
     processLyrics(lyrics) {
         // Dividir por líneas y procesar
         const lines = lyrics.split('\n');
@@ -127,15 +137,19 @@ class LyricsScroller {
             // Detectar líneas especiales que empiecen con ::
             if (trimmedLine.startsWith('::')) {
                 const content = trimmedLine.substring(2).trim(); // Remover :: y espacios
-                return `<div class="special-line">${content}</div>`;
+                const highlightedContent = this.processTextHighlights(content);
+                return `<div class="special-line">${highlightedContent}</div>`;
             }
             
             // Detectar coros o secciones especiales
             if (trimmedLine.match(/^\[.*\]$/) || trimmedLine.match(/^[\(\[]?(Chorus|Verse|Bridge|Intro|Outro)[\)\]]?:?/i)) {
-                return `<div class="section-header">${trimmedLine}</div>`;
+                const highlightedLine = this.processTextHighlights(trimmedLine);
+                return `<div class="section-header">${highlightedLine}</div>`;
             }
             
-            return `<div class="lyric-line">${trimmedLine}</div>`;
+            // Aplicar resaltado a líneas normales también
+            const highlightedLine = this.processTextHighlights(trimmedLine);
+            return `<div class="lyric-line">${highlightedLine}</div>`;
         });
         
         return processedLines.join('');

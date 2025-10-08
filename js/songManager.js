@@ -114,7 +114,8 @@ class SongManager {
                     artist: "Queen",
                     bpm: 114,
                     active: true,
-                    lyrics: `:: Stomp stomp clap - Stomp stomp clap
+                    notes: "Patrón básico: /0Stomp-Stomp-Clap0/\nMantener tempo constante en /0114 BPM0/\n\n/1Cuidado con la entrada del coro1/\n/3Final con acelerando3/",
+                    lyrics: `:: /0Stomp stomp clap0/ - Stomp stomp clap
 
 Buddy, you're a boy, make a big noise
 Playing in the street, gonna be a big man someday
@@ -122,8 +123,11 @@ You got mud on your face, you big disgrace
 Kicking your can all over the place, singin'
 
 :: Chorus - All together now!
-We will, we will rock you
-We will, we will rock you
+/0We will, we will rock you0/
+/0We will, we will rock you0/
+
+/1(Build up here)1/
+/3(Quiet section)3/
 
 :: Stomp stomp clap - Stomp stomp clap
 
@@ -152,6 +156,7 @@ We will, we will rock you`
                     title: "Another One Bites the Dust",
                     artist: "Queen",
                     bpm: 110,
+                    notes: "Groove de bajo muy marcado\nEnfatizar el /0beat en el bombo0/\n\n/1Cambio de dynamics en verso 21/\n/3Break instrumental3/",
                     lyrics: `Steve walks warily down the street
 With the brim pulled way down low
 Ain't no sound but the sound of his feet
@@ -174,6 +179,7 @@ Another one bites the dust`
                     title: "Seven Nation Army",
                     artist: "The White Stripes",
                     bpm: 124,
+                    notes: "Batería /0minimalista0/. Dejar espacio para el /0riff principal0/ de guitarra. /1Solo de batería en puente1/. /3Crescendo al final3/.",
                     lyrics: `:: Main Riff - E E E E D C B B
 
 I'm gonna fight 'em off
@@ -225,11 +231,14 @@ Says, "Find a home"
         if (stored) {
             this.songs = JSON.parse(stored);
             
-            // Añadir propiedad active a canciones existentes que no la tengan
+            // Añadir propiedades faltantes a canciones existentes
             let hasActiveSong = false;
             this.songs.forEach(song => {
                 if (song.active === undefined) {
                     song.active = false;
+                }
+                if (song.notes === undefined) {
+                    song.notes = '';
                 }
                 if (song.active === true) {
                     hasActiveSong = true;
@@ -312,7 +321,27 @@ Says, "Find a home"
         this.saveSongs();
         
         // Actualizar información en el header
-        document.getElementById('current-song').textContent = `${song.title} - ${song.artist}`;
+        const songElement = document.getElementById('current-song');
+        const bpmElement = document.getElementById('current-bpm');
+        const notesElement = document.getElementById('current-notes');
+        const titleElement = document.querySelector('.info-panel h1');
+        
+        if (song.notes && song.notes.trim()) {
+            // Si hay notas, ocultar todo y mostrar solo las notas
+            songElement.style.display = 'none';
+            bpmElement.style.display = 'none';
+            titleElement.style.display = 'none';
+            notesElement.innerHTML = this.processTextHighlights(song.notes);
+            notesElement.style.display = 'block';
+        } else {
+            // Si no hay notas, mostrar todo normal
+            songElement.textContent = `${song.title} - ${song.artist}`;
+            songElement.style.display = 'block';
+            bpmElement.style.display = 'block';
+            titleElement.style.display = 'block';
+            notesElement.textContent = '';
+            notesElement.style.display = 'none';
+        }
         
         // Actualizar BPM del metrónomo
         window.metronome.setBPM(song.bpm);
@@ -345,7 +374,27 @@ Says, "Find a home"
             this.currentSong = activeSong;
             
             // Actualizar información en el header
-            document.getElementById('current-song').textContent = `${activeSong.title} - ${activeSong.artist}`;
+            const songElement = document.getElementById('current-song');
+            const bpmElement = document.getElementById('current-bpm');
+            const notesElement = document.getElementById('current-notes');
+            const titleElement = document.querySelector('.info-panel h1');
+            
+            if (activeSong.notes && activeSong.notes.trim()) {
+                // Si hay notas, ocultar todo y mostrar solo las notas
+                songElement.style.display = 'none';
+                bpmElement.style.display = 'none';
+                titleElement.style.display = 'none';
+                notesElement.innerHTML = this.processTextHighlights(activeSong.notes);
+                notesElement.style.display = 'block';
+            } else {
+                // Si no hay notas, mostrar todo normal
+                songElement.textContent = `${activeSong.title} - ${activeSong.artist}`;
+                songElement.style.display = 'block';
+                bpmElement.style.display = 'block';
+                titleElement.style.display = 'block';
+                notesElement.textContent = '';
+                notesElement.style.display = 'none';
+            }
             
             // Actualizar BPM del metrónomo
             if (window.metronome) {
@@ -395,6 +444,16 @@ Says, "Find a home"
         }
     }
     
+    processTextHighlights(text) {
+        // Convertir texto entre /0 y 0/ a HTML resaltado amarillo
+        let processedText = text.replace(/\/0(.*?)0\//g, '<span class="highlight-yellow">$1</span>');
+        // Convertir texto entre /1 y 1/ a HTML resaltado azul
+        processedText = processedText.replace(/\/1(.*?)1\//g, '<span class="highlight-blue">$1</span>');
+        // Convertir texto entre /3 y 3/ a HTML resaltado verde
+        processedText = processedText.replace(/\/3(.*?)3\//g, '<span class="highlight-green">$1</span>');
+        return processedText;
+    }
+    
     openAddSongModal() {
         this.modal.style.display = 'block';
         document.getElementById('song-title').focus();
@@ -413,6 +472,7 @@ Says, "Find a home"
         document.getElementById('edit-song-title').value = song.title;
         document.getElementById('edit-song-artist').value = song.artist;
         document.getElementById('edit-song-bpm').value = song.bpm;
+        document.getElementById('edit-song-notes').value = song.notes || '';
         document.getElementById('edit-song-lyrics').value = song.lyrics;
         
         this.editModal.style.display = 'block';
@@ -442,6 +502,7 @@ Says, "Find a home"
             artist: artist || 'Artista desconocido',
             bpm: bpm || 120,
             lyrics: lyrics || '',
+            notes: document.getElementById('song-notes').value.trim() || '',
             active: false
         };
         
@@ -462,6 +523,7 @@ Says, "Find a home"
         const title = document.getElementById('edit-song-title').value.trim();
         const artist = document.getElementById('edit-song-artist').value.trim();
         const bpm = parseInt(document.getElementById('edit-song-bpm').value);
+        const notes = document.getElementById('edit-song-notes').value.trim();
         const lyrics = document.getElementById('edit-song-lyrics').value.trim();
         
         if (!title) {
@@ -477,6 +539,7 @@ Says, "Find a home"
                 title,
                 artist: artist || 'Artista desconocido',
                 bpm: bpm || 120,
+                notes: notes || '',
                 lyrics: lyrics || ''
             };
             
@@ -592,6 +655,7 @@ Says, "Find a home"
                         const newSong = {
                             ...song,
                             id: Date.now() + Math.random(), // ID único
+                            notes: song.notes || '', // Asegurar que tenga el campo notes
                             active: false // Las canciones importadas no están activas por defecto
                         };
                         

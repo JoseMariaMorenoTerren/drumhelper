@@ -47,6 +47,47 @@ body {
     color: #cccccc;
 }
 
+.song-notes {
+    font-size: 1.2rem !important;
+    color: #ffdd44 !important;
+    font-style: italic;
+    margin-top: 0;
+    display: block;
+    max-height: 120px;
+    overflow-y: auto;
+    line-height: 1.5;
+    font-weight: normal;
+    text-align: left;
+    white-space: pre-wrap;
+}
+
+/* Texto resaltado en amarillo para notas y letras */
+.highlight-yellow {
+    color: #ffff00 !important;
+    background-color: rgba(255, 255, 0, 0.1);
+    font-weight: bold;
+    padding: 1px 2px;
+    border-radius: 2px;
+}
+
+/* Texto resaltado en azul para notas y letras */
+.highlight-blue {
+    color: #4da6ff !important;
+    background-color: rgba(77, 166, 255, 0.1);
+    font-weight: bold;
+    padding: 1px 2px;
+    border-radius: 2px;
+}
+
+/* Texto resaltado en verde para notas y letras */
+.highlight-green {
+    color: #4dff4d !important;
+    background-color: rgba(77, 255, 77, 0.1);
+    font-weight: bold;
+    padding: 1px 2px;
+    border-radius: 2px;
+}
+
 /* Metrónomo */
 .metronome-container {
     display: flex;

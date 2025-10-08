@@ -14,6 +14,7 @@
             <div class="song-info">
                 <span id="current-song">Selecciona una canción</span>
                 <span id="current-bpm">BPM: 120</span>
+                <span id="current-notes" class="song-notes"></span>
             </div>
         </div>
         
@@ -110,8 +111,12 @@
                     <input type="number" id="song-bpm" min="40" max="300" value="120">
                 </div>
                 <div class="form-group">
+                    <label for="song-notes">Notas:</label>
+                    <textarea id="song-notes" rows="3" placeholder="Notas y comentarios sobre la canción..."></textarea>
+                </div>
+                <div class="form-group">
                     <label for="song-lyrics">Letras:</label>
-                    <textarea id="song-lyrics" rows="10" placeholder="Introduce las letras de la canción..."></textarea>
+                    <textarea id="song-lyrics" rows="8" placeholder="Introduce las letras de la canción..."></textarea>
                 </div>
                 <div class="form-actions">
                     <button type="submit">Guardar</button>
@@ -141,8 +146,12 @@
                     <input type="number" id="edit-song-bpm" min="40" max="300" value="120">
                 </div>
                 <div class="form-group">
+                    <label for="edit-song-notes">Notas:</label>
+                    <textarea id="edit-song-notes" rows="3" placeholder="Notas y comentarios sobre la canción..."></textarea>
+                </div>
+                <div class="form-group">
                     <label for="edit-song-lyrics">Letras:</label>
-                    <textarea id="edit-song-lyrics" rows="10" placeholder="Introduce las letras de la canción..."></textarea>
+                    <textarea id="edit-song-lyrics" rows="8" placeholder="Introduce las letras de la canción..."></textarea>
                 </div>
                 <div class="form-actions">
                     <button type="submit">Actualizar</button>
