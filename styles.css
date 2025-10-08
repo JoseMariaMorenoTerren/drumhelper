@@ -660,7 +660,7 @@ body {
 .mode-toggle-btn {
     position: fixed;
     bottom: 20px;
-    left: 20px;
+    right: 20px;
     background-color: rgba(68, 68, 255, 0.9);
     color: #ffffff;
     border: none;
@@ -689,7 +689,7 @@ body {
 .songlist-toggle-btn {
     position: fixed;
     bottom: 20px;
-    left: 160px;
+    right: 160px;
     background-color: rgba(255, 136, 0, 0.9);
     color: #ffffff;
     border: none;
@@ -771,7 +771,7 @@ body.concert-mode.hide-songlist .song-list-panel {
 @media (max-width: 768px) {
     .mode-toggle-btn {
         bottom: 15px;
-        left: 15px;
+        right: 15px;
         padding: 10px 16px;
         font-size: 0.9rem;
         min-width: 100px;
@@ -779,7 +779,7 @@ body.concert-mode.hide-songlist .song-list-panel {
     
     .songlist-toggle-btn {
         bottom: 15px;
-        left: 130px;
+        right: 130px;
         padding: 10px 16px;
         font-size: 0.9rem;
         min-width: 80px;
