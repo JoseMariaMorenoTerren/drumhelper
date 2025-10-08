@@ -164,7 +164,7 @@ body {
 .main-container {
     display: flex;
     height: 75vh;
-    margin-top: 25vh;
+   margin-top: 45vh;
 }
 
 /* Panel de lista de canciones */
