@@ -45,7 +45,7 @@
     <main class="main-container">
         <!-- Panel izquierdo - Lista de canciones (1/4 de la pantalla horizontal) -->
         <aside class="song-list-panel">
-            <h2>Canciones</h2>
+            <h2 id="songs-title">Canciones</h2>
             <div class="song-search">
                 <input type="text" id="search-input" placeholder="Buscar canción...">
             </div>
@@ -124,6 +124,10 @@
                     <input type="number" id="song-bpm" min="40" max="300" value="120">
                 </div>
                 <div class="form-group">
+                    <label for="song-order">Orden:</label>
+                    <input type="number" id="song-order" min="0" value="0" placeholder="Orden en la lista (0 por defecto)">
+                </div>
+                <div class="form-group">
                     <label for="song-notes">Notas:</label>
                     <textarea id="song-notes" rows="3" placeholder="Notas y comentarios sobre la canción..."></textarea>
                 </div>
@@ -157,6 +161,10 @@
                 <div class="form-group">
                     <label for="edit-song-bpm">BPM:</label>
                     <input type="number" id="edit-song-bpm" min="40" max="300" value="120">
+                </div>
+                <div class="form-group">
+                    <label for="edit-song-order">Orden:</label>
+                    <input type="number" id="edit-song-order" min="0" value="0" placeholder="Orden en la lista">
                 </div>
                 <div class="form-group">
                     <label for="edit-song-notes">Notas:</label>

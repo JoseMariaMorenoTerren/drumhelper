@@ -5,6 +5,7 @@ class SongManager {
         this.storageKey = 'drumhelper-songs';
         
         this.songList = document.getElementById('song-list');
+        this.songsTitle = document.getElementById('songs-title');
         this.searchInput = document.getElementById('search-input');
         this.addSongBtn = document.getElementById('add-song-btn');
         this.editCurrentSongBtn = document.getElementById('edit-current-song-btn');
@@ -125,6 +126,7 @@ class SongManager {
                     title: "We Will Rock You",
                     artist: "Queen",
                     bpm: 114,
+                    order: 0,
                     active: true,
                     fontSize: 2.4,
                     notes: "Patrón básico: /0Stomp-Stomp-Clap0/\nMantener tempo constante en /0114 BPM0/\n\n/1Cuidado con la entrada del coro1/\n/3Final con acelerando3/",
@@ -169,6 +171,7 @@ We will, we will rock you`
                     title: "Another One Bites the Dust",
                     artist: "Queen",
                     bpm: 110,
+                    order: 0,
                     notes: "Groove de bajo muy marcado\nEnfatizar el /0beat en el bombo0/\n\n/1Cambio de dynamics en verso 21/\n/3Break instrumental3/",
                     lyrics: `Steve walks warily down the street
 With the brim pulled way down low
@@ -253,6 +256,9 @@ Says, "Find a home"
                 if (song.notes === undefined) {
                     song.notes = '';
                 }
+                if (song.order === undefined) {
+                    song.order = 0;
+                }
                 if (song.active === true) {
                     hasActiveSong = true;
                 }
@@ -276,12 +282,42 @@ Says, "Find a home"
             song.artist.toLowerCase().includes(searchTerm.toLowerCase())
         );
         
+        // Ordenar por campo order (ascendente), luego por título
+        filteredSongs.sort((a, b) => {
+            const orderA = a.order || 0;
+            const orderB = b.order || 0;
+            
+            if (orderA !== orderB) {
+                return orderA - orderB;
+            }
+            
+            // Si tienen el mismo order, ordenar por título
+            return a.title.localeCompare(b.title);
+        });
+        
         this.songList.innerHTML = '';
         
         filteredSongs.forEach(song => {
             const songElement = this.createSongElement(song);
             this.songList.appendChild(songElement);
         });
+        
+        // Actualizar el título con el contador
+        this.updateSongsTitle(filteredSongs.length, searchTerm);
+    }
+    
+    updateSongsTitle(count, searchTerm = '') {
+        let titleText = '';
+        
+        if (searchTerm) {
+            // Mostrando resultados de búsqueda
+            titleText = `Canciones (${count} de ${this.songs.length})`;
+        } else {
+            // Mostrando todas las canciones
+            titleText = `Canciones (${count})`;
+        }
+        
+        this.songsTitle.textContent = titleText;
     }
     
     createSongElement(song) {
@@ -488,6 +524,7 @@ Says, "Find a home"
         document.getElementById('edit-song-title').value = song.title;
         document.getElementById('edit-song-artist').value = song.artist;
         document.getElementById('edit-song-bpm').value = song.bpm;
+        document.getElementById('edit-song-order').value = song.order || 0;
         document.getElementById('edit-song-notes').value = song.notes || '';
         document.getElementById('edit-song-lyrics').value = song.lyrics;
         
@@ -505,6 +542,7 @@ Says, "Find a home"
         const title = document.getElementById('song-title').value.trim();
         const artist = document.getElementById('song-artist').value.trim();
         const bpm = parseInt(document.getElementById('song-bpm').value);
+        const order = parseInt(document.getElementById('song-order').value) || 0;
         const lyrics = document.getElementById('song-lyrics').value.trim();
         
         if (!title) {
@@ -517,6 +555,7 @@ Says, "Find a home"
             title,
             artist: artist || 'Artista desconocido',
             bpm: bpm || 120,
+            order: order,
             lyrics: lyrics || '',
             notes: document.getElementById('song-notes').value.trim() || '',
             fontSize: 2.4, // Tamaño de fuente por defecto
@@ -540,6 +579,7 @@ Says, "Find a home"
         const title = document.getElementById('edit-song-title').value.trim();
         const artist = document.getElementById('edit-song-artist').value.trim();
         const bpm = parseInt(document.getElementById('edit-song-bpm').value);
+        const order = parseInt(document.getElementById('edit-song-order').value) || 0;
         const notes = document.getElementById('edit-song-notes').value.trim();
         const lyrics = document.getElementById('edit-song-lyrics').value.trim();
         
@@ -556,6 +596,7 @@ Says, "Find a home"
                 title,
                 artist: artist || 'Artista desconocido',
                 bpm: bpm || 120,
+                order: order,
                 notes: notes || '',
                 lyrics: lyrics || '',
                 fontSize: this.songs[songIndex].fontSize || 2.4 // Preservar fontSize existente
