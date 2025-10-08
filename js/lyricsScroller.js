@@ -12,6 +12,7 @@ class LyricsScroller {
         this.songlistToggleBtn = document.getElementById('songlist-toggle-btn');
         this.playPauseBtn = document.getElementById('play-pause-btn');
         this.restartBtn = document.getElementById('restart-btn');
+        this.recordBtn = document.getElementById('record-btn');
         this.timerText = document.getElementById('timer-text');
         
         this.isAutoScrolling = true;
@@ -31,6 +32,7 @@ class LyricsScroller {
         this.timerRunning = false;
         this.timerInterval = null;
         this.elapsedTime = 0; // En segundos
+        this.isRecording = false;
         
         this.initializeEventListeners();
         this.loadFontSizePreference();
