@@ -8,6 +8,8 @@ class LyricsScroller {
         this.scrollSpeedInput = document.getElementById('scroll-speed');
         this.fontSizeMinusBtn = document.getElementById('font-size-minus');
         this.fontSizePlusBtn = document.getElementById('font-size-plus');
+        this.modeToggleBtn = document.getElementById('mode-toggle-btn');
+        this.songlistToggleBtn = document.getElementById('songlist-toggle-btn');
         
         this.isAutoScrolling = true;
         this.scrollSpeed = 5;
@@ -15,9 +17,18 @@ class LyricsScroller {
         this.autoScrollInterval = null;
         this.currentBPM = 120;
         this.fontSize = 2.4; // Tamaño inicial en rem (doble del original)
+        this.currentMode = 'edition'; // Modos: 'edition', 'concert', 'prompter'
+        this.modes = ['edition', 'concert', 'prompter'];
+        this.modeLabels = {
+            'edition': '📝 Edición',
+            'concert': '🎵 Concierto', 
+            'prompter': '📺 Prompter'
+        };
+        this.songlistVisible = true;
         
         this.initializeEventListeners();
         this.loadFontSizePreference();
+        this.loadModePreferences();
     }
     
     initializeEventListeners() {
@@ -43,6 +54,14 @@ class LyricsScroller {
         
         this.fontSizePlusBtn.addEventListener('click', () => {
             this.changeFontSize(0.2);
+        });
+        
+        this.modeToggleBtn.addEventListener('click', () => {
+            this.toggleMode();
+        });
+        
+        this.songlistToggleBtn.addEventListener('click', () => {
+            this.toggleSonglist();
         });
         
         // Escuchar eventos del metrónomo
@@ -294,6 +313,77 @@ class LyricsScroller {
         // Notificar al songManager para actualizar el fontSize de la canción actual
         if (window.songManager) {
             window.songManager.updateCurrentSongFontSize(this.fontSize);
+        }
+    }
+    
+    toggleMode() {
+        const currentIndex = this.modes.indexOf(this.currentMode);
+        const nextIndex = (currentIndex + 1) % this.modes.length;
+        this.currentMode = this.modes[nextIndex];
+        
+        this.applyMode();
+        this.updateModeButton();
+        
+        // Guardar preferencia de modo
+        localStorage.setItem('drumhelper-mode', this.currentMode);
+    }
+    
+    applyMode() {
+        const body = document.body;
+        
+        // Remover todas las clases de modo
+        body.classList.remove('prompter-mode', 'concert-mode', 'hide-songlist');
+        
+        // Aplicar el modo correspondiente
+        if (this.currentMode === 'prompter') {
+            body.classList.add('prompter-mode');
+            this.songlistToggleBtn.style.display = 'none';
+        } else if (this.currentMode === 'concert') {
+            body.classList.add('concert-mode');
+            this.songlistToggleBtn.style.display = 'block';
+            
+            // Aplicar el estado actual de la lista de canciones
+            if (!this.songlistVisible) {
+                body.classList.add('hide-songlist');
+            }
+        } else {
+            // Modo edición - mostrar todo
+            this.songlistToggleBtn.style.display = 'none';
+            this.songlistVisible = true;
+        }
+    }
+    
+    updateModeButton() {
+        this.modeToggleBtn.textContent = this.modeLabels[this.currentMode];
+    }
+    
+    toggleSonglist() {
+        if (this.currentMode === 'concert') {
+            this.songlistVisible = !this.songlistVisible;
+            const body = document.body;
+            
+            if (this.songlistVisible) {
+                body.classList.remove('hide-songlist');
+                this.songlistToggleBtn.textContent = '📋 Ocultar';
+            } else {
+                body.classList.add('hide-songlist');
+                this.songlistToggleBtn.textContent = '📋 Mostrar';
+            }
+        }
+    }
+    
+    loadModePreferences() {
+        const savedMode = localStorage.getItem('drumhelper-mode');
+        if (savedMode && this.modes.includes(savedMode)) {
+            this.currentMode = savedMode;
+        }
+        
+        this.applyMode();
+        this.updateModeButton();
+        
+        // Configurar el botón de lista según el modo
+        if (this.currentMode === 'concert') {
+            this.songlistToggleBtn.textContent = this.songlistVisible ? '📋 Ocultar' : '📋 Mostrar';
         }
     }
 }
