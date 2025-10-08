@@ -476,6 +476,10 @@ class LyricsScroller {
         this.recordBtn.classList.add('recording');
         this.recordBtn.textContent = '⏹️';
         
+        // Volver al comienzo de las letras
+        this.scrollPosition = 0;
+        this.updateScrollPosition();
+        
         // Reiniciar siempre el temporizador desde 0 cuando se inicie la grabación
         this.restartTimer();
         this.startTimer();

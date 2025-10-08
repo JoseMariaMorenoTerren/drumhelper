@@ -708,21 +708,21 @@ body {
 /* Botones flotantes para control de modos */
 .mode-toggle-btn {
     position: fixed;
-    bottom: 20px;
+    bottom: 80px;
     right: 20px;
     background-color: rgba(68, 68, 255, 0.9);
     color: #ffffff;
     border: none;
-    border-radius: 25px;
-    padding: 12px 20px;
-    font-size: 1rem;
+    border-radius: 20px;
+    padding: 8px 14px;
+    font-size: 0.85rem;
     font-weight: bold;
     cursor: pointer;
     z-index: 1000;
     backdrop-filter: blur(5px);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
     transition: all 0.3s ease;
-    min-width: 120px;
+    min-width: 100px;
 }
 
 .mode-toggle-btn:hover {
@@ -737,14 +737,14 @@ body {
 
 .songlist-toggle-btn {
     position: fixed;
-    bottom: 20px;
-    right: 160px;
+    bottom: 135px;
+    right: 20px;
     background-color: rgba(255, 136, 0, 0.9);
     color: #ffffff;
     border: none;
-    border-radius: 25px;
-    padding: 12px 20px;
-    font-size: 1rem;
+    border-radius: 20px;
+    padding: 8px 14px;
+    font-size: 0.85rem;
     font-weight: bold;
     cursor: pointer;
     z-index: 1000;
@@ -836,18 +836,18 @@ body.prompter-mode .song-list-panel h2 {
 /* Estilos responsivos para botones flotantes */
 @media (max-width: 768px) {
     .mode-toggle-btn {
-        bottom: 15px;
+        bottom: 70px;
         right: 15px;
-        padding: 10px 16px;
-        font-size: 0.9rem;
-        min-width: 100px;
+        padding: 7px 12px;
+        font-size: 0.8rem;
+        min-width: 85px;
     }
     
     .songlist-toggle-btn {
-        bottom: 15px;
-        right: 130px;
-        padding: 10px 16px;
-        font-size: 0.9rem;
-        min-width: 80px;
+        bottom: 125px;
+        right: 15px;
+        padding: 7px 12px;
+        font-size: 0.8rem;
+        min-width: 85px;
     }
 }
