@@ -126,6 +126,7 @@ class SongManager {
                     artist: "Queen",
                     bpm: 114,
                     active: true,
+                    fontSize: 2.4,
                     notes: "Patrón básico: /0Stomp-Stomp-Clap0/\nMantener tempo constante en /0114 BPM0/\n\n/1Cuidado con la entrada del coro1/\n/3Final con acelerando3/",
                     lyrics: `:: /0Stomp stomp clap0/ - Stomp stomp clap
 
@@ -168,6 +169,7 @@ We will, we will rock you`
                     title: "Another One Bites the Dust",
                     artist: "Queen",
                     bpm: 110,
+                    fontSize: 2.4,
                     notes: "Groove de bajo muy marcado\nEnfatizar el /0beat en el bombo0/\n\n/1Cambio de dynamics en verso 21/\n/3Break instrumental3/",
                     lyrics: `Steve walks warily down the street
 With the brim pulled way down low
@@ -191,6 +193,7 @@ Another one bites the dust`
                     title: "Seven Nation Army",
                     artist: "The White Stripes",
                     bpm: 124,
+                    fontSize: 2.4,
                     notes: "Batería /0minimalista0/. Dejar espacio para el /0riff principal0/ de guitarra. /1Solo de batería en puente1/. /3Crescendo al final3/.",
                     lyrics: `:: Main Riff - E E E E D C B B
 
@@ -251,6 +254,9 @@ Says, "Find a home"
                 }
                 if (song.notes === undefined) {
                     song.notes = '';
+                }
+                if (song.fontSize === undefined) {
+                    song.fontSize = 2.4; // Tamaño por defecto para canciones existentes
                 }
                 if (song.active === true) {
                     hasActiveSong = true;
@@ -360,6 +366,9 @@ Says, "Find a home"
         
         // Cargar letras
         window.lyricsScroller.loadLyrics(song.lyrics);
+        
+        // Cargar el tamaño de fuente específico de la canción
+        window.lyricsScroller.loadSongFontSize(song);
         
         // Activar el botón de editar
         this.editCurrentSongBtn.disabled = false;
@@ -515,6 +524,7 @@ Says, "Find a home"
             bpm: bpm || 120,
             lyrics: lyrics || '',
             notes: document.getElementById('song-notes').value.trim() || '',
+            fontSize: 2.4, // Tamaño de fuente por defecto
             active: false
         };
         
@@ -552,7 +562,8 @@ Says, "Find a home"
                 artist: artist || 'Artista desconocido',
                 bpm: bpm || 120,
                 notes: notes || '',
-                lyrics: lyrics || ''
+                lyrics: lyrics || '',
+                fontSize: this.songs[songIndex].fontSize || 2.4 // Preservar fontSize existente
             };
             
             this.songs[songIndex] = updatedSong;
@@ -668,6 +679,7 @@ Says, "Find a home"
                             ...song,
                             id: Date.now() + Math.random(), // ID único
                             notes: song.notes || '', // Asegurar que tenga el campo notes
+                            fontSize: song.fontSize || 2.4, // Asegurar que tenga el campo fontSize
                             active: false // Las canciones importadas no están activas por defecto
                         };
                         
@@ -788,6 +800,7 @@ Says, "Find a home"
                         bpm: song.bpm,
                         lyrics: song.lyrics,
                         notes: song.notes || '',
+                        fontSize: 2.4, // Tamaño por defecto para canciones importadas
                         active: false
                     };
                     
@@ -897,6 +910,20 @@ Says, "Find a home"
         }
         
         return songs;
+    }
+    
+    updateCurrentSongFontSize(fontSize) {
+        if (this.currentSong) {
+            // Actualizar el fontSize en la canción actual
+            this.currentSong.fontSize = fontSize;
+            
+            // Encontrar la canción en el array y actualizarla
+            const songIndex = this.songs.findIndex(song => song.id === this.currentSong.id);
+            if (songIndex !== -1) {
+                this.songs[songIndex].fontSize = fontSize;
+                this.saveSongs();
+            }
+        }
     }
 }
 

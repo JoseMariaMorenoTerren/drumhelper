@@ -252,6 +252,7 @@ class LyricsScroller {
         if (newSize >= 1.0 && newSize <= 5.0) {
             this.fontSize = newSize;
             this.updateFontSize();
+            this.saveCurrentSongFontSize();
         }
     }
     
@@ -268,9 +269,6 @@ class LyricsScroller {
         setTimeout(() => {
             this.updateScrollPosition();
         }, 100);
-        
-        // Guardar preferencia en localStorage
-        localStorage.setItem('drumhelper-font-size', this.fontSize.toString());
     }
     
     loadFontSizePreference() {
@@ -278,6 +276,24 @@ class LyricsScroller {
         if (savedSize) {
             this.fontSize = parseFloat(savedSize);
             this.updateFontSize();
+        }
+    }
+    
+    loadSongFontSize(song) {
+        if (song && song.fontSize) {
+            this.fontSize = song.fontSize;
+            this.updateFontSize();
+        } else {
+            // Si la canción no tiene fontSize, usar el por defecto
+            this.fontSize = 2.4;
+            this.updateFontSize();
+        }
+    }
+    
+    saveCurrentSongFontSize() {
+        // Notificar al songManager para actualizar el fontSize de la canción actual
+        if (window.songManager) {
+            window.songManager.updateCurrentSongFontSize(this.fontSize);
         }
     }
 }
