@@ -764,6 +764,43 @@ body {
     transform: scale(0.98);
 }
 
+/* Botones de control para concierto/prompter */
+.concert-control-btn {
+    position: fixed;
+    right: 20px;
+    background-color: rgba(51, 51, 51, 0.9);
+    color: #ffffff;
+    border: none;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    font-size: 1.5rem;
+    cursor: pointer;
+    z-index: 1000;
+    backdrop-filter: blur(5px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+}
+
+.concert-control-btn:hover {
+    background-color: rgba(68, 68, 68, 1);
+    transform: scale(1.05);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+}
+
+.concert-control-btn:active {
+    transform: scale(0.98);
+}
+
+/* Posicionamiento específico de cada botón */
+#concert-goto-top-btn {
+    bottom: 250px;
+}
+
+#concert-play-btn {
+    bottom: 180px;
+}
+
 /* Estilos para los diferentes modos */
 body.prompter-mode .top-section {
     display: none !important;
@@ -849,5 +886,20 @@ body.prompter-mode .song-list-panel h2 {
         padding: 7px 12px;
         font-size: 0.8rem;
         min-width: 85px;
+    }
+    
+    .concert-control-btn {
+        right: 15px;
+        width: 50px;
+        height: 50px;
+        font-size: 1.2rem;
+    }
+    
+    #concert-goto-top-btn {
+        bottom: 220px;
+    }
+    
+    #concert-play-btn {
+        bottom: 160px;
     }
 }

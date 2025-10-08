@@ -15,6 +15,8 @@ class LyricsScroller {
         this.restartBtn = document.getElementById('restart-btn');
         this.recordBtn = document.getElementById('record-btn');
         this.timerText = document.getElementById('timer-text');
+        this.concertGotoTopBtn = document.getElementById('concert-goto-top-btn');
+        this.concertPlayBtn = document.getElementById('concert-play-btn');
         
         this.isAutoScrolling = true;
         this.scrollSpeed = 5;
@@ -91,6 +93,14 @@ class LyricsScroller {
         
         this.recordBtn.addEventListener('click', () => {
             this.toggleRecording();
+        });
+        
+        this.concertGotoTopBtn.addEventListener('click', () => {
+            this.scrollToTop();
+        });
+        
+        this.concertPlayBtn.addEventListener('click', () => {
+            this.toggleTimer();
         });
         
         // Escuchar eventos del metrónomo
@@ -387,9 +397,13 @@ class LyricsScroller {
         if (this.currentMode === 'prompter') {
             body.classList.add('prompter-mode');
             this.songlistToggleBtn.style.display = 'none';
+            this.concertGotoTopBtn.style.display = 'block';
+            this.concertPlayBtn.style.display = 'block';
         } else if (this.currentMode === 'concert') {
             body.classList.add('concert-mode');
             this.songlistToggleBtn.style.display = 'block';
+            this.concertGotoTopBtn.style.display = 'block';
+            this.concertPlayBtn.style.display = 'block';
             
             // Aplicar el estado actual de la lista de canciones
             if (!this.songlistVisible) {
@@ -398,6 +412,8 @@ class LyricsScroller {
         } else {
             // Modo edición - mostrar todo
             this.songlistToggleBtn.style.display = 'none';
+            this.concertGotoTopBtn.style.display = 'none';
+            this.concertPlayBtn.style.display = 'none';
             this.songlistVisible = true;
         }
     }
@@ -447,6 +463,7 @@ class LyricsScroller {
     startTimer() {
         this.timerRunning = true;
         this.playPauseBtn.textContent = '⏸️';
+        this.concertPlayBtn.textContent = '⏸️';
         
         this.timerInterval = setInterval(() => {
             this.elapsedTime++;
@@ -601,6 +618,7 @@ class LyricsScroller {
         this.timerRunning = false;
         this.isPlaying = false;
         this.playPauseBtn.textContent = '▶️';
+        this.concertPlayBtn.textContent = '▶️';
         
         if (this.timerInterval) {
             clearInterval(this.timerInterval);
