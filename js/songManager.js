@@ -15,7 +15,9 @@ class SongManager {
         this.deleteSongBtn = document.getElementById('delete-song-btn');
         this.exportBtn = document.getElementById('export-songs-btn');
         this.importBtn = document.getElementById('import-songs-btn');
+        this.importTxtBtn = document.getElementById('import-txt-songs-btn');
         this.importFileInput = document.getElementById('import-file-input');
+        this.importTxtFileInput = document.getElementById('import-txt-file-input');
         
         this.editingSong = null;
         
@@ -98,9 +100,19 @@ class SongManager {
             this.importFileInput.click();
         });
         
+        this.importTxtBtn.addEventListener('click', () => {
+            this.importTxtFileInput.click();
+        });
+        
         this.importFileInput.addEventListener('change', (e) => {
             if (e.target.files.length > 0) {
                 this.importSongs(e.target.files[0]);
+            }
+        });
+        
+        this.importTxtFileInput.addEventListener('change', (e) => {
+            if (e.target.files.length > 0) {
+                this.importTxtSongs(e.target.files[0]);
             }
         });
     }
@@ -741,6 +753,150 @@ Says, "Find a home"
                 }
             }, 300);
         }, 5000);
+    }
+    
+    importTxtSongs(file) {
+        const reader = new FileReader();
+        
+        reader.onload = (e) => {
+            try {
+                // Mostrar confirmación
+                const confirmMessage = `¿Deseas importar las canciones del archivo "${file.name}"?\n\n` +
+                    `Esto se agregará a tu colección actual.`;
+                
+                if (!confirm(confirmMessage)) {
+                    return;
+                }
+                
+                const txtContent = e.target.result;
+                const songs = this.parseTxtSongs(txtContent);
+            
+            let importedCount = 0;
+            
+            songs.forEach(song => {
+                // Verificar si la canción ya existe (por título y artista)
+                const existingSong = this.songs.find(s => 
+                    s.title.toLowerCase() === song.title.toLowerCase() && 
+                    s.artist.toLowerCase() === song.artist.toLowerCase()
+                );
+                
+                if (!existingSong) {
+                    const newSong = {
+                        id: Date.now() + Math.random(),
+                        title: song.title,
+                        artist: song.artist,
+                        bpm: song.bpm,
+                        lyrics: song.lyrics,
+                        notes: song.notes || '',
+                        active: false
+                    };
+                    
+                    this.songs.push(newSong);
+                    importedCount++;
+                }
+            });
+            
+                // Guardar y actualizar interfaz
+                this.saveSongs();
+                this.renderSongs();
+                
+                // Mostrar resultado
+                this.showNotification(`✅ Importadas ${importedCount} canciones del archivo TXT`, 'success');
+                
+            } catch (error) {
+                console.error('Error importando canciones TXT:', error);
+                this.showNotification('❌ Error al importar las canciones del archivo TXT', 'error');
+            }
+        };
+        
+        reader.onerror = () => {
+            this.showNotification('❌ Error al leer el archivo TXT', 'error');
+        };
+        
+        reader.readAsText(file, 'UTF-8');
+    }
+    
+    parseTxtSongs(txtContent) {
+        const lines = txtContent.split('\n');
+        const songs = [];
+        let currentSong = null;
+        let lyricsLines = [];
+        let notesLines = [];
+        let pendingTitle = null;
+        
+        for (let i = 0; i < lines.length; i++) {
+            const line = lines[i].trim();
+            
+            // Saltar líneas vacías
+            if (!line) {
+                continue;
+            }
+            
+            // Si encontramos una línea que parece ser BPM + Artista (números seguidos de letras)
+            const bpmArtistMatch = line.match(/^(\d+)(.+)$/);
+            
+            if (bpmArtistMatch) {
+                // Guardar la canción anterior si existe
+                if (currentSong) {
+                    currentSong.lyrics = lyricsLines.join('\n').trim();
+                    currentSong.notes = notesLines.join('\n').trim();
+                    if (currentSong.title && currentSong.artist && currentSong.bpm) {
+                        songs.push(currentSong);
+                    }
+                }
+                
+                // Crear nueva canción usando el título pendiente
+                const bpm = parseInt(bpmArtistMatch[1]);
+                const artist = bpmArtistMatch[2].trim();
+                
+                if (pendingTitle && artist && bpm) {
+                    currentSong = {
+                        title: pendingTitle,
+                        artist: artist,
+                        bpm: bpm,
+                        lyrics: '',
+                        notes: ''
+                    };
+                    
+                    lyricsLines = [];
+                    notesLines = [];
+                    pendingTitle = null;
+                } else {
+                    currentSong = null;
+                }
+            } else if (currentSong && line.startsWith('::')) {
+                // Es una línea de notas
+                notesLines.push(line.substring(2).trim());
+            } else if (currentSong) {
+                // Es parte de las letras
+                lyricsLines.push(line);
+            } else if (!currentSong && !bpmArtistMatch) {
+                // Podría ser un título de canción
+                // Verificar si la siguiente línea no vacía es BPM+Artista
+                let nextNonEmptyIndex = i + 1;
+                while (nextNonEmptyIndex < lines.length && !lines[nextNonEmptyIndex].trim()) {
+                    nextNonEmptyIndex++;
+                }
+                
+                if (nextNonEmptyIndex < lines.length) {
+                    const nextLine = lines[nextNonEmptyIndex].trim();
+                    if (nextLine.match(/^(\d+)(.+)$/)) {
+                        pendingTitle = line;
+                    }
+                }
+            }
+        }
+        
+        // Agregar la última canción
+        if (currentSong) {
+            currentSong.lyrics = lyricsLines.join('\n').trim();
+            currentSong.notes = notesLines.join('\n').trim();
+            if (currentSong.title && currentSong.artist && currentSong.bpm) {
+                songs.push(currentSong);
+            }
+        }
+        
+        return songs;
     }
 }
 
