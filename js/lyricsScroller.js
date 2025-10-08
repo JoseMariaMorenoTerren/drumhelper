@@ -10,6 +10,9 @@ class LyricsScroller {
         this.fontSizePlusBtn = document.getElementById('font-size-plus');
         this.modeToggleBtn = document.getElementById('mode-toggle-btn');
         this.songlistToggleBtn = document.getElementById('songlist-toggle-btn');
+        this.playPauseBtn = document.getElementById('play-pause-btn');
+        this.restartBtn = document.getElementById('restart-btn');
+        this.timerText = document.getElementById('timer-text');
         
         this.isAutoScrolling = true;
         this.scrollSpeed = 5;
@@ -25,6 +28,9 @@ class LyricsScroller {
             'prompter': '📺 Prompter'
         };
         this.songlistVisible = true;
+        this.timerRunning = false;
+        this.timerInterval = null;
+        this.elapsedTime = 0; // En segundos
         
         this.initializeEventListeners();
         this.loadFontSizePreference();
@@ -62,6 +68,14 @@ class LyricsScroller {
         
         this.songlistToggleBtn.addEventListener('click', () => {
             this.toggleSonglist();
+        });
+        
+        this.playPauseBtn.addEventListener('click', () => {
+            this.toggleTimer();
+        });
+        
+        this.restartBtn.addEventListener('click', () => {
+            this.restartTimer();
         });
         
         // Escuchar eventos del metrónomo
@@ -250,7 +264,7 @@ class LyricsScroller {
             this.autoScrollResumeTimeout = setTimeout(() => {
                 this.isAutoScrolling = true;
                 this.autoScrollBtn.classList.add('active');
-                this.autoScrollBtn.textContent = 'AUTO';
+                this.autoScrollBtn.textContent = 'A';
             }, 5000);
         }
     }
@@ -385,6 +399,47 @@ class LyricsScroller {
         if (this.currentMode === 'concert') {
             this.songlistToggleBtn.textContent = this.songlistVisible ? '📋 Ocultar' : '📋 Mostrar';
         }
+    }
+    
+    toggleTimer() {
+        if (this.timerRunning) {
+            this.pauseTimer();
+        } else {
+            this.startTimer();
+        }
+    }
+    
+    startTimer() {
+        this.timerRunning = true;
+        this.playPauseBtn.textContent = '⏸️';
+        
+        this.timerInterval = setInterval(() => {
+            this.elapsedTime++;
+            this.updateTimerDisplay();
+        }, 1000);
+    }
+    
+    pauseTimer() {
+        this.timerRunning = false;
+        this.playPauseBtn.textContent = '▶️';
+        
+        if (this.timerInterval) {
+            clearInterval(this.timerInterval);
+            this.timerInterval = null;
+        }
+    }
+    
+    restartTimer() {
+        this.pauseTimer();
+        this.elapsedTime = 0;
+        this.updateTimerDisplay();
+    }
+    
+    updateTimerDisplay() {
+        const minutes = Math.floor(this.elapsedTime / 60);
+        const seconds = this.elapsedTime % 60;
+        const formattedTime = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        this.timerText.textContent = formattedTime;
     }
 }
 
