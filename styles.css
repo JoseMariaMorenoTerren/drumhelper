@@ -187,6 +187,7 @@ body {
     font-size: 1.2rem;
     text-align: center;
     width: 80px;
+    display: none;    
 }
 
 .bpm-display label {
