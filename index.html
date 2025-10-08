@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drum Helper</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Sección superior fija (1/4 de la pantalla) -->
+    <header class="top-section">
+        <div class="info-panel">
+            <h1>Drum Helper</h1>
+            <div class="song-info">
+                <span id="current-song">Selecciona una canción</span>
+                <span id="current-bpm">BPM: 120</span>
+            </div>
+        </div>
+        
+        <!-- Metrónomo -->
+        <div class="metronome-container">
+            <div class="metronome-display">
+                <div class="beat-indicator" id="beat-indicator" title="Clic: Reproducir/Pausar | Doble clic: Parar"></div>
+                <div class="bpm-display">
+                    <div class="bpm-controls">
+                        <button id="bpm-minus-10" class="bpm-btn">-10</button>
+                        <button id="bpm-minus-1" class="bpm-btn">-1</button>
+                    </div>
+                    <input type="number" id="bpm-input" value="120" min="40" max="300">
+                    <label for="bpm-input">BPM</label>
+                    <div class="bpm-controls">
+                        <button id="bpm-plus-1" class="bpm-btn">+1</button>
+                        <button id="bpm-plus-10" class="bpm-btn">+10</button>
+                    </div>
+                </div>
+            </div>
+            <div class="metronome-controls">
+                <button id="tap-tempo-btn" class="control-btn">TAP</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Contenedor principal -->
+    <main class="main-container">
+        <!-- Panel izquierdo - Lista de canciones (1/4 de la pantalla horizontal) -->
+        <aside class="song-list-panel">
+            <h2>Canciones</h2>
+            <div class="song-search">
+                <input type="text" id="search-input" placeholder="Buscar canción...">
+            </div>
+            <ul class="song-list" id="song-list">
+                <!-- Las canciones se cargarán dinámicamente -->
+            </ul>
+            <div class="add-song-section">
+                <button id="add-song-btn" class="add-btn">+ Agregar Canción</button>
+            </div>
+            <div class="data-management">
+                <button id="export-songs-btn" class="data-btn">📤 Exportar</button>
+                <button id="import-songs-btn" class="data-btn">📥 Importar</button>
+                <input type="file" id="import-file-input" accept=".json" style="display: none;">
+            </div>
+        </aside>
+
+        <!-- Panel central - Letras de la canción -->
+        <section class="lyrics-panel">
+            <div class="lyrics-container" id="lyrics-container">
+                <div class="lyrics-content" id="lyrics-content">
+                    <p class="welcome-message">
+                        Bienvenido a Drum Helper
+                        <br><br>
+                        Selecciona una canción de la lista para ver sus letras.
+                        <br><br>
+                        Las letras se desplazarán automáticamente según el tempo del metrónomo.
+                    </p>
+                </div>
+            </div>
+            
+            <!-- Controles de desplazamiento -->
+            <div class="scroll-controls">
+                <button id="scroll-up-btn" class="scroll-btn">⬆️</button>
+                <button id="auto-scroll-btn" class="scroll-btn active">AUTO</button>
+                <button id="scroll-down-btn" class="scroll-btn">⬇️</button>
+                <div class="scroll-speed">
+                    <label for="scroll-speed">Velocidad:</label>
+                    <input type="range" id="scroll-speed" min="1" max="10" value="5">
+                </div>
+                <div class="font-size-controls">
+                    <button id="font-size-minus" class="scroll-btn">A-</button>
+                    <button id="font-size-plus" class="scroll-btn">A+</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Modal para agregar canciones -->
+    <div id="add-song-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Agregar Nueva Canción</h2>
+            <form id="add-song-form">
+                <div class="form-group">
+                    <label for="song-title">Título:</label>
+                    <input type="text" id="song-title" required>
+                </div>
+                <div class="form-group">
+                    <label for="song-artist">Artista:</label>
+                    <input type="text" id="song-artist">
+                </div>
+                <div class="form-group">
+                    <label for="song-bpm">BPM:</label>
+                    <input type="number" id="song-bpm" min="40" max="300" value="120">
+                </div>
+                <div class="form-group">
+                    <label for="song-lyrics">Letras:</label>
+                    <textarea id="song-lyrics" rows="10" placeholder="Introduce las letras de la canción..."></textarea>
+                </div>
+                <div class="form-actions">
+                    <button type="submit">Guardar</button>
+                    <button type="button" class="cancel-btn">Cancelar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal para editar canciones -->
+    <div id="edit-song-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Editar Canción</h2>
+            <form id="edit-song-form">
+                <input type="hidden" id="edit-song-id">
+                <div class="form-group">
+                    <label for="edit-song-title">Título:</label>
+                    <input type="text" id="edit-song-title" required>
+                </div>
+                <div class="form-group">
+                    <label for="edit-song-artist">Artista:</label>
+                    <input type="text" id="edit-song-artist">
+                </div>
+                <div class="form-group">
+                    <label for="edit-song-bpm">BPM:</label>
+                    <input type="number" id="edit-song-bpm" min="40" max="300" value="120">
+                </div>
+                <div class="form-group">
+                    <label for="edit-song-lyrics">Letras:</label>
+                    <textarea id="edit-song-lyrics" rows="10" placeholder="Introduce las letras de la canción..."></textarea>
+                </div>
+                <div class="form-actions">
+                    <button type="submit">Actualizar</button>
+                    <button type="button" class="cancel-btn">Cancelar</button>
+                    <button type="button" id="delete-song-btn" class="delete-btn">Eliminar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/metronome.js"></script>
+    <script src="js/songManager.js"></script>
+    <script src="js/lyricsScroller.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
