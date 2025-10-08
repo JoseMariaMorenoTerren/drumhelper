@@ -169,7 +169,6 @@ We will, we will rock you`
                     title: "Another One Bites the Dust",
                     artist: "Queen",
                     bpm: 110,
-                    fontSize: 2.4,
                     notes: "Groove de bajo muy marcado\nEnfatizar el /0beat en el bombo0/\n\n/1Cambio de dynamics en verso 21/\n/3Break instrumental3/",
                     lyrics: `Steve walks warily down the street
 With the brim pulled way down low
@@ -193,7 +192,6 @@ Another one bites the dust`
                     title: "Seven Nation Army",
                     artist: "The White Stripes",
                     bpm: 124,
-                    fontSize: 2.4,
                     notes: "Batería /0minimalista0/. Dejar espacio para el /0riff principal0/ de guitarra. /1Solo de batería en puente1/. /3Crescendo al final3/.",
                     lyrics: `:: Main Riff - E E E E D C B B
 
@@ -254,9 +252,6 @@ Says, "Find a home"
                 }
                 if (song.notes === undefined) {
                     song.notes = '';
-                }
-                if (song.fontSize === undefined) {
-                    song.fontSize = 2.4; // Tamaño por defecto para canciones existentes
                 }
                 if (song.active === true) {
                     hasActiveSong = true;
@@ -923,6 +918,35 @@ Says, "Find a home"
                 this.songs[songIndex].fontSize = fontSize;
                 this.saveSongs();
             }
+        }
+    }
+    
+    addRecordingEventsToCurrentSong(events) {
+        if (this.currentSong && events && events.length > 0) {
+            // Inicializar el array de grabaciones si no existe
+            if (!this.currentSong.recordings) {
+                this.currentSong.recordings = [];
+            }
+            
+            // Añadir nueva grabación con timestamp
+            const recording = {
+                id: Date.now(),
+                timestamp: new Date().toISOString(),
+                events: events,
+                duration: events.length > 0 ? Math.max(...events.map(e => e.timestamp)) : 0
+            };
+            
+            this.currentSong.recordings.push(recording);
+            
+            // Actualizar la canción en el array
+            const songIndex = this.songs.findIndex(song => song.id === this.currentSong.id);
+            if (songIndex !== -1) {
+                this.songs[songIndex] = { ...this.currentSong };
+                this.saveSongs();
+            }
+            
+            console.log(`💾 Grabación guardada en "${this.currentSong.title}":`, recording);
+            console.log(`📊 Total de grabaciones: ${this.currentSong.recordings.length}`);
         }
     }
 }

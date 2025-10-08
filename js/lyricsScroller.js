@@ -34,6 +34,7 @@ class LyricsScroller {
         this.timerInterval = null;
         this.elapsedTime = 0; // En segundos
         this.isRecording = false;
+        this.recordingEvents = []; // Array para capturar eventos durante la grabación
         
         this.initializeEventListeners();
         this.loadFontSizePreference();
@@ -215,11 +216,21 @@ class LyricsScroller {
     scrollUp() {
         this.scrollPosition -= 30;
         this.updateScrollPosition();
+        
+        // Capturar evento durante la grabación
+        if (this.isRecording) {
+            this.recordScrollEvent('up');
+        }
     }
     
     scrollDown() {
         this.scrollPosition += 30;
         this.updateScrollPosition();
+        
+        // Capturar evento durante la grabación
+        if (this.isRecording) {
+            this.recordScrollEvent('down');
+        }
     }
     
     scrollToTop() {
@@ -476,6 +487,9 @@ class LyricsScroller {
         this.recordBtn.classList.add('recording');
         this.recordBtn.textContent = '⏹️';
         
+        // Limpiar array de eventos anteriores
+        this.recordingEvents = [];
+        
         // Volver al comienzo de las letras
         this.scrollPosition = 0;
         this.updateScrollPosition();
@@ -483,6 +497,8 @@ class LyricsScroller {
         // Reiniciar siempre el temporizador desde 0 cuando se inicie la grabación
         this.restartTimer();
         this.startTimer();
+        
+        console.log('🔴 Grabación iniciada - Capturando eventos de scroll');
     }
     
     stopRecording() {
@@ -492,6 +508,28 @@ class LyricsScroller {
         
         // Pausar el temporizador cuando se detenga la grabación
         this.pauseTimer();
+        
+        // Mostrar eventos capturados en consola
+        console.log('⏹️ Grabación detenida');
+        console.log('📊 Eventos de scroll capturados:', this.recordingEvents);
+        
+        // Enviar eventos al songManager si existe
+        if (window.songManager && this.recordingEvents.length > 0) {
+            window.songManager.addRecordingEventsToCurrentSong(this.recordingEvents);
+        }
+    }
+    
+    recordScrollEvent(direction) {
+        const event = {
+            type: 'scroll',
+            direction: direction, // 'up' o 'down'
+            timestamp: this.elapsedTime, // Tiempo en segundos desde el inicio de la grabación
+            position: this.scrollPosition // Posición actual del scroll
+        };
+        
+        this.recordingEvents.push(event);
+        
+        console.log(`📝 Evento capturado: ${direction} a los ${this.elapsedTime}s (posición: ${this.scrollPosition}px)`);
     }
 }
 
