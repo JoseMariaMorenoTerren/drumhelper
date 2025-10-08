@@ -6,6 +6,8 @@ class SongManager {
         
         this.songList = document.getElementById('song-list');
         this.songsTitle = document.getElementById('songs-title');
+        this.orderModeBtn = document.getElementById('order-mode-btn');
+        this.resetOrderBtn = document.getElementById('reset-order-btn');
         this.searchInput = document.getElementById('search-input');
         this.addSongBtn = document.getElementById('add-song-btn');
         this.editCurrentSongBtn = document.getElementById('edit-current-song-btn');
@@ -21,6 +23,8 @@ class SongManager {
         this.importTxtFileInput = document.getElementById('import-txt-file-input');
         
         this.editingSong = null;
+        this.isOrderMode = false;
+        this.tempOrderCounter = 0; // Variable temporal que empieza en 0
         
         this.initializeEventListeners();
         this.loadSongs();
@@ -40,6 +44,14 @@ class SongManager {
         
         this.addSongBtn.addEventListener('click', () => {
             this.openAddSongModal();
+        });
+        
+        this.orderModeBtn.addEventListener('click', () => {
+            this.toggleOrderMode();
+        });
+        
+        this.resetOrderBtn.addEventListener('click', () => {
+            this.resetAllOrders();
         });
         
         this.editCurrentSongBtn.addEventListener('click', () => {
@@ -317,6 +329,11 @@ Says, "Find a home"
             titleText = `Canciones (${count})`;
         }
         
+        // Añadir indicador de modo ordenamiento
+        if (this.isOrderMode) {
+            titleText += ' - Ordenando';
+        }
+        
         this.songsTitle.textContent = titleText;
     }
     
@@ -330,8 +347,15 @@ Says, "Find a home"
             li.classList.add('active');
         }
         
+        // Construir el título con order si está en modo ordenamiento
+        let titleText = song.title;
+        if (this.isOrderMode) {
+            const orderValue = song.order || 0;
+            titleText = `${song.title} (${orderValue})`;
+        }
+        
         li.innerHTML = `
-            <span class="song-title">${song.title}</span>
+            <span class="song-title">${titleText}</span>
             <span class="song-artist">${song.artist}</span>
             <span class="song-bpm">${song.bpm} BPM</span>
         `;
@@ -358,6 +382,16 @@ Says, "Find a home"
     }
     
     selectSong(song) {
+        // Si estamos en modo ordenamiento, asignar orden automático
+        if (this.isOrderMode) {
+            this.tempOrderCounter += 10; // Incrementar primero
+            song.order = this.tempOrderCounter; // Asignar el valor resultante
+            console.log(`📋 Orden asignado: "${song.title}" = ${song.order}`);
+            this.saveSongs();
+            this.renderSongs();
+            return; // No seleccionar la canción, solo asignar orden
+        }
+        
         this.currentSong = song;
         
         // Desmarcar la canción anteriormente activa
@@ -988,6 +1022,50 @@ Says, "Find a home"
             
             console.log(`💾 Grabación guardada en "${this.currentSong.title}":`, recording);
             console.log(`📊 Total de grabaciones: ${this.currentSong.recordings.length}`);
+        }
+    }
+    
+    toggleOrderMode() {
+        this.isOrderMode = !this.isOrderMode;
+        
+        if (this.isOrderMode) {
+            this.orderModeBtn.classList.add('active');
+            this.orderModeBtn.textContent = '🔢';
+            this.orderModeBtn.title = 'Modo ordenamiento activo - Clic para desactivar';
+            this.resetOrderBtn.style.display = 'flex'; // Mostrar botón de reset
+            this.tempOrderCounter = 0; // Reiniciar contador temporal a 0
+            console.log('📋 Modo ordenamiento ACTIVADO. Haz clic en las canciones para asignar orden automático.');
+            console.log(`🔢 Contador temporal iniciado en: ${this.tempOrderCounter} (próximo valor: ${this.tempOrderCounter + 10})`);
+        } else {
+            this.orderModeBtn.classList.remove('active');
+            this.orderModeBtn.textContent = '📋';
+            this.orderModeBtn.title = 'Activar modo ordenamiento';
+            this.resetOrderBtn.style.display = 'none'; // Ocultar botón de reset
+            console.log('📋 Modo ordenamiento DESACTIVADO');
+        }
+        
+        // Re-renderizar la lista para actualizar los títulos (mostrar/ocultar valores order)
+        this.renderSongs();
+    }
+    
+    resetAllOrders() {
+        const confirmation = confirm('¿Estás seguro de que quieres resetear todos los valores de orden?\n\nTodas las canciones se pondrán en 10000 y podrás reordenarlas desde 10, 20, 30...\n\nEsto no se puede deshacer.');
+        
+        if (confirmation) {
+            // Poner todos los valores de order a 10000
+            this.songs.forEach(song => {
+                song.order = 10000;
+            });
+            
+            // Reiniciar también el contador temporal
+            this.tempOrderCounter = 0;
+            
+            // Guardar cambios y re-renderizar
+            this.saveSongs();
+            this.renderSongs();
+            
+            console.log('🗑️ Todos los valores de orden han sido reseteados a 10000');
+            console.log(`🔢 Contador temporal reiniciado a: ${this.tempOrderCounter} (las canciones ordenadas aparecerán primero)`);
         }
     }
 }

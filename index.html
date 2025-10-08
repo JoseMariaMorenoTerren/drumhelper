@@ -45,7 +45,13 @@
     <main class="main-container">
         <!-- Panel izquierdo - Lista de canciones (1/4 de la pantalla horizontal) -->
         <aside class="song-list-panel">
-            <h2 id="songs-title">Canciones</h2>
+            <div class="songs-header">
+                <h2 id="songs-title">Canciones</h2>
+                <div class="order-buttons">
+                    <button id="reset-order-btn" class="reset-order-btn" style="display: none;" title="Resetear todos los valores de orden a 0">🗑️</button>
+                    <button id="order-mode-btn" class="order-mode-btn" title="Activar modo ordenamiento">📋</button>
+                </div>
+            </div>
             <div class="song-search">
                 <input type="text" id="search-input" placeholder="Buscar canción...">
             </div>
