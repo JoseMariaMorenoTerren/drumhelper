@@ -7,6 +7,7 @@ class SongManager {
         this.songList = document.getElementById('song-list');
         this.searchInput = document.getElementById('search-input');
         this.addSongBtn = document.getElementById('add-song-btn');
+        this.editCurrentSongBtn = document.getElementById('edit-current-song-btn');
         this.modal = document.getElementById('add-song-modal');
         this.addSongForm = document.getElementById('add-song-form');
         this.editModal = document.getElementById('edit-song-modal');
@@ -22,6 +23,11 @@ class SongManager {
         this.loadSongs();
         this.loadDefaultSongs();
         this.renderSongs();
+        
+        // Seleccionar canción activa después de un breve delay para asegurar que todos los componentes estén listos
+        setTimeout(() => {
+            this.selectActiveSong();
+        }, 100);
     }
     
     initializeEventListeners() {
@@ -31,6 +37,12 @@ class SongManager {
         
         this.addSongBtn.addEventListener('click', () => {
             this.openAddSongModal();
+        });
+        
+        this.editCurrentSongBtn.addEventListener('click', () => {
+            if (this.currentSong) {
+                this.openEditSongModal(this.currentSong);
+            }
         });
         
         // Modal events - Add Song
@@ -101,6 +113,7 @@ class SongManager {
                     title: "We Will Rock You",
                     artist: "Queen",
                     bpm: 114,
+                    active: true,
                     lyrics: `:: Stomp stomp clap - Stomp stomp clap
 
 Buddy, you're a boy, make a big noise
@@ -211,6 +224,23 @@ Says, "Find a home"
         const stored = localStorage.getItem(this.storageKey);
         if (stored) {
             this.songs = JSON.parse(stored);
+            
+            // Añadir propiedad active a canciones existentes que no la tengan
+            let hasActiveSong = false;
+            this.songs.forEach(song => {
+                if (song.active === undefined) {
+                    song.active = false;
+                }
+                if (song.active === true) {
+                    hasActiveSong = true;
+                }
+            });
+            
+            // Si no hay ninguna canción activa, marcar la primera como activa
+            if (!hasActiveSong && this.songs.length > 0) {
+                this.songs[0].active = true;
+                this.saveSongs(); // Guardar el cambio
+            }
         }
     }
     
@@ -246,24 +276,11 @@ Says, "Find a home"
             <span class="song-title">${song.title}</span>
             <span class="song-artist">${song.artist}</span>
             <span class="song-bpm">${song.bpm} BPM</span>
-            <div class="song-actions">
-                <button class="edit-btn" title="Editar canción">✏️</button>
-            </div>
         `;
         
-        // Event listener para seleccionar canción (solo en el área principal)
+        // Event listener para seleccionar canción
         li.addEventListener('click', (e) => {
-            // No seleccionar si se hizo clic en el botón de editar
-            if (!e.target.classList.contains('edit-btn')) {
-                this.selectSong(song);
-            }
-        });
-        
-        // Event listener para el botón de editar
-        const editBtn = li.querySelector('.edit-btn');
-        editBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            this.openEditSongModal(song);
+            this.selectSong(song);
         });
         
         // Agregar menú contextual para opciones adicionales
@@ -285,6 +302,15 @@ Says, "Find a home"
     selectSong(song) {
         this.currentSong = song;
         
+        // Desmarcar la canción anteriormente activa
+        this.songs.forEach(s => s.active = false);
+        
+        // Marcar la nueva canción como activa
+        song.active = true;
+        
+        // Guardar cambios en localStorage
+        this.saveSongs();
+        
         // Actualizar información en el header
         document.getElementById('current-song').textContent = `${song.title} - ${song.artist}`;
         
@@ -293,6 +319,9 @@ Says, "Find a home"
         
         // Cargar letras
         window.lyricsScroller.loadLyrics(song.lyrics);
+        
+        // Activar el botón de editar
+        this.editCurrentSongBtn.disabled = false;
         
         // Actualizar clases activas
         document.querySelectorAll('.song-item').forEach(item => {
@@ -305,6 +334,65 @@ Says, "Find a home"
         window.dispatchEvent(new CustomEvent('song-selected', {
             detail: { song }
         }));
+    }
+    
+    selectActiveSong() {
+        // Buscar la canción marcada como activa
+        const activeSong = this.songs.find(song => song.active === true);
+        
+        if (activeSong) {
+            // Seleccionar la canción activa sin guardar de nuevo (para evitar loop)
+            this.currentSong = activeSong;
+            
+            // Actualizar información en el header
+            document.getElementById('current-song').textContent = `${activeSong.title} - ${activeSong.artist}`;
+            
+            // Actualizar BPM del metrónomo
+            if (window.metronome) {
+                window.metronome.setBPM(activeSong.bpm);
+            } else {
+                // Si el metrónomo no está listo, intentar de nuevo en un momento
+                setTimeout(() => {
+                    if (window.metronome) {
+                        window.metronome.setBPM(activeSong.bpm);
+                    }
+                }, 200);
+            }
+            
+            // Cargar letras
+            if (window.lyricsScroller) {
+                window.lyricsScroller.loadLyrics(activeSong.lyrics);
+            } else {
+                // Si lyricsScroller no está listo, intentar de nuevo en un momento
+                setTimeout(() => {
+                    if (window.lyricsScroller) {
+                        window.lyricsScroller.loadLyrics(activeSong.lyrics);
+                    }
+                }, 200);
+            }
+            
+            // Activar el botón de editar
+            if (this.editCurrentSongBtn) {
+                this.editCurrentSongBtn.disabled = false;
+            }
+            
+            // Actualizar clases activas en la lista
+            setTimeout(() => {
+                document.querySelectorAll('.song-item').forEach(item => {
+                    item.classList.remove('active');
+                });
+                
+                const activeElement = document.querySelector(`[data-song-id="${activeSong.id}"]`);
+                if (activeElement) {
+                    activeElement.classList.add('active');
+                }
+            }, 100);
+            
+            // Notificar cambio de canción (igual que selectSong pero sin guardar)
+            window.dispatchEvent(new CustomEvent('song-selected', {
+                detail: { song: activeSong }
+            }));
+        }
     }
     
     openAddSongModal() {
@@ -353,7 +441,8 @@ Says, "Find a home"
             title,
             artist: artist || 'Artista desconocido',
             bpm: bpm || 120,
-            lyrics: lyrics || ''
+            lyrics: lyrics || '',
+            active: false
         };
         
         this.songs.push(newSong);
@@ -502,7 +591,8 @@ Says, "Find a home"
                         // Generar nuevo ID para evitar conflictos
                         const newSong = {
                             ...song,
-                            id: Date.now() + Math.random() // ID único
+                            id: Date.now() + Math.random(), // ID único
+                            active: false // Las canciones importadas no están activas por defecto
                         };
                         
                         this.songs.push(newSong);
@@ -515,6 +605,11 @@ Says, "Find a home"
                 // Guardar y actualizar interfaz
                 this.saveSongs();
                 this.renderSongs();
+                
+                // Si no hay canción activa después del import, activar la primera
+                if (!this.songs.find(song => song.active) && this.songs.length > 0) {
+                    this.selectSong(this.songs[0]);
+                }
                 
                 // Mostrar resultado
                 let message = `✅ Importadas ${importedCount} canciones`;
