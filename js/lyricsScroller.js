@@ -35,6 +35,9 @@ class LyricsScroller {
         this.elapsedTime = 0; // En segundos
         this.isRecording = false;
         this.recordingEvents = []; // Array para capturar eventos durante la grabación
+        this.isPlaying = false;
+        this.playbackEvents = []; // Eventos a reproducir
+        this.playbackTimeouts = []; // Timeouts programados para la reproducción
         
         this.initializeEventListeners();
         this.loadFontSizePreference();
@@ -217,8 +220,8 @@ class LyricsScroller {
         this.scrollPosition -= 30;
         this.updateScrollPosition();
         
-        // Capturar evento durante la grabación
-        if (this.isRecording) {
+        // Capturar evento durante la grabación (pero no durante reproducción)
+        if (this.isRecording && !this.isPlaying) {
             this.recordScrollEvent('up');
         }
     }
@@ -227,8 +230,8 @@ class LyricsScroller {
         this.scrollPosition += 30;
         this.updateScrollPosition();
         
-        // Capturar evento durante la grabación
-        if (this.isRecording) {
+        // Capturar evento durante la grabación (pero no durante reproducción)
+        if (this.isRecording && !this.isPlaying) {
             this.recordScrollEvent('down');
         }
     }
@@ -437,7 +440,7 @@ class LyricsScroller {
         if (this.timerRunning) {
             this.pauseTimer();
         } else {
-            this.startTimer();
+            this.startPlayback();
         }
     }
     
@@ -530,6 +533,101 @@ class LyricsScroller {
         this.recordingEvents.push(event);
         
         console.log(`📝 Evento capturado: ${direction} a los ${this.elapsedTime}s (posición: ${this.scrollPosition}px)`);
+    }
+    
+    startPlayback() {
+        // Obtener los eventos de grabación de la canción actual
+        const currentSong = window.songManager ? window.songManager.getCurrentSong() : null;
+        
+        if (!currentSong || !currentSong.recordings || currentSong.recordings.length === 0) {
+            console.log('ℹ️ No hay datos de grabación para esta canción');
+            alert('No hay datos de grabación para esta canción. Usa el botón de grabación 🔴 para capturar movimientos primero.');
+            return;
+        }
+        
+        // Usar la grabación más reciente
+        const latestRecording = currentSong.recordings[currentSong.recordings.length - 1];
+        this.playbackEvents = [...latestRecording.events];
+        
+        if (this.playbackEvents.length === 0) {
+            console.log('ℹ️ No hay eventos en la grabación');
+            alert('La grabación está vacía. No hay movimientos para reproducir.');
+            return;
+        }
+        
+        console.log(`▶️ Iniciando reproducción de ${this.playbackEvents.length} eventos`);
+        console.log('📊 Eventos a reproducir:', this.playbackEvents);
+        
+        // Volver al comienzo
+        this.scrollPosition = 0;
+        this.updateScrollPosition();
+        
+        // Iniciar el temporizador
+        this.isPlaying = true;
+        this.startTimer();
+        
+        // Programar la reproducción de cada evento
+        this.schedulePlaybackEvents();
+    }
+    
+    schedulePlaybackEvents() {
+        // Limpiar timeouts anteriores
+        this.clearPlaybackTimeouts();
+        
+        this.playbackEvents.forEach((event, index) => {
+            const timeout = setTimeout(() => {
+                this.executePlaybackEvent(event);
+            }, event.timestamp * 1000); // Convertir segundos a milisegundos
+            
+            this.playbackTimeouts.push(timeout);
+        });
+    }
+    
+    executePlaybackEvent(event) {
+        console.log(`🎬 Reproduciendo evento: ${event.direction} a los ${event.timestamp}s`);
+        
+        if (event.direction === 'up') {
+            // Ejecutar scroll hacia arriba sin grabar
+            this.scrollPosition -= 30;
+            this.updateScrollPosition();
+        } else if (event.direction === 'down') {
+            // Ejecutar scroll hacia abajo sin grabar
+            this.scrollPosition += 30;
+            this.updateScrollPosition();
+        }
+    }
+    
+    pauseTimer() {
+        this.timerRunning = false;
+        this.isPlaying = false;
+        this.playPauseBtn.textContent = '▶️';
+        
+        if (this.timerInterval) {
+            clearInterval(this.timerInterval);
+            this.timerInterval = null;
+        }
+        
+        // Limpiar reproducción programada
+        this.clearPlaybackTimeouts();
+        
+        if (this.isPlaying) {
+            console.log('⏸️ Reproducción pausada');
+        }
+    }
+    
+    clearPlaybackTimeouts() {
+        this.playbackTimeouts.forEach(timeout => clearTimeout(timeout));
+        this.playbackTimeouts = [];
+    }
+    
+    restartTimer() {
+        this.pauseTimer();
+        this.elapsedTime = 0;
+        this.updateTimerDisplay();
+        
+        // Volver al comienzo también
+        this.scrollPosition = 0;
+        this.updateScrollPosition();
     }
 }
 
