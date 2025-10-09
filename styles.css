@@ -922,6 +922,7 @@ body.concert-mode #import-txt-songs-btn,
 body.concert-mode #export-songs-btn,
 body.concert-mode #import-songs-btn,
 body.concert-mode .playback-controls,
+body.concert-mode .order-buttons,
 body.concert-mode .song-list-panel h2 {
     display: none !important;
 }
