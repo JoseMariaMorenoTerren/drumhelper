@@ -66,10 +66,7 @@
                 <button id="edit-current-song-btn" class="edit-btn" disabled>Editar</button>
             </div>
             <div class="data-management">
-                <button id="import-txt-songs-btn" class="data-btn">TXT</button>
-                <button id="import-complete-songs-btn" class="data-btn">Completas</button>
-                <button id="export-songs-btn" class="data-btn">Exportar</button>
-                <button id="import-songs-btn" class="data-btn">Importar</button>
+                <button id="data-options-btn" class="data-btn">Opciones</button>
                 <input type="file" id="import-file-input" accept=".json" style="display: none;">
                 <input type="file" id="import-txt-file-input" accept=".txt" style="display: none;">
                 <input type="file" id="import-complete-file-input" accept=".txt" style="display: none;">
@@ -300,6 +297,55 @@
                     <div class="shortcut-item">
                         <span class="key">Shift + R</span>
                         <span class="description">Resetear orden</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de opciones de datos -->
+    <div id="data-options-modal" class="modal" style="display: none;">
+        <div class="modal-content" style="max-width: 500px;">
+            <div class="modal-header">
+                <h2>Opciones de Datos</h2>
+                <span id="close-data-options-modal" class="close">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="data-options-section">
+                    <h3>📥 Importar</h3>
+                    <div class="data-options-grid">
+                        <button id="modal-import-json-btn" class="data-option-btn">
+                            <span class="option-text">Importar JSON</span>
+                            <small>Archivo de respaldo completo</small>
+                        </button>
+                        <button id="modal-import-txt-btn" class="data-option-btn">
+                            <span class="option-text">Importar TXT Simple</span>
+                            <small>Formato básico de texto</small>
+                        </button>
+                        <button id="modal-import-complete-btn" class="data-option-btn">
+                            <span class="option-text">Importar Completas</span>
+                            <small>Formato con todas las columnas</small>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="data-options-section">
+                    <h3>📤 Exportar</h3>
+                    <div class="data-options-grid">
+                        <button id="modal-export-json-btn" class="data-option-btn">
+                            <span class="option-text">Exportar JSON</span>
+                            <small>Respaldo completo de todas las canciones</small>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="data-options-section">
+                    <h3>🗑️ Gestión</h3>
+                    <div class="data-options-grid">
+                        <button id="modal-clear-all-btn" class="data-option-btn danger">
+                            <span class="option-text">Borrar Todas</span>
+                            <small>Eliminar todas las canciones</small>
+                        </button>
                     </div>
                 </div>
             </div>

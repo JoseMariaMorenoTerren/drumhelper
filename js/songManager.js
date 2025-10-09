@@ -20,7 +20,14 @@ class SongManager {
         this.exportBtn = document.getElementById('export-songs-btn');
         this.importBtn = document.getElementById('import-songs-btn');
         this.importTxtBtn = document.getElementById('import-txt-songs-btn');
-        this.importCompleteSongsBtn = document.getElementById('import-complete-songs-btn');
+        this.dataOptionsBtn = document.getElementById('data-options-btn');
+        this.dataOptionsModal = document.getElementById('data-options-modal');
+        this.closeDataOptionsModal = document.getElementById('close-data-options-modal');
+        this.modalImportJsonBtn = document.getElementById('modal-import-json-btn');
+        this.modalImportTxtBtn = document.getElementById('modal-import-txt-btn');
+        this.modalImportCompleteBtn = document.getElementById('modal-import-complete-btn');
+        this.modalExportJsonBtn = document.getElementById('modal-export-json-btn');
+        this.modalClearAllBtn = document.getElementById('modal-clear-all-btn');
         this.importFileInput = document.getElementById('import-file-input');
         this.importTxtFileInput = document.getElementById('import-txt-file-input');
         this.importCompleteFileInput = document.getElementById('import-complete-file-input');
@@ -113,20 +120,46 @@ class SongManager {
         });
         
         // Eventos de exportar/importar
-        this.exportBtn.addEventListener('click', () => {
+        // Evento para abrir modal de opciones de datos
+        this.dataOptionsBtn.addEventListener('click', () => {
+            this.openDataOptionsModal();
+        });
+        
+        // Eventos del modal de opciones de datos
+        this.closeDataOptionsModal.addEventListener('click', () => {
+            this.closeDataOptionsModalFunc();
+        });
+        
+        this.modalExportJsonBtn.addEventListener('click', () => {
+            this.closeDataOptionsModalFunc();
             this.exportSongs();
         });
         
-        this.importBtn.addEventListener('click', () => {
+        this.modalImportJsonBtn.addEventListener('click', () => {
+            this.closeDataOptionsModalFunc();
             this.importFileInput.click();
         });
         
-        this.importTxtBtn.addEventListener('click', () => {
+        this.modalImportTxtBtn.addEventListener('click', () => {
+            this.closeDataOptionsModalFunc();
             this.importTxtFileInput.click();
         });
         
-        this.importCompleteSongsBtn.addEventListener('click', () => {
+        this.modalImportCompleteBtn.addEventListener('click', () => {
+            this.closeDataOptionsModalFunc();
             this.importCompleteFileInput.click();
+        });
+        
+        this.modalClearAllBtn.addEventListener('click', () => {
+            this.closeDataOptionsModalFunc();
+            this.clearAllSongs();
+        });
+        
+        // Cerrar modal al hacer click fuera
+        this.dataOptionsModal.addEventListener('click', (e) => {
+            if (e.target === this.dataOptionsModal) {
+                this.closeDataOptionsModalFunc();
+            }
         });
         
         this.importFileInput.addEventListener('change', (e) => {
@@ -1358,6 +1391,90 @@ Says, "Find a home"
         }
         
         this.selectSong(this.songs[prevIndex]);
+    }
+
+    // Funciones del modal de opciones de datos
+    openDataOptionsModal() {
+        console.log(`🎛️  Abriendo modal de opciones de datos...`);
+        this.dataOptionsModal.style.display = 'block';
+        document.body.classList.add('modal-open');
+    }
+
+    closeDataOptionsModalFunc() {
+        console.log(`❌ Cerrando modal de opciones de datos...`);
+        this.dataOptionsModal.style.display = 'none';
+        document.body.classList.remove('modal-open');
+    }
+
+    // Función para borrar todas las canciones con confirmación
+    clearAllSongs() {
+        console.log(`🗑️  Iniciando proceso de borrado de todas las canciones...`);
+        console.log(`📊 Canciones actuales: ${this.songs.length}`);
+        
+        if (this.songs.length === 0) {
+            console.log(`⚠️  No hay canciones para borrar`);
+            this.showNotification('⚠️ No hay canciones para borrar', 'warning');
+            return;
+        }
+        
+        const confirmMessage = `⚠️ ATENCIÓN: Vas a borrar TODAS las canciones (${this.songs.length} canciones)\n\n` +
+            `Esta acción NO se puede deshacer.\n\n` +
+            `Para confirmar, escribe exactamente la palabra: BORRAR`;
+        
+        const userInput = prompt(confirmMessage);
+        
+        if (userInput === null) {
+            console.log(`❌ Borrado cancelado por el usuario`);
+            return;
+        }
+        
+        console.log(`🔤 Texto ingresado por el usuario: "${userInput}"`);
+        
+        if (userInput.toUpperCase() === 'BORRAR') {
+            console.log(`✅ Confirmación válida - Procediendo con el borrado...`);
+            
+            const songsCount = this.songs.length;
+            const songsBackup = [...this.songs]; // Respaldo para logging
+            
+            // Borrar todas las canciones
+            this.songs = [];
+            this.currentSong = null;
+            
+            // Actualizar almacenamiento y UI
+            this.saveSongs();
+            this.renderSongs();
+            
+            // Limpiar el área de letras
+            const lyricsContainer = document.getElementById('lyrics-container');
+            if (lyricsContainer) {
+                lyricsContainer.innerHTML = '<p>Selecciona una canción para ver sus letras</p>';
+            }
+            
+            // Deshabilitar botón de edición
+            if (this.editCurrentSongBtn) {
+                this.editCurrentSongBtn.disabled = true;
+            }
+            
+            console.log(`🗑️  Borrado completado exitosamente`);
+            console.log(`📈 Resumen del borrado:`);
+            console.log(`  🎵 Canciones eliminadas: ${songsCount}`);
+            console.log(`  📋 Canciones restantes: ${this.songs.length}`);
+            console.log(`  🎯 Canción activa: ${this.currentSong ? this.currentSong.title : 'Ninguna'}`);
+            
+            // Log de las canciones eliminadas (solo títulos)
+            if (songsBackup.length > 0) {
+                console.log(`📝 Canciones que fueron eliminadas:`);
+                songsBackup.forEach((song, index) => {
+                    console.log(`  ${index + 1}. "${song.title}" - ${song.artist || '[Sin artista]'}`);
+                });
+            }
+            
+            this.showNotification(`🗑️ Eliminadas ${songsCount} canciones exitosamente`, 'success');
+            
+        } else {
+            console.log(`❌ Confirmación inválida: "${userInput}" (se esperaba "BORRAR")`);
+            this.showNotification('❌ Confirmación incorrecta. Debes escribir exactamente "BORRAR"', 'error');
+        }
     }
 
     // Función para importar el archivo completo con formato de columnas
