@@ -484,6 +484,11 @@ Says, "Find a home"
         window.dispatchEvent(new CustomEvent('song-selected', {
             detail: { song }
         }));
+        
+        // Actualizar título del prompter si está disponible
+        if (window.lyricsScroller && window.lyricsScroller.updatePrompterTitle) {
+            window.lyricsScroller.updatePrompterTitle();
+        }
     }
     
     selectActiveSong() {
@@ -1116,6 +1121,44 @@ Says, "Find a home"
             console.log('🗑️ Todos los valores de orden han sido reseteados a 10000');
             console.log(`🔢 Contador temporal reiniciado a: ${this.tempOrderCounter} (las canciones ordenadas aparecerán primero)`);
         }
+    }
+    
+    selectPreviousSong() {
+        if (!this.currentSong || this.songs.length === 0) return;
+        
+        const currentIndex = this.songs.findIndex(song => song.id === this.currentSong.id);
+        if (currentIndex === -1) return;
+        
+        // Ir a la canción anterior (circular)
+        const prevIndex = currentIndex === 0 ? this.songs.length - 1 : currentIndex - 1;
+        this.selectSong(this.songs[prevIndex].id);
+    }
+    
+    selectNextSong() {
+        if (!this.currentSong || this.songs.length === 0) return;
+        
+        const currentIndex = this.songs.findIndex(song => song.id === this.currentSong.id);
+        if (currentIndex === -1) return;
+        
+        // Ir a la siguiente canción (circular)
+        const nextIndex = currentIndex === this.songs.length - 1 ? 0 : currentIndex + 1;
+        this.selectSong(this.songs[nextIndex]);
+    }
+    
+    selectPreviousSong() {
+        if (this.songs.length === 0) return;
+        
+        const currentIndex = this.songs.findIndex(song => song.id === this.currentSong?.id);
+        let prevIndex;
+        
+        if (currentIndex === -1 || currentIndex === 0) {
+            // Si no hay canción actual o es la primera, ir a la última
+            prevIndex = this.songs.length - 1;
+        } else {
+            prevIndex = currentIndex - 1;
+        }
+        
+        this.selectSong(this.songs[prevIndex]);
     }
 }
 

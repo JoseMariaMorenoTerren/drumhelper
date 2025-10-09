@@ -17,6 +17,10 @@ class LyricsScroller {
         this.timerText = document.getElementById('timer-text');
         this.concertGotoTopBtn = document.getElementById('concert-goto-top-btn');
         this.concertPlayBtn = document.getElementById('concert-play-btn');
+        this.prompterPrevBtn = document.getElementById('prompter-prev-btn');
+        this.prompterNextBtn = document.getElementById('prompter-next-btn');
+        this.prompterSongTitle = document.getElementById('prompter-song-title');
+        this.prompterTitleText = document.getElementById('prompter-title-text');
         
         this.isAutoScrolling = true;
         this.scrollSpeed = 5;
@@ -103,6 +107,14 @@ class LyricsScroller {
             this.toggleTimer();
         });
         
+        this.prompterPrevBtn.addEventListener('click', () => {
+            this.goToPreviousSong();
+        });
+        
+        this.prompterNextBtn.addEventListener('click', () => {
+            this.goToNextSong();
+        });
+        
         // Escuchar eventos del metrónomo
         window.addEventListener('metronome-beat', (e) => {
             if (this.isAutoScrolling && e.detail.isStrongBeat) {
@@ -145,6 +157,14 @@ class LyricsScroller {
                 case 'ArrowDown':
                     e.preventDefault();
                     this.scrollDown();
+                    break;
+                case 'ArrowLeft':
+                    e.preventDefault();
+                    this.goToPreviousSong();
+                    break;
+                case 'ArrowRight':
+                    e.preventDefault();
+                    this.goToNextSong();
                     break;
                 case ' ':
                     e.preventDefault();
@@ -406,13 +426,20 @@ class LyricsScroller {
         if (this.currentMode === 'prompter') {
             body.classList.add('prompter-mode');
             this.songlistToggleBtn.style.display = 'none';
-            this.concertGotoTopBtn.style.display = 'block';
-            this.concertPlayBtn.style.display = 'block';
+            this.concertGotoTopBtn.style.display = 'none';
+            this.concertPlayBtn.style.display = 'none';
+            this.prompterPrevBtn.style.display = 'block';
+            this.prompterNextBtn.style.display = 'block';
+            this.prompterSongTitle.style.display = 'block';
+            this.updatePrompterTitle();
         } else if (this.currentMode === 'concert') {
             body.classList.add('concert-mode');
             this.songlistToggleBtn.style.display = 'block';
             this.concertGotoTopBtn.style.display = 'block';
             this.concertPlayBtn.style.display = 'block';
+            this.prompterPrevBtn.style.display = 'none';
+            this.prompterNextBtn.style.display = 'none';
+            this.prompterSongTitle.style.display = 'none';
             
             // Aplicar el estado actual de la lista de canciones
             if (!this.songlistVisible) {
@@ -423,6 +450,9 @@ class LyricsScroller {
             this.songlistToggleBtn.style.display = 'none';
             this.concertGotoTopBtn.style.display = 'none';
             this.concertPlayBtn.style.display = 'none';
+            this.prompterPrevBtn.style.display = 'none';
+            this.prompterNextBtn.style.display = 'none';
+            this.prompterSongTitle.style.display = 'none';
             this.songlistVisible = true;
         }
     }
@@ -655,6 +685,31 @@ class LyricsScroller {
         // Volver al comienzo también
         this.scrollPosition = 0;
         this.updateScrollPosition();
+    }
+    
+    goToPreviousSong() {
+        if (window.songManager) {
+            window.songManager.selectPreviousSong();
+        }
+    }
+    
+    goToNextSong() {
+        if (window.songManager) {
+            window.songManager.selectNextSong();
+        }
+    }
+    
+    updatePrompterTitle() {
+        if (window.songManager && window.songManager.currentSong) {
+            const song = window.songManager.currentSong;
+            let titleText = song.title;
+            if (song.artist) {
+                titleText += ` - ${song.artist}`;
+            }
+            this.prompterTitleText.textContent = titleText;
+        } else {
+            this.prompterTitleText.textContent = 'Sin canción seleccionada';
+        }
     }
 }
 
