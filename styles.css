@@ -434,7 +434,7 @@ body {
 
 /* Panel de letras */
 .lyrics-panel {
-    flex-grow: 1;
+    width: 75vw;
     display: flex;
     flex-direction: column;
     position: relative;
@@ -682,8 +682,6 @@ body {
 .delete-btn:hover {
     background-color: #ff4444;
 }
-
-
 
 /* Scrollbar personalizada */
 ::-webkit-scrollbar {
