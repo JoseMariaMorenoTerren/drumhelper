@@ -34,10 +34,16 @@ class LyricsScroller {
         this.fontSize = 2.4; // Tamaño inicial en rem (doble del original)
         this.currentMode = 'edition'; // Modos: 'edition', 'concert', 'prompter'
         this.modes = ['edition', 'concert', 'prompter'];
+        /*
         this.modeLabels = {
             'edition': '📝 Edición',
             'concert': '🎵 Concierto', 
             'prompter': '📺 Prompter'
+        };*/
+        this.modeLabels = {
+            'edition': 'Edición',
+            'concert': 'Concierto', 
+            'prompter': 'Prompter'
         };
         this.songlistVisible = true;
         this.timerRunning = false;
