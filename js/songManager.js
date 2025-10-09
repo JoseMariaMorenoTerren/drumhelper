@@ -802,6 +802,32 @@ Says, "Find a home"
     
     exportSongs() {
         try {
+            console.log(`🚀 Iniciando exportación JSON...`);
+            console.log(`📊 Canciones a exportar: ${this.songs.length}`);
+            console.log(`🏷️  Nombre del setlist: "${this.setlistName}"`);
+            
+            // Validar canciones antes de exportar
+            let validSongs = 0;
+            let invalidSongs = 0;
+            
+            this.songs.forEach((song, index) => {
+                try {
+                    const validationResult = this.validateSong(song);
+                    if (validationResult === true) {
+                        validSongs++;
+                        console.log(`  ✅ Canción ${index + 1}: "${song.title}" - Válida`);
+                    } else {
+                        invalidSongs++;
+                        console.log(`  ⚠️  Canción ${index + 1}: "${song.title}" - Problema: ${validationResult}`);
+                    }
+                } catch (error) {
+                    invalidSongs++;
+                    console.error(`  💥 Canción ${index + 1}: Error validando - ${error.message}`);
+                }
+            });
+            
+            console.log(`📈 Validación completada: ${validSongs} válidas, ${invalidSongs} con problemas`);
+            
             const dataToExport = {
                 version: "1.0",
                 exportDate: new Date().toISOString(),
@@ -809,8 +835,18 @@ Says, "Find a home"
                 songs: this.songs
             };
             
+            console.log(`📦 Estructura de datos para exportar:`, {
+                version: dataToExport.version,
+                exportDate: dataToExport.exportDate,
+                setlistName: dataToExport.setlistName,
+                songsCount: dataToExport.songs.length
+            });
+            
             const dataStr = JSON.stringify(dataToExport, null, 2);
+            console.log(`📄 JSON generado: ${dataStr.length} caracteres`);
+            
             const dataBlob = new Blob([dataStr], { type: 'application/json' });
+            console.log(`💾 Blob creado: ${dataBlob.size} bytes`);
             
             // Crear un enlace de descarga
             const downloadLink = document.createElement('a');
@@ -834,6 +870,8 @@ Says, "Find a home"
             const timeStamp = `${year}-${month}-${day}_${hours}-${minutes}-${seconds}`;
             downloadLink.download = `${cleanSetlistName}-${timeStamp}.json`;
             
+            console.log(`📁 Nombre de archivo generado: ${downloadLink.download}`);
+            
             // Simular clic para descargar
             document.body.appendChild(downloadLink);
             downloadLink.click();
@@ -842,25 +880,57 @@ Says, "Find a home"
             // Limpiar URL del blob
             URL.revokeObjectURL(downloadLink.href);
             
-            this.showNotification(`✅ Exportadas ${this.songs.length} canciones a ${downloadLink.download}`, 'success');
+            console.log(`✅ Exportación completada exitosamente`);
+            console.log(`📈 Resumen de exportación:`);
+            console.log(`  📁 Archivo: ${downloadLink.download}`);
+            console.log(`  🎵 Canciones exportadas: ${this.songs.length}`);
+            console.log(`  ✅ Válidas: ${validSongs}`);
+            console.log(`  ⚠️  Con problemas: ${invalidSongs}`);
+            console.log(`  💾 Tamaño: ${dataBlob.size} bytes`);
+            
+            let message = `✅ Exportadas ${this.songs.length} canciones a ${downloadLink.download}`;
+            if (invalidSongs > 0) {
+                message += ` (${invalidSongs} con problemas - ver consola)`;
+            }
+            
+            const notificationType = invalidSongs > 0 ? 'warning' : 'success';
+            this.showNotification(message, notificationType);
             
         } catch (error) {
-            console.error('Error exportando canciones:', error);
+            console.error('💥 Error crítico exportando canciones:', error);
+            console.log(`📊 Estado actual:`, {
+                songsCount: this.songs.length,
+                setlistName: this.setlistName,
+                timestamp: new Date().toISOString()
+            });
             this.showNotification('❌ Error al exportar las canciones', 'error');
         }
     }
     
     importSongs(file) {
+        console.log(`🚀 Iniciando importación JSON del archivo: ${file.name}`);
+        console.log(`📊 Tamaño del archivo: ${file.size} bytes`);
+        
         const reader = new FileReader();
         
         reader.onload = (e) => {
             try {
+                console.log(`📄 Parseando archivo JSON...`);
                 const importedData = JSON.parse(e.target.result);
+                
+                console.log(`📋 Estructura del archivo JSON:`, {
+                    version: importedData.version,
+                    exportDate: importedData.exportDate,
+                    setlistName: importedData.setlistName,
+                    songsCount: importedData.songs?.length
+                });
                 
                 // Validar estructura del archivo
                 if (!importedData.songs || !Array.isArray(importedData.songs)) {
-                    throw new Error('Formato de archivo inválido');
+                    throw new Error('Formato de archivo inválido - falta array de canciones');
                 }
+                
+                console.log(`🎵 Archivo válido con ${importedData.songs.length} canciones`);
                 
                 // Mostrar confirmación
                 const confirmMessage = `¿Deseas importar ${importedData.songs.length} canciones?\n\n` +
@@ -868,54 +938,79 @@ Says, "Find a home"
                     `Fecha de exportación: ${importedData.exportDate ? new Date(importedData.exportDate).toLocaleString() : 'Desconocida'}`;
                 
                 if (!confirm(confirmMessage)) {
+                    console.log(`❌ Importación cancelada por el usuario`);
                     return;
                 }
+                
+                console.log(`🔄 Procesando ${importedData.songs.length} canciones...`);
                 
                 // Procesar canciones importadas
                 let importedCount = 0;
                 let skippedCount = 0;
+                let errorCount = 0;
                 
-                importedData.songs.forEach(song => {
-                    // Validar estructura de cada canción
-                    if (this.validateSong(song)) {
-                        // Generar nuevo ID para evitar conflictos
-                        const newSong = {
-                            ...song,
-                            id: Date.now() + Math.random(), // ID único
-                            notes: song.notes || '', // Asegurar que tenga el campo notes
-                            fontSize: song.fontSize || 2.4, // Asegurar que tenga el campo fontSize
-                            active: false // Las canciones importadas no están activas por defecto
-                        };
+                importedData.songs.forEach((song, index) => {
+                    try {
+                        console.log(`🎵 Procesando canción ${index + 1}/${importedData.songs.length}: "${song.title || '[Sin título]'}"`);
                         
-                        this.songs.push(newSong);
-                        importedCount++;
-                    } else {
-                        skippedCount++;
+                        // Validar estructura de cada canción
+                        const validationResult = this.validateSong(song);
+                        if (validationResult === true) {
+                            // Generar nuevo ID para evitar conflictos
+                            const newSong = {
+                                ...song,
+                                id: Date.now() + Math.random(), // ID único
+                                notes: song.notes || '', // Asegurar que tenga el campo notes
+                                fontSize: song.fontSize || 2.4, // Asegurar que tenga el campo fontSize
+                                active: false // Las canciones importadas no están activas por defecto
+                            };
+                            
+                            this.songs.push(newSong);
+                            importedCount++;
+                            console.log(`  ✅ Importada: "${song.title}" - Nuevo ID: ${newSong.id}`);
+                        } else {
+                            skippedCount++;
+                            console.log(`  ⏭️  Saltada por validación: "${song.title || '[Sin título]'}" - Razón: ${validationResult || 'Formato inválido'}`);
+                        }
+                    } catch (error) {
+                        errorCount++;
+                        console.error(`  💥 Error procesando canción ${index + 1}:`, error.message);
+                        console.log(`     Datos problemáticos:`, song);
                     }
                 });
                 
                 // Guardar y actualizar interfaz
+                console.log(`💾 Guardando canciones...`);
                 this.saveSongs();
                 this.renderSongs();
                 
                 // Si no hay canción activa después del import, activar la primera
                 if (!this.songs.find(song => song.active) && this.songs.length > 0) {
                     this.selectSong(this.songs[0]);
+                    console.log(`🎯 Activada la primera canción: "${this.songs[0].title}"`);
                 }
                 
-                // Mostrar resultado
+                // Mostrar resultado detallado
+                console.log(`📈 Resumen de importación JSON:`);
+                console.log(`  ✅ Importadas: ${importedCount}`);
+                console.log(`  ⏭️  Saltadas (formato inválido): ${skippedCount}`);
+                console.log(`  💥 Errores: ${errorCount}`);
+                console.log(`  📊 Total en archivo: ${importedData.songs.length}`);
+                console.log(`  🎵 Total en colección actual: ${this.songs.length}`);
+                
                 let message = `✅ Importadas ${importedCount} canciones`;
-                if (skippedCount > 0) {
-                    message += ` (${skippedCount} omitidas por formato inválido)`;
-                }
+                if (skippedCount > 0) message += `, ${skippedCount} saltadas (formato inválido)`;
+                if (errorCount > 0) message += `, ${errorCount} errores (ver consola)`;
                 
-                this.showNotification(message, 'success');
+                const notificationType = errorCount > 0 || skippedCount > 0 ? 'warning' : 'success';
+                this.showNotification(message, notificationType);
                 
                 // Limpiar input de archivo
                 this.importFileInput.value = '';
                 
             } catch (error) {
-                console.error('Error importando canciones:', error);
+                console.error('💥 Error crítico importando canciones JSON:', error);
+                console.log(`📄 Contenido del archivo (primeros 500 caracteres):`, e.target.result?.substring(0, 500));
                 this.showNotification('❌ Error al importar: archivo inválido o corrupto', 'error');
                 this.importFileInput.value = '';
             }
@@ -930,11 +1025,31 @@ Says, "Find a home"
     }
     
     validateSong(song) {
-        return song && 
-               typeof song.title === 'string' && song.title.trim() !== '' &&
-               typeof song.artist === 'string' &&
-               typeof song.bpm === 'number' && song.bpm >= 40 && song.bpm <= 300 &&
-               typeof song.lyrics === 'string';
+        if (!song) {
+            return 'Canción vacía o nula';
+        }
+        
+        if (typeof song.title !== 'string' || song.title.trim() === '') {
+            return 'Título inválido o vacío';
+        }
+        
+        if (typeof song.artist !== 'string') {
+            return 'Artista debe ser texto';
+        }
+        
+        // BPM puede ser string o número, si es string debe ser convertible a número válido
+        if (song.bpm !== undefined && song.bpm !== null && song.bpm !== '') {
+            const bpmNum = typeof song.bpm === 'string' ? parseFloat(song.bpm) : song.bpm;
+            if (isNaN(bpmNum) || bpmNum < 0 || bpmNum > 500) {
+                return `BPM inválido: ${song.bpm}`;
+            }
+        }
+        
+        if (typeof song.lyrics !== 'string') {
+            return 'Letras deben ser texto';
+        }
+        
+        return true; // Canción válida
     }
     
     showNotification(message, type = 'info') {
@@ -942,11 +1057,15 @@ Says, "Find a home"
         notification.className = `notification notification-${type}`;
         notification.textContent = message;
         
+        const backgroundColor = type === 'error' ? '#ff4444' : 
+                               type === 'success' ? '#44ff44' : 
+                               type === 'warning' ? '#ffaa44' : '#4444ff';
+        
         notification.style.cssText = `
             position: fixed;
             top: 20px;
             right: 20px;
-            background: ${type === 'error' ? '#ff4444' : type === 'success' ? '#44ff44' : '#4444ff'};
+            background: ${backgroundColor};
             color: ${type === 'success' ? '#000000' : '#ffffff'};
             padding: 15px 20px;
             border-radius: 8px;
@@ -1255,31 +1374,51 @@ Says, "Find a home"
                 }
                 
                 const text = e.target.result;
+                console.log(`🚀 Iniciando importación de archivo: ${file.name}`);
+                console.log(`📊 Tamaño del archivo: ${text.length} caracteres`);
+                
                 const songs = this.parseCompleteSongFormat(text);
                 let importedCount = 0;
+                let skippedCount = 0;
+                let errorCount = 0;
                 
-                songs.forEach(songData => {
-                    // Verificar si la canción ya existe
-                    const existingSong = this.songs.find(s => 
-                        s.title.toLowerCase() === songData.title.toLowerCase() && 
-                        (songData.artist ? s.artist.toLowerCase() === songData.artist.toLowerCase() : true)
-                    );
-                    
-                    if (!existingSong) {
-                        const newSong = {
-                            id: Date.now() + Math.random(),
-                            title: songData.title,
-                            artist: songData.artist || '',
-                            bpm: songData.bpm || '',
-                            lyrics: songData.lyrics || '',
-                            notes: songData.notes || '',
-                            fontSize: 2.4,
-                            active: false,
-                            order: songData.order || 0
-                        };
+                console.log(`🔄 Procesando ${songs.length} canciones para importar...`);
+                
+                songs.forEach((songData, index) => {
+                    try {
+                        console.log(`🎵 Procesando canción ${index + 1}/${songs.length}: "${songData.title}"`);
                         
-                        this.songs.push(newSong);
-                        importedCount++;
+                        // Verificar si la canción ya existe
+                        const existingSong = this.songs.find(s => 
+                            s.title.toLowerCase() === songData.title.toLowerCase() && 
+                            (songData.artist ? s.artist.toLowerCase() === songData.artist.toLowerCase() : true)
+                        );
+                        
+                        if (!existingSong) {
+                            const newSong = {
+                                id: Date.now() + Math.random(),
+                                title: songData.title,
+                                artist: songData.artist || '',
+                                bpm: songData.bpm || '',
+                                lyrics: songData.lyrics || '',
+                                notes: songData.notes || '',
+                                fontSize: 2.4,
+                                active: false,
+                                order: songData.order || 0
+                            };
+                            
+                            this.songs.push(newSong);
+                            importedCount++;
+                            console.log(`  ✅ Importada: "${songData.title}" - ID: ${newSong.id}`);
+                        } else {
+                            skippedCount++;
+                            console.log(`  ⏭️  Saltada (ya existe): "${songData.title}"`);
+                        }
+                    } catch (error) {
+                        errorCount++;
+                        console.error(`  💥 Error importando "${songData.title}":`, error.message);
+                        console.log(`     Datos problemáticos:`, songData);
+                        // Continuar con la siguiente canción
                     }
                 });
                 
@@ -1287,8 +1426,19 @@ Says, "Find a home"
                 this.saveSongs();
                 this.renderSongs();
                 
-                // Mostrar resultado
-                this.showNotification(`✅ Importadas ${importedCount} canciones del archivo completo`, 'success');
+                // Mostrar resultado detallado
+                console.log(`📈 Resumen de importación:`);
+                console.log(`  ✅ Importadas: ${importedCount}`);
+                console.log(`  ⏭️  Saltadas (duplicadas): ${skippedCount}`);
+                console.log(`  💥 Errores: ${errorCount}`);
+                console.log(`  📊 Total procesadas: ${songs.length}`);
+                
+                let message = `✅ Importadas ${importedCount} canciones`;
+                if (skippedCount > 0) message += `, ${skippedCount} saltadas (ya existían)`;
+                if (errorCount > 0) message += `, ${errorCount} errores (ver consola)`;
+                
+                const notificationType = errorCount > 0 ? 'warning' : 'success';
+                this.showNotification(message, notificationType);
                 
             } catch (error) {
                 console.error('Error importando el archivo completo:', error);
@@ -1308,35 +1458,63 @@ Says, "Find a home"
         const lines = content.split('\n');
         const songs = [];
         
-        // La primera línea contiene los headers, la omitimos
+        console.log(`📄 Procesando archivo con ${lines.length} líneas`);
+        
+        // La primera línea contiene los headers, la mostramos para debug
+        if (lines.length > 0) {
+            const headers = lines[0].split('\t');
+            console.log(`📋 Headers detectados (${headers.length} columnas):`, headers.slice(0, 10).join(' | '), '...');
+        }
+        
+        // Procesar líneas de datos (saltando la primera que son headers)
         for (let i = 1; i < lines.length; i++) {
             const line = lines[i].trim();
-            if (!line) continue;
+            if (!line) {
+                console.log(`⏭️  Línea ${i}: vacía, saltando...`);
+                continue;
+            }
             
-            // Dividir por tabuladores
-            const columns = line.split('\t');
-            
-            if (columns.length >= 16) { // Asegurar que tenemos suficientes columnas
-                const title = columns[0] || '';
-                const artist = columns[1] || '';
-                const order = parseInt(columns[3]) || 0;
-                const bpm = columns[8] || '';
-                const lyrics = columns[15] || ''; // Columna LETRAS
-                const notes = columns[19] || ''; // Columna COMENTARIOS
+            try {
+                // Dividir por tabuladores
+                const columns = line.split('\t');
+                console.log(`📝 Línea ${i}: ${columns.length} columnas detectadas`);
                 
-                if (title) { // Solo procesar si hay título
-                    songs.push({
-                        title: title,
-                        artist: artist,
-                        order: order,
-                        bpm: bpm,
-                        lyrics: lyrics.replace(/\\n/g, '\n'), // Convertir \n a saltos de línea reales
-                        notes: notes.replace(/\\n/g, '\n')
-                    });
+                if (columns.length >= 16) { // Asegurar que tenemos suficientes columnas
+                    const title = columns[0] || '';
+                    const artist = columns[1] || '';
+                    const order = parseInt(columns[3]) || 0;
+                    const bpm = columns[8] || '';
+                    const lyrics = columns[15] || ''; // Columna LETRAS
+                    const notes = columns[19] || ''; // Columna COMENTARIOS
+                    
+                    if (title) { // Solo procesar si hay título
+                        const songData = {
+                            title: title,
+                            artist: artist,
+                            order: order,
+                            bpm: bpm,
+                            lyrics: lyrics.replace(/\\n/g, '\n'), // Convertir \n a saltos de línea reales
+                            notes: notes.replace(/\\n/g, '\n')
+                        };
+                        
+                        songs.push(songData);
+                        console.log(`✅ Línea ${i}: "${title}" por ${artist || '[Sin artista]'} - BPM: ${bpm || '[Sin BPM]'} - Orden: ${order}`);
+                    } else {
+                        console.log(`⚠️  Línea ${i}: Sin título, saltando...`);
+                    }
+                } else {
+                    console.log(`❌ Línea ${i}: Insuficientes columnas (${columns.length}/16 mínimas)`);
+                    console.log(`   Contenido: "${line.substring(0, 100)}${line.length > 100 ? '...' : ''}"`);
                 }
+            } catch (error) {
+                console.error(`💥 Error procesando línea ${i}:`, error.message);
+                console.log(`   Contenido problemático: "${line.substring(0, 100)}${line.length > 100 ? '...' : ''}"`);
+                // Continuar con la siguiente línea
+                continue;
             }
         }
         
+        console.log(`🎵 Total de canciones procesadas exitosamente: ${songs.length}`);
         return songs;
     }
 }
