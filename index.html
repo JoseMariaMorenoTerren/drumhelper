@@ -41,6 +41,9 @@
         </div>
     </header>
 
+    <!-- Botón de ayuda -->
+    <button id="help-btn" class="help-btn" title="Mostrar atajos de teclado">❓</button>
+
     <!-- Contenedor principal -->
     <main class="main-container">
         <!-- Panel izquierdo - Lista de canciones (1/4 de la pantalla horizontal) -->
@@ -206,6 +209,77 @@
     <button id="concert-play-btn" class="concert-control-btn" style="display: none;">
         ▶️
     </button>
+
+    <!-- Modal de ayuda -->
+    <div id="help-modal" class="help-modal">
+        <div class="help-modal-content">
+            <div class="help-modal-header">
+                <h3>Atajos de Teclado</h3>
+                <span class="help-close">&times;</span>
+            </div>
+            <div class="help-modal-body">
+                <div class="shortcut-section">
+                    <h4>Reproducción</h4>
+                    <div class="shortcut-item">
+                        <span class="key">Espacio</span>
+                        <span class="description">Reproducir/Pausar</span>
+                    </div>
+                    <div class="shortcut-item">
+                        <span class="key">S</span>
+                        <span class="description">Detener</span>
+                    </div>
+                    <div class="shortcut-item">
+                        <span class="key">↑ ↓</span>
+                        <span class="description">Ajustar velocidad</span>
+                    </div>
+                </div>
+                
+                <div class="shortcut-section">
+                    <h4>Navegación</h4>
+                    <div class="shortcut-item">
+                        <span class="key">← →</span>
+                        <span class="description">Cambiar canción</span>
+                    </div>
+                    <div class="shortcut-item">
+                        <span class="key">R</span>
+                        <span class="description">Grabar desplazamiento</span>
+                    </div>
+                    <div class="shortcut-item">
+                        <span class="key">P</span>
+                        <span class="description">Reproducir grabación</span>
+                    </div>
+                </div>
+                
+                <div class="shortcut-section">
+                    <h4>Modos de Vista</h4>
+                    <div class="shortcut-item">
+                        <span class="key">E</span>
+                        <span class="description">Modo Edición</span>
+                    </div>
+                    <div class="shortcut-item">
+                        <span class="key">C</span>
+                        <span class="description">Modo Concierto</span>
+                    </div>
+                    <div class="shortcut-item">
+                        <span class="key">T</span>
+                        <span class="description">Modo Teleprompter</span>
+                    </div>
+                </div>
+                
+                <div class="shortcut-section">
+                    <h4>Orden de Canciones</h4>
+                    <div class="shortcut-item">
+                        <span class="key">O</span>
+                        <span class="description">Activar modo orden</span>
+                    </div>
+                    <div class="shortcut-item">
+                        <span class="key">Shift + R</span>
+                        <span class="description">Resetear orden</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <script src="js/metronome.js"></script>
     <script src="js/songManager.js"></script>

@@ -331,6 +331,42 @@ toastStyles.textContent = `
 `;
 document.head.appendChild(toastStyles);
 
+// Funcionalidad del modal de ayuda
+function initializeHelpModal() {
+    const helpBtn = document.getElementById('help-btn');
+    const helpModal = document.getElementById('help-modal');
+    const helpClose = document.querySelector('.help-close');
+    
+    if (helpBtn && helpModal && helpClose) {
+        // Abrir modal
+        helpBtn.addEventListener('click', () => {
+            helpModal.style.display = 'block';
+        });
+        
+        // Cerrar modal con X
+        helpClose.addEventListener('click', () => {
+            helpModal.style.display = 'none';
+        });
+        
+        // Cerrar modal clickeando fuera
+        window.addEventListener('click', (e) => {
+            if (e.target === helpModal) {
+                helpModal.style.display = 'none';
+            }
+        });
+        
+        // Cerrar modal con ESC
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && helpModal.style.display === 'block') {
+                helpModal.style.display = 'none';
+            }
+        });
+    }
+}
+
+// Inicializar modal de ayuda cuando el DOM esté listo
+document.addEventListener('DOMContentLoaded', initializeHelpModal);
+
 // Inicializar la aplicación
 const app = new DrumHelperApp();
 
