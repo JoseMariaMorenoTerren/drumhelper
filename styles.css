@@ -991,12 +991,15 @@ body {
     color: #ffffff;
     border: 1px solid rgba(255, 255, 255, 0.2);
     border-radius: 8px;
-    width: 50px;
-    height: 80px;
-    font-size: 1.8rem;
+    width: 45px;
+    height: 70px;
+    font-size: 1.6rem;
     cursor: pointer;
     z-index: 1000;
     transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .general-nav-btn:hover {
@@ -1010,16 +1013,16 @@ body {
     transform: translateY(-50%) scale(0.95);
 }
 
-/* Posicionamiento de botones generales - ambos en el lateral derecho */
+/* Posicionamiento de botones generales - centrados y juntos en el lateral derecho */
 #general-prev-btn {
     right: 10px;
-    top: 35%;
+    top: calc(50% - 40px);
     transform: translateY(-50%);
 }
 
 #general-next-btn {
     right: 10px;
-    top: 65%;
+    top: calc(50% + 40px);
     transform: translateY(-50%);
 }
 
@@ -1148,22 +1151,22 @@ body.prompter-mode .song-list-panel h2 {
         padding: 6px 10px;
     }
     
-    /* Botones de navegación generales en móvil - ambos en el lateral derecho */
+    /* Botones de navegación generales en móvil - centrados y juntos en el lateral derecho */
     .general-nav-btn {
         width: 45px;
-        height: 70px;
+        height: 60px;
         font-size: 1.5rem;
     }
     
     #general-prev-btn {
         right: 5px;
-        top: 30%;
+        top: calc(50% - 32px);
         transform: translateY(-50%);
     }
     
     #general-next-btn {
         right: 5px;
-        top: 70%;
+        top: calc(50% + 32px);
         transform: translateY(-50%);
     }
 }
