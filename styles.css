@@ -1423,3 +1423,223 @@ body.prompter-mode .song-list-panel h2 {
         font-size: 0.9rem;
     }
 }
+
+/* Estilos para gestión de repertorios */
+.repertoire-header {
+    padding: 10px 15px;
+    border-bottom: 1px solid #333;
+    margin-bottom: 10px;
+}
+
+.repertoire-selector {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.repertoire-select {
+    flex: 1;
+    padding: 6px 10px;
+    background-color: #2a2a2a;
+    color: #ffffff;
+    border: 1px solid #444;
+    border-radius: 4px;
+    font-size: 0.9rem;
+}
+
+.repertoire-select:focus {
+    outline: none;
+    border-color: #666;
+}
+
+.repertoire-options-btn {
+    padding: 6px 8px;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.8rem;
+}
+
+.repertoire-options-btn:hover {
+    background-color: rgba(255, 255, 255, 0.15);
+}
+
+.repertoire-management-section h4 {
+    color: #ffffff;
+    margin-bottom: 15px;
+    font-size: 1.1rem;
+}
+
+.repertoire-actions {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 10px;
+    margin-bottom: 25px;
+}
+
+.repertoire-action-btn {
+    padding: 10px 15px;
+    background-color: #2a2a2a;
+    color: #ffffff;
+    border: 1px solid #444;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: all 0.2s ease;
+}
+
+.repertoire-action-btn:hover {
+    background-color: #3a3a3a;
+    border-color: #555;
+}
+
+.repertoire-action-btn.danger {
+    background-color: #4a2a2a;
+    border-color: #664444;
+}
+
+.repertoire-action-btn.danger:hover {
+    background-color: #5a3a3a;
+}
+
+.repertoire-list-section {
+    margin-bottom: 25px;
+}
+
+.repertoire-list {
+    max-height: 200px;
+    overflow-y: auto;
+    border: 1px solid #444;
+    border-radius: 6px;
+    background-color: #1a1a1a;
+}
+
+.repertoire-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 15px;
+    border-bottom: 1px solid #333;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.repertoire-item:hover {
+    background-color: #2a2a2a;
+}
+
+.repertoire-item.active {
+    background-color: #2d4a3d;
+    border-left: 4px solid #4caf50;
+}
+
+.repertoire-info {
+    flex: 1;
+}
+
+.repertoire-name {
+    font-weight: bold;
+    color: #ffffff;
+    margin-bottom: 2px;
+}
+
+.repertoire-count {
+    font-size: 0.8rem;
+    color: #888;
+}
+
+.repertoire-item-actions {
+    display: flex;
+    gap: 5px;
+}
+
+.repertoire-item-btn {
+    padding: 4px 8px;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.8);
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 0.7rem;
+}
+
+.repertoire-item-btn:hover {
+    background-color: rgba(255, 255, 255, 0.15);
+}
+
+.song-transfer-section {
+    border-top: 1px solid #444;
+    padding-top: 20px;
+}
+
+.transfer-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.target-repertoire-select {
+    padding: 8px 12px;
+    background-color: #2a2a2a;
+    color: #ffffff;
+    border: 1px solid #444;
+    border-radius: 4px;
+    font-size: 0.9rem;
+}
+
+.selected-songs {
+    max-height: 150px;
+    overflow-y: auto;
+    border: 1px solid #444;
+    border-radius: 4px;
+    background-color: #1a1a1a;
+    padding: 10px;
+}
+
+.selected-song-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 5px 0;
+    border-bottom: 1px solid #333;
+}
+
+.selected-song-item:last-child {
+    border-bottom: none;
+}
+
+.transfer-btn {
+    padding: 10px 20px;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: background-color 0.2s ease;
+}
+
+.transfer-btn:hover:not(:disabled) {
+    background-color: #45a049;
+}
+
+.transfer-btn:disabled {
+    background-color: #333;
+    color: #666;
+    cursor: not-allowed;
+}
+
+/* Responsive para repertorios */
+@media (max-width: 768px) {
+    .repertoire-actions {
+        grid-template-columns: 1fr;
+    }
+    
+    .repertoire-selector {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 5px;
+    }
+}

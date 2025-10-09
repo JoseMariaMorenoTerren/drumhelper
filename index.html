@@ -48,6 +48,14 @@
     <main class="main-container">
         <!-- Panel izquierdo - Lista de canciones (1/4 de la pantalla horizontal) -->
         <aside class="song-list-panel">
+            <div class="repertoire-header">
+                <div class="repertoire-selector">
+                    <select id="repertoire-select" class="repertoire-select">
+                        <option value="default">Repertorio Principal</option>
+                    </select>
+                    <button id="repertoire-options-btn" class="repertoire-options-btn" title="Opciones de repertorio">⚙️</button>
+                </div>
+            </div>
             <div class="songs-header">
                 <h2 id="songs-title">Canciones</h2>
                 <div class="order-buttons">
@@ -369,6 +377,80 @@
                         </button>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de gestión de repertorios -->
+    <div id="repertoire-options-modal" class="modal" style="display: none;">
+        <div class="modal-content" style="max-width: 600px;">
+            <div class="modal-header">
+                <h3>Gestión de Repertorios</h3>
+                <span id="close-repertoire-options-modal" class="close">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="repertoire-management-section">
+                    <h4>Repertorio Actual: <span id="current-repertoire-name">Repertorio Principal</span></h4>
+                    
+                    <div class="repertoire-actions">
+                        <button id="new-repertoire-btn" class="repertoire-action-btn">
+                            📁 Nuevo Repertorio
+                        </button>
+                        <button id="duplicate-repertoire-btn" class="repertoire-action-btn">
+                            📄 Duplicar Actual
+                        </button>
+                        <button id="rename-repertoire-btn" class="repertoire-action-btn">
+                            ✏️ Renombrar
+                        </button>
+                        <button id="delete-repertoire-btn" class="repertoire-action-btn danger" style="display: none;">
+                            🗑️ Eliminar
+                        </button>
+                    </div>
+                    
+                    <div class="repertoire-list-section">
+                        <h4>Repertorios Disponibles</h4>
+                        <div id="repertoire-list" class="repertoire-list">
+                            <!-- Lista de repertorios se carga dinámicamente -->
+                        </div>
+                    </div>
+                    
+                    <div class="song-transfer-section" style="display: none;">
+                        <h4>Transferir Canciones</h4>
+                        <div class="transfer-controls">
+                            <select id="target-repertoire-select" class="target-repertoire-select">
+                                <!-- Opciones se cargan dinámicamente -->
+                            </select>
+                            <div class="selected-songs" id="selected-songs-list">
+                                <!-- Canciones seleccionadas -->
+                            </div>
+                            <button id="transfer-songs-btn" class="transfer-btn" disabled>
+                                Transferir Canciones Seleccionadas
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para nombrar repertorio -->
+    <div id="repertoire-name-modal" class="modal" style="display: none;">
+        <div class="modal-content" style="max-width: 400px;">
+            <div class="modal-header">
+                <h3 id="repertoire-name-modal-title">Nuevo Repertorio</h3>
+                <span id="close-repertoire-name-modal" class="close">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form id="repertoire-name-form">
+                    <div class="form-group">
+                        <label for="repertoire-name-input">Nombre del repertorio:</label>
+                        <input type="text" id="repertoire-name-input" required maxlength="50">
+                    </div>
+                    <div class="form-buttons">
+                        <button type="submit" class="btn-primary">Guardar</button>
+                        <button type="button" id="cancel-repertoire-name" class="btn-secondary">Cancelar</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
