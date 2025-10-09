@@ -331,7 +331,7 @@ Says, "Find a home"
         
         // Añadir indicador de modo ordenamiento
         if (this.isOrderMode) {
-            titleText += ' - Ordenando';
+            titleText += '';
         }
         
         this.songsTitle.textContent = titleText;
