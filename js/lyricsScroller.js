@@ -19,6 +19,8 @@ class LyricsScroller {
         this.concertPlayBtn = document.getElementById('concert-play-btn');
         this.prompterPrevBtn = document.getElementById('prompter-prev-btn');
         this.prompterNextBtn = document.getElementById('prompter-next-btn');
+        this.prompterGotoTopBtn = document.getElementById('prompter-goto-top-btn');
+        this.prompterPlayBtn = document.getElementById('prompter-play-btn');
         this.prompterSongTitle = document.getElementById('prompter-song-title');
         this.prompterTitleText = document.getElementById('prompter-title-text');
         this.generalPrevBtn = document.getElementById('general-prev-btn');
@@ -115,6 +117,14 @@ class LyricsScroller {
         
         this.prompterNextBtn.addEventListener('click', () => {
             this.goToNextSong();
+        });
+        
+        this.prompterGotoTopBtn.addEventListener('click', () => {
+            this.scrollToTop();
+        });
+        
+        this.prompterPlayBtn.addEventListener('click', () => {
+            this.toggleTimer();
         });
         
         this.generalPrevBtn.addEventListener('click', () => {
@@ -440,6 +450,8 @@ class LyricsScroller {
             this.concertPlayBtn.style.display = 'none';
             this.prompterPrevBtn.style.display = 'block';
             this.prompterNextBtn.style.display = 'block';
+            this.prompterGotoTopBtn.style.display = 'block';
+            this.prompterPlayBtn.style.display = 'block';
             this.prompterSongTitle.style.display = 'block';
             this.generalPrevBtn.style.display = 'none';
             this.generalNextBtn.style.display = 'none';
@@ -451,6 +463,8 @@ class LyricsScroller {
             this.concertPlayBtn.style.display = 'block';
             this.prompterPrevBtn.style.display = 'none';
             this.prompterNextBtn.style.display = 'none';
+            this.prompterGotoTopBtn.style.display = 'none';
+            this.prompterPlayBtn.style.display = 'none';
             this.prompterSongTitle.style.display = 'none';
             this.generalPrevBtn.style.display = 'block';
             this.generalNextBtn.style.display = 'block';
@@ -466,6 +480,8 @@ class LyricsScroller {
             this.concertPlayBtn.style.display = 'none';
             this.prompterPrevBtn.style.display = 'none';
             this.prompterNextBtn.style.display = 'none';
+            this.prompterGotoTopBtn.style.display = 'none';
+            this.prompterPlayBtn.style.display = 'none';
             this.prompterSongTitle.style.display = 'none';
             this.generalPrevBtn.style.display = 'block';
             this.generalNextBtn.style.display = 'block';

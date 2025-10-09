@@ -966,6 +966,17 @@ body {
     right: 30px;
 }
 
+/* Botones de reproducción del prompter */
+#prompter-goto-top-btn {
+    left: 130px;
+    bottom: 30px;
+}
+
+#prompter-play-btn {
+    right: 130px;
+    bottom: 30px;
+}
+
 /* Título de canción en modo prompter */
 .prompter-song-title {
     position: fixed;
