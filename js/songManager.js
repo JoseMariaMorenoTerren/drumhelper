@@ -335,6 +335,39 @@ Says, "Find a home"
         
         console.log('🔄 Canciones reordenadas según el campo order');
     }
+    
+    scrollToActiveSong() {
+        // Buscar el elemento activo en la lista
+        const activeElement = document.querySelector('.song-item.active');
+        if (!activeElement) return;
+        
+        // Encontrar el contenedor con scroll
+        let scrollContainer = this.songList;
+        while (scrollContainer && scrollContainer.scrollHeight <= scrollContainer.clientHeight) {
+            scrollContainer = scrollContainer.parentElement;
+            if (scrollContainer === document.body) break;
+        }
+        
+        if (scrollContainer && scrollContainer !== document.body) {
+            const containerHeight = scrollContainer.clientHeight;
+            const containerScrollTop = scrollContainer.scrollTop;
+            
+            // Posición del elemento relativa al contenedor
+            const elementRect = activeElement.getBoundingClientRect();
+            const containerRect = scrollContainer.getBoundingClientRect();
+            const elementTop = elementRect.top - containerRect.top + containerScrollTop;
+            const elementHeight = activeElement.offsetHeight;
+            
+            // Calcular la posición para centrar el elemento
+            const scrollPosition = elementTop - (containerHeight / 2) + (elementHeight / 2);
+            
+            // Hacer scroll suave hacia la posición calculada
+            scrollContainer.scrollTo({
+                top: Math.max(0, scrollPosition),
+                behavior: 'smooth'
+            });
+        }
+    }
 
     renderSongs(searchTerm = '') {
         const filteredSongs = this.songs.filter(song => 
@@ -508,6 +541,11 @@ Says, "Find a home"
         
         document.querySelector(`[data-song-id="${song.id}"]`).classList.add('active');
         
+        // Desplazar la lista para centrar la canción seleccionada
+        setTimeout(() => {
+            this.scrollToActiveSong();
+        }, 50); // Pequeño delay para asegurar que el DOM se ha actualizado
+        
         // Notificar cambio de canción
         window.dispatchEvent(new CustomEvent('song-selected', {
             detail: { song }
@@ -588,6 +626,8 @@ Says, "Find a home"
                 const activeElement = document.querySelector(`[data-song-id="${activeSong.id}"]`);
                 if (activeElement) {
                     activeElement.classList.add('active');
+                    // Desplazar la lista para centrar la canción seleccionada
+                    this.scrollToActiveSong();
                 }
             }, 100);
             
