@@ -301,13 +301,41 @@ Says, "Find a home"
     }
     
     saveSongs() {
+        // Ordenar las canciones por el campo 'order' antes de guardar
+        const sortedSongs = [...this.songs].sort((a, b) => {
+            // Primero por orden (ascendente), luego por título si el orden es igual
+            if (a.order !== b.order) {
+                return a.order - b.order;
+            }
+            return a.title.localeCompare(b.title);
+        });
+        
         const data = {
             setlistName: this.setlistName,
-            songs: this.songs
+            songs: sortedSongs
         };
         localStorage.setItem(this.storageKey, JSON.stringify(data));
+        
+        // Actualizar el array interno con el orden correcto
+        this.songs = sortedSongs;
     }
     
+    reorderSongs() {
+        // Reordenar las canciones por el campo 'order'
+        this.songs.sort((a, b) => {
+            if (a.order !== b.order) {
+                return a.order - b.order;
+            }
+            return a.title.localeCompare(b.title);
+        });
+        
+        // Guardar el nuevo orden y re-renderizar
+        this.saveSongs();
+        this.renderSongs();
+        
+        console.log('🔄 Canciones reordenadas según el campo order');
+    }
+
     renderSongs(searchTerm = '') {
         const filteredSongs = this.songs.filter(song => 
             song.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
