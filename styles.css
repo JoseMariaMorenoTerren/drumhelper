@@ -701,6 +701,66 @@ body {
     background-color: #ff4444;
 }
 
+/* Layout de formularios */
+.form-layout {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+.form-left {
+    flex: 1;
+}
+
+.form-right {
+    flex: 1;
+}
+
+/* Layout horizontal en landscape para tablets y desktop */
+@media (min-width: 768px) and (orientation: landscape) {
+    .form-layout {
+        flex-direction: row;
+        gap: 25px;
+    }
+    
+    .form-left {
+        flex: 0 0 45%;
+        max-width: 45%;
+    }
+    
+    .form-right {
+        flex: 1;
+        max-width: 55%;
+    }
+    
+    .form-right textarea {
+        height: 400px;
+        min-height: 400px;
+    }
+}
+
+/* Layout horizontal específico para desktop grande */
+@media (min-width: 1200px) {
+    .form-layout {
+        gap: 30px;
+    }
+    
+    .form-left {
+        flex: 0 0 40%;
+        max-width: 40%;
+    }
+    
+    .form-right {
+        flex: 1;
+        max-width: 60%;
+    }
+    
+    .form-right textarea {
+        height: 450px;
+        min-height: 450px;
+    }
+}
+
 /* Scrollbar personalizada */
 ::-webkit-scrollbar {
     width: 8px;
