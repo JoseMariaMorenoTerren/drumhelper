@@ -223,7 +223,7 @@ body {
 /* Contenedor principal */
 .main-container {
     display: flex;
-    height: 75vh;
+    height: 74vh;
    margin-top: 25vh;
 }
 
@@ -249,6 +249,12 @@ body {
     font-size: 1.2rem;
     margin: 0;
     color: #ffffff;
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+.song-list-panel h2:hover {
+    color: #ffcc00;
 }
 
 .order-mode-btn {
@@ -536,6 +542,11 @@ body {
     background-color: #ff4444;
 }
 
+/* Ocultar botón automático */
+#auto-scroll-btn {
+    display: none;
+}
+
 /* Estilos específicos para el botón de grabación */
 #record-btn {
     background-color: #333333;
@@ -561,10 +572,7 @@ body {
 }
 
 .scroll-speed {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-left: 20px;
+    display: none;
 }
 
 .scroll-speed input[type="range"] {
@@ -767,60 +775,54 @@ body {
 /* Botones flotantes para control de modos */
 .mode-toggle-btn {
     position: fixed;
-    bottom: 80px;
+    bottom: 100px;
     right: 20px;
-    background-color: rgba(68, 68, 255, 0.9);
+    background-color: rgba(0, 0, 0, 0.7);
     color: #ffffff;
-    border: none;
-    border-radius: 20px;
-    padding: 8px 14px;
-    font-size: 0.85rem;
-    font-weight: bold;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 6px;
+    padding: 4px 8px;
+    font-size: 0.8rem;
+    font-weight: normal;
     cursor: pointer;
     z-index: 1000;
-    backdrop-filter: blur(5px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-    transition: all 0.3s ease;
-    min-width: 100px;
+    transition: all 0.2s ease;
+    min-width: 60px;
 }
 
 .mode-toggle-btn:hover {
-    background-color: rgba(68, 68, 255, 1);
-    transform: scale(1.05);
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+    background-color: rgba(0, 0, 0, 0.9);
+    border-color: rgba(255, 255, 255, 0.4);
 }
 
 .mode-toggle-btn:active {
-    transform: scale(0.98);
+    background-color: rgba(0, 0, 0, 1);
 }
 
 .songlist-toggle-btn {
     position: fixed;
     bottom: 135px;
     right: 20px;
-    background-color: rgba(255, 136, 0, 0.9);
+    background-color: rgba(0, 0, 0, 0.7);
     color: #ffffff;
-    border: none;
-    border-radius: 20px;
-    padding: 8px 14px;
-    font-size: 0.85rem;
-    font-weight: bold;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 6px;
+    padding: 4px 8px;
+    font-size: 0.8rem;
+    font-weight: normal;
     cursor: pointer;
     z-index: 1000;
-    backdrop-filter: blur(5px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-    transition: all 0.3s ease;
-    min-width: 100px;
+    transition: all 0.2s ease;
+    min-width: 60px;
 }
 
 .songlist-toggle-btn:hover {
-    background-color: rgba(255, 136, 0, 1);
-    transform: scale(1.05);
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+    background-color: rgba(0, 0, 0, 0.9);
+    border-color: rgba(255, 255, 255, 0.4);
 }
 
 .songlist-toggle-btn:active {
-    transform: scale(0.98);
+    background-color: rgba(0, 0, 0, 1);
 }
 
 /* Botones de control para concierto/prompter */
@@ -934,17 +936,17 @@ body.prompter-mode .song-list-panel h2 {
     .mode-toggle-btn {
         bottom: 70px;
         right: 15px;
-        padding: 7px 12px;
-        font-size: 0.8rem;
-        min-width: 85px;
+        padding: 4px 6px;
+        font-size: 0.75rem;
+        min-width: 50px;
     }
     
     .songlist-toggle-btn {
         bottom: 125px;
         right: 15px;
-        padding: 7px 12px;
-        font-size: 0.8rem;
-        min-width: 85px;
+        padding: 4px 6px;
+        font-size: 0.75rem;
+        min-width: 50px;
     }
     
     .concert-control-btn {

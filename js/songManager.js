@@ -2,6 +2,7 @@ class SongManager {
     constructor() {
         this.songs = [];
         this.currentSong = null;
+        this.setlistName = 'Canciones'; // Nombre por defecto
         this.storageKey = 'drumhelper-songs';
         
         this.songList = document.getElementById('song-list');
@@ -52,6 +53,11 @@ class SongManager {
         
         this.resetOrderBtn.addEventListener('click', () => {
             this.resetAllOrders();
+        });
+        
+        // Hacer el título clickeable para cambiar nombre del setlist
+        this.songsTitle.addEventListener('click', () => {
+            this.editSetlistName();
         });
         
         this.editCurrentSongBtn.addEventListener('click', () => {
@@ -257,7 +263,17 @@ Says, "Find a home"
     loadSongs() {
         const stored = localStorage.getItem(this.storageKey);
         if (stored) {
-            this.songs = JSON.parse(stored);
+            const data = JSON.parse(stored);
+            
+            // Si el dato es un array (formato antiguo), convertir al nuevo formato
+            if (Array.isArray(data)) {
+                this.songs = data;
+                this.setlistName = 'Canciones';
+            } else {
+                // Nuevo formato con setlistName
+                this.songs = data.songs || [];
+                this.setlistName = data.setlistName || 'Canciones';
+            }
             
             // Añadir propiedades faltantes a canciones existentes
             let hasActiveSong = false;
@@ -285,7 +301,11 @@ Says, "Find a home"
     }
     
     saveSongs() {
-        localStorage.setItem(this.storageKey, JSON.stringify(this.songs));
+        const data = {
+            setlistName: this.setlistName,
+            songs: this.songs
+        };
+        localStorage.setItem(this.storageKey, JSON.stringify(data));
     }
     
     renderSongs(searchTerm = '') {
@@ -323,10 +343,10 @@ Says, "Find a home"
         
         if (searchTerm) {
             // Mostrando resultados de búsqueda
-            titleText = `Canciones (${count} de ${this.songs.length})`;
+            titleText = `${this.setlistName} (${count} de ${this.songs.length})`;
         } else {
             // Mostrando todas las canciones
-            titleText = `Canciones (${count})`;
+            titleText = `${this.setlistName} (${count})`;
         }
         
         // Añadir indicador de modo ordenamiento
@@ -336,7 +356,22 @@ Says, "Find a home"
         
         this.songsTitle.textContent = titleText;
     }
-    
+
+    changeSetlistName(newName) {
+        if (newName && newName.trim()) {
+            this.setlistName = newName.trim();
+            this.saveSongs();
+            this.renderSongs();
+        }
+    }
+
+    editSetlistName() {
+        const newName = prompt('Introduce el nombre del setlist:', this.setlistName);
+        if (newName !== null) {
+            this.changeSetlistName(newName);
+        }
+    }
+
     createSongElement(song) {
         const li = document.createElement('li');
         li.className = 'song-item';
@@ -685,6 +720,7 @@ Says, "Find a home"
             const dataToExport = {
                 version: "1.0",
                 exportDate: new Date().toISOString(),
+                setlistName: this.setlistName,
                 songs: this.songs
             };
             
@@ -695,10 +731,23 @@ Says, "Find a home"
             const downloadLink = document.createElement('a');
             downloadLink.href = URL.createObjectURL(dataBlob);
             
-            // Generar nombre de archivo con fecha
+            // Generar nombre de archivo con setlist, fecha, hora y minutos
             const now = new Date();
-            const dateStr = now.toISOString().split('T')[0];
-            downloadLink.download = `drumhelper-songs-${dateStr}.json`;
+            const year = now.getFullYear();
+            const month = String(now.getMonth() + 1).padStart(2, '0');
+            const day = String(now.getDate()).padStart(2, '0');
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+            
+            // Limpiar el nombre del setlist para usar en archivo
+            const cleanSetlistName = this.setlistName
+                .replace(/[^a-zA-Z0-9\s]/g, '')  // Quitar caracteres especiales
+                .replace(/\s+/g, '-')             // Reemplazar espacios por guiones
+                .toLowerCase();
+            
+            const timeStamp = `${year}-${month}-${day}_${hours}-${minutes}-${seconds}`;
+            downloadLink.download = `${cleanSetlistName}-${timeStamp}.json`;
             
             // Simular clic para descargar
             document.body.appendChild(downloadLink);
