@@ -21,6 +21,8 @@ class LyricsScroller {
         this.prompterNextBtn = document.getElementById('prompter-next-btn');
         this.prompterSongTitle = document.getElementById('prompter-song-title');
         this.prompterTitleText = document.getElementById('prompter-title-text');
+        this.generalPrevBtn = document.getElementById('general-prev-btn');
+        this.generalNextBtn = document.getElementById('general-next-btn');
         
         this.isAutoScrolling = true;
         this.scrollSpeed = 5;
@@ -112,6 +114,14 @@ class LyricsScroller {
         });
         
         this.prompterNextBtn.addEventListener('click', () => {
+            this.goToNextSong();
+        });
+        
+        this.generalPrevBtn.addEventListener('click', () => {
+            this.goToPreviousSong();
+        });
+        
+        this.generalNextBtn.addEventListener('click', () => {
             this.goToNextSong();
         });
         
@@ -431,6 +441,8 @@ class LyricsScroller {
             this.prompterPrevBtn.style.display = 'block';
             this.prompterNextBtn.style.display = 'block';
             this.prompterSongTitle.style.display = 'block';
+            this.generalPrevBtn.style.display = 'none';
+            this.generalNextBtn.style.display = 'none';
             this.updatePrompterTitle();
         } else if (this.currentMode === 'concert') {
             body.classList.add('concert-mode');
@@ -440,6 +452,8 @@ class LyricsScroller {
             this.prompterPrevBtn.style.display = 'none';
             this.prompterNextBtn.style.display = 'none';
             this.prompterSongTitle.style.display = 'none';
+            this.generalPrevBtn.style.display = 'block';
+            this.generalNextBtn.style.display = 'block';
             
             // Aplicar el estado actual de la lista de canciones
             if (!this.songlistVisible) {
@@ -453,6 +467,8 @@ class LyricsScroller {
             this.prompterPrevBtn.style.display = 'none';
             this.prompterNextBtn.style.display = 'none';
             this.prompterSongTitle.style.display = 'none';
+            this.generalPrevBtn.style.display = 'block';
+            this.generalNextBtn.style.display = 'block';
             this.songlistVisible = true;
         }
     }

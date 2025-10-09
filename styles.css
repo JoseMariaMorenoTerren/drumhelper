@@ -912,6 +912,47 @@ body {
     border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
+/* Botones de navegación para modo concierto y edición */
+.general-nav-btn {
+    position: fixed;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.6);
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    width: 50px;
+    height: 80px;
+    font-size: 1.8rem;
+    cursor: pointer;
+    z-index: 1000;
+    transition: all 0.3s ease;
+}
+
+.general-nav-btn:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+    border-color: rgba(255, 255, 255, 0.4);
+    transform: translateY(-50%) scale(1.05);
+}
+
+.general-nav-btn:active {
+    background-color: rgba(0, 0, 0, 1);
+    transform: translateY(-50%) scale(0.95);
+}
+
+/* Posicionamiento de botones generales - ambos en el lateral derecho */
+#general-prev-btn {
+    right: 10px;
+    top: 35%;
+    transform: translateY(-50%);
+}
+
+#general-next-btn {
+    right: 10px;
+    top: 65%;
+    transform: translateY(-50%);
+}
+
 /* Estilos para los diferentes modos */
 body.prompter-mode .top-section {
     display: none !important;
@@ -1035,6 +1076,25 @@ body.prompter-mode .song-list-panel h2 {
         max-width: 200px;
         font-size: 0.8rem;
         padding: 6px 10px;
+    }
+    
+    /* Botones de navegación generales en móvil - ambos en el lateral derecho */
+    .general-nav-btn {
+        width: 45px;
+        height: 70px;
+        font-size: 1.5rem;
+    }
+    
+    #general-prev-btn {
+        right: 5px;
+        top: 30%;
+        transform: translateY(-50%);
+    }
+    
+    #general-next-btn {
+        right: 5px;
+        top: 70%;
+        transform: translateY(-50%);
     }
 }
 
