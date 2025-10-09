@@ -20,8 +20,10 @@ class SongManager {
         this.exportBtn = document.getElementById('export-songs-btn');
         this.importBtn = document.getElementById('import-songs-btn');
         this.importTxtBtn = document.getElementById('import-txt-songs-btn');
+        this.importCompleteSongsBtn = document.getElementById('import-complete-songs-btn');
         this.importFileInput = document.getElementById('import-file-input');
         this.importTxtFileInput = document.getElementById('import-txt-file-input');
+        this.importCompleteFileInput = document.getElementById('import-complete-file-input');
         
         this.editingSong = null;
         this.isOrderMode = false;
@@ -123,6 +125,10 @@ class SongManager {
             this.importTxtFileInput.click();
         });
         
+        this.importCompleteSongsBtn.addEventListener('click', () => {
+            this.importCompleteFileInput.click();
+        });
+        
         this.importFileInput.addEventListener('change', (e) => {
             if (e.target.files.length > 0) {
                 this.importSongs(e.target.files[0]);
@@ -132,6 +138,12 @@ class SongManager {
         this.importTxtFileInput.addEventListener('change', (e) => {
             if (e.target.files.length > 0) {
                 this.importTxtSongs(e.target.files[0]);
+            }
+        });
+        
+        this.importCompleteFileInput.addEventListener('change', (e) => {
+            if (e.target.files.length > 0) {
+                this.importCompleteSongsFile(e.target.files[0]);
             }
         });
     }
@@ -1227,6 +1239,105 @@ Says, "Find a home"
         }
         
         this.selectSong(this.songs[prevIndex]);
+    }
+
+    // Función para importar el archivo completo con formato de columnas
+    importCompleteSongsFile(file) {
+        const reader = new FileReader();
+        
+        reader.onload = (e) => {
+            try {
+                const confirmMessage = `¿Deseas importar las canciones del archivo "${file.name}"?\n\n` +
+                    `Esto agregará las canciones con formato completo a tu colección actual.`;
+                
+                if (!confirm(confirmMessage)) {
+                    return;
+                }
+                
+                const text = e.target.result;
+                const songs = this.parseCompleteSongFormat(text);
+                let importedCount = 0;
+                
+                songs.forEach(songData => {
+                    // Verificar si la canción ya existe
+                    const existingSong = this.songs.find(s => 
+                        s.title.toLowerCase() === songData.title.toLowerCase() && 
+                        (songData.artist ? s.artist.toLowerCase() === songData.artist.toLowerCase() : true)
+                    );
+                    
+                    if (!existingSong) {
+                        const newSong = {
+                            id: Date.now() + Math.random(),
+                            title: songData.title,
+                            artist: songData.artist || '',
+                            bpm: songData.bpm || '',
+                            lyrics: songData.lyrics || '',
+                            notes: songData.notes || '',
+                            fontSize: 2.4,
+                            active: false,
+                            order: songData.order || 0
+                        };
+                        
+                        this.songs.push(newSong);
+                        importedCount++;
+                    }
+                });
+                
+                // Guardar y actualizar interfaz
+                this.saveSongs();
+                this.renderSongs();
+                
+                // Mostrar resultado
+                this.showNotification(`✅ Importadas ${importedCount} canciones del archivo completo`, 'success');
+                
+            } catch (error) {
+                console.error('Error importando el archivo completo:', error);
+                this.showNotification('❌ Error al procesar el archivo de canciones completo', 'error');
+            }
+        };
+        
+        reader.onerror = () => {
+            this.showNotification('❌ Error al leer el archivo', 'error');
+        };
+        
+        reader.readAsText(file, 'UTF-8');
+    }
+
+    // Función para parsear el formato completo con columnas separadas por tabulador
+    parseCompleteSongFormat(content) {
+        const lines = content.split('\n');
+        const songs = [];
+        
+        // La primera línea contiene los headers, la omitimos
+        for (let i = 1; i < lines.length; i++) {
+            const line = lines[i].trim();
+            if (!line) continue;
+            
+            // Dividir por tabuladores
+            const columns = line.split('\t');
+            
+            if (columns.length >= 16) { // Asegurar que tenemos suficientes columnas
+                const title = columns[0] || '';
+                const artist = columns[1] || '';
+                const order = parseInt(columns[3]) || 0;
+                const bpm = columns[8] || '';
+                const lyrics = columns[15] || ''; // Columna LETRAS
+                const notes = columns[19] || ''; // Columna COMENTARIOS
+                
+                if (title) { // Solo procesar si hay título
+                    songs.push({
+                        title: title,
+                        artist: artist,
+                        order: order,
+                        bpm: bpm,
+                        lyrics: lyrics.replace(/\\n/g, '\n'), // Convertir \n a saltos de línea reales
+                        notes: notes.replace(/\\n/g, '\n')
+                    });
+                }
+            }
+        }
+        
+        return songs;
     }
 }
 
