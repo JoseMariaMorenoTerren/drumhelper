@@ -387,8 +387,21 @@ function initializeHelpModal() {
         
         // Abrir modal con código de versión
         if (versionCode) {
+            let clickCount = 0;
             versionCode.addEventListener('click', () => {
-                helpModal.style.display = 'block';
+                clickCount++;
+                if (clickCount === 1) {
+                    setTimeout(() => {
+                        if (clickCount === 1) {
+                            // Un clic - abrir ayuda
+                            helpModal.style.display = 'block';
+                        } else if (clickCount === 2) {
+                            // Doble clic - forzar actualización
+                            forceAppUpdate();
+                        }
+                        clickCount = 0;
+                    }, 300);
+                }
             });
         }
         
@@ -420,11 +433,141 @@ function registerServiceWorker() {
             navigator.serviceWorker.register('./sw.js')
                 .then((registration) => {
                     console.log('Service Worker registrado correctamente:', registration.scope);
+                    
+                    // Verificar actualizaciones cada 30 segundos
+                    setInterval(() => {
+                        registration.update();
+                    }, 30000);
+                    
+                    // Manejar actualizaciones del Service Worker
+                    registration.addEventListener('updatefound', () => {
+                        const newWorker = registration.installing;
+                        if (newWorker) {
+                            newWorker.addEventListener('statechange', () => {
+                                if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                                    // Nueva versión disponible
+                                    console.log('Nueva versión disponible - recargando...');
+                                    showUpdateNotification();
+                                }
+                            });
+                        }
+                    });
                 })
                 .catch((error) => {
                     console.log('Error registrando Service Worker:', error);
                 });
         });
+        
+        // Escuchar mensajes del Service Worker
+        navigator.serviceWorker.addEventListener('message', (event) => {
+            if (event.data.type === 'CACHE_UPDATED') {
+                console.log('Cache actualizado - recargando página...');
+                window.location.reload();
+            }
+        });
+    }
+}
+
+// Mostrar notificación de actualización
+function showUpdateNotification() {
+    const updateDiv = document.createElement('div');
+    updateDiv.innerHTML = `
+        <div style="
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #4CAF50;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 8px;
+            z-index: 10000;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            font-family: Arial, sans-serif;
+            text-align: center;
+        ">
+            <div style="font-weight: bold; margin-bottom: 8px;">¡Nueva versión disponible!</div>
+            <button onclick="window.location.reload()" style="
+                background: white;
+                color: #4CAF50;
+                border: none;
+                padding: 8px 16px;
+                border-radius: 4px;
+                cursor: pointer;
+                font-weight: bold;
+            ">Actualizar ahora</button>
+        </div>
+    `;
+    
+    document.body.appendChild(updateDiv);
+    
+    // Auto-actualizar después de 5 segundos
+    setTimeout(() => {
+        window.location.reload();
+    }, 5000);
+}
+
+// Forzar actualización de la aplicación
+function forceAppUpdate() {
+    console.log('Forzando actualización de la aplicación...');
+    
+    // Mostrar mensaje de actualización
+    const updateDiv = document.createElement('div');
+    updateDiv.innerHTML = `
+        <div style="
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #333;
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            z-index: 10000;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+            font-family: Arial, sans-serif;
+            text-align: center;
+        ">
+            <div style="font-size: 1.2em; margin-bottom: 10px;">🔄 Actualizando aplicación...</div>
+            <div style="color: #ccc;">Limpiando cache y recargando</div>
+        </div>
+    `;
+    document.body.appendChild(updateDiv);
+    
+    // Limpiar todos los caches
+    if ('caches' in window) {
+        caches.keys().then(cacheNames => {
+            return Promise.all(
+                cacheNames.map(cacheName => {
+                    console.log('Eliminando cache:', cacheName);
+                    return caches.delete(cacheName);
+                })
+            );
+        }).then(() => {
+            console.log('Todos los caches eliminados');
+            // Desregistrar Service Worker
+            if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.getRegistrations().then(registrations => {
+                    registrations.forEach(registration => {
+                        registration.unregister();
+                    });
+                    // Recargar después de limpiar todo
+                    setTimeout(() => {
+                        window.location.reload(true);
+                    }, 1000);
+                });
+            } else {
+                // Recargar sin Service Worker
+                setTimeout(() => {
+                    window.location.reload(true);
+                }, 1000);
+            }
+        });
+    } else {
+        // Sin soporte de cache, solo recargar
+        setTimeout(() => {
+            window.location.reload(true);
+        }, 1000);
     }
 }
 
