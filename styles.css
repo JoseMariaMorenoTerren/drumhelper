@@ -238,24 +238,9 @@ body {
     flex-direction: column;
 }
 
-.songs-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 15px;
-}
 
-.song-list-panel h2 {
-    font-size: 1.2rem;
-    margin: 0;
-    color: #ffffff;
-    cursor: pointer;
-    transition: color 0.2s ease;
-}
 
-.song-list-panel h2:hover {
-    color: #ffcc00;
-}
+
 
 .order-mode-btn {
     background-color: #333333;
@@ -285,31 +270,7 @@ body {
     background-color: #ff8c42;
 }
 
-.order-buttons {
-    display: flex;
-    gap: 8px;
-    align-items: center;
-}
 
-.reset-order-btn {
-    background-color: #dc3545;
-    color: #ffffff;
-    border: none;
-    border-radius: 6px;
-    width: 28px;
-    height: 28px;
-    font-size: 0.8rem;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.reset-order-btn:hover {
-    background-color: #c82333;
-    transform: scale(1.05);
-}
 
 .song-search input {
     width: 100%;
@@ -1097,14 +1058,7 @@ body.concert-mode #edit-current-song-btn,
 body.concert-mode #import-txt-songs-btn,
 body.concert-mode #export-songs-btn,
 body.concert-mode #import-songs-btn,
-body.concert-mode .playback-controls,
-body.concert-mode .order-buttons,
-body.concert-mode .song-list-panel h2 {
-    display: none !important;
-}
-
-/* Ocultar título en modo prompter también */
-body.prompter-mode .song-list-panel h2 {
+body.concert-mode .playback-controls {
     display: none !important;
 }
 
@@ -1504,6 +1458,18 @@ body.prompter-mode .song-list-panel h2 {
     background-color: #5a3a3a;
 }
 
+.repertoire-ordering-section {
+    margin-bottom: 25px;
+    border-top: 1px solid #444;
+    padding-top: 20px;
+}
+
+.ordering-actions {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 10px;
+}
+
 .repertoire-list-section {
     margin-bottom: 25px;
 }
@@ -1634,6 +1600,10 @@ body.prompter-mode .song-list-panel h2 {
 /* Responsive para repertorios */
 @media (max-width: 768px) {
     .repertoire-actions {
+        grid-template-columns: 1fr;
+    }
+    
+    .ordering-actions {
         grid-template-columns: 1fr;
     }
     

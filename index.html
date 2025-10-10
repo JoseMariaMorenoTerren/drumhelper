@@ -56,13 +56,6 @@
                     <button id="repertoire-options-btn" class="repertoire-options-btn" title="Opciones de repertorio">⚙️</button>
                 </div>
             </div>
-            <div class="songs-header">
-                <h2 id="songs-title">Canciones</h2>
-                <div class="order-buttons">
-                    <button id="reset-order-btn" class="reset-order-btn" style="display: none;" title="Resetear todos los valores de orden a 0">🗑️</button>
-                    <button id="order-mode-btn" class="order-mode-btn" title="Activar modo ordenamiento">📋</button>
-                </div>
-            </div>
             <div class="song-search">
                 <input type="text" id="search-input" placeholder="Buscar canción...">
             </div>
@@ -405,6 +398,18 @@
                         <button id="delete-repertoire-btn" class="repertoire-action-btn danger" style="display: none;">
                             🗑️ Eliminar
                         </button>
+                    </div>
+
+                    <div class="repertoire-ordering-section">
+                        <h4>Ordenamiento de Canciones</h4>
+                        <div class="ordering-actions">
+                            <button id="order-mode-btn" class="repertoire-action-btn" title="Activar modo ordenamiento">
+                                📋 Modo Ordenamiento
+                            </button>
+                            <button id="reset-order-btn" class="repertoire-action-btn" style="display: none;" title="Resetear todos los valores de orden a 0">
+                                🗑️ Resetear Orden
+                            </button>
+                        </div>
                     </div>
                     
                     <div class="repertoire-list-section">

@@ -9,7 +9,6 @@ class SongManager {
         this.repertoires = new Map();
         
         this.songList = document.getElementById('song-list');
-        this.songsTitle = document.getElementById('songs-title');
         this.orderModeBtn = document.getElementById('order-mode-btn');
         this.resetOrderBtn = document.getElementById('reset-order-btn');
         this.searchInput = document.getElementById('search-input');
@@ -86,10 +85,7 @@ class SongManager {
             this.resetAllOrders();
         });
         
-        // Hacer el título clickeable para cambiar nombre del setlist
-        this.songsTitle.addEventListener('click', () => {
-            this.editSetlistName();
-        });
+
         
         this.editCurrentSongBtn.addEventListener('click', () => {
             if (this.currentSong) {
@@ -561,22 +557,23 @@ Says, "Find a home"
     }
     
     updateSongsTitle(count, searchTerm = '') {
-        let titleText = '';
+        // Actualizar el placeholder del input de búsqueda con información útil
+        let placeholderText = '';
         
         if (searchTerm) {
             // Mostrando resultados de búsqueda
-            titleText = `${this.setlistName} (${count} de ${this.songs.length})`;
+            placeholderText = `${count} de ${this.songs.length} canciones`;
         } else {
             // Mostrando todas las canciones
-            titleText = `${this.setlistName} (${count})`;
+            placeholderText = `Buscar en ${count} canciones...`;
         }
         
         // Añadir indicador de modo ordenamiento
         if (this.isOrderMode) {
-            titleText += '';
+            placeholderText += ' (Modo ordenamiento)';
         }
         
-        this.songsTitle.textContent = titleText;
+        this.searchInput.placeholder = placeholderText;
     }
 
     changeSetlistName(newName) {
@@ -587,12 +584,7 @@ Says, "Find a home"
         }
     }
 
-    editSetlistName() {
-        const newName = prompt('Introduce el nombre del setlist:', this.setlistName);
-        if (newName !== null) {
-            this.changeSetlistName(newName);
-        }
-    }
+
 
     createSongElement(song) {
         const li = document.createElement('li');
@@ -1432,18 +1424,24 @@ Says, "Find a home"
         
         if (this.isOrderMode) {
             this.orderModeBtn.classList.add('active');
-            this.orderModeBtn.textContent = '🔢';
+            this.orderModeBtn.innerHTML = '🔢 Modo Activo';
             this.orderModeBtn.title = 'Modo ordenamiento activo - Clic para desactivar';
-            this.resetOrderBtn.style.display = 'flex'; // Mostrar botón de reset
+            this.resetOrderBtn.style.display = 'block'; // Mostrar botón de reset
             this.tempOrderCounter = 0; // Reiniciar contador temporal a 0
             console.log('📋 Modo ordenamiento ACTIVADO. Haz clic en las canciones para asignar orden automático.');
             console.log(`🔢 Contador temporal iniciado en: ${this.tempOrderCounter} (próximo valor: ${this.tempOrderCounter + 10})`);
+            
+            // Cerrar el modal después de activar el modo
+            this.closeRepertoireOptionsModalFunc();
+            this.showNotification('Modo ordenamiento activado. Haz clic en las canciones para ordenar.', 'info');
         } else {
             this.orderModeBtn.classList.remove('active');
-            this.orderModeBtn.textContent = '📋';
+            this.orderModeBtn.innerHTML = '📋 Modo Ordenamiento';
             this.orderModeBtn.title = 'Activar modo ordenamiento';
             this.resetOrderBtn.style.display = 'none'; // Ocultar botón de reset
             console.log('📋 Modo ordenamiento DESACTIVADO');
+            
+            this.showNotification('Modo ordenamiento desactivado', 'info');
         }
         
         // Re-renderizar la lista para actualizar los títulos (mostrar/ocultar valores order)
@@ -1468,6 +1466,10 @@ Says, "Find a home"
             
             console.log('🗑️ Todos los valores de orden han sido reseteados a 10000');
             console.log(`🔢 Contador temporal reiniciado a: ${this.tempOrderCounter} (las canciones ordenadas aparecerán primero)`);
+            
+            // Cerrar el modal y mostrar notificación
+            this.closeRepertoireOptionsModalFunc();
+            this.showNotification('Orden de canciones reseteado. Todas las canciones están en 10000.', 'success');
         }
     }
     
@@ -1865,7 +1867,6 @@ Says, "Find a home"
             // Actualizar UI
             this.renderSongs();
             this.updateSongsTitle(this.songs.length);
-            this.songsTitle.textContent = this.setlistName;
             this.updateCurrentRepertoireName();
             
             // Seleccionar canción activa o la primera si existe
