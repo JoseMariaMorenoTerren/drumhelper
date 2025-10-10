@@ -1,6 +1,6 @@
 # Drum Helper
 
-Una aplicación web para músicos y bateristas que combina un metrónomo interactivo con un visor de letras con desplazamiento automático.
+Una Progressive Web App (PWA) para músicos y bateristas que combina un metrónomo interactivo con un visor de letras con desplazamiento automático. Optimizada para pantalla completa en iPad y otros dispositivos táctiles.
 
 ## Características
 
@@ -55,17 +55,27 @@ Una aplicación web para músicos y bateristas que combina un metrónomo interac
 - **Interfaz intuitiva**: Controles grandes y accesibles
 - **Indicadores visuales**: Estados claros para todos los controles
 
+### 📱 Progressive Web App (PWA)
+- **Instalable**: Se puede instalar en dispositivos móviles y escritorio
+- **Pantalla completa en iPad**: Optimización específica para experiencia inmersiva en tablets
+- **Funciona sin conexión**: Service Worker permite uso offline una vez cargada
+- **Protección anti-zoom**: Previene zoom accidental en dispositivos táctiles
+- **Safe area support**: Compatible con dispositivos con notch o borde redondeado
+- **Orientación flexible**: Se adapta tanto a portrait como landscape en iPad
+
 ## Estructura del Proyecto
 
 ```
 drumhelper/
-├── index.html          # Página principal
-├── styles.css          # Estilos CSS
+├── index.html          # Página principal con PWA meta tags
+├── styles.css          # Estilos CSS con optimizaciones para iPad
+├── manifest.json       # Manifiesto PWA para instalación
+├── sw.js              # Service Worker para funcionamiento offline
 ├── js/
 │   ├── metronome.js    # Clase del metrónomo
-│   ├── songManager.js  # Gestor de canciones
+│   ├── songManager.js  # Gestor de canciones y repertorios
 │   ├── lyricsScroller.js # Control de desplazamiento de letras
-│   └── app.js          # Aplicación principal y coordinación
+│   └── app.js          # Aplicación principal y registro del SW
 └── README.md           # Este archivo
 ```
 
@@ -78,6 +88,22 @@ drumhelper/
 5. **Agregar canciones**: Haz clic en "+ Agregar Canción" para crear nuevas entradas
 6. **Editar canciones**: Haz clic en el botón ✏️ de cualquier canción o usa Ctrl+E
 7. **Gestionar datos**: Exporta tus canciones a un archivo JSON o importa desde otro archivo
+
+### 📱 Uso en iPad (Pantalla Completa)
+
+Para obtener la mejor experiencia en iPad:
+
+1. **Abrir en Safari**: Visita la aplicación web en Safari
+2. **Añadir a Pantalla de Inicio**: 
+   - Toca el botón de compartir (cuadrado con flecha)
+   - Selecciona "Añadir a pantalla de inicio"
+   - Confirma el nombre de la app
+3. **Abrir desde Pantalla de Inicio**: La app se abrirá en modo pantalla completa
+4. **Experiencia Optimizada**: 
+   - Sin barras de navegador
+   - Usa toda la pantalla disponible
+   - Funciona en orientación landscape y portrait
+   - Protección contra zoom accidental
 
 ### ✏️ Edición de Canciones
 

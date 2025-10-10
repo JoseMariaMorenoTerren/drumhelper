@@ -7,6 +7,9 @@ class DrumHelperApp {
         // Prevenir zoom por doble toque en dispositivos táctiles
         this.preventDoubleTabZoom();
         
+        // Registrar Service Worker para PWA
+        registerServiceWorker();
+        
         this.init();
     }
     
@@ -398,6 +401,21 @@ function initializeHelpModal() {
             if (e.key === 'Escape' && helpModal.style.display === 'block') {
                 helpModal.style.display = 'none';
             }
+        });
+    }
+}
+
+// Función para registrar Service Worker
+function registerServiceWorker() {
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('./sw.js')
+                .then((registration) => {
+                    console.log('Service Worker registrado correctamente:', registration.scope);
+                })
+                .catch((error) => {
+                    console.log('Error registrando Service Worker:', error);
+                });
         });
     }
 }

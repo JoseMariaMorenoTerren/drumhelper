@@ -4,6 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Drum Helper</title>
+    
+    <!-- PWA y pantalla completa para iPad/iPhone -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Drum Helper">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#000000">
+    
+    <!-- Prevenir zoom adicional en dispositivos iOS -->
+    <meta name="format-detection" content="telephone=no">
+    
+    <!-- Manifest para PWA -->
+    <link rel="manifest" href="manifest.json">
+    
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -11,6 +25,7 @@
     <header class="top-section">
         <div class="info-panel">
             <h1>Drum Helper</h1>
+            <div id="version-code">v1.1.0</div>
             <div class="song-info">
                 <span id="current-song">Selecciona una canción</span>
                 <span id="current-bpm">BPM: 120</span>
@@ -40,9 +55,6 @@
 
         </div>
     </header>
-
-    <!-- Código de versión -->
-    <div id="version-code" class="version-code">v1.0.2</div>
 
     <!-- Botón de ayuda -->
     <button id="help-btn" class="help-btn" title="Mostrar atajos de teclado">❓</button>

@@ -38,10 +38,41 @@ body {
     background-color: #000000;
     color: #ffffff;
     height: 100vh;
+    height: -webkit-fill-available;
     overflow: hidden;
     /* Prevenir zoom adicional en iOS */
     -webkit-text-size-adjust: 100%;
     -ms-text-size-adjust: 100%;
+    /* Soporte para pantalla completa en iOS */
+    -webkit-overflow-scrolling: touch;
+    /* Optimizaciones PWA para iPad */
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+}
+
+/* Soporte para pantalla completa y safe areas en dispositivos con notch */
+@supports (padding: max(0px)) {
+    body {
+        padding-left: max(0px, env(safe-area-inset-left));
+        padding-right: max(0px, env(safe-area-inset-right));
+    }
+}
+
+/* Optimización específica para iPad */
+@media (max-width: 1024px) and (orientation: landscape) {
+    body {
+        height: 100vh;
+        height: -webkit-fill-available;
+    }
+}
+
+@media (max-width: 834px) and (orientation: portrait) {
+    body {
+        height: 100vh;
+        height: -webkit-fill-available;
+    }
 }
 
 /* Sección superior fija */
@@ -59,6 +90,11 @@ body {
     left: 0;
     right: 0;
     z-index: 100;
+}
+
+.info-panel {
+    position: relative;
+    flex: 1;
 }
 
 .info-panel h1 {
@@ -1670,8 +1706,72 @@ body.concert-mode .playback-controls {
     }
     
     .repertoire-selector {
-        flex-direction: column;
-        align-items: stretch;
-        gap: 5px;
+        font-size: 14px;
     }
+}
+
+/* Estilos específicos para PWA en pantalla completa */
+@media (display-mode: fullscreen), 
+       (display-mode: standalone), 
+       (display-mode: minimal-ui) {
+    body {
+        height: 100vh;
+        height: -webkit-fill-available;
+    }
+    
+    /* Asegurarse de que el contenido use toda la pantalla */
+    .container {
+        height: 100vh;
+        height: -webkit-fill-available;
+    }
+}
+
+/* Estilos específicos para iPad en orientación landscape */
+@media screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: landscape) {
+    body {
+        height: 100vh;
+        height: -webkit-fill-available;
+        min-height: -webkit-fill-available;
+    }
+    
+    .container {
+        height: 100vh;
+        height: -webkit-fill-available;
+        min-height: -webkit-fill-available;
+    }
+    
+    /* Ajustar tamaños de fuente para mejor legibilidad en landscape */
+    .lyrics-display {
+        font-size: calc(1.2em + 0.5vw);
+    }
+}
+
+/* Estilos específicos para iPad en orientación portrait */
+@media screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: portrait) {
+    body {
+        height: 100vh;
+        height: -webkit-fill-available;
+        min-height: -webkit-fill-available;
+    }
+    
+    .container {
+        height: 100vh;
+        height: -webkit-fill-available;
+        min-height: -webkit-fill-available;
+    }
+}
+
+/* Código de versión */
+#version-code {
+    position: absolute;
+    top: 5px;
+    right: 15px;
+    font-size: 0.8em;
+    color: #666;
+    font-family: 'Courier New', monospace;
+    background: rgba(0, 0, 0, 0.3);
+    padding: 2px 6px;
+    border-radius: 3px;
+    border: 1px solid #333;
+    z-index: 10;
 }
