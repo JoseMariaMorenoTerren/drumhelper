@@ -375,14 +375,22 @@ document.head.appendChild(toastStyles);
 // Funcionalidad del modal de ayuda
 function initializeHelpModal() {
     const helpBtn = document.getElementById('help-btn');
+    const versionCode = document.getElementById('version-code');
     const helpModal = document.getElementById('help-modal');
     const helpClose = document.querySelector('.help-close');
     
     if (helpBtn && helpModal && helpClose) {
-        // Abrir modal
+        // Abrir modal con botón de ayuda
         helpBtn.addEventListener('click', () => {
             helpModal.style.display = 'block';
         });
+        
+        // Abrir modal con código de versión
+        if (versionCode) {
+            versionCode.addEventListener('click', () => {
+                helpModal.style.display = 'block';
+            });
+        }
         
         // Cerrar modal con X
         helpClose.addEventListener('click', () => {

@@ -1763,9 +1763,9 @@ body.concert-mode .playback-controls {
 
 /* Código de versión */
 #version-code {
-    position: absolute;
+    position: fixed;
     top: 5px;
-    right: 15px;
+    right: 5px;
     font-size: 0.8em;
     color: #666;
     font-family: 'Courier New', monospace;
@@ -1774,4 +1774,14 @@ body.concert-mode .playback-controls {
     border-radius: 3px;
     border: 1px solid #333;
     z-index: 10;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    user-select: none;
+}
+
+#version-code:hover {
+    color: #888;
+    background: rgba(0, 0, 0, 0.5);
+    border-color: #555;
+    transform: scale(1.05);
 }
