@@ -41,8 +41,8 @@ class DrumHelperApp {
             this.isInitialized = true;
             console.log('Drum Helper inicializado correctamente');
             
-            // Mostrar mensaje de bienvenida
-            this.showWelcomeMessage();
+            // Mostrar mensaje de bienvenida - Deshabilitado
+            // this.showWelcomeMessage();
             
         } catch (error) {
             console.error('Error inicializando la aplicación:', error);
