@@ -489,9 +489,12 @@ body {
 
 .lyrics-container {
     flex-grow: 1;
-    overflow: hidden;
+    overflow-y: auto;
+    overflow-x: hidden;
     padding: 20px;
     position: relative;
+    -webkit-overflow-scrolling: touch;
+    touch-action: pan-y;
 }
 
 .lyrics-content {
@@ -499,6 +502,11 @@ body {
     line-height: 1.4;
     white-space: pre-wrap;
     transition: transform 0.5s ease, font-size 0.3s ease;
+    touch-action: pan-y;
+    -webkit-user-select: text;
+    -moz-user-select: text;
+    -ms-user-select: text;
+    user-select: text;
 }
 
 .lyric-line {

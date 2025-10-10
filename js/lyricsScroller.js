@@ -153,21 +153,49 @@ class LyricsScroller {
             this.updateAutoScrollSpeed();
         });
         
-        // Permitir scroll manual con la rueda del mouse
+        // Permitir scroll manual con la rueda del mouse (no interferir con touch)
         this.lyricsContainer.addEventListener('wheel', (e) => {
-            e.preventDefault();
-            
-            if (e.deltaY > 0) {
-                this.scrollDown();
-            } else {
-                this.scrollUp();
+            // Solo interceptar eventos de mouse wheel, no de touch
+            if (e.deltaMode === WheelEvent.DOM_DELTA_LINE || e.deltaMode === WheelEvent.DOM_DELTA_PAGE) {
+                e.preventDefault();
+                
+                if (e.deltaY > 0) {
+                    this.scrollDown();
+                } else {
+                    this.scrollUp();
+                }
+                
+                // Desactivar auto-scroll temporalmente
+                if (this.isAutoScrolling) {
+                    this.pauseAutoScroll();
+                }
             }
-            
-            // Desactivar auto-scroll temporalmente
+        });
+        
+        // Manejar scroll táctil en dispositivos móviles
+        let isUserScrolling = false;
+        let scrollTimeout;
+        
+        this.lyricsContainer.addEventListener('scroll', () => {
+            // El usuario está haciendo scroll manual
+            if (this.isAutoScrolling) {
+                isUserScrolling = true;
+                this.pauseAutoScroll();
+                
+                // Resetear flag después de que pare el scroll
+                clearTimeout(scrollTimeout);
+                scrollTimeout = setTimeout(() => {
+                    isUserScrolling = false;
+                }, 1000); // 1 segundo sin scroll para considerar que paró
+            }
+        }, { passive: true });
+        
+        // Detectar inicio de touch para pausar auto-scroll
+        this.lyricsContainer.addEventListener('touchstart', () => {
             if (this.isAutoScrolling) {
                 this.pauseAutoScroll();
             }
-        });
+        }, { passive: true });
         
         // Permitir scroll con teclado
         document.addEventListener('keydown', (e) => {

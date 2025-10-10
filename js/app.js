@@ -54,10 +54,15 @@ class DrumHelperApp {
     }
 
     preventDoubleTabZoom() {
-        // Prevenir zoom por doble toque en toda la aplicación
+        // Prevenir zoom por doble toque en toda la aplicación EXCEPTO en área de letras
         let lastTouchEnd = 0;
         
         document.addEventListener('touchend', function (event) {
+            // Permitir scroll normal en el área de letras
+            if (event.target.closest('.lyrics-container') || event.target.closest('.lyrics-content')) {
+                return;
+            }
+            
             const now = (new Date()).getTime();
             if (now - lastTouchEnd <= 300) {
                 event.preventDefault();
@@ -65,8 +70,13 @@ class DrumHelperApp {
             lastTouchEnd = now;
         }, { passive: false });
 
-        // Prevenir zoom con gestos de pellizco
+        // Prevenir zoom con gestos de pellizco EXCEPTO en área de letras
         document.addEventListener('touchstart', function (event) {
+            // Permitir gestos táctiles normales en el área de letras
+            if (event.target.closest('.lyrics-container') || event.target.closest('.lyrics-content')) {
+                return;
+            }
+            
             if (event.touches.length > 1) {
                 event.preventDefault();
             }
