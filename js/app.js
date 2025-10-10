@@ -4,6 +4,9 @@ class DrumHelperApp {
         this.components = {};
         this.isInitialized = false;
         
+        // Prevenir zoom por doble toque en dispositivos táctiles
+        this.preventDoubleTabZoom();
+        
         this.init();
     }
     
@@ -45,6 +48,41 @@ class DrumHelperApp {
             console.error('Error inicializando la aplicación:', error);
             this.showError('Error al inicializar la aplicación. Por favor, recarga la página.');
         }
+    }
+
+    preventDoubleTabZoom() {
+        // Prevenir zoom por doble toque en toda la aplicación
+        let lastTouchEnd = 0;
+        
+        document.addEventListener('touchend', function (event) {
+            const now = (new Date()).getTime();
+            if (now - lastTouchEnd <= 300) {
+                event.preventDefault();
+            }
+            lastTouchEnd = now;
+        }, { passive: false });
+
+        // Prevenir zoom con gestos de pellizco
+        document.addEventListener('touchstart', function (event) {
+            if (event.touches.length > 1) {
+                event.preventDefault();
+            }
+        }, { passive: false });
+
+        // Prevenir contexto de menú en iOS
+        document.addEventListener('contextmenu', function (event) {
+            event.preventDefault();
+        });
+
+        // Prevenir selección de texto arrastrada accidentalmente
+        document.addEventListener('selectstart', function (event) {
+            // Permitir selección solo en inputs y textareas
+            if (!event.target.matches('input, textarea')) {
+                event.preventDefault();
+            }
+        });
+
+        console.log('🚫 Protección contra zoom activada para dispositivos táctiles');
     }
     
     setupGlobalEventListeners() {
