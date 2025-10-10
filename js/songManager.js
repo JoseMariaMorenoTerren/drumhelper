@@ -800,8 +800,13 @@ Says, "Find a home"
     }
     
     processTextHighlights(text) {
+        // Procesar imágenes primero (patrón //img=archivo.jpg)
+        let processedText = text.replace(/\/\/img=([^\s]+\.(jpg|jpeg|png|gif|webp))/gi, (match, filename) => {
+            return `<img src="imagenes/${filename}" alt="${filename}" onerror="this.style.display='none'" loading="lazy">`;
+        });
+        
         // Convertir texto entre /0 y 0/ a HTML resaltado amarillo
-        let processedText = text.replace(/\/0(.*?)0\//g, '<span class="highlight-yellow">$1</span>');
+        processedText = processedText.replace(/\/0(.*?)0\//g, '<span class="highlight-yellow">$1</span>');
         // Convertir texto entre /1 y 1/ a HTML resaltado azul
         processedText = processedText.replace(/\/1(.*?)1\//g, '<span class="highlight-blue">$1</span>');
         // Convertir texto entre /3 y 3/ a HTML resaltado verde
