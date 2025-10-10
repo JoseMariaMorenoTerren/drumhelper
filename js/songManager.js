@@ -51,6 +51,7 @@ class SongManager {
         this.repertoireNameInput = document.getElementById('repertoire-name-input');
         this.cancelRepertoireName = document.getElementById('cancel-repertoire-name');
         this.repertoireNameModalTitle = document.getElementById('repertoire-name-modal-title');
+        this.showArtistBpmCheckbox = document.getElementById('show-artist-bpm-checkbox');
         
         this.editingSong = null;
         this.isOrderMode = false;
@@ -252,6 +253,13 @@ class SongManager {
             e.preventDefault();
             this.handleRepertoireNameSubmit();
         });
+
+        // Event listener para configuración de visualización
+        if (this.showArtistBpmCheckbox) {
+            this.showArtistBpmCheckbox.addEventListener('change', () => {
+                this.saveDisplaySettings();
+            });
+        }
     }
     
     loadDefaultSongs() {
@@ -1775,9 +1783,18 @@ Says, "Find a home"
                     name: 'Repertorio Principal',
                     songs: [],
                     setlistName: 'Canciones',
+                    showArtistBpm: true, // Mostrar por defecto
                     createdAt: new Date().toISOString()
                 });
             }
+            
+            // Migrar repertorios existentes para añadir showArtistBpm si no existe
+            this.repertoires.forEach((repertoire, id) => {
+                if (repertoire.showArtistBpm === undefined) {
+                    repertoire.showArtistBpm = true; // Por defecto mostrar
+                    console.log(`🔄 Migrado repertorio ${id} con showArtistBpm`);
+                }
+            });
 
             // Verificar que el repertorio actual existe
             if (!this.repertoires.has(this.currentRepertoireId)) {
@@ -1787,6 +1804,12 @@ Says, "Find a home"
 
             this.updateRepertoireSelect();
             this.updateCurrentRepertoireName();
+            
+            // Aplicar configuración de visualización del repertorio actual
+            const currentRepertoire = this.repertoires.get(this.currentRepertoireId);
+            if (currentRepertoire) {
+                this.applyDisplaySettings(currentRepertoire);
+            }
             
             console.log('✅ Repertorios inicializados correctamente');
         } catch (error) {
@@ -1844,6 +1867,9 @@ Says, "Find a home"
             // Cargar las canciones del nuevo repertorio
             this.songs = [...(repertoire.songs || [])]; // Hacer una copia para evitar referencias
             this.setlistName = repertoire.setlistName || 'Canciones';
+            
+            // Aplicar configuración de visualización
+            this.applyDisplaySettings(repertoire);
             
             console.log(`🎵 Canciones cargadas:`, this.songs.map(s => s.title));
             
@@ -1952,6 +1978,7 @@ Says, "Find a home"
     openRepertoireOptionsModal() {
         this.updateRepertoireList();
         this.updateDeleteButtonVisibility();
+        this.updateDisplaySettingsUI();
         this.repertoireOptionsModal.style.display = 'block';
     }
 
@@ -2103,6 +2130,7 @@ Says, "Find a home"
             name: name,
             songs: [],
             setlistName: 'Canciones',
+            showArtistBpm: true, // Por defecto mostrar artista y BPM
             createdAt: new Date().toISOString()
         };
 
@@ -2124,6 +2152,7 @@ Says, "Find a home"
             name: name,
             songs: JSON.parse(JSON.stringify(currentRepertoire.songs || [])), // Deep copy
             setlistName: currentRepertoire.setlistName,
+            showArtistBpm: currentRepertoire.showArtistBpm !== false, // Heredar configuración
             createdAt: new Date().toISOString()
         };
 
@@ -2177,6 +2206,47 @@ Says, "Find a home"
 
         // También guardar en el sistema de repertorios
         this.saveRepertoires();
+    }
+
+    // Aplicar configuración de visualización del repertorio
+    applyDisplaySettings(repertoire) {
+        const showArtistBpm = repertoire.showArtistBpm !== false; // Por defecto true
+        
+        // Actualizar checkbox
+        if (this.showArtistBpmCheckbox) {
+            this.showArtistBpmCheckbox.checked = showArtistBpm;
+        }
+        
+        // Aplicar clase CSS al body
+        if (showArtistBpm) {
+            document.body.classList.remove('hide-artist-bpm');
+        } else {
+            document.body.classList.add('hide-artist-bpm');
+        }
+        
+        console.log(`🎨 Configuración de visualización aplicada: mostrar artista/BPM = ${showArtistBpm}`);
+    }
+
+    // Guardar configuración de visualización
+    saveDisplaySettings() {
+        const currentRepertoire = this.repertoires.get(this.currentRepertoireId);
+        if (currentRepertoire && this.showArtistBpmCheckbox) {
+            currentRepertoire.showArtistBpm = this.showArtistBpmCheckbox.checked;
+            this.saveRepertoires();
+            
+            // Aplicar inmediatamente
+            this.applyDisplaySettings(currentRepertoire);
+            
+            console.log(`💾 Configuración guardada: mostrar artista/BPM = ${currentRepertoire.showArtistBpm}`);
+        }
+    }
+
+    // Actualizar UI de configuración de visualización
+    updateDisplaySettingsUI() {
+        const currentRepertoire = this.repertoires.get(this.currentRepertoireId);
+        if (currentRepertoire && this.showArtistBpmCheckbox) {
+            this.showArtistBpmCheckbox.checked = currentRepertoire.showArtistBpm !== false;
+        }
     }
 }
 

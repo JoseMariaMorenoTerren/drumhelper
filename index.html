@@ -25,7 +25,7 @@
     <header class="top-section">
         <div class="info-panel">
             <h1>Drum Helper</h1>
-            <div id="version-code">v1.1.4</div>
+            <div id="version-code">v1.1.5</div>
             <div class="song-info">
                 <span id="current-song">Selecciona una canción</span>
                 <span id="current-bpm">BPM: 120</span>
@@ -60,13 +60,10 @@
     <main class="main-container">
         <!-- Panel izquierdo - Lista de canciones (1/4 de la pantalla horizontal) -->
         <aside class="song-list-panel">
-            <div class="repertoire-header">
-                <div class="repertoire-selector">
-                    <select id="repertoire-select" class="repertoire-select">
-                        <option value="default">Repertorio Principal</option>
-                    </select>
-                </div>
-            </div>
+            <!-- Repertoire selector hidden - accessible through options button -->
+            <select id="repertoire-select" class="repertoire-select" style="display: none;">
+                <option value="default">Repertorio Principal</option>
+            </select>
             <div class="song-search">
                 <input type="text" id="search-input" placeholder="Buscar canción...">
             </div>
@@ -410,6 +407,16 @@
                         <button id="delete-repertoire-btn" class="repertoire-action-btn danger" style="display: none;">
                             🗑️ Eliminar
                         </button>
+                    </div>
+
+                    <div class="repertoire-display-section">
+                        <h4>Configuración de Visualización</h4>
+                        <div class="display-options">
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="show-artist-bpm-checkbox" checked>
+                                <span class="checkbox-text">Mostrar artista y BPM en lista de canciones</span>
+                            </label>
+                        </div>
                     </div>
 
                     <div class="repertoire-ordering-section">

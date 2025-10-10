@@ -342,6 +342,10 @@ body {
 
 
 
+.song-search {
+    padding-top: 15px;
+}
+
 .song-search input {
     width: 100%;
     background-color: #222222;
@@ -396,6 +400,12 @@ body {
     font-size: 0.8rem;
     float: right;
     margin-top: -20px;
+}
+
+/* Ocultar artista y BPM cuando la opción está desactivada */
+body.hide-artist-bpm .song-artist,
+body.hide-artist-bpm .song-bpm {
+    display: none !important;
 }
 
 .add-song-section {
@@ -1585,6 +1595,38 @@ body.concert-mode .playback-controls {
 
 .repertoire-action-btn.danger:hover {
     background-color: #5a3a3a;
+}
+
+/* Sección de configuración de visualización */
+.repertoire-display-section {
+    margin-bottom: 25px;
+    border-top: 1px solid #444;
+    padding-top: 20px;
+}
+
+.display-options {
+    margin-top: 10px;
+}
+
+.checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    color: #ffffff;
+    font-size: 0.9rem;
+    user-select: none;
+}
+
+.checkbox-label input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    accent-color: #ff4444;
+    cursor: pointer;
+}
+
+.checkbox-text {
+    flex: 1;
 }
 
 .repertoire-ordering-section {
