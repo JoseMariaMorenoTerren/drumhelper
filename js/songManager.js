@@ -565,7 +565,7 @@ Says, "Find a home"
             placeholderText = `${count} de ${this.songs.length} canciones`;
         } else {
             // Mostrando todas las canciones
-            placeholderText = `Buscar en ${count} canciones...`;
+            placeholderText = `Buscar en ${count} can..`;
         }
         
         // Añadir indicador de modo ordenamiento
