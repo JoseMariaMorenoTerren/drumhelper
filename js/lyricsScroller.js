@@ -54,6 +54,8 @@ class LyricsScroller {
         this.isPlaying = false;
         this.playbackEvents = []; // Eventos a reproducir
         this.playbackTimeouts = []; // Timeouts programados para la reproducción
+        this.isCountdown = false; // Modo cuenta atrás
+        this.countdownTime = 0; // Tiempo de cuenta atrás en segundos
         
         this.initializeEventListeners();
         this.loadFontSizePreference();
@@ -576,14 +578,30 @@ class LyricsScroller {
         this.concertPlayBtn.textContent = '⏸️';
         
         this.timerInterval = setInterval(() => {
-            this.elapsedTime++;
-            this.updateTimerDisplay();
+            if (this.isCountdown) {
+                // Modo cuenta atrás
+                this.countdownTime--;
+                this.updateTimerDisplay();
+                
+                // Si llega a cero, parar el timer
+                if (this.countdownTime <= 0) {
+                    this.pauseTimer();
+                    this.isCountdown = false;
+                    this.countdownTime = 0;
+                    this.updateTimerDisplay();
+                }
+            } else {
+                // Modo normal
+                this.elapsedTime++;
+                this.updateTimerDisplay();
+            }
         }, 1000);
     }
     
     pauseTimer() {
         this.timerRunning = false;
         this.playPauseBtn.textContent = '▶️';
+        this.concertPlayBtn.textContent = '▶️';
         
         if (this.timerInterval) {
             clearInterval(this.timerInterval);
@@ -591,15 +609,37 @@ class LyricsScroller {
         }
     }
     
-    restartTimer() {
-        this.pauseTimer();
-        this.elapsedTime = 0;
-        this.updateTimerDisplay();
+    startCountdown() {
+        // Iniciar cuenta atrás de 3 minutos y 50 segundos (230 segundos)
+        this.isCountdown = true;
+        this.countdownTime = 3 * 60 + 50; // 3:50 en segundos
+        this.elapsedTime = 0; // Resetear también el tiempo transcurrido
+        
+        console.log('⏰ Iniciando cuenta atrás de 3:50');
+        
+        // Volver al comienzo
+        this.scrollPosition = 0;
+        this.updateScrollPosition();
+        
+        // Iniciar el temporizador
+        this.startTimer();
     }
     
     updateTimerDisplay() {
-        const minutes = Math.floor(this.elapsedTime / 60);
-        const seconds = this.elapsedTime % 60;
+        let timeToShow, minutes, seconds;
+        
+        if (this.isCountdown) {
+            // Mostrar cuenta atrás
+            timeToShow = this.countdownTime;
+            minutes = Math.floor(timeToShow / 60);
+            seconds = timeToShow % 60;
+        } else {
+            // Mostrar tiempo transcurrido normal
+            timeToShow = this.elapsedTime;
+            minutes = Math.floor(timeToShow / 60);
+            seconds = timeToShow % 60;
+        }
+        
         const formattedTime = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
         this.timerText.textContent = formattedTime;
     }
@@ -667,8 +707,8 @@ class LyricsScroller {
         const currentSong = window.songManager ? window.songManager.getCurrentSong() : null;
         
         if (!currentSong || !currentSong.recordings || currentSong.recordings.length === 0) {
-            console.log('ℹ️ No hay datos de grabación para esta canción');
-            alert('No hay datos de grabación para esta canción. Usa el botón de grabación 🔴 para capturar movimientos primero.');
+            console.log('ℹ️ No hay datos de grabación para esta canción - iniciando cuenta atrás');
+            this.startCountdown();
             return;
         }
         
@@ -751,11 +791,15 @@ class LyricsScroller {
     restartTimer() {
         this.pauseTimer();
         this.elapsedTime = 0;
+        this.isCountdown = false;
+        this.countdownTime = 0;
         this.updateTimerDisplay();
         
-        // Volver al comienzo también
+        // Volver al comienzo también - mover letras arriba del todo
         this.scrollPosition = 0;
         this.updateScrollPosition();
+        
+        console.log('🔄 Timer reiniciado - volviendo al inicio');
     }
     
     goToPreviousSong() {
