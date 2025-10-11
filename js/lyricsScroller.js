@@ -756,7 +756,7 @@ class LyricsScroller {
         const currentSong = window.songManager ? window.songManager.getCurrentSong() : null;
         
         if (!currentSong || !currentSong.recordings || currentSong.recordings.length === 0) {
-            console.log('ℹ️ No hay datos de grabación para esta canción - iniciando cuenta atrás');
+            console.log('ℹNo hay datos de grabación para esta canción - iniciando cuenta atrás');
             this.startCountdown();
             return;
         }
