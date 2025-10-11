@@ -56,6 +56,8 @@ class LyricsScroller {
         this.playbackTimeouts = []; // Timeouts programados para la reproducción
         this.isCountdown = false; // Modo cuenta atrás
         this.countdownTime = 0; // Tiempo de cuenta atrás en segundos
+        this.countdownScrollSpeed = 0; // Velocidad de scroll para cuenta atrás (px por segundo)
+        this.countdownScrollInterval = null; // Intervalo para scroll automático en cuenta atrás
         
         this.initializeEventListeners();
         this.loadFontSizePreference();
@@ -598,17 +600,6 @@ class LyricsScroller {
         }, 1000);
     }
     
-    pauseTimer() {
-        this.timerRunning = false;
-        this.playPauseBtn.textContent = '▶️';
-        this.concertPlayBtn.textContent = '▶️';
-        
-        if (this.timerInterval) {
-            clearInterval(this.timerInterval);
-            this.timerInterval = null;
-        }
-    }
-    
     startCountdown() {
         // Iniciar cuenta atrás de 3 minutos y 50 segundos (230 segundos)
         this.isCountdown = true;
@@ -621,10 +612,68 @@ class LyricsScroller {
         this.scrollPosition = 0;
         this.updateScrollPosition();
         
+        // Calcular velocidad de scroll para la cuenta atrás
+        this.calculateCountdownScrollSpeed();
+        
         // Iniciar el temporizador
         this.startTimer();
+        
+        // Iniciar scroll automático para cuenta atrás
+        this.startCountdownAutoScroll();
     }
-    
+
+    calculateCountdownScrollSpeed() {
+        // Calcular la altura total del contenido disponible para hacer scroll
+        const containerHeight = this.lyricsContainer.offsetHeight;
+        const contentHeight = this.lyricsContent.offsetHeight;
+        const maxScrollDistance = Math.max(0, contentHeight - containerHeight);
+        
+        if (maxScrollDistance <= 0) {
+            // No hay contenido suficiente para hacer scroll
+            this.countdownScrollSpeed = 0;
+            console.log('📏 No hay contenido suficiente para scroll automático');
+            return;
+        }
+        
+        // Calcular píxeles por segundo para completar el scroll en 3:50 (230 segundos)
+        const totalTime = 230; // 3 minutos y 50 segundos
+        this.countdownScrollSpeed = maxScrollDistance / totalTime;
+        
+        console.log(`📏 Calculando scroll automático:`);
+        console.log(`   - Altura del contenedor: ${containerHeight}px`);
+        console.log(`   - Altura del contenido: ${contentHeight}px`);
+        console.log(`   - Distancia máxima de scroll: ${maxScrollDistance}px`);
+        console.log(`   - Velocidad de scroll: ${this.countdownScrollSpeed.toFixed(2)} px/segundo`);
+    }
+
+    startCountdownAutoScroll() {
+        // Solo iniciar si hay velocidad de scroll calculada
+        if (this.countdownScrollSpeed <= 0) {
+            return;
+        }
+        
+        // Hacer scroll cada 100ms (0.1 segundos) para movimiento suave
+        const intervalMs = 100;
+        const scrollIncrement = this.countdownScrollSpeed * (intervalMs / 1000);
+        
+        console.log(`🎢 Iniciando scroll automático: ${scrollIncrement.toFixed(2)}px cada ${intervalMs}ms`);
+        
+        this.countdownScrollInterval = setInterval(() => {
+            if (this.isCountdown && this.timerRunning) {
+                this.scrollPosition += scrollIncrement;
+                this.updateScrollPosition();
+            }
+        }, intervalMs);
+    }
+
+    stopCountdownAutoScroll() {
+        if (this.countdownScrollInterval) {
+            clearInterval(this.countdownScrollInterval);
+            this.countdownScrollInterval = null;
+            console.log('⏹️ Scroll automático de cuenta atrás detenido');
+        }
+    }
+
     updateTimerDisplay() {
         let timeToShow, minutes, seconds;
         
@@ -777,6 +826,9 @@ class LyricsScroller {
         
         // Limpiar reproducción programada
         this.clearPlaybackTimeouts();
+        
+        // Detener scroll automático de cuenta atrás si está activo
+        this.stopCountdownAutoScroll();
         
         if (this.isPlaying) {
             console.log('⏸️ Reproducción pausada');
