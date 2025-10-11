@@ -447,20 +447,45 @@ Says, "Find a home"
         
         // Añadir propiedades faltantes a canciones existentes
         let hasActiveSong = false;
+        let needsSave = false;
+        
         this.songs.forEach(song => {
             if (song.active === undefined) {
                 song.active = false;
+                needsSave = true;
             }
             if (song.notes === undefined) {
                 song.notes = '';
+                needsSave = true;
             }
             if (song.order === undefined) {
                 song.order = 0;
+                needsSave = true;
+            }
+            // Migrar fechas para canciones existentes
+            if (!song.createdAt) {
+                // Usar el ID como fecha aproximada de creación (si es timestamp)
+                const createdDate = (typeof song.id === 'number' && song.id > 1000000000000) 
+                    ? new Date(song.id).toISOString() 
+                    : new Date().toISOString();
+                song.createdAt = createdDate;
+                song.lastModified = createdDate;
+                needsSave = true;
+            }
+            if (!song.lastModified && song.createdAt) {
+                song.lastModified = song.createdAt;
+                needsSave = true;
             }
             if (song.active === true) {
                 hasActiveSong = true;
             }
         });
+        
+        // Guardar cambios de migración si es necesario
+        if (needsSave) {
+            console.log('📅 Migrando fechas de canciones existentes...');
+            this.saveSongs();
+        }
         
         // Si no hay ninguna canción activa, marcar la primera como activa
         if (!hasActiveSong && this.songs.length > 0) {
@@ -854,6 +879,9 @@ Says, "Find a home"
         document.getElementById('edit-song-notes').value = song.notes || '';
         document.getElementById('edit-song-lyrics').value = song.lyrics;
         
+        // Mostrar información de fecha de modificación
+        this.updateSongInfoDisplay(song);
+        
         // Cargar repertorios disponibles para copia
         this.loadCopyRepertoireOptions();
         
@@ -879,6 +907,7 @@ Says, "Find a home"
             return;
         }
         
+        const now = new Date();
         const newSong = {
             id: Date.now(), // Simple ID basado en timestamp
             title,
@@ -888,7 +917,9 @@ Says, "Find a home"
             lyrics: lyrics || '',
             notes: document.getElementById('song-notes').value.trim() || '',
             fontSize: 2.4, // Tamaño de fuente por defecto
-            active: false
+            active: false,
+            createdAt: now.toISOString(),
+            lastModified: now.toISOString()
         };
         
         this.songs.push(newSong);
@@ -928,7 +959,8 @@ Says, "Find a home"
                 order: order,
                 notes: notes || '',
                 lyrics: lyrics || '',
-                fontSize: this.songs[songIndex].fontSize || 2.4 // Preservar fontSize existente
+                fontSize: this.songs[songIndex].fontSize || 2.4, // Preservar fontSize existente
+                lastModified: new Date().toISOString()
             };
             
             this.songs[songIndex] = updatedSong;
@@ -2275,6 +2307,55 @@ Says, "Find a home"
         }
     }
 
+    // Formatear fecha para mostrar
+    formatDate(dateString) {
+        if (!dateString) return '-';
+        
+        try {
+            const date = new Date(dateString);
+            const now = new Date();
+            const diffMs = now - date;
+            const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+            
+            // Si es hoy
+            if (diffDays === 0) {
+                return `Hoy ${date.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' })}`;
+            }
+            // Si es ayer
+            else if (diffDays === 1) {
+                return `Ayer ${date.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' })}`;
+            }
+            // Si es esta semana (últimos 7 días)
+            else if (diffDays < 7) {
+                return `Hace ${diffDays} días`;
+            }
+            // Si es más antiguo
+            else {
+                return date.toLocaleDateString('es-ES', { 
+                    day: '2-digit', 
+                    month: '2-digit', 
+                    year: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                });
+            }
+        } catch (error) {
+            console.warn('Error formateando fecha:', error);
+            return '-';
+        }
+    }
+
+    // Actualizar información de la canción en el modal de edición
+    updateSongInfoDisplay(song) {
+        const lastModifiedElement = document.getElementById('edit-song-last-modified');
+        
+        if (lastModifiedElement) {
+            // Si la canción tiene lastModified, usarla; si no, usar createdAt; si no, mostrar que es nueva
+            const dateToShow = song.lastModified || song.createdAt;
+            lastModifiedElement.textContent = dateToShow ? this.formatDate(dateToShow) : 'Canción nueva';
+        }
+    }
+
     // Cargar opciones de repertorios para la función de copia
     loadCopyRepertoireOptions() {
         const select = this.copyTargetRepertoireSelect;
@@ -2316,10 +2397,13 @@ Says, "Find a home"
         }
         
         // Crear una copia de la canción con nuevo ID
+        const now = new Date().toISOString();
         const songCopy = {
             ...this.editingSong,
             id: this.generateId(),
-            order: 0 // Resetear el orden en el nuevo repertorio
+            order: 0, // Resetear el orden en el nuevo repertorio
+            createdAt: now, // Nueva fecha de creación para la copia
+            lastModified: now
         };
         
         // Verificar si ya existe una canción con el mismo título y artista
@@ -2334,9 +2418,13 @@ Says, "Find a home"
             );
             
             if (confirmOverwrite) {
-                // Reemplazar la canción existente
+                // Reemplazar la canción existente manteniendo ID y fechas originales
+                const originalId = existingSong.id;
+                const originalCreatedAt = existingSong.createdAt;
                 Object.assign(existingSong, songCopy);
-                existingSong.id = existingSong.id; // Mantener el ID original
+                existingSong.id = originalId; // Mantener el ID original
+                existingSong.createdAt = originalCreatedAt; // Mantener fecha de creación original
+                existingSong.lastModified = new Date().toISOString(); // Actualizar solo fecha de modificación
             } else {
                 return; // Cancelar la operación
             }
