@@ -53,6 +53,10 @@ class SongManager {
         this.repertoireNameModalTitle = document.getElementById('repertoire-name-modal-title');
         this.showArtistBpmCheckbox = document.getElementById('show-artist-bpm-checkbox');
         
+        // Elementos de copia de canciones
+        this.copyTargetRepertoireSelect = document.getElementById('copy-target-repertoire-select');
+        this.copySongBtn = document.getElementById('copy-song-btn');
+        
         this.editingSong = null;
         this.isOrderMode = false;
         this.tempOrderCounter = 0; // Variable temporal que empieza en 0
@@ -136,6 +140,16 @@ class SongManager {
         
         this.deleteSongBtn.addEventListener('click', () => {
             this.deleteCurrentEditingSong();
+        });
+        
+        // Evento para copiar canción a otro repertorio
+        this.copySongBtn.addEventListener('click', () => {
+            this.copySongToRepertoire();
+        });
+        
+        // Evento para cambio de repertorio objetivo (habilitar/deshabilitar botón)
+        this.copyTargetRepertoireSelect.addEventListener('change', () => {
+            this.updateCopyButtonState();
         });
         
         // Eventos de exportar/importar
@@ -814,6 +828,10 @@ Says, "Find a home"
         return processedText;
     }
     
+    generateId() {
+        return Date.now() + Math.random();
+    }
+    
     openAddSongModal() {
         this.modal.style.display = 'block';
         document.getElementById('song-title').focus();
@@ -835,6 +853,9 @@ Says, "Find a home"
         document.getElementById('edit-song-order').value = song.order || 0;
         document.getElementById('edit-song-notes').value = song.notes || '';
         document.getElementById('edit-song-lyrics').value = song.lyrics;
+        
+        // Cargar repertorios disponibles para copia
+        this.loadCopyRepertoireOptions();
         
         this.editModal.style.display = 'block';
         document.getElementById('edit-song-title').focus();
@@ -2252,6 +2273,89 @@ Says, "Find a home"
         if (currentRepertoire && this.showArtistBpmCheckbox) {
             this.showArtistBpmCheckbox.checked = currentRepertoire.showArtistBpm !== false;
         }
+    }
+
+    // Cargar opciones de repertorios para la función de copia
+    loadCopyRepertoireOptions() {
+        const select = this.copyTargetRepertoireSelect;
+        select.innerHTML = '<option value="">Seleccionar repertorio...</option>';
+        
+        // Agregar todos los repertorios excepto el actual
+        this.repertoires.forEach((repertoire, id) => {
+            if (id !== this.currentRepertoireId) {
+                const option = document.createElement('option');
+                option.value = id;
+                option.textContent = repertoire.name;
+                select.appendChild(option);
+            }
+        });
+        
+        // Actualizar estado del botón
+        this.updateCopyButtonState();
+    }
+
+    // Actualizar estado del botón de copia
+    updateCopyButtonState() {
+        const hasSelection = this.copyTargetRepertoireSelect.value !== '';
+        this.copySongBtn.disabled = !hasSelection;
+    }
+
+    // Copiar canción actual a otro repertorio
+    copySongToRepertoire() {
+        const targetRepertoireId = this.copyTargetRepertoireSelect.value;
+        
+        if (!targetRepertoireId || !this.editingSong) {
+            alert('Por favor selecciona un repertorio de destino.');
+            return;
+        }
+        
+        const targetRepertoire = this.repertoires.get(targetRepertoireId);
+        if (!targetRepertoire) {
+            alert('El repertorio seleccionado no existe.');
+            return;
+        }
+        
+        // Crear una copia de la canción con nuevo ID
+        const songCopy = {
+            ...this.editingSong,
+            id: this.generateId(),
+            order: 0 // Resetear el orden en el nuevo repertorio
+        };
+        
+        // Verificar si ya existe una canción con el mismo título y artista
+        const existingSong = targetRepertoire.songs.find(s => 
+            s.title.toLowerCase() === songCopy.title.toLowerCase() && 
+            s.artist.toLowerCase() === songCopy.artist.toLowerCase()
+        );
+        
+        if (existingSong) {
+            const confirmOverwrite = confirm(
+                `Ya existe una canción "${songCopy.title}" de "${songCopy.artist}" en el repertorio "${targetRepertoire.name}".\n\n¿Deseas reemplazarla?`
+            );
+            
+            if (confirmOverwrite) {
+                // Reemplazar la canción existente
+                Object.assign(existingSong, songCopy);
+                existingSong.id = existingSong.id; // Mantener el ID original
+            } else {
+                return; // Cancelar la operación
+            }
+        } else {
+            // Agregar la nueva canción
+            targetRepertoire.songs.push(songCopy);
+        }
+        
+        // Guardar cambios
+        this.saveRepertoires();
+        
+        // Mostrar confirmación
+        alert(`Canción "${songCopy.title}" copiada exitosamente al repertorio "${targetRepertoire.name}".`);
+        
+        // Limpiar selección
+        this.copyTargetRepertoireSelect.value = '';
+        this.updateCopyButtonState();
+        
+        console.log(`📄 Canción copiada: "${songCopy.title}" → ${targetRepertoire.name}`);
     }
 }
 

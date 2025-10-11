@@ -793,6 +793,57 @@ body.hide-artist-bpm .song-bpm {
     background-color: #ff4444;
 }
 
+/* Sección de copia a otro repertorio */
+.form-copy-section {
+    margin-top: 20px;
+    padding-top: 15px;
+    border-top: 1px solid #444;
+}
+
+.form-copy-section h3 {
+    margin: 0 0 10px 0;
+    font-size: 1.1rem;
+    color: #cccccc;
+}
+
+.copy-controls {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.copy-target-select {
+    flex: 1;
+    padding: 8px 12px;
+    border: 1px solid #555;
+    border-radius: 4px;
+    background-color: #2a2a2a;
+    color: #ffffff;
+    font-size: 0.9rem;
+}
+
+.copy-btn {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    background-color: #4CAF50;
+    color: #ffffff;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    white-space: nowrap;
+}
+
+.copy-btn:hover:not(:disabled) {
+    background-color: #5CBF60;
+}
+
+.copy-btn:disabled {
+    background-color: #666;
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
 /* Layout de formularios */
 .form-layout {
     display: flex;

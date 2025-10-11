@@ -25,7 +25,7 @@
     <header class="top-section">
         <div class="info-panel">
             <h1>Drum Helper</h1>
-            <div id="version-code">v1.1.6</div>
+            <div id="version-code">v1.1.7</div>
             <div class="song-info">
                 <span id="current-song">Selecciona una canción</span>
                 <span id="current-bpm">BPM: 120</span>
@@ -208,6 +208,17 @@
                     <button type="submit">Actualizar</button>
                     <button type="button" class="cancel-btn">Cancelar</button>
                     <button type="button" id="delete-song-btn" class="delete-btn">Eliminar</button>
+                </div>
+                <div class="form-copy-section">
+                    <h3>Copiar a otro repertorio</h3>
+                    <div class="copy-controls">
+                        <select id="copy-target-repertoire-select" class="copy-target-select">
+                            <!-- Opciones se cargan dinámicamente -->
+                        </select>
+                        <button type="button" id="copy-song-btn" class="copy-btn" disabled>
+                            📄 Copiar Canción
+                        </button>
+                    </div>
                 </div>
             </form>
         </div>
