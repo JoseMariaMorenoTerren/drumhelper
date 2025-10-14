@@ -844,6 +844,11 @@ Says, "Find a home"
             return `<img src="imagenes/${filename}" alt="${filename}" onerror="this.style.display='none'" loading="lazy">`;
         });
         
+        // Procesar instrucciones de espera (patrón //espera=XXX)
+        processedText = processedText.replace(/\/\/espera=(\d+)/gi, (match, seconds) => {
+            return `<span class="wait-instruction">espera ${seconds}s</span>`;
+        });
+        
         // Convertir texto entre /0 y 0/ a HTML resaltado amarillo
         processedText = processedText.replace(/\/0(.*?)0\//g, '<span class="highlight-yellow">$1</span>');
         // Convertir texto entre /1 y 1/ a HTML resaltado azul
@@ -876,6 +881,7 @@ Says, "Find a home"
         document.getElementById('edit-song-artist').value = song.artist;
         document.getElementById('edit-song-bpm').value = song.bpm;
         document.getElementById('edit-song-order').value = song.order || 0;
+        document.getElementById('edit-song-duration').value = song.duration || '';
         document.getElementById('edit-song-notes').value = song.notes || '';
         document.getElementById('edit-song-lyrics').value = song.lyrics;
         
@@ -900,6 +906,7 @@ Says, "Find a home"
         const artist = document.getElementById('song-artist').value.trim();
         const bpm = parseInt(document.getElementById('song-bpm').value);
         const order = parseInt(document.getElementById('song-order').value) || 0;
+        const duration = document.getElementById('song-duration').value.trim();
         const lyrics = document.getElementById('song-lyrics').value.trim();
         
         if (!title) {
@@ -914,6 +921,7 @@ Says, "Find a home"
             artist: artist || 'Artista desconocido',
             bpm: bpm || 120,
             order: order,
+            duration: duration || '', // Duración personalizada (mm:ss)
             lyrics: lyrics || '',
             notes: document.getElementById('song-notes').value.trim() || '',
             fontSize: 2.4, // Tamaño de fuente por defecto
@@ -940,6 +948,7 @@ Says, "Find a home"
         const artist = document.getElementById('edit-song-artist').value.trim();
         const bpm = parseInt(document.getElementById('edit-song-bpm').value);
         const order = parseInt(document.getElementById('edit-song-order').value) || 0;
+        const duration = document.getElementById('edit-song-duration').value.trim();
         const notes = document.getElementById('edit-song-notes').value.trim();
         const lyrics = document.getElementById('edit-song-lyrics').value.trim();
         
@@ -957,6 +966,7 @@ Says, "Find a home"
                 artist: artist || 'Artista desconocido',
                 bpm: bpm || 120,
                 order: order,
+                duration: duration || '', // Duración personalizada
                 notes: notes || '',
                 lyrics: lyrics || '',
                 fontSize: this.songs[songIndex].fontSize || 2.4, // Preservar fontSize existente

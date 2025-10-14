@@ -25,7 +25,7 @@
     <header class="top-section">
         <div class="info-panel">
             <h1>Drum Helper</h1>
-            <div id="version-code">v1.2.1</div>
+            <div id="version-code">v1.2.3</div>
             <div class="song-info">
                 <span id="current-song">Selecciona una canción</span>
                 <span id="current-bpm">BPM: 120</span>
@@ -148,6 +148,10 @@
                             <input type="number" id="song-order" min="0" value="0" placeholder="Orden en la lista (0 por defecto)">
                         </div>
                         <div class="form-group">
+                            <label for="song-duration">Duración (mm:ss):</label>
+                            <input type="text" id="song-duration" placeholder="3:50 (opcional)" pattern="^[0-9]{1,2}:[0-5][0-9]$" title="Formato: mm:ss (ej: 3:50)">
+                        </div>
+                        <div class="form-group">
                             <label for="song-notes">Notas:</label>
                             <textarea id="song-notes" rows="3" placeholder="Notas y comentarios sobre la canción..."></textarea>
                         </div>
@@ -191,6 +195,10 @@
                         <div class="form-group">
                             <label for="edit-song-order">Orden:</label>
                             <input type="number" id="edit-song-order" min="0" value="0" placeholder="Orden en la lista">
+                        </div>
+                        <div class="form-group">
+                            <label for="edit-song-duration">Duración (mm:ss):</label>
+                            <input type="text" id="edit-song-duration" placeholder="3:50 (opcional)" pattern="^[0-9]{1,2}:[0-5][0-9]$" title="Formato: mm:ss (ej: 3:50)">
                         </div>
                         <div class="form-group">
                             <label for="edit-song-notes">Notas:</label>

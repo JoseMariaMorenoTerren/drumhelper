@@ -58,6 +58,9 @@ class LyricsScroller {
         this.countdownTime = 0; // Tiempo de cuenta atrás en segundos
         this.countdownScrollSpeed = 0; // Velocidad de scroll para cuenta atrás (px por segundo)
         this.countdownScrollInterval = null; // Intervalo para scroll automático en cuenta atrás
+        this.waitInstructions = []; // Array de instrucciones de espera encontradas
+        this.isPaused = false; // Flag para pausas programadas
+        this.pauseTimeouts = []; // Timeouts para pausas programadas
         
         this.initializeEventListeners();
         this.loadFontSizePreference();
@@ -254,6 +257,11 @@ class LyricsScroller {
         // Procesar imágenes primero (patrón //img=archivo.jpg)
         let processedText = text.replace(/\/\/img=([^\s]+\.(jpg|jpeg|png|gif|webp))/gi, (match, filename) => {
             return `<img src="imagenes/${filename}" alt="${filename}" onerror="this.style.display='none'" loading="lazy">`;
+        });
+        
+        // Procesar instrucciones de espera (patrón //espera=XXX)
+        processedText = processedText.replace(/\/\/espera=(\d+)/gi, (match, seconds) => {
+            return `<span class="wait-instruction">espera ${seconds}s</span>`;
         });
         
         // Convertir texto entre /0 y 0/ a HTML resaltado amarillo
@@ -601,12 +609,25 @@ class LyricsScroller {
     }
     
     startCountdown() {
-        // Iniciar cuenta atrás de 3 minutos y 50 segundos (230 segundos)
+        // Obtener duración personalizada de la canción o usar valor por defecto
+        let countdownDuration = 3 * 60 + 50; // 3:50 por defecto en segundos
+        const currentSong = window.songManager ? window.songManager.getCurrentSong() : null;
+        
+        if (currentSong && currentSong.duration) {
+            const customDuration = this.parseDuration(currentSong.duration);
+            if (customDuration > 0) {
+                countdownDuration = customDuration;
+                console.log(`⏰ Usando duración personalizada: ${currentSong.duration} (${countdownDuration}s)`);
+            }
+        } else {
+            console.log('⏰ Usando duración por defecto: 3:50');
+        }
+        
         this.isCountdown = true;
-        this.countdownTime = 3 * 60 + 50; // 3:50 en segundos
+        this.countdownTime = countdownDuration;
         this.elapsedTime = 0; // Resetear también el tiempo transcurrido
         
-        console.log('⏰ Iniciando cuenta atrás de 3:50');
+        console.log(`⏰ Iniciando cuenta atrás de ${Math.floor(countdownDuration/60)}:${(countdownDuration%60).toString().padStart(2,'0')}`);
         
         // Volver al comienzo
         this.scrollPosition = 0;
@@ -622,6 +643,112 @@ class LyricsScroller {
         this.startCountdownAutoScroll();
     }
 
+    parseDuration(durationString) {
+        // Parsear duración en formato mm:ss a segundos
+        if (!durationString || typeof durationString !== 'string') {
+            return 0;
+        }
+        
+        const parts = durationString.trim().split(':');
+        if (parts.length !== 2) {
+            return 0;
+        }
+        
+        const minutes = parseInt(parts[0], 10);
+        const seconds = parseInt(parts[1], 10);
+        
+        if (isNaN(minutes) || isNaN(seconds) || minutes < 0 || seconds < 0 || seconds > 59) {
+            return 0;
+        }
+        
+        return minutes * 60 + seconds;
+    }
+
+    extractWaitInstructions(lyrics) {
+        // Extraer todas las instrucciones de espera del texto
+        this.waitInstructions = [];
+        
+        if (!lyrics) {
+            return;
+        }
+
+        const lines = lyrics.split('\n');
+        let cumulativeHeight = 0;
+        const lineHeight = 40; // Altura aproximada por línea en píxeles
+
+        lines.forEach((line, index) => {
+            // Buscar instrucciones de espera en esta línea
+            const waitMatches = line.match(/\/\/espera=(\d+)/gi);
+            
+            if (waitMatches) {
+                waitMatches.forEach(match => {
+                    const seconds = parseInt(match.split('=')[1], 10);
+                    if (seconds > 0) {
+                        this.waitInstructions.push({
+                            line: index + 1,
+                            seconds: seconds,
+                            approximatePosition: cumulativeHeight
+                        });
+                        console.log(`⏱️ Espera encontrada: ${seconds}s en línea ${index + 1} (posición ~${cumulativeHeight}px)`);
+                    }
+                });
+            }
+            
+            // Incrementar altura acumulativa (aproximada)
+            cumulativeHeight += lineHeight;
+        });
+
+        console.log(`📝 Total de esperas encontradas: ${this.waitInstructions.length}`);
+        return this.waitInstructions;
+    }
+
+    calculateTotalWaitTime() {
+        // Calcular el tiempo total de todas las esperas
+        return this.waitInstructions.reduce((total, wait) => total + wait.seconds, 0);
+    }
+
+    scheduleWaitPauses(intervalMs) {
+        // Limpiar timeouts previos
+        this.pauseTimeouts.forEach(timeout => clearTimeout(timeout));
+        this.pauseTimeouts = [];
+
+        if (this.waitInstructions.length === 0) return;
+
+        // Programar pausas basadas en las posiciones calculadas previamente
+        let accumulatedWaitTime = 0;
+
+        this.waitInstructions.forEach((waitInstruction) => {
+            const { position, seconds } = waitInstruction;
+            
+            // Calcular el tiempo cuando el scroll debería llegar a esta posición
+            const timeToPosition = position / this.countdownScrollSpeed;
+            const totalTimeToElement = timeToPosition + accumulatedWaitTime;
+
+            // Programar la pausa
+            const pauseTimeout = setTimeout(() => {
+                if (this.isCountdown && this.timerRunning) {
+                    console.log(`⏸️ Pausando scroll por ${seconds}s en posición ${position}px`);
+                    this.isPaused = true;
+
+                    // Programar la reanudación
+                    const resumeTimeout = setTimeout(() => {
+                        if (this.isCountdown && this.timerRunning) {
+                            console.log('▶️ Reanudando scroll');
+                            this.isPaused = false;
+                        }
+                    }, seconds * 1000);
+
+                    this.pauseTimeouts.push(resumeTimeout);
+                }
+            }, totalTimeToElement * 1000);
+
+            this.pauseTimeouts.push(pauseTimeout);
+            accumulatedWaitTime += seconds;
+        });
+
+        console.log(`⏰ Programadas ${this.waitInstructions.length} pausas de scroll`);
+    }
+
     calculateCountdownScrollSpeed() {
         // Calcular la altura total del contenido disponible para hacer scroll
         const containerHeight = this.lyricsContainer.offsetHeight;
@@ -635,14 +762,26 @@ class LyricsScroller {
             return;
         }
         
-        // Calcular píxeles por segundo para completar el scroll en 3:50 (230 segundos)
-        const totalTime = 230; // 3 minutos y 50 segundos
-        this.countdownScrollSpeed = maxScrollDistance / totalTime;
+        // Extraer instrucciones de espera del contenido actual
+        const currentSong = window.songManager ? window.songManager.getCurrentSong() : null;
+        if (currentSong && currentSong.lyrics) {
+            this.extractWaitInstructions(currentSong.lyrics);
+        }
+
+        // Calcular tiempo total disponible para scroll (descontando las esperas)
+        const totalWaitTime = this.calculateTotalWaitTime();
+        const totalTime = this.countdownTime; // Tiempo total de la cuenta atrás
+        const effectiveScrollTime = Math.max(10, totalTime - totalWaitTime); // Mínimo 10s para scroll
+        
+        this.countdownScrollSpeed = maxScrollDistance / effectiveScrollTime;
         
         console.log(`📏 Calculando scroll automático:`);
         console.log(`   - Altura del contenedor: ${containerHeight}px`);
         console.log(`   - Altura del contenido: ${contentHeight}px`);
         console.log(`   - Distancia máxima de scroll: ${maxScrollDistance}px`);
+        console.log(`   - Tiempo total: ${Math.floor(totalTime/60)}:${(totalTime%60).toString().padStart(2,'0')} (${totalTime}s)`);
+        console.log(`   - Tiempo total en esperas: ${totalWaitTime}s`);
+        console.log(`   - Tiempo efectivo de scroll: ${effectiveScrollTime}s`);
         console.log(`   - Velocidad de scroll: ${this.countdownScrollSpeed.toFixed(2)} px/segundo`);
     }
 
@@ -658,8 +797,11 @@ class LyricsScroller {
         
         console.log(`🎢 Iniciando scroll automático: ${scrollIncrement.toFixed(2)}px cada ${intervalMs}ms`);
         
+        // Programar las pausas basadas en las posiciones de las wait instructions
+        this.scheduleWaitPauses(intervalMs);
+        
         this.countdownScrollInterval = setInterval(() => {
-            if (this.isCountdown && this.timerRunning) {
+            if (this.isCountdown && this.timerRunning && !this.isPaused) {
                 this.scrollPosition += scrollIncrement;
                 this.updateScrollPosition();
             }
@@ -672,6 +814,11 @@ class LyricsScroller {
             this.countdownScrollInterval = null;
             console.log('⏹️ Scroll automático de cuenta atrás detenido');
         }
+        
+        // Limpiar todos los timeouts de pausa
+        this.pauseTimeouts.forEach(timeout => clearTimeout(timeout));
+        this.pauseTimeouts = [];
+        this.isPaused = false;
     }
 
     updateTimerDisplay() {
