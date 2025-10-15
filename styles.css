@@ -443,6 +443,11 @@ body.hide-artist-bpm .song-bpm {
     display: none !important;
 }
 
+/* Ocultar notas especiales cuando la opción está activada */
+body.hide-notes .special-line {
+    display: none !important;
+}
+
 .add-song-section {
     margin-top: 15px;
     display: flex;

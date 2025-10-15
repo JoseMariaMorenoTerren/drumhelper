@@ -52,6 +52,7 @@ class SongManager {
         this.cancelRepertoireName = document.getElementById('cancel-repertoire-name');
         this.repertoireNameModalTitle = document.getElementById('repertoire-name-modal-title');
         this.showArtistBpmCheckbox = document.getElementById('show-artist-bpm-checkbox');
+        this.hideNotesCheckbox = document.getElementById('hide-notes-checkbox');
         
         // Elementos de copia de canciones
         this.copyTargetRepertoireSelect = document.getElementById('copy-target-repertoire-select');
@@ -271,6 +272,12 @@ class SongManager {
         // Event listener para configuración de visualización
         if (this.showArtistBpmCheckbox) {
             this.showArtistBpmCheckbox.addEventListener('change', () => {
+                this.saveDisplaySettings();
+            });
+        }
+
+        if (this.hideNotesCheckbox) {
+            this.hideNotesCheckbox.addEventListener('change', () => {
                 this.saveDisplaySettings();
             });
         }
@@ -1851,16 +1858,21 @@ Says, "Find a home"
                     name: 'Repertorio Principal',
                     songs: [],
                     setlistName: 'Canciones',
-                    showArtistBpm: true, // Mostrar por defecto
+                    showArtistBpm: false, // No mostrar por defecto
+                    hideNotes: false, // No ocultar notas por defecto
                     createdAt: new Date().toISOString()
                 });
             }
             
-            // Migrar repertorios existentes para añadir showArtistBpm si no existe
+            // Migrar repertorios existentes para añadir propiedades si no existen
             this.repertoires.forEach((repertoire, id) => {
                 if (repertoire.showArtistBpm === undefined) {
-                    repertoire.showArtistBpm = true; // Por defecto mostrar
+                    repertoire.showArtistBpm = false; // No mostrar por defecto
                     console.log(`🔄 Migrado repertorio ${id} con showArtistBpm`);
+                }
+                if (repertoire.hideNotes === undefined) {
+                    repertoire.hideNotes = false; // No ocultar notas por defecto
+                    console.log(`🔄 Migrado repertorio ${id} con hideNotes`);
                 }
             });
 
@@ -2198,7 +2210,8 @@ Says, "Find a home"
             name: name,
             songs: [],
             setlistName: 'Canciones',
-            showArtistBpm: true, // Por defecto mostrar artista y BPM
+            showArtistBpm: false, // No mostrar artista y BPM por defecto
+            hideNotes: false, // No ocultar notas por defecto
             createdAt: new Date().toISOString()
         };
 
@@ -2220,7 +2233,8 @@ Says, "Find a home"
             name: name,
             songs: JSON.parse(JSON.stringify(currentRepertoire.songs || [])), // Deep copy
             setlistName: currentRepertoire.setlistName,
-            showArtistBpm: currentRepertoire.showArtistBpm !== false, // Heredar configuración
+            showArtistBpm: currentRepertoire.showArtistBpm === true, // Heredar configuración
+            hideNotes: currentRepertoire.hideNotes === true, // Heredar configuración
             createdAt: new Date().toISOString()
         };
 
@@ -2278,28 +2292,44 @@ Says, "Find a home"
 
     // Aplicar configuración de visualización del repertorio
     applyDisplaySettings(repertoire) {
-        const showArtistBpm = repertoire.showArtistBpm !== false; // Por defecto true
+        const showArtistBpm = repertoire.showArtistBpm === true; // Por defecto false
+        const hideNotes = repertoire.hideNotes === true; // Por defecto false
         
-        // Actualizar checkbox
+        // Actualizar checkboxes
         if (this.showArtistBpmCheckbox) {
             this.showArtistBpmCheckbox.checked = showArtistBpm;
         }
         
-        // Aplicar clase CSS al body
+        if (this.hideNotesCheckbox) {
+            this.hideNotesCheckbox.checked = hideNotes;
+        }
+        
+        // Aplicar clases CSS al body
         if (showArtistBpm) {
             document.body.classList.remove('hide-artist-bpm');
         } else {
             document.body.classList.add('hide-artist-bpm');
         }
         
-        console.log(`🎨 Configuración de visualización aplicada: mostrar artista/BPM = ${showArtistBpm}`);
+        if (hideNotes) {
+            document.body.classList.add('hide-notes');
+        } else {
+            document.body.classList.remove('hide-notes');
+        }
+        
+        console.log(`🎨 Configuración de visualización aplicada: mostrar artista/BPM = ${showArtistBpm}, ocultar notas = ${hideNotes}`);
     }
 
     // Guardar configuración de visualización
     saveDisplaySettings() {
         const currentRepertoire = this.repertoires.get(this.currentRepertoireId);
-        if (currentRepertoire && this.showArtistBpmCheckbox) {
-            currentRepertoire.showArtistBpm = this.showArtistBpmCheckbox.checked;
+        if (currentRepertoire) {
+            if (this.showArtistBpmCheckbox) {
+                currentRepertoire.showArtistBpm = this.showArtistBpmCheckbox.checked;
+            }
+            if (this.hideNotesCheckbox) {
+                currentRepertoire.hideNotes = this.hideNotesCheckbox.checked;
+            }
             this.saveRepertoires();
             
             // Aplicar inmediatamente
@@ -2312,8 +2342,13 @@ Says, "Find a home"
     // Actualizar UI de configuración de visualización
     updateDisplaySettingsUI() {
         const currentRepertoire = this.repertoires.get(this.currentRepertoireId);
-        if (currentRepertoire && this.showArtistBpmCheckbox) {
-            this.showArtistBpmCheckbox.checked = currentRepertoire.showArtistBpm !== false;
+        if (currentRepertoire) {
+            if (this.showArtistBpmCheckbox) {
+                this.showArtistBpmCheckbox.checked = currentRepertoire.showArtistBpm === true;
+            }
+            if (this.hideNotesCheckbox) {
+                this.hideNotesCheckbox.checked = currentRepertoire.hideNotes === true;
+            }
         }
     }
 
