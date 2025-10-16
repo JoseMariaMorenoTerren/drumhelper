@@ -54,15 +54,19 @@ class SongManager {
         this.showArtistBpmCheckbox = document.getElementById('show-artist-bpm-checkbox');
         this.hideNotesCheckbox = document.getElementById('hide-notes-checkbox');
         
-        // Elementos de sincronización Firebase
-        this.enableSyncCheckbox = document.getElementById('enable-sync-checkbox');
-        this.manualSyncBtn = document.getElementById('manual-sync-btn');
-        this.syncStatusBtn = document.getElementById('sync-status-btn');
-        this.syncStatusText = document.getElementById('sync-status-text');
-        this.authLoginBtn = document.getElementById('auth-login-btn');
-        this.authLogoutBtn = document.getElementById('auth-logout-btn');
-        this.authStatusText = document.getElementById('auth-status-text');
-        this.authStatusDisplay = document.getElementById('auth-status-display');
+        // Elementos del modal de usuario y sincronización
+        this.userAccountBtn = document.getElementById('user-account-btn');
+        this.userAccountModal = document.getElementById('user-account-modal');
+        this.userAccountClose = document.querySelector('.user-account-close');
+        this.userStatusDisplay = document.getElementById('user-status-display');
+        this.userStatusText = document.getElementById('user-status-text');
+        this.userEmailText = document.getElementById('user-email-text');
+        this.userLoginBtn = document.getElementById('user-login-btn');
+        this.userLogoutBtn = document.getElementById('user-logout-btn');
+        this.userEnableSyncCheckbox = document.getElementById('user-enable-sync-checkbox');
+        this.userManualSyncBtn = document.getElementById('user-manual-sync-btn');
+        this.userSyncStatusBtn = document.getElementById('user-sync-status-btn');
+        this.userSyncStatusText = document.getElementById('user-sync-status-text');
         this.authModal = document.getElementById('auth-modal');
         this.authForm = document.getElementById('auth-form');
         this.authEmail = document.getElementById('auth-email');
@@ -324,22 +328,54 @@ class SongManager {
             });
         }
 
-        // Event listeners para sincronización Firebase
-        if (this.enableSyncCheckbox) {
-            this.enableSyncCheckbox.addEventListener('change', () => {
+        // Event listeners para modal de usuario
+        if (this.userAccountBtn) {
+            this.userAccountBtn.addEventListener('click', () => {
+                this.openUserAccountModal();
+            });
+        }
+
+        if (this.userAccountClose) {
+            this.userAccountClose.addEventListener('click', () => {
+                this.closeUserAccountModal();
+            });
+        }
+
+        if (this.userAccountModal) {
+            this.userAccountModal.addEventListener('click', (e) => {
+                if (e.target === this.userAccountModal) {
+                    this.closeUserAccountModal();
+                }
+            });
+        }
+
+        if (this.userLoginBtn) {
+            this.userLoginBtn.addEventListener('click', () => {
+                this.openAuthModal();
+            });
+        }
+
+        if (this.userLogoutBtn) {
+            this.userLogoutBtn.addEventListener('click', () => {
+                this.performLogout();
+            });
+        }
+
+        if (this.userEnableSyncCheckbox) {
+            this.userEnableSyncCheckbox.addEventListener('change', () => {
                 this.toggleSync();
             });
         }
 
-        if (this.manualSyncBtn) {
-            this.manualSyncBtn.addEventListener('click', () => {
+        if (this.userManualSyncBtn) {
+            this.userManualSyncBtn.addEventListener('click', () => {
                 this.performManualSync();
             });
         }
 
-        if (this.syncStatusBtn) {
-            this.syncStatusBtn.addEventListener('click', () => {
-                this.toggleSyncStatus();
+        if (this.userSyncStatusBtn) {
+            this.userSyncStatusBtn.addEventListener('click', () => {
+                this.toggleUserSyncStatus();
             });
         }
 
@@ -2653,6 +2689,19 @@ Says, "Find a home"
         console.log(`📄 Canción copiada: "${songCopy.title}" → ${targetRepertoire.name}`);
     }
 
+    // Métodos del modal de usuario
+    openUserAccountModal() {
+        if (this.userAccountModal) {
+            this.userAccountModal.style.display = 'block';
+        }
+    }
+
+    closeUserAccountModal() {
+        if (this.userAccountModal) {
+            this.userAccountModal.style.display = 'none';
+        }
+    }
+
     // Métodos de autenticación Firebase
     onAuthStateChanged(user) {
         this.updateAuthUI(user);
@@ -2665,22 +2714,43 @@ Says, "Find a home"
 
     updateAuthUI(user) {
         if (user) {
-            // Usuario autenticado
-            this.authStatusText.textContent = `Conectado: ${user.email}`;
-            this.authStatusDisplay.classList.add('authenticated');
-            this.authLoginBtn.style.display = 'none';
-            this.authLogoutBtn.style.display = 'block';
-            this.enableSyncCheckbox.disabled = false;
-            this.manualSyncBtn.disabled = false;
+            // Usuario autenticado - actualizar ambas interfaces
+            this.updateUserStatusDisplay(user);
+            this.updateSyncControls(true);
         } else {
             // Usuario no autenticado
-            this.authStatusText.textContent = 'No autenticado';
-            this.authStatusDisplay.classList.remove('authenticated');
-            this.authLoginBtn.style.display = 'block';
-            this.authLogoutBtn.style.display = 'none';
-            this.enableSyncCheckbox.disabled = true;
-            this.enableSyncCheckbox.checked = false;
-            this.manualSyncBtn.disabled = true;
+            this.updateUserStatusDisplay(null);
+            this.updateSyncControls(false);
+        }
+    }
+
+    updateUserStatusDisplay(user) {
+        if (user) {
+            // Usuario autenticado
+            this.userStatusText.textContent = 'Conectado';
+            this.userEmailText.textContent = user.email;
+            this.userEmailText.style.display = 'block';
+            this.userStatusDisplay.classList.add('authenticated');
+            this.userLoginBtn.style.display = 'none';
+            this.userLogoutBtn.style.display = 'block';
+        } else {
+            // Usuario no autenticado
+            this.userStatusText.textContent = 'No autenticado';
+            this.userEmailText.style.display = 'none';
+            this.userStatusDisplay.classList.remove('authenticated');
+            this.userLoginBtn.style.display = 'block';
+            this.userLogoutBtn.style.display = 'none';
+        }
+    }
+
+    updateSyncControls(authenticated) {
+        if (authenticated) {
+            this.userEnableSyncCheckbox.disabled = false;
+            this.userManualSyncBtn.disabled = false;
+        } else {
+            this.userEnableSyncCheckbox.disabled = true;
+            this.userEnableSyncCheckbox.checked = false;
+            this.userManualSyncBtn.disabled = true;
         }
     }
 
@@ -2816,11 +2886,11 @@ Says, "Find a home"
     toggleSync() {
         if (!this.firebaseManager || !this.firebaseManager.isAuthenticated()) {
             this.showNotification('Debes iniciar sesión para habilitar la sincronización', 'warning');
-            this.enableSyncCheckbox.checked = false;
+            this.userEnableSyncCheckbox.checked = false;
             return;
         }
 
-        if (this.enableSyncCheckbox.checked) {
+        if (this.userEnableSyncCheckbox.checked) {
             this.firebaseManager.enableSync();
             this.showNotification('Sincronización habilitada', 'success');
         } else {
@@ -2835,8 +2905,8 @@ Says, "Find a home"
             return;
         }
 
-        this.manualSyncBtn.disabled = true;
-        this.manualSyncBtn.textContent = '🔄 Sincronizando...';
+        this.userManualSyncBtn.disabled = true;
+        this.userManualSyncBtn.textContent = '🔄 Sincronizando...';
 
         try {
             const result = await this.firebaseManager.syncRepertoires(this.repertoires);
@@ -2856,21 +2926,21 @@ Says, "Find a home"
             this.showNotification('Error de conexión durante la sincronización', 'error');
         }
 
-        this.manualSyncBtn.disabled = false;
-        this.manualSyncBtn.textContent = '🔄 Sincronizar Ahora';
+        this.userManualSyncBtn.disabled = false;
+        this.userManualSyncBtn.textContent = '🔄 Sincronizar Ahora';
     }
 
-    toggleSyncStatus() {
+    toggleUserSyncStatus() {
         if (!this.firebaseManager) {
-            this.showSyncStatus('Firebase no disponible', 'error');
+            this.showUserSyncStatus('Firebase no disponible', 'error');
             return;
         }
 
         const status = this.firebaseManager.getConnectionStatus();
-        const isVisible = this.syncStatusText.style.display !== 'none';
+        const isVisible = this.userSyncStatusText.style.display !== 'none';
 
         if (isVisible) {
-            this.syncStatusText.style.display = 'none';
+            this.userSyncStatusText.style.display = 'none';
         } else {
             let statusText = `Estado de Firebase:\n`;
             statusText += `• Inicializado: ${status.initialized ? 'Sí' : 'No'}\n`;
@@ -2878,7 +2948,7 @@ Says, "Find a home"
             
             if (status.user) {
                 statusText += `• Usuario: ${status.user.email}\n`;
-                statusText += `• ID: ${status.user.uid}\n`;
+                statusText += `• ID: ${status.user.uid.substring(0, 8)}...\n`;
             }
             
             statusText += `• Sincronización: ${status.syncEnabled ? 'Habilitada' : 'Deshabilitada'}\n`;
@@ -2889,14 +2959,14 @@ Says, "Find a home"
                 statusText += `• Último sync: Nunca`;
             }
 
-            this.showSyncStatus(statusText, status.authenticated ? 'success' : 'warning');
+            this.showUserSyncStatus(statusText, status.authenticated ? 'success' : 'warning');
         }
     }
 
-    showSyncStatus(message, type) {
-        this.syncStatusText.textContent = message;
-        this.syncStatusText.className = `sync-status-text ${type}`;
-        this.syncStatusText.style.display = 'block';
+    showUserSyncStatus(message, type) {
+        this.userSyncStatusText.textContent = message;
+        this.userSyncStatusText.className = `sync-status-display ${type}`;
+        this.userSyncStatusText.style.display = 'block';
     }
 
     initializeSyncUI() {
@@ -2915,7 +2985,7 @@ Says, "Find a home"
     toggleSync() {
         if (!this.firebaseManager) {
             this.showNotification('Firebase no está disponible', 'error');
-            this.enableSyncCheckbox.checked = false;
+            this.userEnableSyncCheckbox.checked = false;
             return;
         }
 

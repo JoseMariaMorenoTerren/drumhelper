@@ -81,6 +81,7 @@
             </div>
             <div class="data-management">
                 <button id="data-options-btn" class="data-btn">Opciones</button>
+                <button id="user-account-btn" class="user-account-btn" title="Cuenta de usuario y sincronización">👤</button>
                 <button id="repertoire-options-btn" class="repertoire-options-btn" title="Opciones de repertorio">⚙️</button>
                 <input type="file" id="import-file-input" accept=".json" style="display: none;">
                 <input type="file" id="import-txt-file-input" accept=".txt" style="display: none;">
@@ -467,36 +468,6 @@
                             </button>
                         </div>
                     </div>
-
-                    <div class="repertoire-sync-section">
-                        <h4>Sincronización en la Nube</h4>
-                        <div class="sync-controls">
-                            <div id="auth-status-display" class="auth-status-display">
-                                <span id="auth-status-text">No autenticado</span>
-                                <button id="auth-login-btn" class="repertoire-action-btn" title="Iniciar sesión">
-                                    🔐 Iniciar Sesión
-                                </button>
-                                <button id="auth-logout-btn" class="repertoire-action-btn secondary" style="display: none;" title="Cerrar sesión">
-                                    🚪 Cerrar Sesión
-                                </button>
-                            </div>
-                            <label class="checkbox-label">
-                                <input type="checkbox" id="enable-sync-checkbox" disabled>
-                                <span class="checkbox-text">Habilitar sincronización automática</span>
-                            </label>
-                            <div class="sync-actions">
-                                <button id="manual-sync-btn" class="repertoire-action-btn" disabled title="Sincronizar manualmente">
-                                    🔄 Sincronizar Ahora
-                                </button>
-                                <button id="sync-status-btn" class="repertoire-action-btn secondary" title="Ver estado de sincronización">
-                                    ℹ️ Estado
-                                </button>
-                            </div>
-                            <div id="sync-status-text" class="sync-status-text" style="display: none;">
-                                <!-- Estado de sincronización -->
-                            </div>
-                        </div>
-                    </div>
                     
                     <div class="repertoire-list-section">
                         <h4>Repertorios Disponibles</h4>
@@ -571,6 +542,77 @@
                 <div id="auth-status" class="auth-status" style="display: none;">
                     <!-- Estado de autenticación -->
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Usuario y Sincronización -->
+    <div id="user-account-modal" class="modal">
+        <div class="modal-content user-account-modal-content">
+            <div class="modal-header">
+                <h2>👤 Cuenta de Usuario y Sincronización</h2>
+                <span class="close user-account-close">&times;</span>
+            </div>
+            <div class="modal-body">
+                
+                <!-- Sección de Estado de Usuario -->
+                <div class="user-status-section">
+                    <h3>Estado de la Cuenta</h3>
+                    <div id="user-status-display" class="user-status-display">
+                        <div class="status-info">
+                            <span id="user-status-text" class="status-text">No autenticado</span>
+                            <span id="user-email-text" class="email-text" style="display: none;"></span>
+                        </div>
+                        <div class="status-actions">
+                            <button id="user-login-btn" class="btn-primary" title="Iniciar sesión">
+                                🔐 Iniciar Sesión
+                            </button>
+                            <button id="user-logout-btn" class="btn-secondary" style="display: none;" title="Cerrar sesión">
+                                🚪 Cerrar Sesión
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sección de Sincronización -->
+                <div class="sync-section">
+                    <h3>Sincronización en la Nube</h3>
+                    <div class="sync-description">
+                        <p>Mantén tus repertorios sincronizados entre todos tus dispositivos con una cuenta de usuario.</p>
+                    </div>
+                    
+                    <div class="sync-controls">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="user-enable-sync-checkbox" disabled>
+                            <span class="checkbox-text">Habilitar sincronización automática</span>
+                        </label>
+                        
+                        <div class="sync-actions">
+                            <button id="user-manual-sync-btn" class="btn-action" disabled title="Sincronizar manualmente">
+                                🔄 Sincronizar Ahora
+                            </button>
+                            <button id="user-sync-status-btn" class="btn-secondary" title="Ver estado de sincronización">
+                                ℹ️ Ver Estado
+                            </button>
+                        </div>
+                        
+                        <div id="user-sync-status-text" class="sync-status-display" style="display: none;">
+                            <!-- Estado de sincronización -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sección de Ayuda -->
+                <div class="sync-help-section">
+                    <h3>¿Cómo funciona?</h3>
+                    <ul class="help-list">
+                        <li><strong>Multi-dispositivo:</strong> Usa la misma cuenta en tablet, móvil y ordenador</li>
+                        <li><strong>Backup automático:</strong> Tus repertorios se guardan seguros en la nube</li>
+                        <li><strong>Sincronización inteligente:</strong> Los cambios se sincronizan automáticamente</li>
+                        <li><strong>Privacidad:</strong> Solo tú puedes acceder a tus datos</li>
+                    </ul>
+                </div>
+
             </div>
         </div>
     </div>
