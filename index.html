@@ -18,6 +18,11 @@
     <!-- Manifest para PWA -->
     <link rel="manifest" href="manifest.json">
     
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+    
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -25,7 +30,7 @@
     <header class="top-section">
         <div class="info-panel">
             <h1>Drum Helper</h1>
-            <div id="version-code">v1.2.4</div>
+            <div id="version-code">v1.3.0</div>
             <div class="song-info">
                 <span id="current-song">Selecciona una canción</span>
                 <span id="current-bpm">BPM: 120</span>
@@ -462,6 +467,36 @@
                             </button>
                         </div>
                     </div>
+
+                    <div class="repertoire-sync-section">
+                        <h4>Sincronización en la Nube</h4>
+                        <div class="sync-controls">
+                            <div id="auth-status-display" class="auth-status-display">
+                                <span id="auth-status-text">No autenticado</span>
+                                <button id="auth-login-btn" class="repertoire-action-btn" title="Iniciar sesión">
+                                    🔐 Iniciar Sesión
+                                </button>
+                                <button id="auth-logout-btn" class="repertoire-action-btn secondary" style="display: none;" title="Cerrar sesión">
+                                    🚪 Cerrar Sesión
+                                </button>
+                            </div>
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="enable-sync-checkbox" disabled>
+                                <span class="checkbox-text">Habilitar sincronización automática</span>
+                            </label>
+                            <div class="sync-actions">
+                                <button id="manual-sync-btn" class="repertoire-action-btn" disabled title="Sincronizar manualmente">
+                                    🔄 Sincronizar Ahora
+                                </button>
+                                <button id="sync-status-btn" class="repertoire-action-btn secondary" title="Ver estado de sincronización">
+                                    ℹ️ Estado
+                                </button>
+                            </div>
+                            <div id="sync-status-text" class="sync-status-text" style="display: none;">
+                                <!-- Estado de sincronización -->
+                            </div>
+                        </div>
+                    </div>
                     
                     <div class="repertoire-list-section">
                         <h4>Repertorios Disponibles</h4>
@@ -511,6 +546,37 @@
         </div>
     </div>
 
+    <!-- Modal de Autenticación -->
+    <div id="auth-modal" class="modal">
+        <div class="modal-content auth-modal-content">
+            <div class="modal-header">
+                <h2 id="auth-modal-title">Iniciar Sesión</h2>
+                <span class="close auth-close">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form id="auth-form">
+                    <div class="form-group">
+                        <label for="auth-email">Email:</label>
+                        <input type="email" id="auth-email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="auth-password">Contraseña:</label>
+                        <input type="password" id="auth-password" required minlength="6">
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" id="auth-submit-btn" class="btn-primary">Iniciar Sesión</button>
+                        <button type="button" id="auth-toggle-btn" class="btn-secondary">¿No tienes cuenta? Regístrate</button>
+                    </div>
+                </form>
+                <div id="auth-status" class="auth-status" style="display: none;">
+                    <!-- Estado de autenticación -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/firebaseConfig.js"></script>
+    <script src="js/firebaseManager.js"></script>
     <script src="js/metronome.js"></script>
     <script src="js/songManager.js"></script>
     <script src="js/lyricsScroller.js"></script>

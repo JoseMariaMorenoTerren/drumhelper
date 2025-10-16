@@ -54,6 +54,25 @@ class SongManager {
         this.showArtistBpmCheckbox = document.getElementById('show-artist-bpm-checkbox');
         this.hideNotesCheckbox = document.getElementById('hide-notes-checkbox');
         
+        // Elementos de sincronización Firebase
+        this.enableSyncCheckbox = document.getElementById('enable-sync-checkbox');
+        this.manualSyncBtn = document.getElementById('manual-sync-btn');
+        this.syncStatusBtn = document.getElementById('sync-status-btn');
+        this.syncStatusText = document.getElementById('sync-status-text');
+        this.authLoginBtn = document.getElementById('auth-login-btn');
+        this.authLogoutBtn = document.getElementById('auth-logout-btn');
+        this.authStatusText = document.getElementById('auth-status-text');
+        this.authStatusDisplay = document.getElementById('auth-status-display');
+        this.authModal = document.getElementById('auth-modal');
+        this.authForm = document.getElementById('auth-form');
+        this.authEmail = document.getElementById('auth-email');
+        this.authPassword = document.getElementById('auth-password');
+        this.authSubmitBtn = document.getElementById('auth-submit-btn');
+        this.authToggleBtn = document.getElementById('auth-toggle-btn');
+        this.authStatus = document.getElementById('auth-status');
+        this.authClose = document.querySelector('.auth-close');
+        this.isSignUpMode = false;
+        
         // Elementos de copia de canciones
         this.copyTargetRepertoireSelect = document.getElementById('copy-target-repertoire-select');
         this.copySongBtn = document.getElementById('copy-song-btn');
@@ -61,6 +80,10 @@ class SongManager {
         this.editingSong = null;
         this.isOrderMode = false;
         this.tempOrderCounter = 0; // Variable temporal que empieza en 0
+        
+        // Inicializar Firebase
+        this.firebaseManager = null;
+        this.initializeFirebase();
         
         this.initializeEventListeners();
         this.loadRepertoires();
@@ -72,6 +95,25 @@ class SongManager {
         setTimeout(() => {
             this.selectActiveSong();
         }, 100);
+    }
+    
+    async initializeFirebase() {
+        try {
+            // Esperar a que Firebase esté disponible
+            if (typeof FirebaseManager !== 'undefined') {
+                this.firebaseManager = new FirebaseManager();
+                console.log('🔥 Firebase Manager inicializado en SongManager');
+                
+                // Inicializar UI de sincronización después de un breve delay
+                setTimeout(() => {
+                    this.initializeSyncUI();
+                }, 500);
+            } else {
+                console.warn('🔥 FirebaseManager no disponible');
+            }
+        } catch (error) {
+            console.error('❌ Error inicializando Firebase Manager:', error);
+        }
     }
     
     initializeEventListeners() {
@@ -279,6 +321,66 @@ class SongManager {
         if (this.hideNotesCheckbox) {
             this.hideNotesCheckbox.addEventListener('change', () => {
                 this.saveDisplaySettings();
+            });
+        }
+
+        // Event listeners para sincronización Firebase
+        if (this.enableSyncCheckbox) {
+            this.enableSyncCheckbox.addEventListener('change', () => {
+                this.toggleSync();
+            });
+        }
+
+        if (this.manualSyncBtn) {
+            this.manualSyncBtn.addEventListener('click', () => {
+                this.performManualSync();
+            });
+        }
+
+        if (this.syncStatusBtn) {
+            this.syncStatusBtn.addEventListener('click', () => {
+                this.toggleSyncStatus();
+            });
+        }
+
+        // Event listeners para autenticación
+        if (this.authLoginBtn) {
+            this.authLoginBtn.addEventListener('click', () => {
+                this.openAuthModal();
+            });
+        }
+
+        if (this.authLogoutBtn) {
+            this.authLogoutBtn.addEventListener('click', () => {
+                this.performLogout();
+            });
+        }
+
+        if (this.authForm) {
+            this.authForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                this.handleAuthSubmit();
+            });
+        }
+
+        if (this.authToggleBtn) {
+            this.authToggleBtn.addEventListener('click', () => {
+                this.toggleAuthMode();
+            });
+        }
+
+        if (this.authClose) {
+            this.authClose.addEventListener('click', () => {
+                this.closeAuthModal();
+            });
+        }
+
+        // Cerrar modal al hacer clic fuera
+        if (this.authModal) {
+            this.authModal.addEventListener('click', (e) => {
+                if (e.target === this.authModal) {
+                    this.closeAuthModal();
+                }
             });
         }
     }
@@ -1906,7 +2008,7 @@ Says, "Find a home"
         }
     }
 
-    saveRepertoires() {
+    async saveRepertoires() {
         try {
             // Guardar el repertorio actual
             const currentRepertoire = this.repertoires.get(this.currentRepertoireId);
@@ -1915,14 +2017,74 @@ Says, "Find a home"
                 currentRepertoire.setlistName = this.setlistName;
             }
 
-            // Guardar todos los repertorios
+            // Guardar todos los repertorios en localStorage
             const data = {
                 currentRepertoireId: this.currentRepertoireId,
                 repertoires: Object.fromEntries(this.repertoires)
             };
             localStorage.setItem(this.repertoiresKey, JSON.stringify(data));
+            
+            // Marcar fecha de última modificación local
+            if (this.firebaseManager) {
+                this.firebaseManager.setLocalLastModified();
+            }
+            
+            // Sincronizar con Firebase si está habilitado
+            this.syncWithFirebase();
+            
         } catch (error) {
             console.error('Error guardando repertorios:', error);
+        }
+    }
+    
+    async syncWithFirebase() {
+        if (!this.firebaseManager || !this.firebaseManager.syncEnabled) {
+            return;
+        }
+        
+        try {
+            const result = await this.firebaseManager.syncRepertoires(this.repertoires);
+            
+            if (result.success) {
+                console.log('🔥 Sync resultado:', result.message);
+                
+                // Si necesitamos actualizar datos locales
+                if (result.shouldUpdateLocal && result.data) {
+                    await this.loadFromFirebaseData(result.data);
+                }
+            } else {
+                console.warn('⚠️ Sync falló:', result.message);
+            }
+        } catch (error) {
+            console.error('❌ Error en sync Firebase:', error);
+        }
+    }
+    
+    async loadFromFirebaseData(firebaseData) {
+        try {
+            console.log('⬇️ Cargando datos desde Firebase...');
+            
+            // Actualizar repertorios con datos de Firebase
+            this.repertoires = firebaseData.repertoires;
+            
+            // Guardar en localStorage también
+            const data = {
+                currentRepertoireId: this.currentRepertoireId,
+                repertoires: Object.fromEntries(this.repertoires)
+            };
+            localStorage.setItem(this.repertoiresKey, JSON.stringify(data));
+            
+            // Recargar la interfaz
+            this.updateRepertoireSelect();
+            this.updateRepertoireList();
+            this.loadSongs();
+            this.renderSongs();
+            
+            this.showNotification('Datos sincronizados desde la nube', 'success');
+            
+        } catch (error) {
+            console.error('❌ Error cargando datos de Firebase:', error);
+            this.showNotification('Error sincronizando datos', 'error');
         }
     }
 
@@ -2489,6 +2651,354 @@ Says, "Find a home"
         this.updateCopyButtonState();
         
         console.log(`📄 Canción copiada: "${songCopy.title}" → ${targetRepertoire.name}`);
+    }
+
+    // Métodos de autenticación Firebase
+    onAuthStateChanged(user) {
+        this.updateAuthUI(user);
+        
+        if (user) {
+            // Usuario autenticado - intentar sincronizar
+            this.performManualSync();
+        }
+    }
+
+    updateAuthUI(user) {
+        if (user) {
+            // Usuario autenticado
+            this.authStatusText.textContent = `Conectado: ${user.email}`;
+            this.authStatusDisplay.classList.add('authenticated');
+            this.authLoginBtn.style.display = 'none';
+            this.authLogoutBtn.style.display = 'block';
+            this.enableSyncCheckbox.disabled = false;
+            this.manualSyncBtn.disabled = false;
+        } else {
+            // Usuario no autenticado
+            this.authStatusText.textContent = 'No autenticado';
+            this.authStatusDisplay.classList.remove('authenticated');
+            this.authLoginBtn.style.display = 'block';
+            this.authLogoutBtn.style.display = 'none';
+            this.enableSyncCheckbox.disabled = true;
+            this.enableSyncCheckbox.checked = false;
+            this.manualSyncBtn.disabled = true;
+        }
+    }
+
+    openAuthModal() {
+        if (this.authModal) {
+            this.authModal.style.display = 'block';
+            this.authEmail.focus();
+        }
+    }
+
+    closeAuthModal() {
+        if (this.authModal) {
+            this.authModal.style.display = 'none';
+            this.clearAuthForm();
+        }
+    }
+
+    clearAuthForm() {
+        if (this.authEmail) this.authEmail.value = '';
+        if (this.authPassword) this.authPassword.value = '';
+        this.hideAuthStatus();
+    }
+
+    toggleAuthMode() {
+        this.isSignUpMode = !this.isSignUpMode;
+        
+        const title = document.getElementById('auth-modal-title');
+        if (this.isSignUpMode) {
+            title.textContent = 'Crear Cuenta';
+            this.authSubmitBtn.textContent = 'Registrarse';
+            this.authToggleBtn.textContent = '¿Ya tienes cuenta? Inicia sesión';
+        } else {
+            title.textContent = 'Iniciar Sesión';
+            this.authSubmitBtn.textContent = 'Iniciar Sesión';
+            this.authToggleBtn.textContent = '¿No tienes cuenta? Regístrate';
+        }
+        
+        this.hideAuthStatus();
+    }
+
+    async handleAuthSubmit() {
+        const email = this.authEmail.value.trim();
+        const password = this.authPassword.value;
+
+        if (!email || !password) {
+            this.showAuthStatus('Por favor completa todos los campos', 'error');
+            return;
+        }
+
+        if (password.length < 6) {
+            this.showAuthStatus('La contraseña debe tener al menos 6 caracteres', 'error');
+            return;
+        }
+
+        this.authSubmitBtn.disabled = true;
+        this.authSubmitBtn.textContent = 'Procesando...';
+
+        try {
+            let result;
+            if (this.isSignUpMode) {
+                result = await this.firebaseManager.signUpWithEmail(email, password);
+            } else {
+                result = await this.firebaseManager.signInWithEmail(email, password);
+            }
+
+            if (result.success) {
+                this.showAuthStatus(
+                    this.isSignUpMode ? 'Cuenta creada exitosamente' : 'Inicio de sesión exitoso',
+                    'success'
+                );
+                
+                setTimeout(() => {
+                    this.closeAuthModal();
+                }, 1500);
+            } else {
+                this.showAuthStatus(this.getAuthErrorMessage(result.error), 'error');
+            }
+        } catch (error) {
+            console.error('Error en autenticación:', error);
+            this.showAuthStatus('Error de conexión. Inténtalo de nuevo.', 'error');
+        }
+
+        this.authSubmitBtn.disabled = false;
+        this.authSubmitBtn.textContent = this.isSignUpMode ? 'Registrarse' : 'Iniciar Sesión';
+    }
+
+    async performLogout() {
+        try {
+            const result = await this.firebaseManager.signOut();
+            if (result.success) {
+                this.showNotification('Sesión cerrada correctamente', 'success');
+            } else {
+                this.showNotification('Error cerrando sesión', 'error');
+            }
+        } catch (error) {
+            console.error('Error cerrando sesión:', error);
+            this.showNotification('Error cerrando sesión', 'error');
+        }
+    }
+
+    showAuthStatus(message, type) {
+        this.authStatus.textContent = message;
+        this.authStatus.className = `auth-status ${type}`;
+        this.authStatus.style.display = 'block';
+    }
+
+    hideAuthStatus() {
+        this.authStatus.style.display = 'none';
+    }
+
+    getAuthErrorMessage(error) {
+        switch (error) {
+            case 'auth/user-not-found':
+                return 'No existe una cuenta con este email';
+            case 'auth/wrong-password':
+                return 'Contraseña incorrecta';
+            case 'auth/email-already-in-use':
+                return 'Ya existe una cuenta con este email';
+            case 'auth/weak-password':
+                return 'La contraseña es muy débil';
+            case 'auth/invalid-email':
+                return 'Email inválido';
+            case 'auth/user-disabled':
+                return 'Esta cuenta ha sido deshabilitada';
+            case 'auth/too-many-requests':
+                return 'Demasiados intentos. Inténtalo más tarde';
+            default:
+                return error || 'Error desconocido';
+        }
+    }
+
+    // Métodos de sincronización actualizados
+    toggleSync() {
+        if (!this.firebaseManager || !this.firebaseManager.isAuthenticated()) {
+            this.showNotification('Debes iniciar sesión para habilitar la sincronización', 'warning');
+            this.enableSyncCheckbox.checked = false;
+            return;
+        }
+
+        if (this.enableSyncCheckbox.checked) {
+            this.firebaseManager.enableSync();
+            this.showNotification('Sincronización habilitada', 'success');
+        } else {
+            this.firebaseManager.disableSync();
+            this.showNotification('Sincronización deshabilitada', 'info');
+        }
+    }
+
+    async performManualSync() {
+        if (!this.firebaseManager || !this.firebaseManager.isAuthenticated()) {
+            this.showNotification('Debes iniciar sesión para sincronizar', 'warning');
+            return;
+        }
+
+        this.manualSyncBtn.disabled = true;
+        this.manualSyncBtn.textContent = '🔄 Sincronizando...';
+
+        try {
+            const result = await this.firebaseManager.syncRepertoires(this.repertoires);
+            
+            if (result.success) {
+                this.showNotification(result.message, 'success');
+                
+                // Si necesitamos actualizar datos locales
+                if (result.shouldUpdateLocal && result.data) {
+                    await this.loadFromFirebaseData(result.data);
+                }
+            } else {
+                this.showNotification(`Error: ${result.message}`, 'error');
+            }
+        } catch (error) {
+            console.error('Error en sincronización manual:', error);
+            this.showNotification('Error de conexión durante la sincronización', 'error');
+        }
+
+        this.manualSyncBtn.disabled = false;
+        this.manualSyncBtn.textContent = '🔄 Sincronizar Ahora';
+    }
+
+    toggleSyncStatus() {
+        if (!this.firebaseManager) {
+            this.showSyncStatus('Firebase no disponible', 'error');
+            return;
+        }
+
+        const status = this.firebaseManager.getConnectionStatus();
+        const isVisible = this.syncStatusText.style.display !== 'none';
+
+        if (isVisible) {
+            this.syncStatusText.style.display = 'none';
+        } else {
+            let statusText = `Estado de Firebase:\n`;
+            statusText += `• Inicializado: ${status.initialized ? 'Sí' : 'No'}\n`;
+            statusText += `• Autenticado: ${status.authenticated ? 'Sí' : 'No'}\n`;
+            
+            if (status.user) {
+                statusText += `• Usuario: ${status.user.email}\n`;
+                statusText += `• ID: ${status.user.uid}\n`;
+            }
+            
+            statusText += `• Sincronización: ${status.syncEnabled ? 'Habilitada' : 'Deshabilitada'}\n`;
+            
+            if (status.lastSync) {
+                statusText += `• Último sync: ${status.lastSync.toLocaleString()}`;
+            } else {
+                statusText += `• Último sync: Nunca`;
+            }
+
+            this.showSyncStatus(statusText, status.authenticated ? 'success' : 'warning');
+        }
+    }
+
+    showSyncStatus(message, type) {
+        this.syncStatusText.textContent = message;
+        this.syncStatusText.className = `sync-status-text ${type}`;
+        this.syncStatusText.style.display = 'block';
+    }
+
+    initializeSyncUI() {
+        // Configurar UI inicial basada en el estado de Firebase
+        if (this.firebaseManager) {
+            const status = this.firebaseManager.getConnectionStatus();
+            this.updateAuthUI(status.user);
+            
+            if (this.enableSyncCheckbox) {
+                this.enableSyncCheckbox.checked = status.syncEnabled;
+            }
+        }
+    }
+
+    // Métodos de sincronización Firebase
+    toggleSync() {
+        if (!this.firebaseManager) {
+            this.showNotification('Firebase no está disponible', 'error');
+            this.enableSyncCheckbox.checked = false;
+            return;
+        }
+
+        if (this.enableSyncCheckbox.checked) {
+            this.firebaseManager.enableSync();
+            this.showNotification('Sincronización habilitada', 'success');
+            // Realizar primera sincronización
+            this.performManualSync();
+        } else {
+            this.firebaseManager.disableSync();
+            this.showNotification('Sincronización deshabilitada', 'info');
+        }
+    }
+
+    async performManualSync() {
+        if (!this.firebaseManager) {
+            this.showNotification('Firebase no está disponible', 'error');
+            return;
+        }
+
+        try {
+            this.updateSyncStatus('Sincronizando...', 'info');
+            
+            const result = await this.firebaseManager.syncRepertoires(this.repertoires);
+            
+            if (result.success) {
+                this.updateSyncStatus(result.message, 'success');
+                
+                // Si necesitamos actualizar datos locales
+                if (result.shouldUpdateLocal && result.data) {
+                    await this.loadFromFirebaseData(result.data);
+                }
+            } else {
+                this.updateSyncStatus(result.message, 'error');
+            }
+        } catch (error) {
+            console.error('❌ Error en sincronización manual:', error);
+            this.updateSyncStatus('Error de conexión', 'error');
+        }
+    }
+
+    toggleSyncStatus() {
+        if (this.syncStatusText.style.display === 'none') {
+            this.showSyncStatus();
+        } else {
+            this.hideSyncStatus();
+        }
+    }
+
+    showSyncStatus() {
+        if (!this.firebaseManager) {
+            this.updateSyncStatus('Firebase no disponible', 'error');
+            return;
+        }
+
+        const status = this.firebaseManager.getConnectionStatus();
+        const statusText = `
+Estado: ${status.initialized ? '✅ Conectado' : '❌ Desconectado'}
+Sync: ${status.syncEnabled ? '✅ Habilitado' : '❌ Deshabilitado'}
+Usuario: ${status.userId}
+Último sync: ${status.lastSync ? status.lastSync.toLocaleString() : 'Nunca'}
+        `;
+        
+        this.updateSyncStatus(statusText, status.initialized ? 'success' : 'error');
+    }
+
+    hideSyncStatus() {
+        this.syncStatusText.style.display = 'none';
+    }
+
+    updateSyncStatus(message, type = 'info') {
+        if (this.syncStatusText) {
+            this.syncStatusText.textContent = message;
+            this.syncStatusText.className = `sync-status-text ${type}`;
+            this.syncStatusText.style.display = 'block';
+        }
+    }
+
+    // Inicializar estado de sincronización
+    initializeSyncUI() {
+        if (this.firebaseManager && this.enableSyncCheckbox) {
+            this.enableSyncCheckbox.checked = this.firebaseManager.syncEnabled;
+        }
     }
 }
 
