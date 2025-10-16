@@ -2178,6 +2178,11 @@ body.concert-mode .playback-controls {
     width: 90%;
     max-height: 80vh;
     overflow-y: auto;
+    /* Fixes específicos para iPad */
+    -webkit-overflow-scrolling: touch;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    position: relative;
 }
 
 .user-account-modal-content h3 {
