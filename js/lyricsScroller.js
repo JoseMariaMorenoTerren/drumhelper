@@ -260,8 +260,10 @@ class LyricsScroller {
         });
         
         // Procesar instrucciones de espera (patrón //espera=XXX)
+        let waitCounter = 0;
         processedText = processedText.replace(/\/\/espera=(\d+)/gi, (match, seconds) => {
-            return `<span class="wait-instruction">espera ${seconds}s</span>`;
+            const waitId = `wait-instruction-${waitCounter++}`;
+            return `<span class="wait-instruction" id="${waitId}" data-seconds="${seconds}">espera ${seconds}s</span>`;
         });
         
         // Convertir texto entre /0 y 0/ a HTML resaltado amarillo
@@ -674,6 +676,7 @@ class LyricsScroller {
 
         const lines = lyrics.split('\n');
         let cumulativeHeight = 0;
+        let waitCounter = 0;
         const lineHeight = 40; // Altura aproximada por línea en píxeles
 
         lines.forEach((line, index) => {
@@ -684,12 +687,14 @@ class LyricsScroller {
                 waitMatches.forEach(match => {
                     const seconds = parseInt(match.split('=')[1], 10);
                     if (seconds > 0) {
+                        const waitId = `wait-instruction-${waitCounter++}`;
                         this.waitInstructions.push({
                             line: index + 1,
                             seconds: seconds,
-                            approximatePosition: cumulativeHeight
+                            approximatePosition: cumulativeHeight,
+                            elementId: waitId
                         });
-                        console.log(`⏱️ Espera encontrada: ${seconds}s en línea ${index + 1} (posición ~${cumulativeHeight}px)`);
+                        console.log(`⏱️ Espera encontrada: ${seconds}s en línea ${index + 1} (posición ~${cumulativeHeight}px) ID: ${waitId}`);
                     }
                 });
             }
@@ -718,7 +723,7 @@ class LyricsScroller {
         let accumulatedWaitTime = 0;
 
         this.waitInstructions.forEach((waitInstruction) => {
-            const { position, seconds } = waitInstruction;
+            const { position, seconds, elementId } = waitInstruction;
             
             // Calcular el tiempo cuando el scroll debería llegar a esta posición
             const timeToPosition = position / this.countdownScrollSpeed;
@@ -729,12 +734,22 @@ class LyricsScroller {
                 if (this.isCountdown && this.timerRunning) {
                     console.log(`⏸️ Pausando scroll por ${seconds}s en posición ${position}px`);
                     this.isPaused = true;
+                    
+                    // Resaltar la instrucción de espera
+                    if (elementId) {
+                        this.highlightWaitInstruction(elementId);
+                    }
 
                     // Programar la reanudación
                     const resumeTimeout = setTimeout(() => {
                         if (this.isCountdown && this.timerRunning) {
                             console.log('▶️ Reanudando scroll');
                             this.isPaused = false;
+                            
+                            // Quitar resaltado de la instrucción
+                            if (elementId) {
+                                this.unhighlightWaitInstruction(elementId);
+                            }
                         }
                     }, seconds * 1000);
 
@@ -819,6 +834,9 @@ class LyricsScroller {
         this.pauseTimeouts.forEach(timeout => clearTimeout(timeout));
         this.pauseTimeouts = [];
         this.isPaused = false;
+        
+        // Limpiar todos los resaltados de instrucciones de espera
+        this.clearAllWaitHighlights();
     }
 
     updateTimerDisplay() {
@@ -1024,6 +1042,30 @@ class LyricsScroller {
         } else {
             this.prompterTitleText.textContent = 'Sin canción seleccionada';
         }
+    }
+
+    // Métodos para resaltar instrucciones de espera
+    highlightWaitInstruction(elementId) {
+        const element = document.getElementById(elementId);
+        if (element) {
+            element.classList.add('wait-instruction-active');
+            console.log(`🟡 Resaltando instrucción de espera: ${elementId}`);
+        }
+    }
+
+    unhighlightWaitInstruction(elementId) {
+        const element = document.getElementById(elementId);
+        if (element) {
+            element.classList.remove('wait-instruction-active');
+            console.log(`⚪ Quitando resaltado de instrucción: ${elementId}`);
+        }
+    }
+
+    clearAllWaitHighlights() {
+        const activeInstructions = document.querySelectorAll('.wait-instruction-active');
+        activeInstructions.forEach(element => {
+            element.classList.remove('wait-instruction-active');
+        });
     }
 }
 

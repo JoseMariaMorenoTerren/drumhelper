@@ -188,6 +188,16 @@ body {
     vertical-align: middle;
     float: right;
     clear: right;
+    transition: all 0.3s ease;
+}
+
+/* Instrucción de espera activa (durante la pausa) */
+.wait-instruction-active {
+    background-color: #ffeb3b !important;
+    color: #333 !important;
+    opacity: 1 !important;
+    box-shadow: 0 0 8px rgba(255, 235, 59, 0.6);
+    transform: scale(1.1);
 }
 
 /* Metrónomo */

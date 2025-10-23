@@ -852,8 +852,10 @@ Says, "Find a home"
         });
         
         // Procesar instrucciones de espera (patrón //espera=XXX)
+        let waitCounter = 0;
         processedText = processedText.replace(/\/\/espera=(\d+)/gi, (match, seconds) => {
-            return `<span class="wait-instruction">espera ${seconds}s</span>`;
+            const waitId = `wait-instruction-${waitCounter++}`;
+            return `<span class="wait-instruction" id="${waitId}" data-seconds="${seconds}">espera ${seconds}s</span>`;
         });
         
         // Convertir texto entre /0 y 0/ a HTML resaltado amarillo
