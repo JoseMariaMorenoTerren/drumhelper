@@ -851,11 +851,9 @@ Says, "Find a home"
             return `<img src="imagenes/${filename}" alt="${filename}" onerror="this.style.display='none'" loading="lazy">`;
         });
         
-        // Procesar instrucciones de espera (patrón //espera=XXX)
-        let waitCounter = 0;
+        // Procesar instrucciones de espera (patrón //espera=XXX) - solo mostrar texto, sin funcionalidad
         processedText = processedText.replace(/\/\/espera=(\d+)/gi, (match, seconds) => {
-            const waitId = `wait-instruction-${waitCounter++}`;
-            return `<span class="wait-instruction" id="${waitId}" data-seconds="${seconds}">espera ${seconds}s</span>`;
+            return `<span class="wait-instruction-display">espera ${seconds}s</span>`;
         });
         
         // Convertir texto entre /0 y 0/ a HTML resaltado amarillo

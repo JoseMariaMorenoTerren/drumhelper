@@ -191,6 +191,21 @@ body {
     transition: all 0.3s ease;
 }
 
+/* Instrucciones de espera en notas (solo visuales, sin funcionalidad) */
+.wait-instruction-display {
+    color: #888 !important;
+    font-size: 0.4em !important;
+    font-style: italic;
+    opacity: 0.8;
+    background-color: rgba(136, 136, 136, 0.1);
+    padding: 2px 4px;
+    border-radius: 3px;
+    margin: 0 2px;
+    vertical-align: middle;
+    float: right;
+    clear: right;
+}
+
 /* Instrucción de espera activa (durante la pausa) */
 .wait-instruction-active {
     background-color: #ffeb3b !important;

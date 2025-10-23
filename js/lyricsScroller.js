@@ -61,6 +61,10 @@ class LyricsScroller {
         this.waitInstructions = []; // Array de instrucciones de espera encontradas
         this.isPaused = false; // Flag para pausas programadas
         this.pauseTimeouts = []; // Timeouts para pausas programadas
+        this.waitCounter = 0; // Contador global para IDs únicos de instrucciones de espera
+        
+        // Hacer el contador global disponible estáticamente
+        LyricsScroller.globalWaitCounter = 0;
         
         this.initializeEventListeners();
         this.loadFontSizePreference();
@@ -236,6 +240,10 @@ class LyricsScroller {
     }
     
     loadLyrics(lyrics) {
+        // Reiniciar contador de instrucciones de espera
+        this.waitCounter = 0;
+        LyricsScroller.globalWaitCounter = 0;
+        
         if (!lyrics || lyrics.trim() === '') {
             this.lyricsContent.innerHTML = `
                 <p class="welcome-message">
@@ -248,6 +256,11 @@ class LyricsScroller {
             // Procesar las letras para mejor visualización
             const processedLyrics = this.processLyrics(lyrics);
             this.lyricsContent.innerHTML = processedLyrics;
+            
+            // Extraer instrucciones de espera después de cargar el DOM
+            setTimeout(() => {
+                this.extractWaitInstructions();
+            }, 10);
         }
         
         this.resetScroll();
@@ -260,9 +273,8 @@ class LyricsScroller {
         });
         
         // Procesar instrucciones de espera (patrón //espera=XXX)
-        let waitCounter = 0;
         processedText = processedText.replace(/\/\/espera=(\d+)/gi, (match, seconds) => {
-            const waitId = `wait-instruction-${waitCounter++}`;
+            const waitId = `wait-instruction-${LyricsScroller.globalWaitCounter++}`;
             return `<span class="wait-instruction" id="${waitId}" data-seconds="${seconds}">espera ${seconds}s</span>`;
         });
         
@@ -673,41 +685,31 @@ class LyricsScroller {
         return minutes * 60 + seconds;
     }
 
-    extractWaitInstructions(lyrics) {
-        // Extraer todas las instrucciones de espera del texto
+    extractWaitInstructions() {
+        // Extraer todas las instrucciones de espera buscando elementos DOM ya generados
         this.waitInstructions = [];
         
-        if (!lyrics) {
-            return;
-        }
-
-        const lines = lyrics.split('\n');
-        let cumulativeHeight = 0;
-        let waitCounter = 0;
-        const lineHeight = 40; // Altura aproximada por línea en píxeles
-
-        lines.forEach((line, index) => {
-            // Buscar instrucciones de espera en esta línea
-            const waitMatches = line.match(/\/\/espera=(\d+)/gi);
+        // Buscar todos los elementos de instrucciones de espera en el DOM
+        const waitElements = this.lyricsContent.querySelectorAll('.wait-instruction[id^="wait-instruction-"]');
+        
+        waitElements.forEach((element, index) => {
+            const seconds = parseInt(element.getAttribute('data-seconds'), 10);
+            const elementId = element.id;
             
-            if (waitMatches) {
-                waitMatches.forEach(match => {
-                    const seconds = parseInt(match.split('=')[1], 10);
-                    if (seconds > 0) {
-                        const waitId = `wait-instruction-${waitCounter++}`;
-                        this.waitInstructions.push({
-                            line: index + 1,
-                            seconds: seconds,
-                            approximatePosition: cumulativeHeight,
-                            elementId: waitId
-                        });
-                        console.log(`⏱️ Espera encontrada: ${seconds}s en línea ${index + 1} (posición ~${cumulativeHeight}px) ID: ${waitId}`);
-                    }
+            if (seconds > 0) {
+                // Calcular posición aproximada basada en la posición del elemento
+                const elementRect = element.getBoundingClientRect();
+                const containerRect = this.lyricsContainer.getBoundingClientRect();
+                const approximatePosition = Math.max(0, elementRect.top - containerRect.top);
+                
+                this.waitInstructions.push({
+                    line: index + 1, // Usar índice del elemento
+                    seconds: seconds,
+                    approximatePosition: approximatePosition,
+                    elementId: elementId
                 });
+                console.log(`⏱️ Espera encontrada: ${seconds}s en elemento ${elementId} (posición ~${approximatePosition}px)`);
             }
-            
-            // Incrementar altura acumulativa (aproximada)
-            cumulativeHeight += lineHeight;
         });
 
         console.log(`📝 Total de esperas encontradas: ${this.waitInstructions.length}`);
@@ -811,11 +813,8 @@ class LyricsScroller {
             return;
         }
         
-        // Extraer instrucciones de espera del contenido actual
-        const currentSong = window.songManager ? window.songManager.getCurrentSong() : null;
-        if (currentSong && currentSong.lyrics) {
-            this.extractWaitInstructions(currentSong.lyrics);
-        }
+        // Extraer instrucciones de espera del contenido actual DOM
+        this.extractWaitInstructions();
 
         // Calcular tiempo total disponible para scroll (descontando las esperas)
         const totalWaitTime = this.calculateTotalWaitTime();
