@@ -712,6 +712,22 @@ class LyricsScroller {
         return this.waitInstructions.reduce((total, wait) => total + wait.seconds, 0);
     }
 
+    calculateRealWaitPositions() {
+        // Calcular posiciones reales basadas en los elementos DOM generados
+        this.waitInstructions.forEach((waitInstruction) => {
+            const element = document.getElementById(waitInstruction.elementId);
+            if (element) {
+                // Calcular la posición real del elemento relativa al contenedor
+                const elementRect = element.getBoundingClientRect();
+                const containerRect = this.lyricsContainer.getBoundingClientRect();
+                const realPosition = elementRect.top - containerRect.top + this.scrollPosition;
+                
+                waitInstruction.realPosition = Math.max(0, realPosition);
+                console.log(`📍 Posición real de ${waitInstruction.elementId}: ${waitInstruction.realPosition}px (estimada: ${waitInstruction.approximatePosition}px)`);
+            }
+        });
+    }
+
     scheduleWaitPauses(intervalMs) {
         // Limpiar timeouts previos
         this.pauseTimeouts.forEach(timeout => clearTimeout(timeout));
@@ -719,15 +735,26 @@ class LyricsScroller {
 
         if (this.waitInstructions.length === 0) return;
 
-        // Programar pausas basadas en las posiciones calculadas previamente
+        // Calcular posiciones reales de los elementos DOM
+        this.calculateRealWaitPositions();
+
+        // Programar pausas basadas en las posiciones reales
         let accumulatedWaitTime = 0;
 
         this.waitInstructions.forEach((waitInstruction) => {
-            const { position, seconds, elementId } = waitInstruction;
+            const { realPosition, approximatePosition, seconds, elementId } = waitInstruction;
+            
+            // Usar posición real si está disponible, sino usar aproximada
+            const position = realPosition !== undefined ? realPosition : approximatePosition;
+            
+            console.log(`🔍 Procesando espera: ${elementId}, posición: ${position}px, duración: ${seconds}s`);
+            console.log(`📊 Velocidad de scroll: ${this.countdownScrollSpeed}px/s`);
             
             // Calcular el tiempo cuando el scroll debería llegar a esta posición
             const timeToPosition = position / this.countdownScrollSpeed;
             const totalTimeToElement = timeToPosition + accumulatedWaitTime;
+            
+            console.log(`⏰ Tiempo hasta la posición: ${timeToPosition.toFixed(2)}s, tiempo total: ${totalTimeToElement.toFixed(2)}s`);
 
             // Programar la pausa
             const pauseTimeout = setTimeout(() => {
