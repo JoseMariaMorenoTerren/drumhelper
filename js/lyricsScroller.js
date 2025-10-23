@@ -392,9 +392,11 @@ class LyricsScroller {
         this.isAutoScrolling = !this.isAutoScrolling;
         
         if (this.isAutoScrolling) {
+            console.log('🤖 AUTOSCROLL ACTIVADO');
             this.autoScrollBtn.classList.add('active');
             this.autoScrollBtn.textContent = 'A';
         } else {
+            console.log('👤 AUTOSCROLL DESACTIVADO - Modo manual');
             this.autoScrollBtn.classList.remove('active');
             this.autoScrollBtn.textContent = 'M';
         }
@@ -578,8 +580,10 @@ class LyricsScroller {
     
     toggleTimer() {
         if (this.timerRunning) {
+            console.log('🎛️ TOGGLE TIMER - Pausando...');
             this.pauseTimer();
         } else {
+            console.log('🎛️ TOGGLE TIMER - Iniciando reproducción...');
             this.startPlayback();
         }
     }
@@ -589,6 +593,8 @@ class LyricsScroller {
         this.playPauseBtn.textContent = '⏸️';
         this.concertPlayBtn.textContent = '⏸️';
         
+        console.log('▶️ TIMER INICIADO');
+        
         this.timerInterval = setInterval(() => {
             if (this.isCountdown) {
                 // Modo cuenta atrás
@@ -597,6 +603,7 @@ class LyricsScroller {
                 
                 // Si llega a cero, parar el timer
                 if (this.countdownTime <= 0) {
+                    console.log('🏁 COUNTDOWN TERMINADO - Timer detenido automáticamente');
                     this.pauseTimer();
                     this.isCountdown = false;
                     this.countdownTime = 0;
@@ -629,7 +636,7 @@ class LyricsScroller {
         this.countdownTime = countdownDuration;
         this.elapsedTime = 0; // Resetear también el tiempo transcurrido
         
-        console.log(`⏰ Iniciando cuenta atrás de ${Math.floor(countdownDuration/60)}:${(countdownDuration%60).toString().padStart(2,'0')}`);
+        console.log(`🚀 INICIANDO COUNTDOWN de ${Math.floor(countdownDuration/60)}:${(countdownDuration%60).toString().padStart(2,'0')}`);
         
         // Volver al comienzo
         this.scrollPosition = 0;
@@ -894,6 +901,7 @@ class LyricsScroller {
     }
     
     startRecording() {
+        console.log('🔴 GRABACIÓN INICIADA');
         this.isRecording = true;
         this.recordBtn.classList.add('recording');
         this.recordBtn.textContent = '⏹️';
@@ -913,6 +921,7 @@ class LyricsScroller {
     }
     
     stopRecording() {
+        console.log('⏹️ GRABACIÓN DETENIDA');
         this.isRecording = false;
         this.recordBtn.classList.remove('recording');
         this.recordBtn.textContent = '🔴';
@@ -944,11 +953,12 @@ class LyricsScroller {
     }
     
     startPlayback() {
+        console.log('📼 INICIANDO REPRODUCCIÓN DE GRABACIÓN');
         // Obtener los eventos de grabación de la canción actual
         const currentSong = window.songManager ? window.songManager.getCurrentSong() : null;
         
         if (!currentSong || !currentSong.recordings || currentSong.recordings.length === 0) {
-            console.log('ℹNo hay datos de grabación para esta canción - iniciando cuenta atrás');
+            console.log('ℹ️ No hay datos de grabación para esta canción - iniciando countdown');
             this.startCountdown();
             return;
         }
@@ -1011,9 +1021,12 @@ class LyricsScroller {
         this.playPauseBtn.textContent = '▶️';
         this.concertPlayBtn.textContent = '▶️';
         
+        console.log('⏸️ TIMER PAUSADO');
+        
         if (this.timerInterval) {
             clearInterval(this.timerInterval);
             this.timerInterval = null;
+            console.log('⏹️ Interval del timer limpiado');
         }
         
         // Limpiar reproducción programada
@@ -1033,6 +1046,7 @@ class LyricsScroller {
     }
     
     restartTimer() {
+        console.log('🔄 TIMER REINICIADO');
         this.pauseTimer();
         this.elapsedTime = 0;
         this.isCountdown = false;
