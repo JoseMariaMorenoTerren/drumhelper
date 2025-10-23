@@ -1026,57 +1026,15 @@ Says, "Find a home"
     
     exportSongs() {
         try {
-            console.log(`🚀 Iniciando exportación JSON...`);
-            console.log(`📊 Canciones a exportar: ${this.songs.length}`);
-            console.log(`🏷️  Nombre del setlist: "${this.setlistName}"`);
+            console.log(`🚀 Iniciando exportación de repertorios por separado...`);
+            console.log(`� Total de repertorios: ${this.repertoires.size}`);
             
-            // Validar canciones antes de exportar
-            let validSongs = 0;
-            let invalidSongs = 0;
+            let totalExportedFiles = 0;
+            let totalExportedSongs = 0;
+            let totalValidSongs = 0;
+            let totalInvalidSongs = 0;
             
-            this.songs.forEach((song, index) => {
-                try {
-                    const validationResult = this.validateSong(song);
-                    if (validationResult === true) {
-                        validSongs++;
-                        console.log(`  ✅ Canción ${index + 1}: "${song.title}" - Válida`);
-                    } else {
-                        invalidSongs++;
-                        console.log(`  ⚠️  Canción ${index + 1}: "${song.title}" - Problema: ${validationResult}`);
-                    }
-                } catch (error) {
-                    invalidSongs++;
-                    console.error(`  💥 Canción ${index + 1}: Error validando - ${error.message}`);
-                }
-            });
-            
-            console.log(`📈 Validación completada: ${validSongs} válidas, ${invalidSongs} con problemas`);
-            
-            const dataToExport = {
-                version: "1.0",
-                exportDate: new Date().toISOString(),
-                setlistName: this.setlistName,
-                songs: this.songs
-            };
-            
-            console.log(`📦 Estructura de datos para exportar:`, {
-                version: dataToExport.version,
-                exportDate: dataToExport.exportDate,
-                setlistName: dataToExport.setlistName,
-                songsCount: dataToExport.songs.length
-            });
-            
-            const dataStr = JSON.stringify(dataToExport, null, 2);
-            console.log(`📄 JSON generado: ${dataStr.length} caracteres`);
-            
-            const dataBlob = new Blob([dataStr], { type: 'application/json' });
-            console.log(`💾 Blob creado: ${dataBlob.size} bytes`);
-            
-            // Crear un enlace de descarga
-            const downloadLink = document.createElement('a');
-            downloadLink.href = URL.createObjectURL(dataBlob);
-            
-            // Generar nombre de archivo con setlist, fecha, hora y minutos
+            // Generar timestamp común para todos los archivos
             const now = new Date();
             const year = now.getFullYear();
             const month = String(now.getMonth() + 1).padStart(2, '0');
@@ -1084,50 +1042,105 @@ Says, "Find a home"
             const hours = String(now.getHours()).padStart(2, '0');
             const minutes = String(now.getMinutes()).padStart(2, '0');
             const seconds = String(now.getSeconds()).padStart(2, '0');
-            
-            // Limpiar el nombre del setlist para usar en archivo
-            const cleanSetlistName = this.setlistName
-                .replace(/[^a-zA-Z0-9\s]/g, '')  // Quitar caracteres especiales
-                .replace(/\s+/g, '-')             // Reemplazar espacios por guiones
-                .toLowerCase();
-            
             const timeStamp = `${year}-${month}-${day}_${hours}-${minutes}-${seconds}`;
-            downloadLink.download = `${cleanSetlistName}-${timeStamp}.json`;
             
-            console.log(`📁 Nombre de archivo generado: ${downloadLink.download}`);
+            // Exportar cada repertorio por separado
+            this.repertoires.forEach((repertoire, repertoireId) => {
+                console.log(`📁 Exportando repertorio: "${repertoire.name}" (${repertoire.songs.length} canciones)`);
+                
+                // Validar canciones del repertorio
+                let validSongs = 0;
+                let invalidSongs = 0;
+                
+                repertoire.songs.forEach((song, index) => {
+                    try {
+                        const validationResult = this.validateSong(song);
+                        if (validationResult === true) {
+                            validSongs++;
+                            console.log(`  ✅ Canción ${index + 1}: "${song.title}" - Válida`);
+                        } else {
+                            invalidSongs++;
+                            console.log(`  ⚠️  Canción ${index + 1}: "${song.title}" - Problema: ${validationResult}`);
+                        }
+                    } catch (error) {
+                        invalidSongs++;
+                        console.error(`  💥 Canción ${index + 1}: Error validando - ${error.message}`);
+                    }
+                });
+                
+                totalValidSongs += validSongs;
+                totalInvalidSongs += invalidSongs;
+                totalExportedSongs += repertoire.songs.length;
+                
+                // Crear estructura de datos para este repertorio
+                const dataToExport = {
+                    version: "1.0",
+                    exportDate: new Date().toISOString(),
+                    setlistName: repertoire.setlistName || repertoire.name,
+                    repertoireName: repertoire.name,
+                    repertoireId: repertoireId,
+                    songs: repertoire.songs
+                };
+                
+                console.log(`📦 Datos de repertorio "${repertoire.name}":`, {
+                    version: dataToExport.version,
+                    repertoireName: dataToExport.repertoireName,
+                    setlistName: dataToExport.setlistName,
+                    songsCount: dataToExport.songs.length
+                });
+                
+                // Convertir a JSON
+                const dataStr = JSON.stringify(dataToExport, null, 2);
+                const dataBlob = new Blob([dataStr], { type: 'application/json' });
+                
+                // Crear enlace de descarga
+                const downloadLink = document.createElement('a');
+                downloadLink.href = URL.createObjectURL(dataBlob);
+                
+                // Limpiar el nombre del repertorio para usar en archivo
+                const cleanRepertoireName = repertoire.name
+                    .replace(/[^a-zA-Z0-9\s]/g, '')  // Quitar caracteres especiales
+                    .replace(/\s+/g, '-')             // Reemplazar espacios por guiones
+                    .toLowerCase();
+                
+                downloadLink.download = `${cleanRepertoireName}-${timeStamp}.json`;
+                
+                console.log(`📁 Archivo generado: ${downloadLink.download} (${dataBlob.size} bytes)`);
+                
+                // Descargar archivo
+                document.body.appendChild(downloadLink);
+                downloadLink.click();
+                document.body.removeChild(downloadLink);
+                
+                // Limpiar URL del blob
+                URL.revokeObjectURL(downloadLink.href);
+                
+                totalExportedFiles++;
+                console.log(`✅ Repertorio "${repertoire.name}" exportado exitosamente`);
+            });
             
-            // Simular clic para descargar
-            document.body.appendChild(downloadLink);
-            downloadLink.click();
-            document.body.removeChild(downloadLink);
+            console.log(`🎉 Exportación completa:`);
+            console.log(`  📁 Archivos generados: ${totalExportedFiles}`);
+            console.log(`  🎵 Total de canciones: ${totalExportedSongs}`);
+            console.log(`  ✅ Válidas: ${totalValidSongs}`);
+            console.log(`  ⚠️  Con problemas: ${totalInvalidSongs}`);
             
-            // Limpiar URL del blob
-            URL.revokeObjectURL(downloadLink.href);
-            
-            console.log(`✅ Exportación completada exitosamente`);
-            console.log(`📈 Resumen de exportación:`);
-            console.log(`  📁 Archivo: ${downloadLink.download}`);
-            console.log(`  🎵 Canciones exportadas: ${this.songs.length}`);
-            console.log(`  ✅ Válidas: ${validSongs}`);
-            console.log(`  ⚠️  Con problemas: ${invalidSongs}`);
-            console.log(`  💾 Tamaño: ${dataBlob.size} bytes`);
-            
-            let message = `✅ Exportadas ${this.songs.length} canciones a ${downloadLink.download}`;
-            if (invalidSongs > 0) {
-                message += ` (${invalidSongs} con problemas - ver consola)`;
+            let message = `✅ Exportados ${totalExportedFiles} repertorios con ${totalExportedSongs} canciones`;
+            if (totalInvalidSongs > 0) {
+                message += ` (${totalInvalidSongs} canciones con problemas - ver consola)`;
             }
             
-            const notificationType = invalidSongs > 0 ? 'warning' : 'success';
+            const notificationType = totalInvalidSongs > 0 ? 'warning' : 'success';
             this.showNotification(message, notificationType);
             
         } catch (error) {
-            console.error('💥 Error crítico exportando canciones:', error);
+            console.error('💥 Error crítico exportando repertorios:', error);
             console.log(`📊 Estado actual:`, {
-                songsCount: this.songs.length,
-                setlistName: this.setlistName,
+                repertoiresCount: this.repertoires.size,
+                currentRepertoire: this.currentRepertoireId,
                 timestamp: new Date().toISOString()
             });
-            this.showNotification('❌ Error al exportar las canciones', 'error');
+            this.showNotification('❌ Error al exportar los repertorios', 'error');
         }
     }
     
