@@ -293,7 +293,7 @@ class SongManager {
                     bpm: 114,
                     order: 0,
                     active: true,
-                    fontSize: 2.4,
+                    fontSize: this.getDefaultFontSize(),
                     notes: "Patrón básico: /0Stomp-Stomp-Clap0/\nMantener tempo constante en /0114 BPM0/\n\n/1Cuidado con la entrada del coro1/\n/3Final con acelerando3/",
                     lyrics: `:: /0Stomp stomp clap0/ - Stomp stomp clap
 
@@ -931,7 +931,7 @@ Says, "Find a home"
             duration: duration || '', // Duración personalizada (mm:ss)
             lyrics: lyrics || '',
             notes: document.getElementById('song-notes').value.trim() || '',
-            fontSize: 2.4, // Tamaño de fuente por defecto
+            fontSize: this.getDefaultFontSize(), // Tamaño de fuente por defecto
             active: false,
             createdAt: now.toISOString(),
             lastModified: now.toISOString()
@@ -1347,7 +1347,7 @@ Says, "Find a home"
                         bpm: song.bpm,
                         lyrics: song.lyrics,
                         notes: song.notes || '',
-                        fontSize: 2.4, // Tamaño por defecto para canciones importadas
+                        fontSize: this.getDefaultFontSize(), // Tamaño por defecto para canciones importadas
                         active: false
                     };
                     
@@ -1720,7 +1720,7 @@ Says, "Find a home"
                                 bpm: songData.bpm || '',
                                 lyrics: songData.lyrics || '',
                                 notes: songData.notes || '',
-                                fontSize: 2.4,
+                                fontSize: this.getDefaultFontSize(),
                                 active: false,
                                 order: songData.order || 0
                             };
@@ -2489,6 +2489,14 @@ Says, "Find a home"
         this.updateCopyButtonState();
         
         console.log(`📄 Canción copiada: "${songCopy.title}" → ${targetRepertoire.name}`);
+    }
+
+    // Función helper para obtener el fontSize por defecto desde localStorage
+    getDefaultFontSize() {
+        const savedSize = localStorage.getItem('globalFontSize');
+        const defaultSize = savedSize ? parseFloat(savedSize) : 2.4;
+        console.log(`📏 getDefaultFontSize: ${defaultSize} (desde localStorage: ${savedSize || 'null'})`);
+        return defaultSize;
     }
 }
 

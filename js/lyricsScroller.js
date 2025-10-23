@@ -446,6 +446,11 @@ class LyricsScroller {
         if (newSize >= 1.0 && newSize <= 5.0) {
             this.fontSize = newSize;
             this.updateFontSize();
+            
+            // Guardar como preferencia global
+            this.saveFontSizePreference();
+            
+            // Guardar también para la canción actual si hay una seleccionada
             this.saveCurrentSongFontSize();
         }
     }
@@ -473,13 +478,27 @@ class LyricsScroller {
         }
     }
     
+    saveFontSizePreference() {
+        localStorage.setItem('drumhelper-font-size', this.fontSize.toString());
+        console.log(`💾 Tamaño de letra guardado globalmente: ${this.fontSize}rem`);
+    }
+    
     loadSongFontSize(song) {
         if (song && song.fontSize) {
+            // La canción tiene un tamaño específico guardado
             this.fontSize = song.fontSize;
             this.updateFontSize();
+            console.log(`🎵 Cargando tamaño específico de canción: ${this.fontSize}rem`);
         } else {
-            // Si la canción no tiene fontSize, usar el por defecto
-            this.fontSize = 2.4;
+            // Usar preferencia global guardada o valor por defecto
+            const savedGlobalSize = localStorage.getItem('drumhelper-font-size');
+            if (savedGlobalSize) {
+                this.fontSize = parseFloat(savedGlobalSize);
+                console.log(`🌐 Cargando tamaño global guardado: ${this.fontSize}rem`);
+            } else {
+                this.fontSize = 2.4;
+                console.log(`📏 Usando tamaño por defecto: ${this.fontSize}rem`);
+            }
             this.updateFontSize();
         }
     }
@@ -488,6 +507,7 @@ class LyricsScroller {
         // Notificar al songManager para actualizar el fontSize de la canción actual
         if (window.songManager) {
             window.songManager.updateCurrentSongFontSize(this.fontSize);
+            console.log(`🎵 Tamaño de letra guardado para canción actual: ${this.fontSize}rem`);
         }
     }
     
