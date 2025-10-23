@@ -1,6 +1,7 @@
 {
     "name": "Drum Helper",
     "short_name": "DrumHelper",
+    "version": "1.2.4",
     "description": "Aplicación de ayuda para bateristas con metrónomo y letras sincronizadas",
     "start_url": "./index.html",
     "display": "fullscreen",
