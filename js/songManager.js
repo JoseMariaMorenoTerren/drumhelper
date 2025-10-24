@@ -11,6 +11,7 @@ class SongManager {
         this.songList = document.getElementById('song-list');
         this.orderModeBtn = document.getElementById('order-mode-btn');
         this.resetOrderBtn = document.getElementById('reset-order-btn');
+        this.alphabeticalSortBtn = document.getElementById('alphabetical-sort-btn');
         this.searchInput = document.getElementById('search-input');
         this.addSongBtn = document.getElementById('add-song-btn');
         this.editCurrentSongBtn = document.getElementById('edit-current-song-btn');
@@ -89,6 +90,10 @@ class SongManager {
         
         this.resetOrderBtn.addEventListener('click', () => {
             this.resetAllOrders();
+        });
+        
+        this.alphabeticalSortBtn.addEventListener('click', () => {
+            this.sortSongsAlphabetically();
         });
         
 
@@ -1566,6 +1571,50 @@ Says, "Find a home"
             // Cerrar el modal y mostrar notificación
             this.closeRepertoireOptionsModalFunc();
             this.showNotification('Orden de canciones reseteado. Todas las canciones están en 10000.', 'success');
+        }
+    }
+    
+    sortSongsAlphabetically() {
+        if (this.songs.length === 0) {
+            this.showNotification('No hay canciones para ordenar', 'warning');
+            return;
+        }
+        
+        const confirmation = confirm(`¿Ordenar todas las canciones alfabéticamente?\n\n` +
+            `• Se ordenarán por título (A-Z)\n` +
+            `• Los valores de orden serán: 10, 20, 30, 40...\n` +
+            `• Total de canciones: ${this.songs.length}\n\n` +
+            `Esta acción no se puede deshacer.`);
+        
+        if (confirmation) {
+            console.log(`🔤 Iniciando ordenamiento alfabético de ${this.songs.length} canciones...`);
+            
+            // Crear copia de las canciones y ordenar alfabéticamente por título
+            const sortedSongs = [...this.songs].sort((a, b) => {
+                return a.title.toLowerCase().localeCompare(b.title.toLowerCase());
+            });
+            
+            // Asignar valores de orden incrementales de 10 en 10
+            sortedSongs.forEach((song, index) => {
+                song.order = (index + 1) * 10;
+                console.log(`  ${index + 1}. "${song.title}" → orden: ${song.order}`);
+            });
+            
+            // Actualizar el array principal con el orden correcto
+            this.songs = sortedSongs;
+            
+            // Reiniciar contador temporal para futuras ordenaciones manuales
+            this.tempOrderCounter = 0;
+            
+            // Guardar cambios y re-renderizar
+            this.saveSongs();
+            this.renderSongs();
+            
+            console.log(`✅ Ordenamiento alfabético completado. Valores de orden: 10 a ${this.songs.length * 10}`);
+            
+            // Cerrar modal y mostrar notificación
+            this.closeRepertoireOptionsModalFunc();
+            this.showNotification(`${this.songs.length} canciones ordenadas alfabéticamente (10, 20, 30...)`, 'success');
         }
     }
     
