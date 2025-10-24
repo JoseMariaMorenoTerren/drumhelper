@@ -779,21 +779,19 @@ Says, "Find a home"
             const songElement = document.getElementById('current-song');
             const bpmElement = document.getElementById('current-bpm');
             const notesElement = document.getElementById('current-notes');
-            const titleElement = document.querySelector('.info-panel h1');
+            
+            // El título de la canción siempre debe estar visible
+            songElement.textContent = `${activeSong.title} - ${activeSong.artist}`;
+            songElement.style.display = 'block';
             
             if (activeSong.notes && activeSong.notes.trim()) {
-                // Si hay notas, ocultar todo y mostrar solo las notas
-                songElement.style.display = 'none';
-                bpmElement.style.display = 'none';
-                titleElement.style.display = 'none';
+                // Si hay notas, mostrar notas también pero mantener título visible
+                bpmElement.style.display = 'block';
                 notesElement.innerHTML = this.processTextHighlights(activeSong.notes);
                 notesElement.style.display = 'block';
             } else {
-                // Si no hay notas, mostrar todo normal
-                songElement.textContent = `${activeSong.title} - ${activeSong.artist}`;
-                songElement.style.display = 'block';
+                // Si no hay notas, mostrar título y BPM
                 bpmElement.style.display = 'block';
-                titleElement.style.display = 'block';
                 notesElement.textContent = '';
                 notesElement.style.display = 'none';
             }
