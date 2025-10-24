@@ -1596,7 +1596,7 @@ Says, "Find a home"
             
             // Asignar valores de orden incrementales de 10 en 10
             sortedSongs.forEach((song, index) => {
-                song.order = (index + 1) * 10;
+                song.order = ((index + 1) * 10)+10000;
                 console.log(`  ${index + 1}. "${song.title}" → orden: ${song.order}`);
             });
             
