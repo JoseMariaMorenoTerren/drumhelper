@@ -114,6 +114,18 @@ body {
     color: #cccccc;
 }
 
+/* Título de la canción más grande y en negrita */
+#current-song {
+    font-size: 1.4rem !important;
+    font-weight: bold !important;
+    color: #ffffff !important;
+}
+
+/* Ocultar el elemento BPM de la cabecera */
+#current-bpm {
+    display: none !important;
+}
+
 .song-notes {
     font-size: 1.6rem !important;
     color: #ffdd44 !important;
