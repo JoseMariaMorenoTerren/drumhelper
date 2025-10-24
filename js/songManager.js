@@ -715,13 +715,11 @@ Says, "Find a home"
         const songElement = document.getElementById('current-song');
         const bpmElement = document.getElementById('current-bpm');
         const notesElement = document.getElementById('current-notes');
-        const titleElement = document.querySelector('.info-panel h1');
         
         if (song.notes && song.notes.trim()) {
             // Si hay notas, ocultar todo y mostrar solo las notas
             songElement.style.display = 'none';
             bpmElement.style.display = 'none';
-            titleElement.style.display = 'none';
             notesElement.innerHTML = this.processTextHighlights(song.notes);
             notesElement.style.display = 'block';
         } else {
@@ -729,7 +727,6 @@ Says, "Find a home"
             songElement.textContent = `${song.title} - ${song.artist}`;
             songElement.style.display = 'block';
             bpmElement.style.display = 'block';
-            titleElement.style.display = 'block';
             notesElement.textContent = '';
             notesElement.style.display = 'none';
         }
