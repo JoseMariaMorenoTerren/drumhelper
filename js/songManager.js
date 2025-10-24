@@ -716,16 +716,17 @@ Says, "Find a home"
         const bpmElement = document.getElementById('current-bpm');
         const notesElement = document.getElementById('current-notes');
         
+        // El título de la canción siempre debe estar visible
+        songElement.textContent = `${song.title} - ${song.artist}`;
+        songElement.style.display = 'block';
+        
         if (song.notes && song.notes.trim()) {
-            // Si hay notas, ocultar todo y mostrar solo las notas
-            songElement.style.display = 'none';
-            bpmElement.style.display = 'none';
+            // Si hay notas, mostrar notas también pero mantener título visible
+            bpmElement.style.display = 'block';
             notesElement.innerHTML = this.processTextHighlights(song.notes);
             notesElement.style.display = 'block';
         } else {
-            // Si no hay notas, mostrar todo normal
-            songElement.textContent = `${song.title} - ${song.artist}`;
-            songElement.style.display = 'block';
+            // Si no hay notas, mostrar título y BPM
             bpmElement.style.display = 'block';
             notesElement.textContent = '';
             notesElement.style.display = 'none';
