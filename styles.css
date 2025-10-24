@@ -115,12 +115,12 @@ body {
 }
 
 .song-notes {
-    font-size: 1.2rem !important;
+    font-size: 1.6rem !important;
     color: #ffdd44 !important;
     font-style: italic;
     margin-top: 0;
     display: block;
-    max-height: 120px;
+    max-height: 140px;
     overflow-y: auto;
     line-height: 1.5;
     font-weight: normal;
