@@ -526,6 +526,9 @@ Says, "Find a home"
         
         // Actualizar el array interno con el orden correcto
         this.songs = sortedSongs;
+        
+        // Actualizar fecha de modificación del repertorio actual
+        this.updateCurrentRepertoireModified();
     }
     
     reorderSongs() {
@@ -1932,6 +1935,10 @@ Says, "Find a home"
                     repertoire.hideNotes = false; // No ocultar notas por defecto
                     console.log(`🔄 Migrado repertorio ${id} con hideNotes`);
                 }
+                if (repertoire.lastModified === undefined) {
+                    repertoire.lastModified = repertoire.createdAt || new Date().toISOString();
+                    console.log(`🔄 Migrado repertorio ${id} con lastModified`);
+                }
             });
 
             // Verificar que el repertorio actual existe
@@ -2263,6 +2270,7 @@ Says, "Find a home"
 
     createNewRepertoire(name) {
         const newId = 'repertoire_' + Date.now();
+        const now = new Date().toISOString();
         const newRepertoire = {
             id: newId,
             name: name,
@@ -2270,7 +2278,8 @@ Says, "Find a home"
             setlistName: 'Canciones',
             showArtistBpm: false, // No mostrar artista y BPM por defecto
             hideNotes: false, // No ocultar notas por defecto
-            createdAt: new Date().toISOString()
+            createdAt: now,
+            lastModified: now
         };
 
         this.repertoires.set(newId, newRepertoire);
@@ -2286,6 +2295,7 @@ Says, "Find a home"
         if (!currentRepertoire) return;
 
         const newId = 'repertoire_' + Date.now();
+        const now = new Date().toISOString();
         const duplicatedRepertoire = {
             id: newId,
             name: name,
@@ -2293,7 +2303,8 @@ Says, "Find a home"
             setlistName: currentRepertoire.setlistName,
             showArtistBpm: currentRepertoire.showArtistBpm === true, // Heredar configuración
             hideNotes: currentRepertoire.hideNotes === true, // Heredar configuración
-            createdAt: new Date().toISOString()
+            createdAt: now,
+            lastModified: now
         };
 
         // Asignar nuevos IDs a las canciones duplicadas
@@ -2315,37 +2326,13 @@ Says, "Find a home"
         if (!currentRepertoire) return;
 
         currentRepertoire.name = name;
+        this.updateCurrentRepertoireModified();
         this.saveRepertoires();
         this.updateRepertoireSelect();
         this.updateCurrentRepertoireName();
         this.updateRepertoireList();
         
         this.showNotification(`Repertorio renombrado a "${name}"`, 'success');
-    }
-
-    // Sobrescribir saveSongs para que también guarde repertorios
-    saveSongs() {
-        // Ordenar las canciones por el campo 'order' antes de guardar
-        const sortedSongs = [...this.songs].sort((a, b) => {
-            // Primero por orden (ascendente), luego por título si el orden es igual
-            if (a.order !== b.order) {
-                return a.order - b.order;
-            }
-            return a.title.localeCompare(b.title);
-        });
-        
-        // Guardar en el formato tradicional para compatibilidad
-        const data = {
-            setlistName: this.setlistName,
-            songs: sortedSongs
-        };
-        localStorage.setItem(this.storageKey, JSON.stringify(data));
-        
-        // Actualizar el array interno con el orden correcto
-        this.songs = sortedSongs;
-
-        // También guardar en el sistema de repertorios
-        this.saveRepertoires();
     }
 
     // Aplicar configuración de visualización del repertorio
@@ -2555,6 +2542,17 @@ Says, "Find a home"
         const defaultSize = savedSize ? parseFloat(savedSize) : 2.4;
         console.log(`📏 getDefaultFontSize: ${defaultSize} (desde localStorage: ${savedSize || 'null'})`);
         return defaultSize;
+    }
+
+    // Función para actualizar la fecha de última modificación del repertorio actual
+    updateCurrentRepertoireModified() {
+        if (this.repertoires.has(this.currentRepertoireId)) {
+            const repertoire = this.repertoires.get(this.currentRepertoireId);
+            const now = new Date().toISOString();
+            repertoire.lastModified = now;
+            console.log(`📅 Repertorio "${repertoire.name}" actualizado - última modificación: ${now}`);
+            this.saveRepertoires();
+        }
     }
 }
 
