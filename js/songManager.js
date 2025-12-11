@@ -59,6 +59,22 @@ class SongManager {
         this.copyTargetRepertoireSelect = document.getElementById('copy-target-repertoire-select');
         this.copySongBtn = document.getElementById('copy-song-btn');
         
+        // Elementos del gestor de repertorios
+        this.repertoireManagerBtn = document.getElementById('repertoire-manager-btn');
+        this.repertoireManagerModal = document.getElementById('repertoire-manager-modal');
+        this.closeRepertoireManager = document.getElementById('close-repertoire-manager');
+        this.closeManagerBtn = document.getElementById('close-manager-btn');
+        this.leftRepertoireSelect = document.getElementById('left-repertoire-select');
+        this.rightRepertoireSelect = document.getElementById('right-repertoire-select');
+        this.leftSongsList = document.getElementById('left-songs-list');
+        this.rightSongsList = document.getElementById('right-songs-list');
+        this.moveRightBtn = document.getElementById('move-right-btn');
+        this.moveLeftBtn = document.getElementById('move-left-btn');
+        this.copyRightBtn = document.getElementById('copy-right-btn');
+        this.copyLeftBtn = document.getElementById('copy-left-btn');
+        this.leftSelectionCount = document.getElementById('left-selection-count');
+        this.rightSelectionCount = document.getElementById('right-selection-count');
+        
         this.editingSong = null;
         this.isOrderMode = false;
         this.tempOrderCounter = 0; // Variable temporal que empieza en 0
@@ -252,6 +268,49 @@ class SongManager {
 
         this.deleteRepertoireBtn.addEventListener('click', () => {
             this.deleteCurrentRepertoire();
+        });
+
+        // Event listeners para el gestor de repertorios
+        this.repertoireManagerBtn.addEventListener('click', () => {
+            this.openRepertoireManager();
+        });
+
+        this.closeRepertoireManager.addEventListener('click', () => {
+            this.closeRepertoireManagerModal();
+        });
+
+        this.closeManagerBtn.addEventListener('click', () => {
+            this.closeRepertoireManagerModal();
+        });
+
+        this.repertoireManagerModal.addEventListener('click', (e) => {
+            if (e.target === this.repertoireManagerModal) {
+                this.closeRepertoireManagerModal();
+            }
+        });
+
+        this.leftRepertoireSelect.addEventListener('change', () => {
+            this.loadManagerSongs('left');
+        });
+
+        this.rightRepertoireSelect.addEventListener('change', () => {
+            this.loadManagerSongs('right');
+        });
+
+        this.moveRightBtn.addEventListener('click', () => {
+            this.transferSongs('left', 'right', false);
+        });
+
+        this.moveLeftBtn.addEventListener('click', () => {
+            this.transferSongs('right', 'left', false);
+        });
+
+        this.copyRightBtn.addEventListener('click', () => {
+            this.transferSongs('left', 'right', true);
+        });
+
+        this.copyLeftBtn.addEventListener('click', () => {
+            this.transferSongs('right', 'left', true);
         });
 
         // Eventos del modal de nombre de repertorio
@@ -2553,6 +2612,240 @@ Says, "Find a home"
             console.log(`📅 Repertorio "${repertoire.name}" actualizado - última modificación: ${now}`);
             this.saveRepertoires();
         }
+    }
+
+    // ========== FUNCIONES DEL GESTOR DE REPERTORIOS ==========
+
+    openRepertoireManager() {
+        console.log('📋 Abriendo gestor de repertorios...');
+        
+        // Inicializar selecciones
+        this.selectedLeftSongs = new Set();
+        this.selectedRightSongs = new Set();
+        
+        // Poblar los selectores de repertorios
+        this.populateManagerRepertoireSelects();
+        
+        // Cargar canciones de los repertorios por defecto
+        this.loadManagerSongs('left');
+        this.loadManagerSongs('right');
+        
+        // Mostrar modal
+        this.repertoireManagerModal.style.display = 'flex';
+        
+        // Actualizar contadores
+        this.updateSelectionCounts();
+    }
+
+    closeRepertoireManagerModal() {
+        console.log('📋 Cerrando gestor de repertorios...');
+        this.repertoireManagerModal.style.display = 'none';
+        
+        // Limpiar selecciones
+        this.selectedLeftSongs = new Set();
+        this.selectedRightSongs = new Set();
+        
+        // Recargar la lista de canciones actual por si hubo cambios
+        this.renderSongs();
+    }
+
+    populateManagerRepertoireSelects() {
+        // Limpiar opciones actuales
+        this.leftRepertoireSelect.innerHTML = '';
+        this.rightRepertoireSelect.innerHTML = '';
+        
+        // Agregar opciones para cada repertorio
+        this.repertoires.forEach((repertoire, id) => {
+            const leftOption = document.createElement('option');
+            leftOption.value = id;
+            leftOption.textContent = repertoire.name;
+            this.leftRepertoireSelect.appendChild(leftOption);
+            
+            const rightOption = document.createElement('option');
+            rightOption.value = id;
+            rightOption.textContent = repertoire.name;
+            this.rightRepertoireSelect.appendChild(rightOption);
+        });
+        
+        // Seleccionar el repertorio actual en el panel izquierdo
+        this.leftRepertoireSelect.value = this.currentRepertoireId;
+        
+        // Seleccionar otro repertorio en el derecho si hay más de uno
+        if (this.repertoires.size > 1) {
+            const otherRepertoire = Array.from(this.repertoires.keys()).find(id => id !== this.currentRepertoireId);
+            if (otherRepertoire) {
+                this.rightRepertoireSelect.value = otherRepertoire;
+            }
+        }
+        
+        console.log(`📋 Repertorios cargados en selectores: ${this.repertoires.size}`);
+    }
+
+    loadManagerSongs(side) {
+        const select = side === 'left' ? this.leftRepertoireSelect : this.rightRepertoireSelect;
+        const list = side === 'left' ? this.leftSongsList : this.rightSongsList;
+        const selectedSongs = side === 'left' ? this.selectedLeftSongs : this.selectedRightSongs;
+        
+        const repertoireId = select.value;
+        const repertoire = this.repertoires.get(repertoireId);
+        
+        if (!repertoire) {
+            list.innerHTML = '<li style="color: #888; padding: 20px; text-align: center;">No hay repertorio seleccionado</li>';
+            return;
+        }
+        
+        // Limpiar la lista
+        list.innerHTML = '';
+        
+        if (!repertoire.songs || repertoire.songs.length === 0) {
+            list.innerHTML = '<li style="color: #888; padding: 20px; text-align: center;">No hay canciones en este repertorio</li>';
+            return;
+        }
+        
+        // Ordenar canciones por orden y título
+        const sortedSongs = [...repertoire.songs].sort((a, b) => {
+            if (a.order !== b.order) return a.order - b.order;
+            return a.title.localeCompare(b.title);
+        });
+        
+        // Crear items de canciones
+        sortedSongs.forEach(song => {
+            const li = document.createElement('li');
+            li.className = 'manager-song-item';
+            li.dataset.songId = song.id;
+            
+            if (selectedSongs.has(song.id)) {
+                li.classList.add('selected');
+            }
+            
+            li.innerHTML = `
+                <div class="manager-song-info">
+                    <div class="manager-song-title">${song.title}</div>
+                    <div class="manager-song-artist">${song.artist || 'Sin artista'}</div>
+                </div>
+                <input type="checkbox" class="manager-song-checkbox" ${selectedSongs.has(song.id) ? 'checked' : ''}>
+            `;
+            
+            // Event listener para seleccionar/deseleccionar
+            li.addEventListener('click', (e) => {
+                const checkbox = li.querySelector('.manager-song-checkbox');
+                const songId = song.id;
+                
+                if (selectedSongs.has(songId)) {
+                    selectedSongs.delete(songId);
+                    li.classList.remove('selected');
+                    checkbox.checked = false;
+                } else {
+                    selectedSongs.add(songId);
+                    li.classList.add('selected');
+                    checkbox.checked = true;
+                }
+                
+                this.updateSelectionCounts();
+            });
+            
+            list.appendChild(li);
+        });
+        
+        console.log(`📋 Cargadas ${sortedSongs.length} canciones en panel ${side}`);
+    }
+
+    updateSelectionCounts() {
+        this.leftSelectionCount.textContent = `${this.selectedLeftSongs.size} seleccionada${this.selectedLeftSongs.size !== 1 ? 's' : ''}`;
+        this.rightSelectionCount.textContent = `${this.selectedRightSongs.size} seleccionada${this.selectedRightSongs.size !== 1 ? 's' : ''}`;
+    }
+
+    transferSongs(fromSide, toSide, isCopy) {
+        const fromRepertoireId = fromSide === 'left' ? this.leftRepertoireSelect.value : this.rightRepertoireSelect.value;
+        const toRepertoireId = toSide === 'left' ? this.leftRepertoireSelect.value : this.rightRepertoireSelect.value;
+        const selectedSongs = fromSide === 'left' ? this.selectedLeftSongs : this.selectedRightSongs;
+        
+        if (selectedSongs.size === 0) {
+            this.showNotification('❌ No hay canciones seleccionadas', 'error');
+            return;
+        }
+        
+        if (fromRepertoireId === toRepertoireId) {
+            this.showNotification('❌ No puedes transferir canciones al mismo repertorio', 'error');
+            return;
+        }
+        
+        const fromRepertoire = this.repertoires.get(fromRepertoireId);
+        const toRepertoire = this.repertoires.get(toRepertoireId);
+        
+        if (!fromRepertoire || !toRepertoire) {
+            this.showNotification('❌ Error: Repertorio no encontrado', 'error');
+            return;
+        }
+        
+        const action = isCopy ? 'Copiar' : 'Mover';
+        const confirmation = confirm(
+            `¿${action} ${selectedSongs.size} canción${selectedSongs.size !== 1 ? 'es' : ''} de "${fromRepertoire.name}" a "${toRepertoire.name}"?`
+        );
+        
+        if (!confirmation) return;
+        
+        let transferred = 0;
+        const songsToTransfer = [];
+        
+        // Recopilar canciones a transferir
+        selectedSongs.forEach(songId => {
+            const song = fromRepertoire.songs.find(s => s.id === songId);
+            if (song) {
+                songsToTransfer.push(song);
+            }
+        });
+        
+        // Transferir canciones
+        songsToTransfer.forEach(song => {
+            if (isCopy) {
+                // Copiar: crear nueva canción con nuevo ID
+                const songCopy = JSON.parse(JSON.stringify(song));
+                songCopy.id = Date.now() + Math.random();
+                songCopy.active = false;
+                songCopy.createdAt = new Date().toISOString();
+                songCopy.lastModified = new Date().toISOString();
+                
+                toRepertoire.songs.push(songCopy);
+            } else {
+                // Mover: quitar del origen y agregar al destino
+                const index = fromRepertoire.songs.findIndex(s => s.id === song.id);
+                if (index !== -1) {
+                    fromRepertoire.songs.splice(index, 1);
+                }
+                song.active = false;
+                song.lastModified = new Date().toISOString();
+                toRepertoire.songs.push(song);
+            }
+            transferred++;
+        });
+        
+        // Actualizar fechas de modificación
+        fromRepertoire.lastModified = new Date().toISOString();
+        toRepertoire.lastModified = new Date().toISOString();
+        
+        // Guardar cambios
+        this.saveRepertoires();
+        
+        // Si el repertorio actual es uno de los afectados, recargar
+        if (fromRepertoireId === this.currentRepertoireId || toRepertoireId === this.currentRepertoireId) {
+            this.loadRepertoire(this.currentRepertoireId);
+        }
+        
+        // Limpiar selecciones
+        selectedSongs.clear();
+        
+        // Recargar ambas listas
+        this.loadManagerSongs('left');
+        this.loadManagerSongs('right');
+        
+        // Actualizar contadores
+        this.updateSelectionCounts();
+        
+        const verb = isCopy ? 'copiadas' : 'movidas';
+        this.showNotification(`✅ ${transferred} canción${transferred !== 1 ? 'es' : ''} ${verb} correctamente`, 'success');
+        
+        console.log(`📋 ${transferred} canciones ${verb} de "${fromRepertoire.name}" a "${toRepertoire.name}"`);
     }
 }
 

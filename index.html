@@ -76,6 +76,7 @@
             <div class="data-management">
                 <button id="data-options-btn" class="data-btn">Opciones</button>
                 <button id="repertoire-options-btn" class="repertoire-options-btn" title="Opciones de repertorio">⚙️</button>
+                <button id="repertoire-manager-btn" class="repertoire-manager-btn" title="Editar repertorios">📋</button>
                 <input type="file" id="import-file-input" accept=".json" style="display: none;">
                 <input type="file" id="import-txt-file-input" accept=".txt" style="display: none;">
                 <input type="file" id="import-complete-file-input" accept=".txt" style="display: none;">
@@ -545,6 +546,72 @@
                         <button type="button" id="cancel-repertoire-name" class="btn-secondary">Cancelar</button>
                     </div>
                 </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de gestión de repertorios -->
+    <div id="repertoire-manager-modal" class="repertoire-manager-modal" style="display: none;">
+        <div class="repertoire-manager-content">
+            <div class="repertoire-manager-header">
+                <h2>📋 Gestión de Repertorios</h2>
+                <button id="close-repertoire-manager" class="close-btn">×</button>
+            </div>
+            
+            <div class="repertoire-manager-body">
+                <!-- Panel izquierdo -->
+                <div class="repertoire-panel left-panel">
+                    <div class="panel-header">
+                        <h3>Repertorio Origen</h3>
+                        <select id="left-repertoire-select" class="panel-repertoire-select">
+                            <!-- Se carga dinámicamente -->
+                        </select>
+                    </div>
+                    <div class="panel-songs-container">
+                        <ul id="left-songs-list" class="manager-songs-list">
+                            <!-- Canciones del repertorio izquierdo -->
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Controles centrales -->
+                <div class="transfer-controls">
+                    <button id="move-right-btn" class="transfer-btn" title="Mover seleccionadas a la derecha">
+                        →
+                    </button>
+                    <button id="move-left-btn" class="transfer-btn" title="Mover seleccionadas a la izquierda">
+                        ←
+                    </button>
+                    <button id="copy-right-btn" class="transfer-btn" title="Copiar seleccionadas a la derecha">
+                        ⇉
+                    </button>
+                    <button id="copy-left-btn" class="transfer-btn" title="Copiar seleccionadas a la izquierda">
+                        ⇇
+                    </button>
+                </div>
+
+                <!-- Panel derecho -->
+                <div class="repertoire-panel right-panel">
+                    <div class="panel-header">
+                        <h3>Repertorio Destino</h3>
+                        <select id="right-repertoire-select" class="panel-repertoire-select">
+                            <!-- Se carga dinámicamente -->
+                        </select>
+                    </div>
+                    <div class="panel-songs-container">
+                        <ul id="right-songs-list" class="manager-songs-list">
+                            <!-- Canciones del repertorio derecho -->
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="repertoire-manager-footer">
+                <div class="selection-info">
+                    <span id="left-selection-count">0 seleccionadas</span>
+                    <span id="right-selection-count">0 seleccionadas</span>
+                </div>
+                <button id="close-manager-btn" class="modal-btn">Cerrar</button>
             </div>
         </div>
     </div>
