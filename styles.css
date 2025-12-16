@@ -82,14 +82,111 @@ body {
     background-color: #111111;
     border-bottom: 2px solid #333333;
     display: flex;
-    align-items: center;
+    flex-direction: column;
+    align-items: stretch;
     justify-content: space-between;
-    padding: 15px 20px;
+    padding: 10px 20px;
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     z-index: 100;
+}
+
+/* Estructura gráfica de la canción */
+.song-structure-container {
+    width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 5px 0;
+    margin-bottom: 5px;
+    background-color: #0a0a0a;
+    border-radius: 4px;
+    max-height: 40px;
+}
+
+.song-structure-container::-webkit-scrollbar {
+    height: 6px;
+}
+
+.song-structure-container::-webkit-scrollbar-track {
+    background: #1a1a1a;
+    border-radius: 3px;
+}
+
+.song-structure-container::-webkit-scrollbar-thumb {
+    background: #444;
+    border-radius: 3px;
+}
+
+.song-structure-container::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+.song-structure {
+    display: flex;
+    gap: 2px;
+    padding: 5px;
+    min-width: min-content;
+}
+
+.structure-bar {
+    width: 12px;
+    height: 20px;
+    border-radius: 2px;
+    flex-shrink: 0;
+    transition: transform 0.2s;
+    cursor: pointer;
+    border: 1px solid rgba(0, 0, 0, 0.3);
+}
+
+.structure-bar:hover {
+    transform: scale(1.2);
+}
+
+/* Colores para cada tipo de compás */
+.structure-bar.silence {
+    background-color: #FFD700; /* Amarillo - Silencio */
+}
+
+.structure-bar.chorus {
+    background-color: #00FF00; /* Verde - Estribillo */
+}
+
+.structure-bar.verse {
+    background-color: #FFFFFF; /* Blanco - Estrofa */
+}
+
+.structure-bar.bridge {
+    background-color: #FF6B6B; /* Rojo - Puente */
+}
+
+.structure-bar.intro {
+    background-color: #4ECDC4; /* Cian - Intro */
+}
+
+.structure-bar.outro {
+    background-color: #9B59B6; /* Morado - Outro */
+}
+
+.structure-bar.solo {
+    background-color: #FF8C00; /* Naranja - Solo */
+}
+
+.structure-bar.pre-chorus {
+    background-color: #87CEEB; /* Azul claro - Pre-estribillo */
+}
+
+.structure-bar.unknown {
+    background-color: #666666; /* Gris - Desconocido */
+}
+
+/* Contenedor inferior con info y metrónomo */
+.top-section-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex: 1;
 }
 
 .info-panel {

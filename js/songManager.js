@@ -75,6 +75,10 @@ class SongManager {
         this.leftSelectionCount = document.getElementById('left-selection-count');
         this.rightSelectionCount = document.getElementById('right-selection-count');
         
+        // Elemento de estructura gráfica
+        this.songStructureContainer = document.getElementById('song-structure-container');
+        this.songStructure = document.getElementById('song-structure');
+        
         this.editingSong = null;
         this.isOrderMode = false;
         this.tempOrderCounter = 0; // Variable temporal que empieza en 0
@@ -797,6 +801,9 @@ Says, "Find a home"
         // Actualizar BPM del metrónomo
         window.metronome.setBPM(song.bpm);
         
+        // Renderizar estructura gráfica
+        this.renderSongStructure(song);
+        
         // Cargar letras
         window.lyricsScroller.loadLyrics(song.lyrics);
         
@@ -870,6 +877,9 @@ Says, "Find a home"
                 }, 200);
             }
             
+            // Renderizar estructura gráfica
+            this.renderSongStructure(activeSong);
+            
             // Cargar letras
             if (window.lyricsScroller) {
                 window.lyricsScroller.loadLyrics(activeSong.lyrics);
@@ -928,6 +938,66 @@ Says, "Find a home"
         return processedText;
     }
     
+    renderSongStructure(song) {
+        if (!this.songStructure) return;
+        
+        // Limpiar estructura anterior
+        this.songStructure.innerHTML = '';
+        
+        // Si no hay estructura definida, ocultar el contenedor
+        if (!song.structure || song.structure.trim() === '') {
+            this.songStructureContainer.style.display = 'none';
+            return;
+        }
+        
+        // Mostrar el contenedor
+        this.songStructureContainer.style.display = 'block';
+        
+        // Mapeo de letras a clases CSS
+        const structureMap = {
+            '_': 'silence',      // Silencio - Amarillo
+            'E': 'chorus',       // Estribillo - Verde
+            'V': 'verse',        // Estrofa - Blanco
+            'B': 'bridge',       // Puente - Rojo
+            'I': 'intro',        // Intro - Cian
+            'O': 'outro',        // Outro - Morado
+            'S': 'solo',         // Solo - Naranja
+            'P': 'pre-chorus'    // Pre-estribillo - Azul claro
+        };
+        
+        // Crear un cuadrado por cada letra
+        const structure = song.structure.toUpperCase();
+        for (let i = 0; i < structure.length; i++) {
+            const char = structure[i];
+            const bar = document.createElement('div');
+            bar.className = 'structure-bar';
+            
+            // Añadir la clase correspondiente según el tipo
+            const structureClass = structureMap[char] || 'unknown';
+            bar.classList.add(structureClass);
+            
+            // Añadir tooltip
+            const tooltipText = this.getStructureLabel(char);
+            bar.title = `${tooltipText} (compás ${i + 1})`;
+            
+            this.songStructure.appendChild(bar);
+        }
+    }
+    
+    getStructureLabel(char) {
+        const labels = {
+            '_': 'Silencio',
+            'E': 'Estribillo',
+            'V': 'Estrofa',
+            'B': 'Puente',
+            'I': 'Intro',
+            'O': 'Outro',
+            'S': 'Solo',
+            'P': 'Pre-estribillo'
+        };
+        return labels[char] || 'Desconocido';
+    }
+    
     generateId() {
         return Date.now() + Math.random();
     }
@@ -953,6 +1023,7 @@ Says, "Find a home"
         document.getElementById('edit-song-order').value = song.order || 0;
         document.getElementById('edit-song-duration').value = song.duration || '';
         document.getElementById('edit-song-notes').value = song.notes || '';
+        document.getElementById('edit-song-structure').value = song.structure || '';
         document.getElementById('edit-song-lyrics').value = song.lyrics;
         
         // Mostrar información de fecha de modificación
@@ -978,6 +1049,7 @@ Says, "Find a home"
         const order = parseInt(document.getElementById('song-order').value) || 0;
         const duration = document.getElementById('song-duration').value.trim();
         const lyrics = document.getElementById('song-lyrics').value.trim();
+        const structure = document.getElementById('song-structure').value.trim();
         
         if (!title) {
             alert('El título es obligatorio');
@@ -994,6 +1066,7 @@ Says, "Find a home"
             duration: duration || '', // Duración personalizada (mm:ss)
             lyrics: lyrics || '',
             notes: document.getElementById('song-notes').value.trim() || '',
+            structure: structure || '', // Estructura gráfica
             fontSize: this.getDefaultFontSize(), // Tamaño de fuente por defecto
             active: false,
             createdAt: now.toISOString(),
@@ -1021,6 +1094,7 @@ Says, "Find a home"
         const duration = document.getElementById('edit-song-duration').value.trim();
         const notes = document.getElementById('edit-song-notes').value.trim();
         const lyrics = document.getElementById('edit-song-lyrics').value.trim();
+        const structure = document.getElementById('edit-song-structure').value.trim();
         
         if (!title) {
             alert('El título es obligatorio');
@@ -1039,6 +1113,7 @@ Says, "Find a home"
                 duration: duration || '', // Duración personalizada
                 notes: notes || '',
                 lyrics: lyrics || '',
+                structure: structure || '', // Estructura gráfica
                 fontSize: this.songs[songIndex].fontSize || 2.4, // Preservar fontSize existente
                 lastModified: new Date().toISOString()
             };

@@ -23,17 +23,25 @@
 <body>
     <!-- Sección superior fija (1/4 de la pantalla) -->
     <header class="top-section">
-        <div class="info-panel">
-            <div id="version-code">v1.3.0</div>
-            <div class="song-info">
-                <span id="current-song">Selecciona una canción</span>
-                <span id="current-bpm">BPM: 120</span>
-                <span id="current-notes" class="song-notes"></span>
+        <!-- Estructura gráfica de la canción -->
+        <div class="song-structure-container" id="song-structure-container">
+            <div class="song-structure" id="song-structure">
+                <!-- Los cuadrados de estructura se generarán dinámicamente -->
             </div>
         </div>
         
-        <!-- Metrónomo -->
-        <div class="metronome-container">
+        <div class="top-section-content">
+            <div class="info-panel">
+                <div id="version-code">v1.3.0</div>
+                <div class="song-info">
+                    <span id="current-song">Selecciona una canción</span>
+                    <span id="current-bpm">BPM: 120</span>
+                    <span id="current-notes" class="song-notes"></span>
+                </div>
+            </div>
+            
+            <!-- Metrónomo -->
+            <div class="metronome-container">
             <div class="metronome-display">
                 <div class="beat-indicator" id="beat-indicator" title="Clic: Reproducir/Pausar | Doble clic: Parar">
                     <div class="bpm-text" id="bpm-text">120</div>
@@ -51,7 +59,6 @@
                     </div>
                 </div>
             </div>
-
         </div>
     </header>
 
@@ -155,6 +162,13 @@
                             <label for="song-notes">Notas:</label>
                             <textarea id="song-notes" rows="3" placeholder="Notas y comentarios sobre la canción..."></textarea>
                         </div>
+                        <div class="form-group">
+                            <label for="song-structure">Estructura (gráfica):</label>
+                            <input type="text" id="song-structure" placeholder="Ej: ____EEEEEEEEEEEVVVVEEEEEEEEEE" title="_ = Silencio, E = Estribillo, V = Estrofa, B = Puente, I = Intro, O = Outro, S = Solo, P = Pre-estribillo">
+                            <small style="color: #999; display: block; margin-top: 5px;">
+                                Cada letra = 1 compás. _ silencio, E estribillo, V estrofa, B puente, I intro, O outro, S solo, P pre-estribillo
+                            </small>
+                        </div>
                     </div>
                     <div class="form-right">
                         <div class="form-group">
@@ -203,6 +217,13 @@
                         <div class="form-group">
                             <label for="edit-song-notes">Notas:</label>
                             <textarea id="edit-song-notes" rows="3" placeholder="Notas y comentarios sobre la canción..."></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="edit-song-structure">Estructura (gráfica):</label>
+                            <input type="text" id="edit-song-structure" placeholder="Ej: ____EEEEEEEEEEEVVVVEEEEEEEEEE" title="_ = Silencio, E = Estribillo, V = Estrofa, B = Puente, I = Intro, O = Outro, S = Solo, P = Pre-estribillo">
+                            <small style="color: #999; display: block; margin-top: 5px;">
+                                Cada letra = 1 compás. _ silencio, E estribillo, V estrofa, B puente, I intro, O outro, S solo, P pre-estribillo
+                            </small>
                         </div>
                         <div class="form-group">
                             <label>Información:</label>
