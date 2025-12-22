@@ -96,17 +96,18 @@ body {
 /* Estructura gráfica de la canción */
 .song-structure-container {
     width: 100%;
-    overflow-x: auto;
-    overflow-y: hidden;
-    padding: 5px 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 8px;
     margin-bottom: 5px;
     background-color: #0a0a0a;
     border-radius: 4px;
-    max-height: 40px;
+    max-height: 80px;
+    box-sizing: border-box;
 }
 
 .song-structure-container::-webkit-scrollbar {
-    height: 6px;
+    width: 6px;
 }
 
 .song-structure-container::-webkit-scrollbar-track {
@@ -125,23 +126,25 @@ body {
 
 .song-structure {
     display: flex;
-    gap: 2px;
-    padding: 5px;
-    min-width: min-content;
+    flex-wrap: wrap;
+    gap: 4px;
+    align-items: center;
 }
 
 .structure-bar {
-    width: 12px;
-    height: 20px;
+    width: 9px;
+    height: 28px;
     border-radius: 2px;
     flex-shrink: 0;
-    transition: transform 0.2s;
+    transition: transform 0.2s, box-shadow 0.2s;
     cursor: pointer;
-    border: 1px solid rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(0, 0, 0, 0.4);
+    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.3);
 }
 
 .structure-bar:hover {
     transform: scale(1.2);
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.5);
 }
 
 /* Colores para cada tipo de compás */
