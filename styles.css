@@ -2347,3 +2347,28 @@ body.concert-mode .playback-controls {
     background: #357abd;
     transform: scale(1.05);
 }
+
+.midi-btn {
+    background: #9b59b6;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 6px;
+    color: #ffffff;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.midi-btn:hover {
+    background: #8e44ad;
+    transform: scale(1.05);
+}
+
+.midi-btn.active {
+    background: #27ae60;
+    box-shadow: 0 0 15px rgba(39, 174, 96, 0.5);
+}
+
+.midi-btn.active:hover {
+    background: #229954;
+}

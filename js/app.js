@@ -584,6 +584,107 @@ function forceAppUpdate() {
 // Inicializar modal de ayuda cuando el DOM esté listo
 document.addEventListener('DOMContentLoaded', initializeHelpModal);
 
+// Inicializar controlador MIDI
+document.addEventListener('DOMContentLoaded', () => {
+    const midiToggleBtn = document.getElementById('midi-toggle-btn');
+    
+    if (midiToggleBtn) {
+        // Verificar si MIDI está soportado
+        if (!window.midiHandler.isSupported) {
+            midiToggleBtn.disabled = true;
+            midiToggleBtn.title = 'MIDI no soportado en este navegador';
+            midiToggleBtn.style.opacity = '0.5';
+        }
+        
+        // Manejar clic en botón MIDI
+        midiToggleBtn.addEventListener('click', async () => {
+            if (!window.midiHandler.isEnabled) {
+                // Habilitar MIDI
+                const success = await window.midiHandler.enable();
+                if (success) {
+                    midiToggleBtn.classList.add('active');
+                    midiToggleBtn.title = 'MIDI habilitado - Clic para deshabilitar';
+                    
+                    // Registrar listener para eventos MIDI
+                    window.midiHandler.addListener((midiEvent) => {
+                        handleMIDIEvent(midiEvent);
+                    });
+                    
+                    // Mostrar estado
+                    const status = window.midiHandler.getStatus();
+                    console.log('🎹 MIDI activado:', status);
+                    
+                    if (status.inputCount === 0) {
+                        alert('MIDI habilitado, pero no se detectaron dispositivos de entrada.\n\nConecta un dispositivo MIDI y se detectará automáticamente.');
+                    } else {
+                        alert(`MIDI habilitado exitosamente.\n\nDispositivos de entrada: ${status.inputCount}\n${status.inputs.map(i => '• ' + i.name).join('\n')}`);
+                    }
+                }
+            } else {
+                // Deshabilitar MIDI
+                window.midiHandler.disable();
+                midiToggleBtn.classList.remove('active');
+                midiToggleBtn.title = 'Habilitar MIDI';
+                console.log('🔌 MIDI desactivado');
+            }
+        });
+    }
+});
+
+// Función para manejar eventos MIDI
+function handleMIDIEvent(midiEvent) {
+    const { command, note, velocity, channel } = midiEvent;
+    
+    // Note On (comando 9) con velocity > 0
+    if (command === 9 && velocity > 0) {
+        console.log(`🎵 Nota tocada: ${note} (velocity: ${velocity}, canal: ${channel + 1})`);
+        
+        // Aquí puedes añadir acciones personalizadas
+        // Por ejemplo, cambiar canciones, controlar el metrónomo, etc.
+        
+        // Ejemplo: Usar notas para controlar funciones
+        switch (note) {
+            case 60: // Do central (C4)
+                window.metronome.togglePlayPause();
+                console.log('🎹 MIDI: Toggle metrónomo');
+                break;
+            case 62: // Re (D4)
+                window.metronome.stop();
+                console.log('🎹 MIDI: Parar metrónomo');
+                break;
+            case 64: // Mi (E4)
+                window.lyricsScroller.toggleAutoScroll();
+                console.log('🎹 MIDI: Toggle auto-scroll');
+                break;
+            case 65: // Fa (F4)
+                window.lyricsScroller.scrollFaster();
+                console.log('🎹 MIDI: Aumentar velocidad scroll');
+                break;
+            case 67: // Sol (G4)
+                window.lyricsScroller.scrollSlower();
+                console.log('🎹 MIDI: Disminuir velocidad scroll');
+                break;
+        }
+    }
+    
+    // Note Off (comando 8) o Note On con velocity 0
+    if (command === 8 || (command === 9 && velocity === 0)) {
+        console.log(`🎵 Nota liberada: ${note}`);
+    }
+    
+    // Control Change (comando 11)
+    if (command === 11) {
+        console.log(`🎛️ Control Change: CC${note} = ${velocity}`);
+        
+        // Ejemplo: Usar CC para controlar el BPM
+        if (note === 1) { // Modulation wheel
+            const bpm = Math.floor(40 + (velocity / 127) * 260); // Mapear 0-127 a 40-300 BPM
+            window.metronome.setBPM(bpm);
+            console.log(`🎹 MIDI: BPM cambiado a ${bpm}`);
+        }
+    }
+}
+
 // Inicializar la aplicación
 const app = new DrumHelperApp();
 
