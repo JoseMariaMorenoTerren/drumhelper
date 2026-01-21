@@ -62,6 +62,17 @@ class SongManager {
         // Botón para abrir archivo HTML
         this.openHtmlBtn = document.getElementById('open-html-btn');
         
+        // Elementos del visor de HTML
+        this.htmlViewerModal = document.getElementById('html-viewer-modal');
+        this.htmlViewerIframe = document.getElementById('html-viewer-iframe');
+        this.closeHtmlViewer = document.getElementById('close-html-viewer');
+        
+        console.log('HTML Viewer elements:', {
+            modal: this.htmlViewerModal,
+            iframe: this.htmlViewerIframe,
+            closeBtn: this.closeHtmlViewer
+        });
+        
         // Elementos del gestor de repertorios
         this.repertoireManagerBtn = document.getElementById('repertoire-manager-btn');
         this.repertoireManagerModal = document.getElementById('repertoire-manager-modal');
@@ -184,6 +195,29 @@ class SongManager {
         // Evento para abrir archivo HTML
         this.openHtmlBtn.addEventListener('click', () => {
             this.openSongHtmlFile();
+        });
+        
+        // Evento para cerrar el visor de HTML (solo si existe)
+        if (this.closeHtmlViewer) {
+            this.closeHtmlViewer.addEventListener('click', () => {
+                this.closeHtmlViewerModal();
+            });
+        }
+        
+        // Cerrar modal al hacer clic fuera del iframe (solo si existe)
+        if (this.htmlViewerModal) {
+            this.htmlViewerModal.addEventListener('click', (e) => {
+                if (e.target === this.htmlViewerModal) {
+                    this.closeHtmlViewerModal();
+                }
+            });
+        }
+        
+        // Cerrar con tecla ESC
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && this.htmlViewerModal && this.htmlViewerModal.classList.contains('active')) {
+                this.closeHtmlViewerModal();
+            }
         });
         
         // Eventos de exportar/importar
@@ -1184,8 +1218,38 @@ Says, "Find a home"
             return;
         }
         
-        // Abrir el archivo HTML en una nueva ventana/pestaña
-        window.open(this.currentSong.htmlFile, '_blank');
+        console.log('Opening HTML file:', this.currentSong.htmlFile);
+        console.log('Modal elements:', {
+            modal: this.htmlViewerModal,
+            iframe: this.htmlViewerIframe
+        });
+        
+        // Verificar que los elementos del modal existan
+        if (!this.htmlViewerModal || !this.htmlViewerIframe) {
+            console.error('Elementos del modal no encontrados, abriendo en nueva ventana');
+            window.open(this.currentSong.htmlFile, '_blank');
+            return;
+        }
+        
+        // Cargar el archivo HTML en el iframe y mostrar el modal
+        this.htmlViewerIframe.src = this.currentSong.htmlFile;
+        this.htmlViewerModal.classList.add('active');
+        
+        console.log('Modal abierto con src:', this.htmlViewerIframe.src);
+        
+        // Pausar el metrónomo si está sonando
+        if (window.metronome && window.metronome.isPlaying) {
+            window.metronome.stop();
+        }
+    }
+    
+    closeHtmlViewerModal() {
+        if (!this.htmlViewerModal) {
+            console.error('Modal no encontrado');
+            return;
+        }
+        this.htmlViewerModal.classList.remove('active');
+        this.htmlViewerIframe.src = '';
     }
     
     getCurrentSong() {

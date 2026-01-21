@@ -1,5 +1,5 @@
 // Service Worker para Drum Helper PWA
-const CACHE_NAME = 'drum-helper-v1.1.4';
+const CACHE_NAME = 'drum-helper-v1.1.5';
 const urlsToCache = [
     './',
     './index.html',
@@ -64,9 +64,20 @@ self.addEventListener('fetch', (event) => {
                         });
                     return response;
                 })
-                .catch(() => {
+                .catch((error) => {
                     // Si falla la red, usar cache
-                    return caches.match(event.request);
+                    console.log('SW: Error fetching, trying cache:', error);
+                    return caches.match(event.request)
+                        .then((cachedResponse) => {
+                            if (cachedResponse) {
+                                return cachedResponse;
+                            }
+                            // Si tampoco está en cache, devolver un error apropiado
+                            return new Response('File not found', {
+                                status: 404,
+                                statusText: 'Not Found'
+                            });
+                        });
                 })
         );
     } else {
