@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Baby Can I Hold You - Tracy Chapman</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body, html {
+            height: 100%;
+            width: 100%;
+            overflow: hidden;
+            font-family: 'Courier New', monospace;
+            background-color: black;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            width: 100vw;
+        }
+
+        .bloque-timeline {
+            width: 100%;
+            height: 3.75vh;
+            display: flex;
+            flex-direction: row;
+            flex-shrink: 0;
+        }
+
+        .parte {
+            height: 100%;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .parte::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background-color: transparent;
+            transition: background-color 0.3s ease;
+        }
+
+        .parte.active::after {
+            background-color: #ffffff;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+        }
+
+        .parte-intro { background-color: #9966FF; width: 14.3%; }
+        .parte-verso1 { background-color: #66CCFF; width: 14.3%; }
+        .parte-verso2 { background-color: #66CCFF; width: 14.3%; }
+        .parte-estribillo1 { background-color: #FFFFFF; width: 14.3%; }
+        .parte-verso3 { background-color: #FFFFFF; width: 14.3%; }
+        .parte-estribillo2 { background-color: #FFFFFF; width: 14.3%; }
+        .parte-estribillo-final { background-color: #FFFFFF; width: 14.2%; }
+
+        .bloque-contenido {
+            background-color: black;
+            width: 100%;
+            flex: 1;
+            color: white;
+            padding: 20px;
+            overflow-x: auto;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            flex-wrap: wrap;
+            align-content: flex-start;
+        }
+
+        .seccion {
+            min-width: 300px;
+            margin-right: 60px;
+            flex-shrink: 0;
+        }
+
+        .bloque-tiempo {
+            border: 3px solid #222;
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .bloque-tiempo.active {
+            border-color: #ffffff;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+        }
+
+        .titulo-seccion {
+            color: #4A90E2;
+            font-weight: bold;
+            margin-bottom: 10px;
+            font-size: 0.9em;
+        }
+
+        .verso {
+            line-height: 1.4;
+            margin-bottom: 3px;
+            font-size: 1.1em;
+        }
+
+        .dinamica-0 .verso { color: #FFD700; } /* Amarillo */
+        .dinamica-1 .verso { color: #66CCFF; } /* Azul */
+        .dinamica-2 .verso { color: #FFFFFF; } /* Blanco */
+        .dinamica-3 .verso { color: #66FF66; } /* Verde */
+
+        .anotacion {
+            color: #888;
+            font-style: italic;
+            margin: 5px 0;
+            font-size: 0.7em;
+            line-height: 0.9;
+        }
+
+        .anotacion-especial {
+            color: #FF8C00;
+            font-style: italic;
+            font-weight: bold;
+            margin: 8px 0;
+            font-size: 1.2em;
+            line-height: 1.2;
+        }
+
+        .btn-home {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-family: Arial, sans-serif;
+            font-weight: bold;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .btn-home:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+        }
+
+        .audio-controls {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.9);
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(255, 255, 255, 0.2);
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .audio-controls audio {
+            width: 300px;
+        }
+
+        .btn-restart {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-family: Arial, sans-serif;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 2px 10px rgba(255, 107, 107, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .btn-restart:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.6);
+        }
+
+        .btn-restart:active {
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <a href="../../index.html" class="btn-home">🏠 Índice</a>
+    <div class="container">
+        <div class="bloque-timeline">
+            <div class="parte parte-intro"></div>
+            <div class="parte parte-verso1"></div>
+            <div class="parte parte-verso2"></div>
+            <div class="parte parte-estribillo1"></div>
+            <div class="parte parte-verso3"></div>
+            <div class="parte parte-estribillo2"></div>
+            <div class="parte parte-estribillo-final"></div>
+        </div>
+
+        <div class="bloque-contenido">
+            <div class="seccion">
+                <div class="titulo-seccion">0. INTRO INSTRUMENTAL</div>
+                
+                <div class="bloque-tiempo" data-start="0" data-end="26">
+                    <div class="anotacion">[0:00 - 0:26] [Instrumental]</div>
+                    <div class="anotacion-especial">Intro instrumental 2 vueltas 4 compases</div>
+                </div>
+            </div>
+
+            <div class="seccion">
+                <div class="titulo-seccion">1. VERSO 1</div>
+                
+                <div class="bloque-tiempo dinamica-1" data-start="26" data-end="52">
+                    <div class="anotacion">[0:26] [/1]</div>
+                    <div class="anotacion-especial">BREVE SILENCIO en 3 de 1 pulso y al 1</div>
+                    <div class="anotacion-especial">Aro</div>
+                    <div class="verso">Sorry</div>
+                    <div class="verso">Is all that you can't say?</div>
+                    <div class="verso">Years gone by and still</div>
+                    <div class="verso">Words don't come easily</div>
+                    <div class="verso">Like sorry</div>
+                    <div class="verso">Like sorry</div>
+                    <div class="anotacion-especial">BREVE SILENCIO</div>
+                </div>
+            </div>
+
+            <div class="seccion">
+                <div class="titulo-seccion">2. VERSO 2</div>
+                
+                <div class="bloque-tiempo dinamica-1" data-start="52" data-end="78">
+                    <div class="anotacion">[0:52] [/1]</div>
+                    <div class="verso">Forgive me</div>
+                    <div class="verso">Is all that you can't say?</div>
+                    <div class="verso">Years gone by and still</div>
+                    <div class="verso">Words don't come easily</div>
+                    <div class="verso">Like forgive me</div>
+                    <div class="verso">Forgive me</div>
+                </div>
+            </div>
+
+            <div class="seccion">
+                <div class="titulo-seccion">3. ESTRIBILLO 1</div>
+                
+                <div class="bloque-tiempo dinamica-2" data-start="78" data-end="104">
+                    <div class="anotacion">[1:18] [/2]</div>
+                    <div class="anotacion-especial">A LA CAJA</div>
+                    <div class="verso">But you can say: Baby</div>
+                    <div class="verso">Baby, can I hold you tonight?</div>
+                    <div class="verso">Maybe if I told you the right words</div>
+                    <div class="verso">At the right time</div>
+                    <div class="verso">You'd be mine</div>
+                </div>
+            </div>
+
+            <div class="seccion">
+                <div class="titulo-seccion">4. VERSO 3</div>
+                
+                <div class="bloque-tiempo dinamica-2" data-start="104" data-end="130">
+                    <div class="anotacion">[1:44] [/2]</div>
+                    <div class="verso">I love you</div>
+                    <div class="verso">Is all that you can't say?</div>
+                    <div class="verso">Years gone by and still</div>
+                    <div class="verso">Words don't come easily</div>
+                    <div class="verso">Like I love you</div>
+                    <div class="verso">I love you</div>
+                </div>
+            </div>
+
+            <div class="seccion">
+                <div class="titulo-seccion">5. ESTRIBILLO 2</div>
+                
+                <div class="bloque-tiempo dinamica-2" data-start="130" data-end="156">
+                    <div class="anotacion">[2:10] [/2]</div>
+                    <div class="verso">But you can say: Baby</div>
+                    <div class="verso">Baby, can I hold you tonight?</div>
+                    <div class="verso">Maybe if I told you the right words</div>
+                    <div class="verso">At the right time</div>
+                    <div class="verso">You'd be mine</div>
+                </div>
+            </div>
+
+            <div class="seccion">
+                <div class="titulo-seccion">6. ESTRIBILLO FINAL</div>
+                
+                <div class="bloque-tiempo dinamica-2" data-start="156" data-end="182">
+                    <div class="anotacion">[2:36] [/2]</div>
+                    <div class="verso">Baby, can I hold you tonight?</div>
+                    <div class="verso">Maybe if I told you the right words</div>
+                    <div class="verso">At the right time</div>
+                    <div class="verso">You'd be mine</div>
+                    <div class="verso">You'd be mine</div>
+                    <div class="verso">You'd be mine</div>
+                    <div class="anotacion-especial">OJO: Final en /1 al 3er "You'd be mine"</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="audio-controls">
+        <audio id="audioPlayer" controls>
+            <source src="Tracy Chapman - Baby Can I Hold You_mixed.m4a" type="audio/mp4">
+            Tu navegador no soporta el elemento de audio.
+        </audio>
+        <button class="btn-restart" id="btnRestart">🔄 Reiniciar</button>
+    </div>
+
+    <script>
+        const audioPlayer = document.getElementById('audioPlayer');
+        const bloqueTiempos = document.querySelectorAll('.bloque-tiempo');
+        const timelineParts = document.querySelectorAll('.parte');
+        const btnRestart = document.getElementById('btnRestart');
+        
+        // Función para reiniciar la reproducción
+        btnRestart.addEventListener('click', function() {
+            audioPlayer.currentTime = 0;
+            audioPlayer.play();
+        });
+        
+        // Mapeo de rangos de tiempo a partes del timeline
+        const timelineMapping = [
+            { start: 0, end: 26, element: document.querySelector('.parte-intro') },
+            { start: 26, end: 52, element: document.querySelector('.parte-verso1') },
+            { start: 52, end: 78, element: document.querySelector('.parte-verso2') },
+            { start: 78, end: 104, element: document.querySelector('.parte-estribillo1') },
+            { start: 104, end: 130, element: document.querySelector('.parte-verso3') },
+            { start: 130, end: 156, element: document.querySelector('.parte-estribillo2') },
+            { start: 156, end: 182, element: document.querySelector('.parte-estribillo-final') }
+        ];
+        
+        let currentActiveBloque = null;
+        let currentActivePart = null;
+
+        audioPlayer.addEventListener('timeupdate', function() {
+            const currentTime = audioPlayer.currentTime;
+            
+            // Activar bloque de tiempo correspondiente
+            bloqueTiempos.forEach(bloque => {
+                const start = parseFloat(bloque.getAttribute('data-start'));
+                const end = parseFloat(bloque.getAttribute('data-end'));
+                
+                if (currentTime >= start && currentTime < end) {
+                    if (currentActiveBloque && currentActiveBloque !== bloque) {
+                        currentActiveBloque.classList.remove('active');
+                    }
+                    
+                    bloque.classList.add('active');
+                    currentActiveBloque = bloque;
+                    bloque.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'nearest' });
+                } else {
+                    bloque.classList.remove('active');
+                }
+            });
+            
+            // Activar parte del timeline correspondiente
+            timelineMapping.forEach(mapping => {
+                if (currentTime >= mapping.start && currentTime < mapping.end) {
+                    if (currentActivePart && currentActivePart !== mapping.element) {
+                        currentActivePart.classList.remove('active');
+                    }
+                    
+                    mapping.element.classList.add('active');
+                    currentActivePart = mapping.element;
+                } else if (mapping.element) {
+                    mapping.element.classList.remove('active');
+                }
+            });
+        });
+
+        // Limpiar resaltados cuando se pausa
+        audioPlayer.addEventListener('pause', function() {
+            bloqueTiempos.forEach(bloque => {
+                bloque.classList.remove('active');
+            });
+            timelineParts.forEach(part => {
+                part.classList.remove('active');
+            });
+            currentActiveBloque = null;
+            currentActivePart = null;
+        });
+    </script>
+</body>
+</html>

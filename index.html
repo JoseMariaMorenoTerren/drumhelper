@@ -38,6 +38,7 @@
                     <span id="current-bpm">BPM: 120</span>
                     <span id="current-notes" class="song-notes"></span>
                 </div>
+                <button id="open-html-btn" class="open-html-btn" style="display: none;" title="Abrir archivo HTML de la canción">📄 Ver Notas</button>
             </div>
             
             <!-- Metrónomo -->
@@ -164,6 +165,10 @@
                             <textarea id="song-notes" rows="3" placeholder="Notas y comentarios sobre la canción..."></textarea>
                         </div>
                         <div class="form-group">
+                            <label for="song-html-file">Archivo HTML:</label>
+                            <input type="text" id="song-html-file" placeholder="Ej: canciones/baby-can-i-hold-you/baby-can-i-hold-you.html">
+                        </div>
+                        <div class="form-group">
                             <label for="song-structure">Estructura (gráfica):</label>
                             <input type="text" id="song-structure" placeholder="Ej: ____EEEEEEEEEEEVVVVEEEEEEEEEE" title="_ = Silencio, E = Estribillo, V = Estrofa, B = Puente, I = Intro, O = Outro, S = Solo, P = Pre-estribillo">
                             <small style="color: #999; display: block; margin-top: 5px;">
@@ -218,6 +223,10 @@
                         <div class="form-group">
                             <label for="edit-song-notes">Notas:</label>
                             <textarea id="edit-song-notes" rows="3" placeholder="Notas y comentarios sobre la canción..."></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="edit-song-html-file">Archivo HTML:</label>
+                            <input type="text" id="edit-song-html-file" placeholder="Ej: canciones/baby-can-i-hold-you/baby-can-i-hold-you.html">
                         </div>
                         <div class="form-group">
                             <label for="edit-song-structure">Estructura (gráfica):</label>

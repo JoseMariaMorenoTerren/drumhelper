@@ -1,0 +1,3759 @@
+{
+  "version": "1.0",
+  "exportDate": "2025-10-24T09:52:40.581Z",
+  "setlistName": "Todas las canciones",
+  "repertoireName": "Bluemoons setlist",
+  "repertoireId": "repertoire_1760028153664",
+  "songs": [
+    {
+      "active": true,
+      "createdAt": "2025-10-09T16:53:28.360Z",
+      "bpm": 85,
+      "id": 1760028808360.4773,
+      "lyrics": "/0Today is gonna be the day\n/0That they're gonna throw it back to you\n/0By now, you should've somehow\n/0Realized what you gotta do\n/0I don't believe that anybody\n/0Feels the way I do about you now\n:: Cuenta 1 compas y entramos\n/0Backbeat, the word is on the street\nThat the /3fire3/ in your heart is out\nI'm sure you've heard it all before\nBut you never really had a doubt\nI don't believe that anybody\nFeels the way I do about you now\nAnd all the roads\nWe have to walk are winding\nAnd all the lights\nThat lead us there are blinding\nThere are many things that I'd\nLike to say to you\nBut I don't know how\nBecause maybe\nYou're gonna be the one that saves me\nAnd after all\nYou're my wonderwall\nSILENCIO\nToday was gonna be the day\nBut they'll never throw it back to you\nBy now, you should've somehow\nRealized what you're not to do\nI don't believe that anybody\nFeels the way I do about you now\nAnd all the roads\nThat lead you there were winding\nAnd all the lights\nThat light the way are blinding\nThere are many things that I'd\nLike to say to you\nBut I don't know how\nI said maybe\nYou're gonna be the one that saves me\nAnd after all\nYou're my wonderwall\nI said maybe (I said maybe)\nYou're gonna be the one that saves me\nAnd after all\nYou're my wonderwall\nI said maybe (I said maybe)\nYou're gonna be the one that saves me\n(That saves me)\nYou're gonna be the one that saves me\n(That saves me)\nYou're gonna be the one that saves me\n(That saves me)\nDon’t let me down\nThe Beatles\nDon't let me down\nDon't let me down\nDon't let me down\nDon't let me down\nNobody ever loved me like she does\nOh, she does, yeah, she does\nAnd if somebody loved me like she does\nOh, she does, yes, she does\nDon't let me down\nDon't let me down\nDon't let me down\nDon't let me down\nI'm in love for the first time\nDon't you know it's gonna last\nIt's a love that lasts forever\nIt's a love that has no past\nDon't let me down\nDon't let me down\nDon't let me down\nDon't let me down\nAnd from the first time\nThat she really done me\nOh, she done me, she done me good\nI guess nobody ever really done me\nOh, she done me, she done me good\nDon't let me down\nDon't let me down\nDon't let me down\nDon't let me down\nHablar de nada",
+      "notes": "",
+      "fontSize": 1.5999999999999999,
+      "artist": "Oasis",
+      "title": "Wonderwall",
+      "lastModified": "2025-10-11T09:08:04.301Z",
+      "order": 10
+    },
+    {
+      "active": false,
+      "createdAt": "2025-10-09T16:53:28.360Z",
+      "fontSize": 1,
+      "notes": "Inicio solo de guitarra \n/0 S S S S   S S S S0/",
+      "lyrics": "Look at the stars\nLook how they shine for you\nAnd everything you do\nYeah, they were all yellow\n\nI came along\nI wrote a song for you\nAnd all the things you do\nAnd it was called Yellow\n\nSo, then, I took my turn\nOh, what a thing to have done\nAnd it was all yellow\n\n/3Your skin\n/3Oh, yeah, your skin and bones\n/3Turn into something beautiful\n/3Do you know\n/3You know I love3//0you so?0/\n/0You know I love you so?\n:: SOLO\nI swam acros\nI jumped across for you\nOh, what a thing to do\n'Cause you were all yellow\n\nI drew a line\nI drew a line for you\nOh, what a thing to do\nAnd it was all yellow\n\n/3And your skin\n/3Oh, yeah, your skin and bones\n/3Turn into something beautiful\n/3Do you know\n/3For you, I'd bleed3//0myself dry?0/\n/0For you, I'd bleed myself dry\n\n/0It's true0/\nLook how they shine for you\nLook how they shine for you\nLook how they shine for\n\nLook how they shine for you\nLook how they shine for you\nLook how they shine\n/0Look at the stars\n/0Look how they shine for you\n/0And all the things that you do\n\n\n.",
+      "lastModified": "2025-10-09T16:53:28.360Z",
+      "bpm": 85,
+      "id": 1760028808360.0874,
+      "title": "Yellow",
+      "recordings": [
+        {
+          "events": [
+            {
+              "direction": "down",
+              "type": "scroll",
+              "timestamp": 1,
+              "position": 30
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "position": 60,
+              "timestamp": 2
+            },
+            {
+              "direction": "down",
+              "type": "scroll",
+              "timestamp": 2,
+              "position": 90
+            },
+            {
+              "direction": "down",
+              "type": "scroll",
+              "timestamp": 3,
+              "position": 120
+            },
+            {
+              "direction": "down",
+              "type": "scroll",
+              "position": 150,
+              "timestamp": 3
+            },
+            {
+              "position": 180,
+              "timestamp": 4,
+              "direction": "down",
+              "type": "scroll"
+            },
+            {
+              "position": 210,
+              "direction": "down",
+              "timestamp": 4,
+              "type": "scroll"
+            },
+            {
+              "position": 240,
+              "direction": "down",
+              "timestamp": 4,
+              "type": "scroll"
+            },
+            {
+              "timestamp": 4,
+              "direction": "down",
+              "position": 270,
+              "type": "scroll"
+            },
+            {
+              "timestamp": 5,
+              "position": 300,
+              "type": "scroll",
+              "direction": "down"
+            },
+            {
+              "position": 330,
+              "direction": "down",
+              "timestamp": 6,
+              "type": "scroll"
+            },
+            {
+              "direction": "down",
+              "timestamp": 6,
+              "type": "scroll",
+              "position": 360
+            },
+            {
+              "position": 390,
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 6
+            },
+            {
+              "type": "scroll",
+              "position": 360,
+              "timestamp": 7,
+              "direction": "up"
+            },
+            {
+              "direction": "up",
+              "position": 330,
+              "type": "scroll",
+              "timestamp": 7
+            },
+            {
+              "direction": "up",
+              "timestamp": 7,
+              "type": "scroll",
+              "position": 300
+            },
+            {
+              "position": 270,
+              "type": "scroll",
+              "direction": "up",
+              "timestamp": 7
+            },
+            {
+              "position": 240,
+              "direction": "up",
+              "timestamp": 7,
+              "type": "scroll"
+            },
+            {
+              "direction": "down",
+              "type": "scroll",
+              "position": 270,
+              "timestamp": 9
+            },
+            {
+              "direction": "down",
+              "position": 300,
+              "timestamp": 9,
+              "type": "scroll"
+            },
+            {
+              "direction": "down",
+              "type": "scroll",
+              "position": 330,
+              "timestamp": 9
+            },
+            {
+              "timestamp": 9,
+              "type": "scroll",
+              "direction": "down",
+              "position": 360
+            },
+            {
+              "direction": "down",
+              "timestamp": 9,
+              "position": 390,
+              "type": "scroll"
+            },
+            {
+              "direction": "down",
+              "type": "scroll",
+              "position": 420,
+              "timestamp": 10
+            },
+            {
+              "timestamp": 10,
+              "direction": "down",
+              "position": 450,
+              "type": "scroll"
+            },
+            {
+              "position": 480,
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 11
+            },
+            {
+              "type": "scroll",
+              "timestamp": 11,
+              "direction": "down",
+              "position": 510
+            },
+            {
+              "position": 540,
+              "timestamp": 12,
+              "direction": "down",
+              "type": "scroll"
+            },
+            {
+              "timestamp": 12,
+              "position": 570,
+              "direction": "down",
+              "type": "scroll"
+            },
+            {
+              "timestamp": 12,
+              "direction": "down",
+              "position": 600,
+              "type": "scroll"
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 12,
+              "position": 630
+            },
+            {
+              "position": 660,
+              "type": "scroll",
+              "timestamp": 12,
+              "direction": "down"
+            },
+            {
+              "type": "scroll",
+              "timestamp": 12,
+              "position": 690,
+              "direction": "down"
+            },
+            {
+              "type": "scroll",
+              "position": 720,
+              "direction": "down",
+              "timestamp": 13
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "position": 750,
+              "timestamp": 13
+            },
+            {
+              "position": 780,
+              "direction": "down",
+              "type": "scroll",
+              "timestamp": 14
+            },
+            {
+              "position": 810,
+              "direction": "down",
+              "type": "scroll",
+              "timestamp": 14
+            },
+            {
+              "direction": "down",
+              "position": 840,
+              "type": "scroll",
+              "timestamp": 14
+            },
+            {
+              "position": 870,
+              "direction": "down",
+              "timestamp": 14,
+              "type": "scroll"
+            },
+            {
+              "timestamp": 15,
+              "type": "scroll",
+              "position": 900,
+              "direction": "down"
+            },
+            {
+              "type": "scroll",
+              "position": 930,
+              "direction": "down",
+              "timestamp": 15
+            },
+            {
+              "position": 960,
+              "direction": "down",
+              "type": "scroll",
+              "timestamp": 15
+            },
+            {
+              "timestamp": 16,
+              "direction": "down",
+              "type": "scroll",
+              "position": 990
+            },
+            {
+              "position": 1020,
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 16
+            },
+            {
+              "type": "scroll",
+              "timestamp": 17,
+              "position": 1050,
+              "direction": "down"
+            },
+            {
+              "direction": "up",
+              "type": "scroll",
+              "timestamp": 18,
+              "position": 1020
+            },
+            {
+              "position": 1050,
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 19
+            }
+          ],
+          "duration": 19,
+          "id": 1759940048482,
+          "timestamp": "2025-10-08T16:14:08.482Z"
+        }
+      ],
+      "artist": "Coldplay",
+      "order": 20
+    },
+    {
+      "fontSize": 1.5999999999999999,
+      "artist": "Antonio Flores",
+      "createdAt": "2025-10-09T16:53:28.359Z",
+      "notes": "",
+      "recordings": [
+        {
+          "duration": 148,
+          "id": 1760037817058,
+          "events": [
+            {
+              "position": 30,
+              "type": "scroll",
+              "timestamp": 39,
+              "direction": "down"
+            },
+            {
+              "direction": "down",
+              "position": 60,
+              "timestamp": 40,
+              "type": "scroll"
+            },
+            {
+              "direction": "down",
+              "timestamp": 40,
+              "type": "scroll",
+              "position": 90
+            },
+            {
+              "position": 120,
+              "direction": "down",
+              "type": "scroll",
+              "timestamp": 41
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "position": 150,
+              "timestamp": 41
+            },
+            {
+              "timestamp": 42,
+              "direction": "down",
+              "position": 180,
+              "type": "scroll"
+            },
+            {
+              "position": 210,
+              "direction": "down",
+              "type": "scroll",
+              "timestamp": 42
+            },
+            {
+              "position": 240,
+              "timestamp": 53,
+              "direction": "down",
+              "type": "scroll"
+            },
+            {
+              "position": 270,
+              "direction": "down",
+              "type": "scroll",
+              "timestamp": 53
+            },
+            {
+              "direction": "down",
+              "timestamp": 53,
+              "type": "scroll",
+              "position": 300
+            },
+            {
+              "position": 330,
+              "timestamp": 54,
+              "type": "scroll",
+              "direction": "down"
+            },
+            {
+              "direction": "down",
+              "position": 360,
+              "type": "scroll",
+              "timestamp": 54
+            },
+            {
+              "direction": "down",
+              "position": 390,
+              "type": "scroll",
+              "timestamp": 54
+            },
+            {
+              "direction": "down",
+              "position": 420,
+              "type": "scroll",
+              "timestamp": 55
+            },
+            {
+              "direction": "down",
+              "type": "scroll",
+              "timestamp": 55,
+              "position": 450
+            },
+            {
+              "position": 480,
+              "type": "scroll",
+              "timestamp": 56,
+              "direction": "down"
+            },
+            {
+              "direction": "down",
+              "position": 510,
+              "timestamp": 56,
+              "type": "scroll"
+            },
+            {
+              "timestamp": 57,
+              "position": 540,
+              "direction": "down",
+              "type": "scroll"
+            },
+            {
+              "position": 570,
+              "direction": "down",
+              "timestamp": 59,
+              "type": "scroll"
+            },
+            {
+              "timestamp": 60,
+              "direction": "down",
+              "position": 600,
+              "type": "scroll"
+            },
+            {
+              "timestamp": 64,
+              "type": "scroll",
+              "position": 630,
+              "direction": "down"
+            },
+            {
+              "type": "scroll",
+              "timestamp": 64,
+              "direction": "down",
+              "position": 660
+            },
+            {
+              "timestamp": 65,
+              "type": "scroll",
+              "direction": "down",
+              "position": 690
+            },
+            {
+              "direction": "down",
+              "position": 720,
+              "timestamp": 72,
+              "type": "scroll"
+            },
+            {
+              "position": 750,
+              "direction": "down",
+              "timestamp": 73,
+              "type": "scroll"
+            },
+            {
+              "direction": "down",
+              "position": 780,
+              "timestamp": 73,
+              "type": "scroll"
+            },
+            {
+              "direction": "down",
+              "timestamp": 73,
+              "type": "scroll",
+              "position": 810
+            },
+            {
+              "direction": "down",
+              "position": 840,
+              "type": "scroll",
+              "timestamp": 74
+            },
+            {
+              "timestamp": 80,
+              "direction": "down",
+              "type": "scroll",
+              "position": 870
+            },
+            {
+              "timestamp": 80,
+              "type": "scroll",
+              "direction": "down",
+              "position": 900
+            },
+            {
+              "direction": "down",
+              "timestamp": 81,
+              "position": 930,
+              "type": "scroll"
+            },
+            {
+              "direction": "down",
+              "type": "scroll",
+              "timestamp": 81,
+              "position": 960
+            },
+            {
+              "direction": "down",
+              "position": 990,
+              "timestamp": 81,
+              "type": "scroll"
+            },
+            {
+              "direction": "down",
+              "type": "scroll",
+              "timestamp": 86,
+              "position": 1020
+            },
+            {
+              "direction": "down",
+              "timestamp": 86,
+              "type": "scroll",
+              "position": 1050
+            },
+            {
+              "type": "scroll",
+              "position": 1080,
+              "direction": "down",
+              "timestamp": 87
+            },
+            {
+              "direction": "down",
+              "position": 1110,
+              "timestamp": 100,
+              "type": "scroll"
+            },
+            {
+              "type": "scroll",
+              "timestamp": 100,
+              "position": 1140,
+              "direction": "down"
+            },
+            {
+              "timestamp": 101,
+              "type": "scroll",
+              "direction": "down",
+              "position": 1170
+            },
+            {
+              "timestamp": 101,
+              "type": "scroll",
+              "position": 1200,
+              "direction": "down"
+            },
+            {
+              "position": 1230,
+              "direction": "down",
+              "timestamp": 116,
+              "type": "scroll"
+            },
+            {
+              "timestamp": 116,
+              "position": 1260,
+              "type": "scroll",
+              "direction": "down"
+            },
+            {
+              "timestamp": 117,
+              "direction": "down",
+              "type": "scroll",
+              "position": 1290
+            },
+            {
+              "direction": "down",
+              "type": "scroll",
+              "position": 1320,
+              "timestamp": 117
+            },
+            {
+              "direction": "down",
+              "type": "scroll",
+              "timestamp": 117,
+              "position": 1350
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "position": 1380,
+              "timestamp": 117
+            },
+            {
+              "timestamp": 118,
+              "type": "scroll",
+              "direction": "down",
+              "position": 1410
+            },
+            {
+              "timestamp": 118,
+              "type": "scroll",
+              "direction": "down",
+              "position": 1440
+            },
+            {
+              "type": "scroll",
+              "timestamp": 118,
+              "position": 1470,
+              "direction": "down"
+            },
+            {
+              "position": 1500,
+              "type": "scroll",
+              "timestamp": 125,
+              "direction": "down"
+            },
+            {
+              "position": 1530,
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 125
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "position": 1560,
+              "timestamp": 125
+            },
+            {
+              "direction": "down",
+              "type": "scroll",
+              "timestamp": 126,
+              "position": 1590
+            },
+            {
+              "position": 1620,
+              "type": "scroll",
+              "timestamp": 126,
+              "direction": "down"
+            },
+            {
+              "timestamp": 126,
+              "direction": "down",
+              "type": "scroll",
+              "position": 1650
+            },
+            {
+              "position": 1680,
+              "type": "scroll",
+              "timestamp": 128,
+              "direction": "down"
+            },
+            {
+              "type": "scroll",
+              "position": 1710,
+              "direction": "down",
+              "timestamp": 129
+            },
+            {
+              "type": "scroll",
+              "timestamp": 129,
+              "direction": "down",
+              "position": 1740
+            },
+            {
+              "position": 1770,
+              "timestamp": 129,
+              "type": "scroll",
+              "direction": "down"
+            },
+            {
+              "timestamp": 129,
+              "direction": "down",
+              "position": 1800,
+              "type": "scroll"
+            },
+            {
+              "direction": "down",
+              "type": "scroll",
+              "timestamp": 130,
+              "position": 1830
+            },
+            {
+              "direction": "down",
+              "position": 1860,
+              "type": "scroll",
+              "timestamp": 138
+            },
+            {
+              "direction": "down",
+              "timestamp": 138,
+              "position": 1890,
+              "type": "scroll"
+            },
+            {
+              "direction": "down",
+              "position": 1920,
+              "timestamp": 139,
+              "type": "scroll"
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 139,
+              "position": 1950
+            },
+            {
+              "direction": "down",
+              "type": "scroll",
+              "timestamp": 139,
+              "position": 1980
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "position": 2010,
+              "timestamp": 147
+            },
+            {
+              "timestamp": 147,
+              "position": 2032,
+              "direction": "down",
+              "type": "scroll"
+            },
+            {
+              "timestamp": 148,
+              "type": "scroll",
+              "direction": "down",
+              "position": 2032
+            },
+            {
+              "timestamp": 148,
+              "direction": "down",
+              "position": 2032,
+              "type": "scroll"
+            },
+            {
+              "position": 2032,
+              "direction": "down",
+              "timestamp": 148,
+              "type": "scroll"
+            }
+          ],
+          "timestamp": "2025-10-09T19:23:37.058Z"
+        }
+      ],
+      "bpm": 70,
+      "lastModified": "2025-10-09T16:53:28.359Z",
+      "title": "No dudaría",
+      "id": 1760028808359.3909,
+      "order": 30,
+      "lyrics": "/0Si pudiera olvidar\n/0Todo aquello que fui\n/0Si pudiera borrar\n/0Todo lo que yo vi\n/0No dudaría\n/0No dudaría en volver a reír\n/0Si pudiera explicar\n/0Las vidas que quite\n/0Si pudiera quemar\n/0Las armas que use\n/0No dudaría\n/0No dudaría en volver a reír\nPrometo ver la alegría\nEscarmentar de la experiencia\nPero nunca, nunca más\nUsar la violencia\nPrometo ver la alegría\nEscarmentar de la experiencia\nPero nunca, nunca más\nUsar la violencia\nParachuruchru.... :: x2\n/0Si pudiera sembrar\n/0Los campos que arrasé\n/0Si pudiera devolver\n/0La paz que quité\n/0No dudaría\n/0No dudaría en volver a reír\n/0Si pudiera olvidar\n/0Aquel llanto que oí\n/0Si pudiera lograr\n/0Apartarlo de mí\n/0No dudaría\n/0No dudaría en volver a reír\nPrometo ver la alegría\nEscarmentar de la experiencia\nPero nunca, nunca más\nUsar la violencia\nPrometo ver la alegría\nEscarmentar de la experiencia\nPero nunca, nunca más\nUsar la violencia\nParachuruchru.... :: x4",
+      "active": false
+    },
+    {
+      "artist": "The Frames",
+      "id": 1761287020969.8992,
+      "fontSize": 2.4,
+      "active": false,
+      "title": "Falling Slowly",
+      "notes": "",
+      "order": 40,
+      "lyrics": "I don't know you\nBut I want you\nAll the more for that\nWords fall through me\nAnd always fool me\nAnd I can't react\n\nAnd games that never amount\nTo more than they're meant\nWill play themselves out\n:: Charles a corches, con caja\nTake this sinking boat and point it home\nWe've still got time\nRaise your hopeful voice, you have a choice\nYou'll make it now\n:: SILENCIO y aro\nFalling slowly, eyes that know me\nAnd I can't go back\nMoods that take me and erase me\nAnd I'm painted black\n\nYou have suffered enough\nAnd warred with yourself\nIt's time that you won\n\nTake this sinking boat and point it home\nWe've still got time\nRaise your hopeful voice, you have a choice\nYou've made it now\n:: SOLO\n:: SILENCIO de todos instrumento\nTake this sinking boat and point it home\nWe've still got time\nRaise your hopeful voice, you have a choice :: Vuelven instrumentos\nYou've made it now\nFalling slowly, sing your melody\nI'll sing along\n:: SOLO\nNooww...\n\n:: FINAL EN SECO (ESTA VERSIÓN)",
+      "bpm": "71",
+      "createdAt": "2025-10-24T06:23:40.969Z",
+      "lastModified": "2025-10-24T06:23:40.969Z"
+    },
+    {
+      "id": 1760028808358.461,
+      "notes": "3 vueltas de piano (friends) y dos golpes, marco 4 y entramos - \nFinal juntos tras segundo vuelta de estribillo, ojo primer estribillo recortado",
+      "title": "La del pirata cojo",
+      "artist": "Joaquín Sabina",
+      "fontSize": 1.4,
+      "active": false,
+      "order": 50,
+      "lastModified": "2025-10-09T16:53:28.358Z",
+      "lyrics": "No soy un fulano con la lagrima fácil\nDe esos que se quejan solo por vicio\nSi la vida se deja yo le meto mano\nY si no aún me excita mi oficio\n\nY como además sale gratis soñar\nY no creo en la reencarnación\nCon un poco de imaginación\nPartiré de viaje enseguida\nA vivir otras vidas\nA probarme otros nombres\n\nA colarme en el traje y la piel\nDe todos los hombres\nQue nunca seré\n:: Sube dinámica\nAl Capone en Chicago\nLegionario en melilla\nPintor en Montparnasse\n\nMercader en Damasco\nCostalero en Sevilla\nNegro en nueva Orleans\n\nViejo verde en Sodoma\nDeportado en Siberia\nSultán en un harén\n\nPolicía, ni en broma\nTriunfador de la feria\nGitanito en Jerez\n\nTahúr en Montecarlo\nCigarrillo en tu boca\nTaxista en Nueva York\n\nEl más chulo del barrio\nTiro porque me toca\nSuspenso en religión\n\nConfesor de la reina\nBanderillero en Cádiz\nTabernero en Dublín\n\nComunista en las Vegas\nAhogado en el Titanic\nFlautista en Hamelin\n\nPero si me dan a elegir\nEntre todas las vidas yo escojo\nLa del pirata cojo\nCon pata de palo\nCon parche en el ojo\nCon cara de malo\nEl viejo truhan, capitán\nDe un barco que tuviera por bandera\nUn par de tibias y una calavera\n\nLa del pirata cojo nooooo\nCon pata de palo\nCon parche en el ojo\nCon cara de malo\nEl viejo truhan, capitán\nDe un barco que tuviera por bandera\nUn par de tibias y una calavera\n\nBillarista a tres bandas\nInsumiso en el cielo\nDueño de un cabaret\n\nArañazo en tu espalda\nTenor en Rigoletto\nPianista de un burdel\n\nBongosero en la Habana\nCasanova en Venecia\nAnciano en Shangri La\n\nPolizón en tu cama\nVocalista de orquesta\nMejor tiempo en Le Mans\n:: Sube dinámica\nCronista de sucesos\nDetective en apuros\nConservado en alcohol\n\nViolador en tus sueños\nSuicida en el viaducto\nGuapo en un culebrón\n\nMorfinómano en China\nDesertor en la guerra\nBoxeador en Detroit\n\nCazador en la India\nMarinero en Marsella\nFotógrafo en Playboy\n\nPero si me dan a elegir\nEntre todas las vidas yo escojo\nLa del pirata cojo\nCon pata de palo\nCon parche en el ojo\n\nCon cara de malo\nEl viejo truhan, capitán\nDe un barco que tuviera\nPor bandera\nUn par de tibias y una calavera\n\nLa del pirata cojo\nCon pata de palo\nCon parche en el ojo\n\nCon cara de malo\nEl viejo truhan, capitán\nDe un barco que tuviera\nPor bandera\nUn par de tibias y una calavera\nFinal todos juntos solo estribillo que se repite dos veces y el segundo es el final en seco",
+      "createdAt": "2025-10-09T16:53:28.358Z",
+      "bpm": 135
+    },
+    {
+      "bpm": "100",
+      "fontSize": 2.4,
+      "title": "I Still havent found what...",
+      "id": 1761293537517.6702,
+      "order": 70,
+      "notes": "",
+      "artist": "U2",
+      "active": false,
+      "lyrics": ":: Versión con Robbie comienza él solo\n:: Final acariciando platos\nI have climbed the highest mountains\nI have run through the fields\nOnly to be with you\nOnly to be with you\n\nI have run, I have crawled\nI have scaled\nThese city walls\nThese city walls\nOnly to be with you\n\nBut I still haven't found\nWhat I'm looking for\nBut I still haven't found\nWhat I'm looking for\n\nI have kissed honey lips\nFelt the healing in her fingertips\nIt burned like fire\nThis burning desire\n\nI have spoken with the tongue of angels\nI have held the hand of the devil\nIt was warm in the night\nI was cold as a stone\n\nBut I still haven't found\nWhat I'm looking for\nBut I still haven't found\nWhat I'm looking for\n\nI believe in the kingdom come\nThen all the colors will\nBleed into one\nBleed into one\nBut, yes, I'm still running\n\nYou broke the bonds\nAnd you loosed the chains\nYou carried the cross\nAnd all my shame\nAll my shame\nYou know I believe it\n\nBut I still haven't found\nWhat I'm looking for\nBut I still haven't found\nWhat I'm looking for\nBut I still haven't found\nWhat I'm looking for\nBut I still haven't found\nWhat I'm looking for\n:: OJO final diferente",
+      "createdAt": "2025-10-24T08:12:17.517Z",
+      "lastModified": "2025-10-24T08:12:17.517Z"
+    },
+    {
+      "order": 80,
+      "notes": "Entro tras 4 compases de guitarra, con flam en anacrusa. 2 Vueltas. OJO crescendos primero 1, 1 y luego 2\n\n",
+      "bpm": "136",
+      "title": "Insurrección",
+      "artist": "El último de la fila",
+      "fontSize": 1.4,
+      "lastModified": "2025-10-09T16:53:28.358Z",
+      "active": false,
+      "createdAt": "2025-10-09T16:53:28.358Z",
+      "id": 1760028808358.4316,
+      "lyrics": "Dónde estabas entonces \ncuando tanto te necesité?\nNadie es mejor que nadie \npero tu creíste vencer.\nSi lloré ante tu puerta de nada sirvió\nBarras de bar, vertederos de amor...\n\nOs enseñé mi trocito peor.\nRetales de mi vida,\nfotos a contraluz\n\nMe siento hoy como un halcón\nherido por las flechas de la incertidumbre.\n\nDónde estabas entonces \ncuando tanto te necesité?\nNadie es mejor que nadie \npero tu creíste vencer.\nSi lloré ante tu puerta de nada sirvió\nBarras de bar, vertederos de amor...\n\nOs enseñé mi trocito peor.\nRetales de mi vida,\nfotos a contraluz\n\nMe siento hoy como un halcón\nherido por las flechas de la incertidumbre\n\nMe corto el pelo una y otra vez.\nMe quiero defender\nDame mi alma y déjame en paz\nQuiero intentar no volver a caer\nPequeñas tretas          \npara continuar en la brecha.\n\nMe siento hoy como un halcón\nllamado a las filas de la insurrección\n\n\n"
+    },
+    {
+      "lyrics": "Me acuerdo\nY pienso en el tiempo que llevábamos sin vernos\nDos niños pequeños que lo sentían todo\nYo lo sigo sintiendo hoy por ti\nRecuerdos que tengo\nY no entiendo que dejáramos de vernos\nBuscando en mil besos que no son nuestros besos\nDeseo estar contigo hasta morir\nDesesperándome\nTe he buscado en mis sueños\nY ahogándome\nVolverá\nSeguro que volverá\nLo sigo sintiendo y te echo de menos\nQue acabe mi soledad\nVolverá\nTe juro que volverá\nEse amor verdadero de cuando era pequeño\nSeguro que volverá\nVolverá\nTe miro en el tiempo\nY siento que tú eres lo que quiero\nMi niña, mi sueño, todo eso que no tengo\nY que sigo sintiendo hoy por ti\nIncluso en mis sueños\nMe invento y me creo que te tengo\nQue toco tu cuerpo, y sé que eso no es cierto\nQue estoy acojonándome sin ti\nDesesperándome\nTe he buscado en mis sueños\nY ahogándome\nVolverá\nSeguro que volverá\nLo sigo sintiendo y te echo de menos\nQue acabe mi soledad\nVolverá\nTe juro que volverá\nEse amor verdadero de cuando era pequeño\nSeguro que volverá\nVolverá\nVolverá\nSeguro que volverá\nLo sigo sintiendo, te echo de menos\nQue acabe mi soledad\nVolverá\nTe juro que volverá\nEse amor verdadero de cuando era pequeño\nSeguro que volverá\nVolverá\nViva la vida",
+      "createdAt": "2025-10-09T16:53:28.360Z",
+      "id": 1760028808360.7263,
+      "order": 90,
+      "fontSize": 1.5999999999999999,
+      "bpm": 124,
+      "artist": "Dani Martín",
+      "active": false,
+      "notes": "::B C B C con Charles a barrica/punta semiabierto -\nEntramos todos juntos\n::FINAL EN SECO tras 2 vuektas",
+      "title": "Volverá",
+      "lastModified": "2025-10-11T09:04:14.392Z"
+    },
+    {
+      "createdAt": "2025-10-09T16:53:28.358Z",
+      "notes": "Ian 2 compases solo",
+      "id": 1760028808358.3523,
+      "lyrics": "Voy a mirarme en tu espejo\nSi tu juras hablarme de ti\nBusco en tus ojos mi ultima luz\nSé que lo harías por mí\nSé que lo harías\n\nTe he prometido ponerme de pie\nY sabes que quiero cumplir\nNo es necesario tu salto de fe\nSé que lo harías por mí\n\nMe he divertido pasándolo mal\nUn poco más cerca del fin\nTrátame como si fuera a explotar\nSe que lo harías por mí\nSé que lo harías\n\nY antes de hacernos viejos\nY hablar de nada, voy a pasar\nMis vacaciones dentro de una tormenta y quererme más\nY voy a hacerlo por ti\nYo quiero hacerlo por ti\n\nEs divertido tender al error\nDeciros a todo que sí\nAléjate de mi mundo interior\nSé que lo harías por mí\nSé que lo harías\n\nY antes de hacernos viejos\nY hablar de nada, voy a pasar\nMis vacaciones dentro de una tormenta y quererme más\nY voy a hacerlo por ti\nYo quiero hacerlo por ti\nY voy a hacerlo por ti\nYo quiero hacerlo por ti\n\nla hacemos mas larga!!!\n\n",
+      "active": false,
+      "fontSize": 1.7999999999999998,
+      "bpm": "118",
+      "artist": "Viva Suecia",
+      "title": "Hablar de nada",
+      "order": 100,
+      "lastModified": "2025-10-09T16:53:28.358Z"
+    },
+    {
+      "active": false,
+      "lastModified": "2025-10-11T08:57:19.692Z",
+      "notes": "",
+      "createdAt": "2025-10-09T16:53:28.360Z",
+      "fontSize": 1.5999999999999999,
+      "id": 1760028808360.575,
+      "lyrics": "Here comes Johnny singing Oldies, Goldies\nBe-bop-a-lula, baby, what I say\nHere comes Johnny singing I gotta woman\nDown in the tunnels, trying to make it pay\nHe got the action, he got the motion\nOh yeah, the boy can play\nDedication, devotion\n/0Turning all the night time into the day\nHe do the song about the sweet lovin' woman\nHe do the song about the knife\nAnd he do the walk, he do the walk of life\nYeah, he do the walk of life\nHere comes Johnny goin' tell you the story\nHand me down my walkin' shoes\nHere come Johnny with the power and the glory\nBackbeat, the talkin' blues\nHe got the action, he got the motion\nYeah, the boy can play\nDedication, devotion\n/0Turning all the night time into the day\nHe do the song about the sweet lovin' woman\nHe do the song about the knife\nAnd he do the walk, he do the walk of life\nYeah, he do the walk of life\n::SOLO\nHere comes Johnny singing oldies, goldies\nBe-bop-a-lula, baby what I say\nHere comes Johnny singing \"I Gotta Woman\"\nDown in the tunnels, trying to make it pay\nHe got the action, he got the motion\nOh yeah, the boy can play\nDedication, devotion\n/0Turning all the night time into the day\nAnd after all the violence and double talk\nThere's just a song in all the trouble and the strife\nYou do the walk, you do the walk of life\nHum, you do the walk of life\nInsurrección",
+      "order": 110,
+      "recordings": [
+        {
+          "events": [
+            {
+              "timestamp": 1,
+              "direction": "down",
+              "position": 30,
+              "type": "scroll"
+            },
+            {
+              "position": 60,
+              "direction": "down",
+              "type": "scroll",
+              "timestamp": 1
+            },
+            {
+              "position": 90,
+              "timestamp": 1,
+              "direction": "down",
+              "type": "scroll"
+            },
+            {
+              "direction": "down",
+              "timestamp": 2,
+              "position": 120,
+              "type": "scroll"
+            },
+            {
+              "type": "scroll",
+              "timestamp": 2,
+              "direction": "down",
+              "position": 150
+            },
+            {
+              "timestamp": 3,
+              "position": 180,
+              "type": "scroll",
+              "direction": "down"
+            },
+            {
+              "direction": "down",
+              "type": "scroll",
+              "position": 210,
+              "timestamp": 3
+            },
+            {
+              "direction": "down",
+              "type": "scroll",
+              "position": 240,
+              "timestamp": 3
+            }
+          ],
+          "timestamp": "2025-10-10T10:08:32.222Z",
+          "id": 1760090912222,
+          "duration": 3
+        }
+      ],
+      "artist": "Dire Straits",
+      "title": "Walk of live",
+      "bpm": 168
+    },
+    {
+      "artist": "Miguel Rios",
+      "lyrics": "A menudo me recuerdas a alguien\nTu sonrisa la /0imagino0/ sin miedo\nInvadido por la ausencia\nMe devora la impaciencia\nMe pregunto si algun día te veré \n\nYa se todo de /0tu vida0/, y sin embargo\nNo conozco ni /0un detalle0/ de ti\nEl teléfono es muy frio\nTus llamadas son muy pocas\nYo si quiero conocerte y tu no a mi\nPor favor!\n\nDame una cita\nVamos al parque\nEntra en mi vida\nSin anunciarte\nAbre las puertas\nCierra los ojos\nVamos a vernos\nPoquito a poco\n\nDame tus manos\nSiente las mias\nComo dos ciegos\nSanta Lucia, Santa Lucia, ohh Santa Lucia!\n\n/0A menudo me recuerdas0/ a mi",
+      "notes": "Entrada todos a la vez, marco 4",
+      "active": false,
+      "order": 120,
+      "bpm": 100,
+      "lastModified": "2025-10-11T09:07:11.826Z",
+      "createdAt": "2025-10-09T16:53:28.359Z",
+      "id": 1760028808359.8154,
+      "title": "Santa Lucía",
+      "fontSize": 1.5999999999999999
+    },
+    {
+      "artist": "Radiohead",
+      "order": 130,
+      "fontSize": 2.4,
+      "bpm": 93,
+      "active": false,
+      "id": 1761293555302.1323,
+      "notes": "Entrada marcando 4",
+      "title": "Creep",
+      "lyrics": "When you were here before\n Couldn't look you in the eye\n You're just like an angel\n Your skin makes me cry\n\nYou float like a feather\n In a beautiful world\n I wish I was special6\n You're so fucking special\n\nBut I'm a creep\n I'm a weirdo\n What the hell am I doing here?\n I don't belong here\n\nI don't care if it hurts\n I wanna have control\n I want a perfect body\n I want a perfect soul\n\nI want you to notice\n When I'm not around\n You're so fucking special\n I wish I was special\n\nBut I'm a creep\n I'm a weirdo\n What the hell am I doing here?\n I don't belong here\n Oh, oh\n\nShe's running out the door\n She's running out\n She run, run, run, run\n Run\n\nWhatever makes you happy\n Whatever you want\n You're so fucking special\n I wish I was special\n\nBut I'm a creep\n I'm a weirdo\n What the hell am I doing here?\n I don't belong here\n I don't belong here",
+      "createdAt": "2025-10-24T08:12:35.302Z",
+      "lastModified": "2025-10-24T08:17:31.730Z",
+      "duration": ""
+    },
+    {
+      "lyrics": "So, so you think you can tell\nHeaven from hell?\nBlue skies from pain?\nCan you tell a green field\nFrom a cold steel rail?\nA smile from a veil?\nDo you think you can tell?\nDid they get you to trade\nYour heroes for ghosts?\nHot ashes for trees?\nHot air for a cool breeze?\nCold comfort for change?\nDid you exchange\nA walk on part in the war\nFor a lead role in a cage?\nSOLO\nHow I wish\nHow I wish you were here\nWe're just two lost souls\nSwimming in a fish bowl year after year\nRunning over the same old ground\nWhat have we found?\nThe same old fears\nWish you were here\nLa Puerta Violeta",
+      "title": "Wish you were here",
+      "fontSize": 2.4,
+      "active": false,
+      "artist": "Pink Floyd",
+      "notes": "",
+      "bpm": 60,
+      "order": 140,
+      "id": 1761293626435.8345,
+      "createdAt": "2025-10-24T08:13:46.435Z",
+      "lastModified": "2025-10-24T08:19:28.364Z",
+      "duration": ""
+    },
+    {
+      "active": false,
+      "id": 1760028808360.4097,
+      "lastModified": "2025-10-24T08:20:13.864Z",
+      "order": 150,
+      "fontSize": 2.4,
+      "createdAt": "2025-10-09T16:53:28.360Z",
+      "bpm": 112,
+      "notes": "Mazas y bombo a negras",
+      "lyrics": "Daddy's flown across the ocean\nLeaving just a memory\nA snapshot in the family album\nDaddy, what else did you leave for me?\nDaddy, what'd ya leave behind for me?\nAll in all, it was just a brick in the wall\nAll in all, it was all just bricks in the wall\nHey!\nWe don't need no education\nWe don't need no thought control\nNo dark sarcasm in the classroom\nTeacher, leave them kids alone\nHey, teacher, leave them kids alone\nAll in all, it's just another brick in the wall\nAll in all, you're just another brick in the wall\nWe don't need no education\nWe don't need no thought control\nNo dark sarcasm in the classroom\nTeachers, leave them kids alone\nHey, teacher, leave us kids alone\nAll in all, you're just another brick in the wall\nAll in all, you're just another brick in the wall\n(Solo)\nIf you don't eat yer meat, you can't have any pudding\nHow can you have any pudding if you don't eat yer meat?\nYou! Yes, you behind the bike stands\nStand still, laddy!\nI don't need no arms around me\nAnd I don't need no drugs to calm me\nI have seen the writing on the wall\nDon't think I need anything at all\nNo, don't think I'll need anything at all\nAll in all, it was all just bricks in the wall\nAll in all, you were all just bricks in the wall\nInsoportable",
+      "artist": "Pink Floyd",
+      "title": "Another brick in the wall 1+2+3",
+      "duration": ""
+    },
+    {
+      "bpm": 124,
+      "title": "Insoportable",
+      "order": 160,
+      "lastModified": "2025-10-11T09:00:43.137Z",
+      "createdAt": "2025-10-09T16:53:28.358Z",
+      "id": 1760028808358.7239,
+      "lyrics": "Ya lo sé\nLo que eres corazón\nMirate y ves que eres lo peor\n\nY ya no hay nada que me sirva en tu interior\nEs que yo por ti no doy ni un duro amor\n\n/3Aunque digas no se te ha hecho tarde (ya se te ha hecho tarde) \n/3Sabes que eres un poquito /3insoportable (tan insorportable)\n/3Mirarás siempre hacia atrás arrepentida (tan arrepentida)\n/3Sabes que yo he dado todo todo en balde\n/3En balde (En balde)\n\nYa vere si vuelvo a verte o no\nTu podrás creer que voy de duro y no\n\nY ya no hay nada que me sirva en tu interior\nEs que yo por ti no doy un duro amor\n\n/3Aunque digas no se te ha hecho tarde (ya se te ha hecho tarde) \n/3Sabes que eres un poquito insoportable (tan insorportable)\n/3Mirarás siempre hacia atrás arrepentida (tan arrepentida)\n/3Sabes que yo he dado todo todo en balde\n/3En balde (En balde)\n\n:: OJO Aquí la unimos con Nada fue un error (acelerar)\n\n/0Aunque digas, no se te ha hecho tarde\n/0Sabes que eres un poquito insoportable\n\nMirarás siempre hacia atrás, arrepentida (tan arrepentida)\nSabes que yo he dado todo, todo en balde\n\nAunque digas, no se te ha hecho tarde (ya se te ha hecho tarde)\nSabes que eres un poquito insoportable (tan insoportable)\nMirarás siempre hacia atrás, arrepentida (tan arrepentida)\nSabes que yo he dado todo, todo en balde\nEn balde",
+      "active": false,
+      "artist": "El Canto del Loco",
+      "fontSize": 1.2,
+      "notes": "4 COMPASES DE SILENCIO, \nENTRADA CAJA EN ANACRUSA 4º compás\nVUELTA DEL SILENCIO DOS COMPASES CRESCENDO\n:: F I N A L      E N      S E C O     E N     1"
+    },
+    {
+      "fontSize": 1.7999999999999998,
+      "lastModified": "2025-10-09T16:53:28.360Z",
+      "artist": "Coti",
+      "order": 170,
+      "id": 1760028808360.4004,
+      "notes": "Viene de Insoportable",
+      "title": "Nada fue un error",
+      "bpm": 138,
+      "createdAt": "2025-10-09T16:53:28.360Z",
+      "lyrics": "Tengo una mala noticia\nNo fue de casualidad\nYo quería que nos pasara\nY tú, y tú lo dejaste pasar\nNo quiero que me perdones\nY no me pidas perdón\nNo me niegues que me buscaste\nNada, nada de esto\nNada de esto fue un error\nNada fue un error\nNada de esto fue un error\nNada fue un error\nLos errores no se elijen\nPara bien y o para mal\nYo falle cuando viniste\nY tú, y tú no quisiste fallar\nAprendí la diferencia\nEntre el juego y el azar\nQuien te mira y quien se entrega\nNada, nada de esto\nNada de esto fue un error\nNada fue un error\nNada de esto fue un error\nNada fue un error\nTengo una mala noticia\nNo fue de casualidad\nYo quería que nos pasara\nY tú, y tú lo dejaste pasar\nNo quiero que me perdones\nY no me pidas perdón\nNo me niegues que me buscaste\nNada, nada de esto\nNada de esto fue un error\nNada fue un error\nNada de esto fue un error\nNada fue un error\nLos errores no se elijen\nPara bien y o para mal\nNo falle cuando viniste\nY tú, y tú no quisiste fallar\nAprendí la diferencia\nEntre el juego y el azar\nQuien te mira y quien se entrega\nNada, nada de esto\nNada de esto fue un error\nNada fue un error\nNada de esto fue un error\nNada fue un error\nNada fue un error\nNada de esto fue\nCreep",
+      "active": false
+    },
+    {
+      "artist": "Alan Parsons",
+      "id": 1760028808360.7083,
+      "notes": "",
+      "createdAt": "2025-10-09T16:53:28.360Z",
+      "lyrics": "Don't think sorry's easily said\nDon't try turning tables instead\nYou've taken lots of chances before\nBut I ain't gonna give anymore, don't ask me\nThat's how it goes\nCause part of me knows what you're thinkin'\nDon't say words you're gonna regret\nDon't let the fire rush to your head\nI've heard the accusation before\nAnd I ain't gonna take anymore, believe me\nThe Sun in your eyes\nMade some of the lies worth believing\nI am the eye in the sky looking at you\nI can read your mind\nI am the maker of rules, dealing with fools\nI can cheat you blind\nAnd I don't need to see anymore to know that\nI can read your mind (looking at you)\nI can read your mind (looking at you)\nI can read your mind (looking at you)\nI can read your mind (looking at you)\nDon't leave false illusions behind\nDon't cry I ain't changing my mind\nSo find another fool like before\nCause I ain't gonna live anymore believing\nSome of the lies while all of the signs are deceiving\nI am the eye in the sky looking at you\nI can read your mind\nI am the maker of rules, dealing with fools\nI can cheat you blind\nAnd I don't need to see anymore to know that\nI can read your mind (looking at you)\nI can read your mind (looking at you)\nI can read your mind (looking at you)\nI can read your mind (looking at you)\nI am the eye in the sky looking at you\nI can read your mind\nI am the maker of rules, dealing with fools\nI can cheat you blind\nAnd I don't need to see anymore to know that\nI can read your mind (looking at you)\nI can read your mind (looking at you)\nI can read your mind (looking at you)\nI can read your mind (looking at you)\nRocking all over the world",
+      "active": false,
+      "bpm": 110,
+      "fontSize": 1.9999999999999998,
+      "lastModified": "2025-10-09T16:53:28.360Z",
+      "title": "Eye in the Skys",
+      "order": 180
+    },
+    {
+      "notes": "",
+      "lastModified": "2025-10-09T16:53:28.359Z",
+      "bpm": 122,
+      "id": 1760028808359.7646,
+      "artist": "Héroes del silencio",
+      "title": "Maldito duende",
+      "fontSize": 1.7999999999999998,
+      "lyrics": "He oído que la noche es toda magia\nY que el duende te invita a soñar\nY sé que últimamente apenas he parado\nY tengo la impresión de divagar\nAmanece tan pronto y yo estoy tan solo\nY no me arrepiento de lo de ayer\nSi las estrellas te iluminan\nHoy y te sirven de guía\nTe sientes tan fuerte que piensas\nQue nadie te puede tocar\nLas distancias se hacen cortas\nPasan rápidas las horas\nY este cuarto no para de menguar\nY tantas cosas por decir tanta charla por aquí\nSi fuera posible escapar de este lugar\nAmanece tan pronto y yo estoy tan solo\nQue no arrepiento de lo de lo de ayer\nSi las estrellas te iluminan\nHoy y te sirven de guía\nTe sientes tan fuerte que piensas\nQue nadie te puede tocar\nAmanece tan pronto y yo estoy tan solo\nQue no me arrepiento de lo de ayer\nSi las estrellas te iluminan\nHoy y te sirven de guía\nTe sientes tan fuerte que piensas\nQue nadie te puede tocar\nEs por ti",
+      "active": false,
+      "createdAt": "2025-10-09T16:53:28.359Z",
+      "order": 190
+    },
+    {
+      "id": 1760028808360.956,
+      "lyrics": "I thought love was only true in fairy tales\nMeant for someone else but not for me\nOh, love was out to get me\nThat's the way it seems\nDisappointment haunted all my dreams\nThen I saw her face\nNow I'm a believer\nNot a trace\nOf doubt in my mind\nI'm in love\nI'm a believer\nI couldn't leave her if I tried\nI thought love was more or less a given thing\nSeems the more I gave the less I got\nOh, what's the use in trying\nAll you get is pain\nWhen I needed sunshine I got rain\nThen I saw her face\nNow I'm a believer\nNot a trace\nOf doubt in my mind\nI'm in love\nI'm a believer\nI couldn't leave her if I tried\nOh, love was out to get me\nThat's the way it seems\nDisappointment haunted all my dreams\nThen I saw her face\nNow I'm a believer\nNot a trace\nOf doubt in my mind\nI'm in love\nI'm a believer\nI couldn't leave her if I tried\nYes, I saw her face\nNow I'm a believer\nNo not a trace\nOf doubt in my mind\nSaid I'm a believer\n(6x)\nYeah\nI'm a believer\nSaid I'm a believer, yeah\nI'm a believer\nSaid I'm a believer, yeah\nI'm a believer\nBorn to be wild",
+      "order": 200,
+      "bpm": 160,
+      "lastModified": "2025-10-09T16:53:28.360Z",
+      "createdAt": "2025-10-09T16:53:28.360Z",
+      "notes": "",
+      "title": "I'm a believer",
+      "artist": "The Monkees",
+      "active": false,
+      "fontSize": 1.9999999999999998
+    },
+    {
+      "createdAt": "2025-10-09T16:53:28.359Z",
+      "id": 1760028808359.1516,
+      "bpm": "125",
+      "lyrics": "I think I'm gonna be sad\nI think it's today, yeah\nThe girl that's drivin' me mad\nIs goin' away\n\nShe's got a ticket to ride\nShe's got a ticket to ride   SILENCIO\nShe's got a ticket to ride\nBut she don't care\n\nShe said that livin' with me\nWas bringin' her down, yeah\nShe would never be free\nWhen I was around\n\nShe's got a ticket to ride\nShe's got a ticket to ride    SILENCIO\nShe's got a ticket to ride\nBut she don't care\n\nI don't know why she's ridin' so high\nShe ought to think twice\nShe ought to do right by me\nBefore she gets to sayin' goodbye\nShe ought to think twice\nShe ought to do right by me\n\nI think I'm gonna be sad\nI think it's today, yeah\nThe girl that's drivin' me mad\nIs goin' away, yeah\n\nAh, she's got a ticket to ride\nShe's got a ticket to ride    SILENCIO\nShe's got a ticket to ride\nBut she don't care\n\nI don't know why she's ridin' so high\nShe ought to think twice\nShe ought to do right by me\nBefore she gets to sayin' goodbye\nShe ought to think twice\nShe ought to do right by me   SILENCIO\n\nShe said that livin' with me\nWas bringin' her down, yeah\nShe would never be free\nWhen I was around\n\nAh, she's got a ticket to ride\nShe's got a ticket to ride   SILENCIO\nShe's got a ticket to ride\nBut she don't care\n   SILENCIO\nMy baby don't care\nMy baby don't care\nMy baby don't care\nMy baby don't care\n\nMy baby don't care",
+      "title": "Ticket to ride",
+      "lastModified": "2025-10-09T16:53:28.359Z",
+      "notes": "Entrada tras intro de piano",
+      "order": 210,
+      "active": false,
+      "artist": "The Beatles",
+      "fontSize": 1.9999999999999998
+    },
+    {
+      "fontSize": 2.4,
+      "bpm": 120,
+      "title": "Come Together",
+      "order": 220,
+      "id": 1761293887170.2253,
+      "notes": "",
+      "artist": "The Beatles",
+      "active": false,
+      "lyrics": "Shoot me, shoot me\nShoot me, shoot me\n\nHere come old flat-top\nHe come grooving up slowly\nHe got joo-joo eyeballs\nHe one holy roller\nHe got hair down to his knee\nGot to be a joker, he just do what he please\n\nShoot me, shoot me\nShoot me, shoot me\n\nHe wear no shoeshine\nHe got toe-jam football\nHe got monkey finger\nHe shoot Coca-Cola\nHe say: I know you, you know me\nOne thing I can tell you is you got to be free\n\nCome together, right now\nOver me\n\nShoot me, shoot me\nShoot me\n\nHe bag production\nHe got walrus gumboot\nHe got Ono sideboard\nHe one spinal cracker\nHe got feet down below his knee\nHold you in his armchair, you can feel his disease\n\nCome together, right now\nOver me\n\nShoot me, right!\n\nCome, come\nCome, come\nCome\n\nHe roller coaster\nHe got early warning\nHe got muddy water\nHe one mojo filter\nHe say: One and one and one is three\nGot to be good looking, 'cause he's so hard to see\n\nCome together, right now\nOver me\n\nShoot me, shoot me\nShoot me, oh\n\nCome together, yeah\nCome together, yeah\nCome together, yeah\nCome together, yeah\nCome together, yeah\nCome together, yeah\nCome together, yeah\nCome together, yeah\nCome together, yeah",
+      "createdAt": "2025-10-24T08:18:07.170Z",
+      "lastModified": "2025-10-24T08:18:56.740Z",
+      "duration": ""
+    },
+    {
+      "lyrics": "Don't let me down\nDon't let me down\nDon't let me down\nDon't let me down\n\nNobody ever loved me like she does\nOh, she does, yeah, she does\nAnd if somebody loved me like she does\nOh, she does, yes, she does\n\nDon't let me down\nDon't let me down\nDon't let me down\nDon't let me down\n\nI'm in love for the first time\nDon't you know it's gonna last\nIt's a love that lasts forever\nIt's a love that has no past\n\nDon't let me down\nDon't let me down\nDon't let me down\nDon't let me down\n\nAnd from the first time\nThat she really done me\nOh, she done me, she done me good\nI guess nobody ever really done me\nOh, she done me, she done me good\n\nDon't let me down\nDon't let me down\nDon't let me down\nDon't let me down",
+      "fontSize": 1.7999999999999998,
+      "id": 1760028808358.6052,
+      "createdAt": "2025-10-09T16:53:28.358Z",
+      "title": "Don’t let me down",
+      "lastModified": "2025-10-09T16:53:28.358Z",
+      "notes": "",
+      "order": 230,
+      "bpm": "",
+      "active": false,
+      "artist": "The Beatles"
+    },
+    {
+      "recordings": [
+        {
+          "events": [
+            {
+              "direction": "down",
+              "type": "scroll",
+              "timestamp": 70,
+              "position": 30
+            },
+            {
+              "direction": "down",
+              "position": 60,
+              "type": "scroll",
+              "timestamp": 71
+            },
+            {
+              "position": 90,
+              "type": "scroll",
+              "timestamp": 72,
+              "direction": "down"
+            },
+            {
+              "type": "scroll",
+              "timestamp": 72,
+              "position": 120,
+              "direction": "down"
+            },
+            {
+              "direction": "down",
+              "timestamp": 73,
+              "type": "scroll",
+              "position": 150
+            },
+            {
+              "type": "scroll",
+              "timestamp": 74,
+              "position": 180,
+              "direction": "down"
+            },
+            {
+              "position": 210,
+              "direction": "down",
+              "timestamp": 75,
+              "type": "scroll"
+            },
+            {
+              "direction": "down",
+              "timestamp": 75,
+              "type": "scroll",
+              "position": 240
+            },
+            {
+              "timestamp": 82,
+              "position": 270,
+              "type": "scroll",
+              "direction": "down"
+            },
+            {
+              "direction": "down",
+              "type": "scroll",
+              "timestamp": 83,
+              "position": 300
+            },
+            {
+              "position": 330,
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 83
+            },
+            {
+              "direction": "down",
+              "type": "scroll",
+              "timestamp": 84,
+              "position": 360
+            },
+            {
+              "timestamp": 84,
+              "type": "scroll",
+              "direction": "down",
+              "position": 390
+            },
+            {
+              "direction": "down",
+              "position": 420,
+              "timestamp": 85,
+              "type": "scroll"
+            },
+            {
+              "timestamp": 92,
+              "position": 450,
+              "direction": "down",
+              "type": "scroll"
+            },
+            {
+              "timestamp": 92,
+              "direction": "down",
+              "type": "scroll",
+              "position": 480
+            },
+            {
+              "type": "scroll",
+              "timestamp": 93,
+              "position": 510,
+              "direction": "down"
+            },
+            {
+              "direction": "down",
+              "timestamp": 93,
+              "type": "scroll",
+              "position": 540
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 112,
+              "position": 570
+            },
+            {
+              "direction": "down",
+              "position": 600,
+              "type": "scroll",
+              "timestamp": 112
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "position": 630,
+              "timestamp": 112
+            },
+            {
+              "direction": "down",
+              "type": "scroll",
+              "position": 660,
+              "timestamp": 113
+            },
+            {
+              "position": 690,
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 113
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "position": 720,
+              "timestamp": 114
+            },
+            {
+              "position": 750,
+              "timestamp": 124,
+              "type": "scroll",
+              "direction": "down"
+            },
+            {
+              "direction": "down",
+              "timestamp": 125,
+              "type": "scroll",
+              "position": 780
+            },
+            {
+              "direction": "down",
+              "position": 810,
+              "type": "scroll",
+              "timestamp": 125
+            },
+            {
+              "timestamp": 125,
+              "position": 840,
+              "direction": "down",
+              "type": "scroll"
+            },
+            {
+              "direction": "down",
+              "position": 870,
+              "type": "scroll",
+              "timestamp": 125
+            },
+            {
+              "timestamp": 126,
+              "type": "scroll",
+              "position": 900,
+              "direction": "down"
+            },
+            {
+              "direction": "down",
+              "type": "scroll",
+              "timestamp": 152,
+              "position": 930
+            },
+            {
+              "direction": "down",
+              "timestamp": 153,
+              "type": "scroll",
+              "position": 960
+            },
+            {
+              "type": "scroll",
+              "timestamp": 153,
+              "direction": "down",
+              "position": 990
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "position": 1020,
+              "timestamp": 161
+            },
+            {
+              "position": 1050,
+              "timestamp": 168,
+              "direction": "down",
+              "type": "scroll"
+            },
+            {
+              "position": 1080,
+              "direction": "down",
+              "type": "scroll",
+              "timestamp": 170
+            },
+            {
+              "type": "scroll",
+              "position": 1110,
+              "direction": "down",
+              "timestamp": 178
+            },
+            {
+              "type": "scroll",
+              "position": 1140,
+              "timestamp": 178,
+              "direction": "down"
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 179,
+              "position": 1170
+            },
+            {
+              "timestamp": 212,
+              "position": 1200,
+              "type": "scroll",
+              "direction": "down"
+            },
+            {
+              "timestamp": 212,
+              "position": 1230,
+              "type": "scroll",
+              "direction": "down"
+            },
+            {
+              "direction": "down",
+              "timestamp": 212,
+              "position": 1260,
+              "type": "scroll"
+            },
+            {
+              "type": "scroll",
+              "position": 1290,
+              "timestamp": 212,
+              "direction": "down"
+            },
+            {
+              "position": 1320,
+              "timestamp": 213,
+              "direction": "down",
+              "type": "scroll"
+            },
+            {
+              "timestamp": 220,
+              "type": "scroll",
+              "position": 1350,
+              "direction": "down"
+            },
+            {
+              "type": "scroll",
+              "timestamp": 220,
+              "position": 1380,
+              "direction": "down"
+            },
+            {
+              "direction": "down",
+              "position": 1410,
+              "type": "scroll",
+              "timestamp": 221
+            },
+            {
+              "timestamp": 221,
+              "direction": "down",
+              "position": 1440,
+              "type": "scroll"
+            },
+            {
+              "position": 1470,
+              "direction": "down",
+              "timestamp": 221,
+              "type": "scroll"
+            },
+            {
+              "direction": "down",
+              "timestamp": 228,
+              "position": 1500,
+              "type": "scroll"
+            },
+            {
+              "position": 1530,
+              "timestamp": 237,
+              "direction": "down",
+              "type": "scroll"
+            },
+            {
+              "position": 1560,
+              "timestamp": 238,
+              "type": "scroll",
+              "direction": "down"
+            },
+            {
+              "direction": "down",
+              "position": 1590,
+              "type": "scroll",
+              "timestamp": 238
+            },
+            {
+              "type": "scroll",
+              "timestamp": 246,
+              "position": 1620,
+              "direction": "down"
+            },
+            {
+              "direction": "down",
+              "position": 1650,
+              "type": "scroll",
+              "timestamp": 247
+            },
+            {
+              "direction": "down",
+              "position": 1680,
+              "type": "scroll",
+              "timestamp": 247
+            },
+            {
+              "timestamp": 265,
+              "position": 1710,
+              "direction": "down",
+              "type": "scroll"
+            },
+            {
+              "direction": "down",
+              "timestamp": 265,
+              "type": "scroll",
+              "position": 1740
+            },
+            {
+              "direction": "down",
+              "type": "scroll",
+              "timestamp": 266,
+              "position": 1770
+            },
+            {
+              "type": "scroll",
+              "position": 1800,
+              "direction": "down",
+              "timestamp": 266
+            },
+            {
+              "position": 1830,
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 266
+            },
+            {
+              "position": 1860,
+              "direction": "down",
+              "type": "scroll",
+              "timestamp": 274
+            },
+            {
+              "type": "scroll",
+              "position": 1890,
+              "timestamp": 274,
+              "direction": "down"
+            },
+            {
+              "position": 1920,
+              "timestamp": 274,
+              "direction": "down",
+              "type": "scroll"
+            },
+            {
+              "timestamp": 282,
+              "position": 1950,
+              "type": "scroll",
+              "direction": "down"
+            },
+            {
+              "position": 1980,
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 282
+            },
+            {
+              "timestamp": 289,
+              "type": "scroll",
+              "position": 2010,
+              "direction": "down"
+            },
+            {
+              "timestamp": 289,
+              "position": 2040,
+              "direction": "down",
+              "type": "scroll"
+            },
+            {
+              "direction": "down",
+              "timestamp": 289,
+              "type": "scroll",
+              "position": 2070
+            },
+            {
+              "direction": "down",
+              "type": "scroll",
+              "timestamp": 301,
+              "position": 2100
+            },
+            {
+              "type": "scroll",
+              "position": 2130,
+              "timestamp": 301,
+              "direction": "down"
+            },
+            {
+              "type": "scroll",
+              "position": 2160,
+              "timestamp": 306,
+              "direction": "down"
+            },
+            {
+              "timestamp": 306,
+              "type": "scroll",
+              "direction": "down",
+              "position": 2190
+            },
+            {
+              "direction": "down",
+              "timestamp": 307,
+              "type": "scroll",
+              "position": 2220
+            },
+            {
+              "position": 2250,
+              "direction": "down",
+              "type": "scroll",
+              "timestamp": 308
+            },
+            {
+              "direction": "down",
+              "timestamp": 314,
+              "type": "scroll",
+              "position": 2280
+            },
+            {
+              "position": 2310,
+              "type": "scroll",
+              "timestamp": 315,
+              "direction": "down"
+            },
+            {
+              "type": "scroll",
+              "position": 2340,
+              "timestamp": 330,
+              "direction": "down"
+            },
+            {
+              "position": 2370,
+              "timestamp": 331,
+              "direction": "down",
+              "type": "scroll"
+            },
+            {
+              "type": "scroll",
+              "timestamp": 331,
+              "position": 2400,
+              "direction": "down"
+            },
+            {
+              "direction": "down",
+              "type": "scroll",
+              "position": 2430,
+              "timestamp": 331
+            },
+            {
+              "position": 2460,
+              "direction": "down",
+              "type": "scroll",
+              "timestamp": 331
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 336,
+              "position": 2490
+            },
+            {
+              "direction": "down",
+              "type": "scroll",
+              "timestamp": 337,
+              "position": 2520
+            },
+            {
+              "timestamp": 349,
+              "position": 2544,
+              "direction": "down",
+              "type": "scroll"
+            },
+            {
+              "position": 2544,
+              "timestamp": 349,
+              "direction": "down",
+              "type": "scroll"
+            },
+            {
+              "direction": "down",
+              "timestamp": 350,
+              "type": "scroll",
+              "position": 2544
+            },
+            {
+              "direction": "down",
+              "timestamp": 350,
+              "type": "scroll",
+              "position": 2544
+            },
+            {
+              "direction": "down",
+              "timestamp": 350,
+              "type": "scroll",
+              "position": 2544
+            },
+            {
+              "timestamp": 350,
+              "direction": "down",
+              "type": "scroll",
+              "position": 2544
+            },
+            {
+              "position": 2544,
+              "type": "scroll",
+              "timestamp": 351,
+              "direction": "down"
+            },
+            {
+              "position": 2544,
+              "direction": "down",
+              "timestamp": 351,
+              "type": "scroll"
+            },
+            {
+              "timestamp": 353,
+              "position": 2544,
+              "direction": "down",
+              "type": "scroll"
+            },
+            {
+              "position": 2544,
+              "type": "scroll",
+              "timestamp": 353,
+              "direction": "down"
+            },
+            {
+              "position": 2544,
+              "direction": "down",
+              "type": "scroll",
+              "timestamp": 353
+            }
+          ],
+          "duration": 353,
+          "timestamp": "2025-10-09T19:13:35.741Z",
+          "id": 1760037215741
+        }
+      ],
+      "id": 1760028808359.3115,
+      "title": "Heroes",
+      "active": false,
+      "createdAt": "2025-10-09T16:53:28.359Z",
+      "artist": "David Bowie",
+      "bpm": 128,
+      "fontSize": 1.4,
+      "order": 240,
+      "notes": "Entramos todos juntos",
+      "lastModified": "2025-10-09T16:53:28.359Z",
+      "lyrics": "I, I will be king\nAnd you, you will be queen\nThough nothing will drive them away\nWe can beat them, just for one day\nWe can be heroes, just for one day\nAnd you, you can be mean\nAnd I, I'll drink all the time\n'Cause we're lovers, and that is a fact\nYes we're lovers, and that is that\nThough nothing will keep us together\nWe could steal time just for one day\nWe can be heroes for ever and ever\nWhat d'you say?\nI, I wish you could swim\nLike the dolphins, like dolphins can swim\nThough nothing, nothing will keep us together\nWe can beat them, for ever and ever\nOh we can be Heroes, just for one day\nI, I will be king\nAnd you, you will be queen\nThough nothing will drive them away\nWe can be Heroes, just for one day\nWe can be us, just for one day\nI, I can remember (I remember)\nStanding, by the wall (by the wall)\nAnd the guns, shot above our heads (over our heads)\nAnd we kissed, as though nothing could fall (nothing could fall)\nAnd the shame, was on the other side\nOh we can beat them, for ever and ever\nThen we could be Heroes, just for one day\nWe can be Heroes\nWe can be Heroes\nWe can be Heroes\nJust for one day\nWe can be Heroes\nWe're nothing, and nothing will help us\nMaybe we're lying, then you better not stay\nBut we could be safer, just for one day\nOh-oh-oh-ohh, oh-oh-oh-ohh, just for one day\nImagine"
+    },
+    {
+      "order": 250,
+      "fontSize": 1.7999999999999998,
+      "artist": "Artista desconocido",
+      "notes": "",
+      "lastModified": "2025-10-11T08:53:32.258Z",
+      "active": false,
+      "title": "Pájaros de barro",
+      "bpm": 133,
+      "createdAt": "2025-10-09T16:53:28.359Z",
+      "id": 1760028808359.5278,
+      "lyrics": "/0Por si el tiempo me arrastra\n/0A playas desiertas\n/0Hoy cierro ya el libro\n/0De las horas muertas\n/0Hago pájaros de barro\n/0Hago pájaros de barro y los echo a volar\n\nPor si el tiempo me arrastra\nA playas desiertas\nHoy rechazo la bajeza\nDel abandono y la pena\nNi una página en blanco más\nSiento el asombro de un transeúnte solitario\n\n/3En los mapas me pierdo\n/3Por sus hojas navego\n/3Ahora sopla el viento\n/3Cuando el mar quedó lejos, hace tiempo\n\n/0Ya no subo la cuesta.     \n/0Que me lleva a tu casa\nYa no duerme mi perro junto a tu candela\nEn los vértices del tiempo anidan los sentimientos\nHoy son pájaros de barro que quieren volar\n\n/3En los valles me pierdo\n/3En las carreteras duermo\n/3Ahora sopla el viento\n/3Cuando el mar quedó lejos, hace tiempo\n\n/0Cuando no tengo barca, remos ni guitarra\n/0Cuando ya no canta el ruise0/ñor de la mañana\nAhora sopla el viento\nCuando el mar quedó lejos, hace tiempo\n\nEn los valles me pierdo\nEn las carreteras duermo"
+    },
+    {
+      "artist": "Mecano",
+      "title": "La Fuerza del Destino",
+      "active": false,
+      "lastModified": "2025-10-11T08:49:01.306Z",
+      "notes": "Entrada todos juntos, marco 4",
+      "fontSize": 1.2,
+      "id": 1760028808359.5867,
+      "bpm": 90,
+      "createdAt": "2025-10-09T16:53:28.359Z",
+      "lyrics": "Nos vimos tres o cuatro veces    \nPor toda la ciudad\nUna noche en el Bar del Oro\nMe decidí a atacar\n\nTú me dijiste diecinueve\nNo quise desconfiar\nPero es que ni mucho ni poco\nNo vi de dónde agarrar\n\nY nos metimos en el coche\nMi amigo, tu amiga, tú y yo\nTe dije nena dame un beso\nTú contestaste que no\n\nEmpezamos mal y yo que creía\nQue esto era un buen plan               \n\nAquella noche fue un desastre\nNo me comí un colín\nÉstas son solo un par de estrechas\nNos fuimos a dormir\n\nPero la fuerza del destino\nNos hizo repetir\nDos cines y un par de conciertos\nY empezamos a salir\n\nNo sé si esa cara tan rara\nUn ojo aquí y un diente allá\nO el cuerpecillo de gitana\nMujer a medio terminar\n\nTu corazón fue lo que me\nAcabó de enamorar\n:: Silencio y solo\n\nY nos metimos en el coche\nMi amigo, tu amiga, tú y yo\nTe dije nena dame un beso\nTú contestaste que no\n\nEmpezamos mal y yo que creía\nQue esto era un buen plan\n\nY desde entonces hasta ahora\nEl juego del amor\nNos tuvo tres años jugando\nLuego nos separó\n\nPero la fuerza del destino\nNos hizo repetir\nQue si el invierno viene frío\nQuiero estar junto a ti\n\nQuiero estar junto a ti\nQuiero estar junto a ti\nQuiero estar junto a ti\nQuiero estar junto a ti",
+      "order": 260
+    },
+    {
+      "title": "Sweet Caroline",
+      "notes": "",
+      "createdAt": "2025-10-09T16:53:28.360Z",
+      "artist": "Neil Diamond",
+      "order": 270,
+      "recordings": [
+        {
+          "duration": 9,
+          "events": [
+            {
+              "direction": "down",
+              "position": 30,
+              "timestamp": 1,
+              "type": "scroll"
+            },
+            {
+              "timestamp": 2,
+              "direction": "down",
+              "position": 60,
+              "type": "scroll"
+            },
+            {
+              "type": "scroll",
+              "timestamp": 3,
+              "direction": "down",
+              "position": 90
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 4,
+              "position": 120
+            },
+            {
+              "timestamp": 5,
+              "type": "scroll",
+              "position": 150,
+              "direction": "down"
+            },
+            {
+              "direction": "down",
+              "type": "scroll",
+              "position": 180,
+              "timestamp": 5
+            },
+            {
+              "position": 210,
+              "direction": "down",
+              "type": "scroll",
+              "timestamp": 5
+            },
+            {
+              "timestamp": 5,
+              "type": "scroll",
+              "direction": "down",
+              "position": 240
+            },
+            {
+              "direction": "down",
+              "timestamp": 6,
+              "position": 270,
+              "type": "scroll"
+            },
+            {
+              "timestamp": 6,
+              "type": "scroll",
+              "position": 300,
+              "direction": "down"
+            },
+            {
+              "position": 330,
+              "direction": "down",
+              "type": "scroll",
+              "timestamp": 6
+            },
+            {
+              "direction": "up",
+              "position": 300,
+              "timestamp": 7,
+              "type": "scroll"
+            },
+            {
+              "position": 270,
+              "timestamp": 7,
+              "direction": "up",
+              "type": "scroll"
+            },
+            {
+              "timestamp": 7,
+              "direction": "up",
+              "type": "scroll",
+              "position": 240
+            },
+            {
+              "type": "scroll",
+              "timestamp": 7,
+              "direction": "up",
+              "position": 210
+            },
+            {
+              "type": "scroll",
+              "direction": "up",
+              "timestamp": 7,
+              "position": 180
+            },
+            {
+              "type": "scroll",
+              "timestamp": 7,
+              "direction": "up",
+              "position": 150
+            },
+            {
+              "timestamp": 7,
+              "type": "scroll",
+              "direction": "up",
+              "position": 120
+            },
+            {
+              "timestamp": 8,
+              "position": 90,
+              "type": "scroll",
+              "direction": "up"
+            },
+            {
+              "timestamp": 8,
+              "type": "scroll",
+              "position": 60,
+              "direction": "up"
+            },
+            {
+              "type": "scroll",
+              "direction": "up",
+              "position": 30,
+              "timestamp": 8
+            },
+            {
+              "type": "scroll",
+              "timestamp": 8,
+              "direction": "up",
+              "position": 0
+            },
+            {
+              "direction": "up",
+              "timestamp": 8,
+              "position": 0,
+              "type": "scroll"
+            },
+            {
+              "position": 30,
+              "type": "scroll",
+              "timestamp": 9,
+              "direction": "down"
+            },
+            {
+              "direction": "down",
+              "position": 60,
+              "type": "scroll",
+              "timestamp": 9
+            }
+          ],
+          "id": 1759939784532,
+          "timestamp": "2025-10-08T16:09:44.532Z"
+        },
+        {
+          "duration": 3,
+          "timestamp": "2025-10-08T16:11:46.917Z",
+          "events": [
+            {
+              "direction": "down",
+              "position": 30,
+              "type": "scroll",
+              "timestamp": 1
+            },
+            {
+              "direction": "down",
+              "position": 60,
+              "type": "scroll",
+              "timestamp": 2
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 3,
+              "position": 90
+            }
+          ],
+          "id": 1759939906917
+        }
+      ],
+      "fontSize": 1.5999999999999999,
+      "bpm": 130,
+      "id": 1760028808360.527,
+      "lastModified": "2025-10-09T16:53:28.360Z",
+      "lyrics": "Where it began?\nI can't begin to knowing\nBut then I know\nIt's growing strong\nWas in the spring\nAnd spring became the summer\nWho'd have believed\nYou'd come along\nHands, touching hands\nReaching out\nTouching me\nTouching you\nSweet Caroline\nGood times never seemed so good\nI've been inclined\nTo believe they never would\nBut now I\nLook at the night\nAnd it don't seem so lonely\nWe fill it up with only two\nAnd when I hurt\nHurting runs off my shoulders\nHow can I hurt when holding you?\nWarm, touching warm\nReaching out\nTouching me\nTouching you\nSweet Caroline\nGood times never seemed so good\nI've been inclined\nTo believe they never would\nNo, no, no\nSweet Caroline\nGood times never seemed so good\nSweet Caroline\nI believe it never could\nSweet Caroline\nLa Fuerza del Destino",
+      "active": false
+    },
+    {
+      "lyrics": "Get your motor running\nHead out on the highway\nLooking for adventure\nAnd whatever comes our way\n\nYeah, darling, gonna make it happen\nTake the world in a love embrace\nFire all of your guns at once and\nExplode into space\n\nI like smoke and lightning\nHeavy metal thunder\nRacing in the wind\nAnd the feeling that I'm under\n\nYeah, darling, gonna make it happen\nTake the world in a love embrace\nFire all of your guns at once and\nExplode into space\n\nLike a true nature's child\nWe were born, born to be wild\nWe can climb so high\nI never wanna die\n\nBorn to be wild\nBorn to be wild\n\nGet your motor running\nHead out on the highway\nLooking for adventure\nAnd whatever comes our way\n\nYeah, darling, gonna make it happen\nTake the world in a love embrace\nFire all of your guns at once and\nExplode into space\n\nLike a true nature's child\nWe were born, born to be wild\nWe can climb so high\nI never wanna die\n\nBorn to be wild\nBorn to be wild",
+      "bpm": "145",
+      "fontSize": 1.5999999999999999,
+      "artist": "",
+      "order": 280,
+      "createdAt": "2025-10-09T16:53:28.358Z",
+      "notes": "Entrada todos juntos marcando 4",
+      "title": "Born to be wild",
+      "id": 1760028808358.8955,
+      "lastModified": "2025-10-09T16:53:28.358Z",
+      "active": false
+    },
+    {
+      "notes": "Entrada solo piano 8 compases - \nsalida solo piano tras \"I know Saint Peter won't call my name\"",
+      "order": 290,
+      "active": false,
+      "title": "Viva la vida",
+      "lastModified": "2025-10-09T16:53:28.359Z",
+      "lyrics": "I used to rule the world     \nSeas would rise when I gave the word\nNow in the morning I sleep alone\nSweep the streets I used to own\n\nI used to roll the dice\nFeel the fear in my enemy's eyes\nListened as the crowd would sing\nNow the old king is dead!\nLong live the king!\n\nOne minute I held the key\nNext the walls were closed on me\nAnd I discovered that my castles stand\nUpon pillars of salt and pillars of sand\n\nI hear Jerusalem bells are ringing\nRoman Cavalry choirs are singing\nBe my mirror, my sword and shield\nMy missionaries in a foreign field\n\nFor some reason I can't explain\nOnce you'd gone, there was never\nNever an honest word\nThat was when I ruled the world\nSOLO\nIt was the wicked and wild wind\nBlew down the doors to let me in\nShattered windows and the sound of drums\nPeople couldn't believe what I'd become\n\nRevolutionaries wait\nFor my head on a silver plate\nJust a puppet on a lonely string\nOh, who would ever want to be king?\n\nI hear Jerusalem bells are ringing\nRoman Cavalry choirs are singing\nBe my mirror, my sword and shield\nMy missionaries in a foreign field\n\nFor some reason I can't explain\nI know Saint Peter won't call my name\nNever an honest word\nBut that was when I ruled the world  \n\nOoh, ooh, ooh, ooh\n\nHear Jerusalem bells are ringing\nRoman Cavalry choirs are singing\nBe my mirror, my sword and shield\nMy missionaries in a foreign field\n\nFor some reason I can't explain\nI know Saint Peter won't call my name\nNever an honest word\nBut that was when I ruled the world",
+      "fontSize": 1.5999999999999999,
+      "createdAt": "2025-10-09T16:53:28.359Z",
+      "artist": "Coldplay",
+      "bpm": "140",
+      "id": 1760028808359.3499
+    },
+    {
+      "createdAt": "2025-10-09T16:53:28.359Z",
+      "active": false,
+      "bpm": "100",
+      "notes": "Breve entrada guitarra y Crash, apertura charles y caja+bombo, luego bombo a negras\nX O      O     O     O     O      O   \nB   CB    B     CB    B     CB    B      ",
+      "artist": "Juanes",
+      "fontSize": 1.4,
+      "title": "La camisa negra ....",
+      "id": 1760028808359.4072,
+      "lyrics": "Uno por pobre y feo, hombre\nPero antoja'o, ay ome\n\nTengo la camisa negra\nHoy mi amor está de luto\nHoy tengo en el alma una pena\nY es por culpa de tu embrujo\n\nHoy sé que tú ya no me quieres\nY eso es lo que más me hiere\nQue tengo la camisa negra\nY una pena que me duele\n\nMal parece que solo me quedé\nY fue pura todita tu mentira\nQué maldita mala suerte la mía\nQue aquel día te encontré\n\nPor beber del veneno malevo de tu amor\nYo quedé moribundo y lleno de dolor\nRespiré de ese humo amargo de tu adiós\nY desde que tú te fuiste, yo solo\n\nTengo\nTengo la camisa negra\nPorque negra tengo el alma\nYo por ti perdí la calma\nY casi pierdo hasta mi cama\n\nCama, cama, come on, baby\nTe digo con disimulo\nQue tengo la camisa negra\nY debajo tengo el difunto\n\nPa' enterrártelo cuando quieras, mamita\n\nAsí como lo oyes, mi'ja\n\nTengo la camisa negra\nYa tu amor no me interesa\nLo que ayer me supo a gloria\nHoy me sabe a pura\n\nMiércoles por la tarde y tú que no llegas\nNi siquiera muestras señas\nY yo con la camisa negra\nY tus maletas en la puerta\n\nMal parece que solo me quedé\nY fue pura todita tu mentira\nQué maldita mala suerte la mía\nQue aquel día te encontré\n\nPor beber del veneno malevo de tu amor\nYo quedé moribundo y lleno de dolor\nRespiré de ese humo amargo de tu adiós\nY desde que tú te fuiste, yo solo\n\nTengo\nTengo la camisa negra\nPorque negra tengo el alma\nYo por ti perdí la calma\nY casi pierdo hasta mi cama\n\nCama, cama, come on, baby\nTe digo con disimulo\nQue tengo la camisa negra\nY debajo tengo el difunto\n\nTengo la camisa negra\nPorque negra tengo el alma\nYo por ti perdí la calma\nY casi pierdo hasta mi cama\n\nCama, cama, come on, baby\nTe digo con disimulo\nQue tengo la camisa negra\nY debajo tengo el difunto\n\n",
+      "lastModified": "2025-10-09T16:53:28.359Z",
+      "order": 300
+    },
+    {
+      "id": 1760028808358.9834,
+      "lyrics": ":: B C B C - B C B BC, charles a negras.\nNo pasaba de los veinte\nEl mayor de los tres chicos\nQue vinieron a atracarme el mes pasado\n\nSubvenciónanos un pico\nY no te hagas el valiente\nQue me pongo muy nervioso si me enfado\n\nMe pillaron diez quinientas\nY un peluco marca omega\nCon un pincho de cocina en la garganta\nPero el bizco se dio cuenta\nY me dijo: Oye, colega\nTe pareces al sabina ese que canta\n\nEra un noche cualquiera\nPuede ser que fuera trece\n¿Qué más da? Pudiera ser que fuera martes\nSolo se que algunas veces\nCuando menos te lo esperas\nEl diablo va y se pone de tu parte\n\nEste encuentro hay que mojarlo\nCon jarabe de litrona\nCompañeros antes de que cante el gallo\nTranquilo, tronco, perdona\nY un trago pa celebrarlo\nLos tres iban hasta el culo de caballo\n\nA una barra americana\nMe llevaron por la cara\nNo dejaron que pagara ni una ronda\nControlaban tres fulanas\nPero a mí me reservaban\nLos encantos de Maruja, la cachonda\n\nNos pusimos como motos\nCon la birra y los canutos\nSe cortaron de meterse algo más fuerte\nNos hicimos unas fotos\nDe cabina en tres minutos\nParecemos la cuadrilla de la muerte\n:: SOLO\n\nProtegidos por la Luna\nCogieron prestado un coche\nMe dejaron en mi queli y se borraron\nPor las venas de la noche\nEnróllate y haznos una\nCopla guapa de la tuyas, me gritaron\n\nMe devolvieron intacto\nCon un guiño mi dinero\nLa cadena, la cartera y el reloj\nYo, que siempre cumplo un pacto\nCuando es entre caballeros\nLes tenía que escribir esta canción\n\nHoy venía en el diario\nEl careto del más alto\nNo lo había vuelto a ver desde aquel día\nEscapaba del asalto\nAl chalé de un millonario\nY en la puerta le esperó la policía\nMucha, mucha policía",
+      "fontSize": 1.5999999999999999,
+      "notes": "",
+      "bpm": "205",
+      "createdAt": "2025-10-09T16:53:28.358Z",
+      "artist": "Joaquín Sabina",
+      "lastModified": "2025-10-09T16:53:28.358Z",
+      "active": false,
+      "order": 310,
+      "title": "Pacto entre caballeros"
+    },
+    {
+      "active": false,
+      "lastModified": "2025-10-09T16:53:28.360Z",
+      "notes": "",
+      "fontSize": 1.5999999999999999,
+      "id": 1760028808360.4246,
+      "order": 320,
+      "lyrics": "See the stone set in your eyes\nSee the thorn twist in your side\nI'll wait for you\nSleight of hand and twist of fate\nOn a bed of nails, she makes me wait\nAnd I wait without you\nWith or without you\nWith or without you\nThrough the storm, we reach the shore\nYou give it all, but I want more\nAnd I'm waiting for you\nWith or without you\nWith or without you, ah\nI can't live\nWith or without you\nAnd you give yourself away\nAnd you give yourself away\nAnd you give, and you give\nAnd you give yourself away\nMy hands are tied\nMy body bruised\nShe's got me with\nNothing to win and nothing left to lose\nAnd you give yourself away\nAnd you give yourself away\nAnd you give, and you give\nAnd you give yourself away\nWith or without you\nWith or without you, oh\nI can't live with or without you\nOhh ohhh ohhh\nWith or without you\nWith or without you, oh\nI can't live with or without you\nWith or without you\nLove will tears apart... again...\nTicket to ride",
+      "bpm": 110,
+      "title": "With or without you",
+      "createdAt": "2025-10-09T16:53:28.360Z",
+      "artist": "U2"
+    },
+    {
+      "bpm": "132",
+      "lastModified": "2025-10-09T16:53:28.358Z",
+      "active": false,
+      "fontSize": 1.7999999999999998,
+      "notes": "S - ENTRAMOS TODOS JUNTOS\nCon batería ritmo disco,  Tango Rumba en cajon.",
+      "order": 10010,
+      "id": 1760028808358.4617,
+      "artist": "Alaska y Dinarama / Fangoria",
+      "lyrics": ":: Posible Groove con Cencerro\nLa gente me señala\nMe apuntan con el dedo\nSusurra a mis espaldas\nY a mí me importa un bledo\n\nQue más me da\nSi soy distinta a ellos\nNo soy de nadie\nNo tengo dueño\n\nYo sé que me critican\nMe consta que me odian\nLa envidia les corroe\nMi vida les agobia\n¿Por qué será?\nYo no tengo la culpa\nMi circunstancia les insulta\n\nMi destino es el que yo decido\nEl que yo elijo para mi\n\n¿A quién le importa lo que yo haga?\n¿A quién le importa lo que yo diga?\nYo soy así, y así seguiré, nunca cambiaré\n¿A quién le importa lo que yo haga?\n¿A quién le importa lo que yo diga?\nYo soy así, y así seguiré, nunca cambiaré\nSOLO\nQuizá la culpa es mía\nPor no seguir la norma\nYa es demasiado tarde\nPara cambiar ahora\nMe mantendré\nFirme en mis convicciones\nReforzaré mis posiciones\n\nMi destino es el que yo decido\nEl que yo elijo para mi\n\n¿A quién le importa lo que yo haga?\n¿A quién le importa lo que yo diga?\nYo soy así, y así seguiré, nunca cambiaré\n¿A quién le importa lo que yo haga?\n¿A quién le importa lo que yo diga?\nYo soy así, y así seguiré, nunca cambiaré\nSOLO\n¿A quién le importa lo que yo haga?\n¿A quién le importa lo que yo diga?\nYo soy así, y así seguiré, nunca cambiaré\nA quién le importa lo que yo haga?\n¿A quién le importa lo que yo diga?\nYo soy así, y así seguiré, nunca cambiaré",
+      "title": "A quién le importa",
+      "createdAt": "2025-10-09T16:53:28.358Z"
+    },
+    {
+      "id": 1761229104214,
+      "title": "Clocks",
+      "artist": "Coldplay",
+      "bpm": 131,
+      "order": 10040,
+      "duration": "4:13",
+      "lyrics": "//espera=30\n\nLights go out and I can't be saved\nTides that I tried to swim against\nHave brought me down upon my knees\nOh, I beg, I beg and plead, singing\n\nCome out of things unsaid\nShoot an apple off my head\nAnd a trouble that can't be named\nA tiger's waiting to be tamed, singing\n\nYou are, you are\n//espera=13\n:: SOLO 2 vueltas (Al ride)\n:: Vuelta a charles\nConfusion never stops\nClosing walls and ticking clocks\nGonna come back and take you home\nI could not stop that you now know, singing\n\nCome out upon my seas\nCursed missed opportunities\nAm I a part of the cure?\nOr am I part of the disease? Singing\n:: Seguimos en charles (algo abierto)\nYou are, you are\nYou are, you are\nYou are, you are\n:: Al ride\n/3And nothing else compares\n/3Oh, nothing else compares\n/3And nothing else compares\n:: SILENCIO, 8 compases\n:: Al Ride\nYou are, you are\n//espera=30\nHome, home where I wanted to go\nHome, home where I wanted to go\nHome, home where I wanted to go (you are)\nHome, home where I wanted to go (you are)\n:: SILENCIO Y SOLO PIANO",
+      "notes": "Entrada solo piano, 2 vueltas 8 compases\nCC B CC B\nLuego 2 vueltas 8 compases dinámica alta (charles abierto)",
+      "fontSize": 1.5999999999999999,
+      "active": false,
+      "createdAt": "2025-10-23T14:18:24.214Z",
+      "lastModified": "2025-10-23T14:29:38.375Z"
+    },
+    {
+      "lyrics": "Es por ti\nQue veo ríos\nDonde solo hay asfalto\nEs por ti\nQue hay océanos\nDonde solo había charcos\n\nEs por ti\nQue soy un duende cómplice\nDel viento\nQue se escapa de madrugada  (OJO x 1 )\nPara colarse por tu ventana  (SOLO SILENCIO, NADA EN MEDIO)\n\nEs por ti\nQue no hay cadenas\nSi sigo el ritmo de tus caderas\nEs por ti\nQue rozo la locura\nCuando navego por tu cintura\n\nEs por ti\nQue soy un duende cómplice\nDel viento\nQue se escapa de madrugada\nQue se escapa de madrugada\nQue se escapa de madrugada\nPara colarse por tu ventana (SOLO SILENCIO, NADA EN MEDIO)\nY decirte\n\nTus labios son de seda\nTus dientes del color de la Luna llena\nTu risa la sangre que corre por mis venas\nTus besos la tinta de mis versos\nQue siempre te cuentan (SOLO SILENCIO, NADA EN MEDIO)\n\nAh, ah, ah, ah\nAh, ah, ah, ah\n\nEs por ti\nQue veo ríos\nDonde solo hay asfalto\nEs por ti\nQue hay océanos\nDonde solo había charcos\n\nEs por ti\nQue soy un duende cómplice\nDel viento\nQue se escapa de madrugada\nQue se escapa de madrugada\nQue se escapa de madrugada\nPara colarse por tu ventana (SOLO SILENCIO, NADA EN MEDIO)\nY decirte\n\nTus labios son de seda\nTus dientes del color de la Luna llena\nTu risa la sangre que corre por mis venas\nTus besos la tinta de mis versos SILENCIO\nQue siempre te cuentan.  (SOLO SILENCIO, NADA EN MEDIO)\n\nAh, ah, ah, ah\nAh, ah, ah, ah\nAh, ah, ah, ah\nAh, ah, ah, ah\n:: OJO ACABAR EN EL 4 ¿¿¿¿COMPROBAR SI ES EL 1????\nQue siempre te cuentan",
+      "createdAt": "2025-10-09T16:53:28.359Z",
+      "id": 1760028808359.5256,
+      "notes": "Entrada tras dos vueltas de piano",
+      "active": false,
+      "lastModified": "2025-10-09T16:53:28.359Z",
+      "fontSize": 1.9999999999999998,
+      "artist": "Complices",
+      "bpm": "120",
+      "title": "Es por ti",
+      "order": 10080
+    },
+    {
+      "active": false,
+      "title": "Escuela de calor",
+      "createdAt": "2025-10-09T16:53:28.359Z",
+      "lastModified": "2025-10-09T16:53:28.359Z",
+      "notes": "",
+      "artist": "Radio Futura",
+      "lyrics": "Arde la calle al sol de poniente,\nHay tribus ocultas cerca del río\nEsperando que caiga la noche.\nHace falta valor, hace falta valor,\nVen a la escuela de calor.\nSé lo que tengo que hacer para conseguir\nQue tú estés loco por mí.\nVen a mi lado y comprueba el tejido\nMas cuida esas manos, chico.\nEsa paloma sobrevuela el peligro,\nAprendió en una escuela de calor.\nVas por ahí sin prestar atención\nY cae sobre ti una maldición.\nEn las piscina probadas las chicas\nDesnudan sus cuerpos al sol.\nNo des un mal paso, no des un mal paso,\nEsto es una escuela de calor.\nDeja que me acerque,\nDeja que me acerque a ti,\nQuiero vivir del aire,\nQuiero salir de aquí.\nArde la calle al sol de poniente.\nDon’t look back in anger",
+      "id": 1760028808359.0503,
+      "bpm": 127,
+      "order": 10090,
+      "fontSize": 1.9999999999999998
+    },
+    {
+      "notes": "Entrada con pandereta 2 y 4. 12 compases.",
+      "fontSize": 1.4,
+      "id": 1760028808359.84,
+      "order": 10100,
+      "lastModified": "2025-10-11T08:50:20.131Z",
+      "title": "Eso que tu me das",
+      "artist": "Pau Donés",
+      "bpm": 130,
+      "active": false,
+      "createdAt": "2025-10-09T16:53:28.359Z",
+      "lyrics": "/0Eso que tú me das\n/0Es mucho más de lo que pido\n/0Todo lo que me das\n/0Es lo que ahora necesito\n\nEso que tú me das\nNo creo lo tenga merecido\nPor todo lo que me das\nTe estaré siempre agradecido\n\nAsí que gracias por estar\nPor tu amistad y tu compañía\n/1Eres lo, lo mejor\n/1Que me ha dado la vida\n\nPor todo lo que recibí\nEstar aquí, vale la pena\nGracias a ti, seguí\nRemando contra la marea\n\nPor todo lo que recibí\nAhora sé que no estoy solo\nAhora te tengo a ti\nAmigo mío, mi tesoro\n\nAsí que gracias por estar\nPor tu amistad y tu compañía\n/1Eres lo, lo mejor\n/1Que me ha dado la vida\n:: SOLO\nTodo te lo voy a dar\nPor tu calidad, por tu alegría\nMe ayudaste a remontar\nA superarme día a día\n\nTodo te lo voy a dar\nFuiste mi mejor medicina\nTodo te lo daré\nSea lo que sea lo que pidas\n\nY eso que tú me das\nEs mucho más\nEs mucho más\nDe lo que nunca te he pedido\n\nTodo lo que me das\nEs mucho más\n/3Es mucho más\n/3De lo que nunca he merecido\n\nEso que tú me das\nEso que tú me das"
+    },
+    {
+      "id": 1761214721678,
+      "title": "I'm Gonna Be (500 Miles)",
+      "artist": "The Proclaimers",
+      "bpm": 132,
+      "order": 10170,
+      "duration": "3:38",
+      "lyrics": "/0When I wake up\n/0Well, I know I'm gonna be\n/0I'm gonna be the man who wakes up next to you\n/0When I go out\n/0Yeah, I know I'm gonna be\n/0I'm gonna be the man who goes along with you\n:: CAJA SOLO EN 2\nIf I get drunk\nWell, I know I'm gonna be\nI'm gonna be the man who gets drunk next to you\nAnd if I haver\nYeah, I know I'm gonna be\nI'm gonna be the man who's haverin' to you\n\n/3But I would walk five hundred miles\n/3And I would walk five hundred more\n/3Just to be the man who walked a thousand miles\n/3To fall down at your door\n\nWhen I'm workin'\nYes, I know I'm gonna be\nI'm gonna be the man who's workin' hard for you\nAnd when the money\nComes in for the work I do\nI'll pass almost every penny on to you\n\nWhen I come home (when I come home)\nOh, I know I'm gonna be\nI'm gonna be the man who comes back home to you\nAnd if I grow old\nWell, I know I'm gonna be\nI'm gonna be the man who's growin' old with you\n\n/3But I would walk five hundred miles\n/3And I would walk five hundred more\n/3Just to be the man who walked a thousand miles\n/3To fall down at your door\n\nDa-da-da-da (da-da-da-da)\nDa-da-da-da (da-da-da-da)\nDa-da-dum-diddy-dum-diddy-dum-diddy-da-da-da\nDa-da-da-da (da-da-da-da)\nDa-da-da-da (da-da-da-da)\nDa-da-dum-diddy-dum-diddy-dum-diddy-da-da-da\n:: VOLVEMOS A CAJA EN 4\nWhen I'm lonely\nWell, I know I'm gonna be\nI'm gonna be the man who's lonely without you\nAnd when I'm dreamin'\nWell, I know I'm gonna dream\nI'm gonna dream about the time when I'm with you\n\nWhen I go out (when I go out)\nWell, I know I'm gonna be\nI'm gonna be the man who goes along with you\nAnd when I come home (when I come home)\nYes, I know I'm gonna be\nI'm gonna be the man who comes back home with you\nI'm gonna be the /0man who's comin' home with you0/\n:: Golpes de crash, silencio y crescendo\n/3But I would walk five hundred miles\n/3And I would walk five hundred more\n/3Just to be the man who walked a thousand miles\n/3To fall down at your door\n\nDa-da-da-da (da-da-da-da)\nDa-da-da-da (da-da-da-da)\nDa-da-dum-diddy-dum-diddy-dum-diddy-da-da-da\nDa-da-da-da (da-da-da-da)\nDa-da-da-da (da-da-da-da)\nDa-da-dum-diddy-dum-diddy-dum-diddy-da-da-da\n\nDa-da-da-da (da-da-da-da)\nDa-da-da-da (da-da-da-da)\nDa-da-dum-diddy-dum-diddy-dum-diddy-da-da-da\nDa-da-da-da (da-da-da-da)\nDa-da-da-da (da-da-da-da)\nDa-da-dum-diddy-dum-diddy-dum-diddy-da-da-da\n\n/3And I would walk five hundred miles\n/3And I would walk five hundred more\n/3Just to be the man who walked a thousand miles\n/3To fall down at your door",
+      "notes": "OJO Caja solo en  2 al principio",
+      "fontSize": 1.5999999999999999,
+      "active": false,
+      "createdAt": "2025-10-23T10:18:41.678Z",
+      "lastModified": "2025-10-23T17:03:10.995Z",
+      "recordings": [
+        {
+          "id": 1761215209813,
+          "timestamp": "2025-10-23T10:26:49.813Z",
+          "events": [
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 8,
+              "position": 30
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 9,
+              "position": 60
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 9,
+              "position": 90
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 9,
+              "position": 120
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 9,
+              "position": 150
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 9,
+              "position": 180
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 10,
+              "position": 210
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 10,
+              "position": 240
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 10,
+              "position": 270
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 10,
+              "position": 300
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 18,
+              "position": 330
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 19,
+              "position": 360
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 19,
+              "position": 390
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 21,
+              "position": 420
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 21,
+              "position": 450
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 23,
+              "position": 480
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 23,
+              "position": 510
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 25,
+              "position": 540
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 25,
+              "position": 570
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 26,
+              "position": 600
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 26,
+              "position": 630
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 27,
+              "position": 660
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 27,
+              "position": 690
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 28,
+              "position": 720
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 28,
+              "position": 750
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 40,
+              "position": 780
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 41,
+              "position": 810
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 41,
+              "position": 840
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 42,
+              "position": 870
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 42,
+              "position": 900
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 43,
+              "position": 930
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 43,
+              "position": 960
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 44,
+              "position": 990
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 50,
+              "position": 1020
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 51,
+              "position": 1050
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 51,
+              "position": 1080
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 52,
+              "position": 1110
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 52,
+              "position": 1140
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 53,
+              "position": 1170
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 53,
+              "position": 1200
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 54,
+              "position": 1230
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 54,
+              "position": 1260
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 54,
+              "position": 1290
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 55,
+              "position": 1320
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 56,
+              "position": 1350
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 56,
+              "position": 1380
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 63,
+              "position": 1410
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 64,
+              "position": 1440
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 64,
+              "position": 1470
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 65,
+              "position": 1500
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 66,
+              "position": 1530
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 67,
+              "position": 1560
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 67,
+              "position": 1590
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 69,
+              "position": 1620
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 69,
+              "position": 1650
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 70,
+              "position": 1680
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 71,
+              "position": 1710
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 77,
+              "position": 1740
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 80,
+              "position": 1770
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 81,
+              "position": 1800
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 81,
+              "position": 1830
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 82,
+              "position": 1860
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 82,
+              "position": 1890
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 83,
+              "position": 1920
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 83,
+              "position": 1950
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 83,
+              "position": 1980
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 86,
+              "position": 2010
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 88,
+              "position": 2040
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 89,
+              "position": 2070
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 89,
+              "position": 2100
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 90,
+              "position": 2130
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 91,
+              "position": 2160
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 97,
+              "position": 2190
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 97,
+              "position": 2220
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 98,
+              "position": 2250
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 98,
+              "position": 2280
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 99,
+              "position": 2310
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 99,
+              "position": 2340
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 113,
+              "position": 2370
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 114,
+              "position": 2400
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 114,
+              "position": 2430
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 114,
+              "position": 2460
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 115,
+              "position": 2490
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 115,
+              "position": 2520
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 116,
+              "position": 2550
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 116,
+              "position": 2580
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 117,
+              "position": 2610
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 117,
+              "position": 2640
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 118,
+              "position": 2670
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 118,
+              "position": 2700
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 118,
+              "position": 2730
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 123,
+              "position": 2760
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 123,
+              "position": 2790
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 126,
+              "position": 2820
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 127,
+              "position": 2850
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 127,
+              "position": 2880
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 128,
+              "position": 2910
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 129,
+              "position": 2940
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 129,
+              "position": 2970
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 129,
+              "position": 3000
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 130,
+              "position": 3030
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 137,
+              "position": 3060
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 137,
+              "position": 3090
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 138,
+              "position": 3120
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 138,
+              "position": 3150
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 151,
+              "position": 3180
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 152,
+              "position": 3210
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 152,
+              "position": 3240
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 152,
+              "position": 3270
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 153,
+              "position": 3300
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 153,
+              "position": 3330
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 153,
+              "position": 3360
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 154,
+              "position": 3390
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 154,
+              "position": 3420
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 154,
+              "position": 3450
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 159,
+              "position": 3480
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 159,
+              "position": 3510
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 159,
+              "position": 3540
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 159,
+              "position": 3570
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 160,
+              "position": 3600
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 163,
+              "position": 3630
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 163,
+              "position": 3660
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 164,
+              "position": 3690
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 164,
+              "position": 3720
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 165,
+              "position": 3750
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 165,
+              "position": 3780
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 165,
+              "position": 3810
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 170,
+              "position": 3835
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 170,
+              "position": 3835
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 171,
+              "position": 3835
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 171,
+              "position": 3835
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 172,
+              "position": 3835
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 172,
+              "position": 3835
+            }
+          ],
+          "duration": 172
+        },
+        {
+          "id": 1761215541136,
+          "timestamp": "2025-10-23T10:32:21.136Z",
+          "events": [
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 11,
+              "position": 30
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 14,
+              "position": 60
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 19,
+              "position": 90
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 20,
+              "position": 120
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 22,
+              "position": 150
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 23,
+              "position": 180
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 24,
+              "position": 210
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 26,
+              "position": 240
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 27,
+              "position": 270
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 28,
+              "position": 300
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 30,
+              "position": 330
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 31,
+              "position": 360
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 33,
+              "position": 390
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 34,
+              "position": 420
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 35,
+              "position": 450
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 36,
+              "position": 480
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 36,
+              "position": 510
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 37,
+              "position": 540
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 37,
+              "position": 570
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 37,
+              "position": 600
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 38,
+              "position": 630
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 38,
+              "position": 660
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 39,
+              "position": 690
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 39,
+              "position": 720
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 40,
+              "position": 750
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 46,
+              "position": 780
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 47,
+              "position": 810
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 47,
+              "position": 840
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 47,
+              "position": 870
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 48,
+              "position": 900
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 48,
+              "position": 930
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 49,
+              "position": 960
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 49,
+              "position": 990
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 54,
+              "position": 1020
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 55,
+              "position": 1050
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 56,
+              "position": 1080
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 56,
+              "position": 1110
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 58,
+              "position": 1140
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 59,
+              "position": 1170
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 60,
+              "position": 1200
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 61,
+              "position": 1230
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 63,
+              "position": 1260
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 63,
+              "position": 1290
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 64,
+              "position": 1320
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 64,
+              "position": 1350
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 65,
+              "position": 1380
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 72,
+              "position": 1410
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 73,
+              "position": 1440
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 75,
+              "position": 1470
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 76,
+              "position": 1500
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 77,
+              "position": 1530
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 77,
+              "position": 1560
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 78,
+              "position": 1590
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 78,
+              "position": 1620
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 78,
+              "position": 1650
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 79,
+              "position": 1680
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 79,
+              "position": 1710
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 80,
+              "position": 1740
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 92,
+              "position": 1770
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 93,
+              "position": 1800
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 93,
+              "position": 1830
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 93,
+              "position": 1860
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 94,
+              "position": 1890
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 94,
+              "position": 1920
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 95,
+              "position": 1950
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 95,
+              "position": 1980
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 96,
+              "position": 2010
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 100,
+              "position": 2040
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 101,
+              "position": 2070
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 101,
+              "position": 2100
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 101,
+              "position": 2130
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 102,
+              "position": 2160
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 102,
+              "position": 2190
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 107,
+              "position": 2220
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 107,
+              "position": 2250
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 107,
+              "position": 2280
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 108,
+              "position": 2310
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 108,
+              "position": 2340
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 109,
+              "position": 2370
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 116,
+              "position": 2400
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 117,
+              "position": 2430
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 118,
+              "position": 2460
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 118,
+              "position": 2490
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 119,
+              "position": 2520
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 121,
+              "position": 2550
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 123,
+              "position": 2580
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 123,
+              "position": 2610
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 124,
+              "position": 2640
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 124,
+              "position": 2670
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 125,
+              "position": 2700
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 125,
+              "position": 2730
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 126,
+              "position": 2760
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 132,
+              "position": 2790
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 132,
+              "position": 2820
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 133,
+              "position": 2850
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 133,
+              "position": 2880
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 134,
+              "position": 2910
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 135,
+              "position": 2940
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 136,
+              "position": 2970
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 136,
+              "position": 3000
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 139,
+              "position": 3030
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 147,
+              "position": 3060
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 147,
+              "position": 3090
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 147,
+              "position": 3120
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 148,
+              "position": 3150
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 148,
+              "position": 3180
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 154,
+              "position": 3210
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 155,
+              "position": 3240
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 155,
+              "position": 3270
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 156,
+              "position": 3300
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 160,
+              "position": 3330
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 161,
+              "position": 3360
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 161,
+              "position": 3390
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 161,
+              "position": 3420
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 161,
+              "position": 3450
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 165,
+              "position": 3480
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 165,
+              "position": 3510
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 166,
+              "position": 3540
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 166,
+              "position": 3570
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 167,
+              "position": 3600
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 167,
+              "position": 3630
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 172,
+              "position": 3660
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 173,
+              "position": 3690
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 173,
+              "position": 3720
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 173,
+              "position": 3750
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 174,
+              "position": 3780
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 174,
+              "position": 3810
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 179,
+              "position": 3840
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 180,
+              "position": 3855
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 180,
+              "position": 3855
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 181,
+              "position": 3855
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 181,
+              "position": 3855
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 182,
+              "position": 3855
+            }
+          ],
+          "duration": 182
+        }
+      ]
+    },
+    {
+      "lastModified": "2025-10-09T16:53:28.358Z",
+      "title": "Imagine",
+      "id": 1760028808358.582,
+      "active": false,
+      "createdAt": "2025-10-09T16:53:28.358Z",
+      "bpm": 70,
+      "order": 10180,
+      "lyrics": "/0Imagine there's no heaven\n/0It's easy if you try\n/0No hell below us\n/0Above us, only sky\n\nImagine all the people\nLivin' for today\n/0Ah\nImagine there's no countries\nIt isn't hard to do\nNothing to kill or die for\nAnd no religion, too\n\nImagine all the people\nLivin' life in peace\n/0You\nYou may say I'm a dreamer\nBut I'm not the only one\nI hope someday you'll join us\nAnd the world will /0be as one0/\n\nImagine no possessions\nI wonder if you can\nNo need for greed or hunger\nA brotherhood of man\n\nImagine all the people\nSharing all the /0world0/\n/0You\nYou may say I'm a dreamer\nBut I'm not the only one\nI hope someday you'll join us\nAnd the world will live /0as one0/",
+      "artist": "John Lenon",
+      "fontSize": 1.4,
+      "notes": "//img=entrada-imagine.jpg"
+    },
+    {
+      "notes": "Entrada con pandereta",
+      "order": 10250,
+      "bpm": 122,
+      "active": false,
+      "lyrics": "/0Una niña triste en el espejo\n/0Me mira prudente y no quiere hablar\n/0Hay un mounstruo gris en la cocina\n\n/0Que lo rompe todo, que no para de gritar\n\n/0Tengo una mano en el cuello que con sutileza\n/0Me impide respirar\n/0Una venda me tapa los ojos\n/0Puedo oler el miedo y se acerca\n\n/0Tengo un nudo en las cuerdas que ensucia mi voz al cantar\n/0Tengo una culpa que me aprieta\n/0Se posa en mis hombros y me cuesta andar\n\nPero, dibujé una puerta violeta en la pared\nY al entrar me liberé, como se despliega la vela de un barco\n/3Desperté3/ en un prado verde, muy lejos de aquí\nCorrí, grité, reí\nSé lo que no quiero, ahora estoy a salvo\n\nUna flor que se marchita\nUn árbol que no crece porque no es su lugar\nUn castigo que se me impone\nUn verso que me tacha y me anula\n\nTengo todo el cuerpo encadenado (uh, uh, uh)\nLas manos agrietadas, mil arrugas en la piel\nLas fantasmas hablan en la nuca\nSe reabre la herida y me sangra (uh, uh, uh)\n\nHay un jilguero en mi garganta que vuela con fuerza\nTengo la necesidad de girar la llave /0y no mirar atrás0/\n\nAsí que dibujé una puerta violeta en la pared\nY al entrar me liberé, como se despliega la vela de un barco\n/3Desperté3/ en un prado verde muy lejos de aquí\nCorrí, grité, reí\nSé lo que no quiero, ahora estoy a salvo\n\nAsí que /3dibujé3/ una puerta violeta en la pared (uh, uh, uh)\nY al entrar me liberé, como se despliega la vela de un barco\n/3Aparecí3/ en un prado verde muy lejos de aquí (uh, uh, uh)\nCorrí, grité, reí (uh, uh, uh)\nSé lo que no quiero, ahora estoy a salvo",
+      "fontSize": 1.4,
+      "createdAt": "2025-10-09T16:53:28.359Z",
+      "artist": "Rozalen",
+      "id": 1760028808359.885,
+      "title": "La Puerta Violeta",
+      "lastModified": "2025-10-11T09:03:04.005Z"
+    },
+    {
+      "id": 1760028808359.5386,
+      "notes": "",
+      "active": false,
+      "order": 10260,
+      "title": "Lobo hombre en París ",
+      "artist": "La Unión",
+      "createdAt": "2025-10-09T16:53:28.359Z",
+      "fontSize": 1.7999999999999998,
+      "lyrics": "Cae la noche y amanece en París\nEn el día en que todo ocurrió\nComo un sueño de loco sin fín\nLa fortuna se ha reído de ti, ja ja\n\nSorprendido espiando\nEl lobo escapó aullando y\nEs mordido por el mago del Siam\n\nLa Luna llena sobre París\nHa transformado en hombre a Denisse\nAuuu!! Lobo hombre en París\nAuuu!! Su nombre es Denisse\n\nRueda por los bares del boulevard\nSe ha alojado en un sucio hostal, ja ja\n\nMientras está cenando\nJunto a el se ha sentado\nUna joven con la que irá a contemplar\n\nLa Luna llena sobre París\nAlgunos francos cobra Denisse \nAuuu!! Lobo hombre en París\nAuuu!! Su nombre es Denisse\nSolo\n\nLa Luna llena sobre París\nHa transformado en hombre a Denisse\nAuuu!! Lobo hombre en París\nAuuu!! Su nombre es Denisse\n\n\nMientras está cenando\nJunto a él se ha sentado\nUna joven con la que va a contemplar\n\nLa Luna llena sobre París\nHa transformado en hombre a Denisse\nLobo hombre en París\nAl final mirar a Nino",
+      "bpm": "138",
+      "lastModified": "2025-10-09T16:53:28.359Z"
+    },
+    {
+      "artist": "Jonh Paul Jon",
+      "title": "Love is in the air",
+      "notes": "",
+      "bpm": 115,
+      "fontSize": 2.1999999999999997,
+      "lastModified": "2025-10-09T16:53:28.359Z",
+      "lyrics": "Love is in the air, everywhere I look around\nLove is in the air, every sight and every sound\nAnd I don't know if I'm being foolish\nDon't know if I'm being wise\nBut it's something that I must believe in\nAnd it's there when I look in your eyes\nLove is in the air, in the whisper of the tree\nLove is in the air, in the thunder of the sea\nAnd I don't know if I'm just dreaming\nDon't know if I feel safe\nBut it's something that I must believe in\nAnd it's there when you call out my name\nLove is in the air\nLove is in the air\nOh, oh, oh, oh\nLove is in the air, in the rising of the sun\nLove is in the air, when the day is nearly done\nAnd I don't know if you're illusion\nDon't know if I see truth\nBut you're something that I must believe in\nAnd you're there when I reach out for you\nLove is in the air, everywhere I look around\nLove is in the air, every sight and every sound\nAnd I don't know if I'm being foolish\nDon't know if I'm being wise\nBut it's something that I must believe in\nAnd it's there when I look in your eyes\nLove is in the air\nLove is in the air\nOh, oh, oh, oh\nOh, love is in the air\nLove is in the air\nLove's is in the air\nLove's is in the air\nLove is in the air\nLa camisa negra ....",
+      "order": 10270,
+      "id": 1760028808359.94,
+      "active": false,
+      "createdAt": "2025-10-09T16:53:28.359Z"
+    },
+    {
+      "title": "Mediterráneo",
+      "id": 1760028808359.0674,
+      "bpm": "134",
+      "notes": "Entrada marcando 4 y Tom base + Caja, final igual y parada en seco",
+      "fontSize": 2.4,
+      "createdAt": "2025-10-09T16:53:28.359Z",
+      "order": 10290,
+      "lastModified": "2025-10-09T16:53:28.359Z",
+      "artist": "",
+      "active": false,
+      "lyrics": "Qué agobio de verano\nTengo el cuerpo empapado en sudor\nSe me cae la casa encima\nYo ya no aguanto el calor\n\nLa vida ya no es vida en la ciudad\nLlegó la hora de cambiar asfalto por mar\nCansado de vivir en una jaula como un animal\n\nQuema la ropa de invierno y prepárate para viajar\nQue la tierra prometida está más cerca de lo que puedas pensar\nCalifornia ya no existe, el sueño acabó\nPero yo sé de un lugar donde brilla el sol\nDéjame llevarte este verano donde está la acción\n\nMediterráneo\nRuta de calor\nMediterráneo\nA templo del sol\nMediterráneo\nNoches de luz y color\n\nMediterráneo\nTierra de pasión\nMediterráneo\nRuta de calor\nMediterráneo\nEterno verano al sol\n\nSi buscas sensaciones aquí hay algo realmente especial\nSi quieres un paraíso esto es lo más parecido que vas a encontrar\nSi buscas algo que dinero no pueda comprar\nY si quieres ver a mescalina nadar\nNo hay mejor rincón en el planeta si quieres soñar\n\nNos veremos en ibiza, en mallorca, san luís y mahón\nBailaremos en valencia, en alicante, en gandía y benidorm\nDesde l'escala hasta playa san juan\nEn cadaqués, en sitges, playa libertad\nSeremos los elegidos en el templo del dios del mar\n\nMediterráneo\nRuta de calor\nMediterráneo\nA templo del sol\nMediterráneo\nNoches de luz y color\n\nMediterráneo\nTierra de pasión\nMediterráneo\nRuta de calor\nMediterráneo\nEterno verano al sol\n\nMediterráneo\nRuta de calor\nMediterráneo\nA templo del sol\nMediterráneo\nNoches de luz y color\n\nMediterráneo\nTierra de pasión\nMediterráneo\nRuta de calor\nMediterráneo\nEterno verano al sol."
+    },
+    {
+      "fontSize": 1.4,
+      "artist": "Alaska y Dinarama",
+      "createdAt": "2025-10-09T16:53:28.360Z",
+      "lastModified": "2025-10-09T16:53:28.360Z",
+      "active": false,
+      "bpm": 135,
+      "id": 1760028808360.3428,
+      "title": "Ni tu ni nadie",
+      "order": 10310,
+      "notes": "",
+      "lyrics": "Haces muy mal en elevar mi tensión\nEn aplastar mi ambición\nTú sigue así y ya verás\nMiro el reloj y es mucho más tarde que ayer\nTe esperaría otra vez\nY no lo haré, no lo haré\nDonde está nuestro error sin solución\nFuiste tu el culpable o lo fui yo\nNi tú ni nadie, nadie puede cambiarme\nMil campanas suenan en mi corazón\nQué difícil es pedir perdón\nNi tú ni nadie, nadie puede cambiarme\nVete de aquí no me supiste entender\nYo solo pienso en tu bien\nNo es necesario mentir\nQué fácil es, atormentarse después\nPero sobreviviré, sé qué podré\nSobreviviré\nDonde está nuestro error sin solución\nFuiste tu el culpable o lo fui yo\nNi tú ni nadie, nadie puede cambiarme\nMil campanas suenan en mi corazón\nQué difícil es pedir perdón\nNi tú ni nadie, nadie puede cambiarme\nMil campanas suenan en mi corazón\nQué difícil es pedir perdón\nNi tú ni nadie, nadie puede cambiarme\nDonde está nuestro error sin solución\nFuiste tu el culpable o lo fui yo\nNi tú ni nadie, nadie puede cambiarme\nMil campanas suenan en mi corazón\nQué difícil es pedir perdón\nNi tú ni nadie, nadie puede cambiarme\nPacto entre caballeros"
+    },
+    {
+      "id": 1761210656881,
+      "title": "One",
+      "artist": "U2",
+      "bpm": 91,
+      "order": 10330,
+      "duration": "1:32",
+      "lyrics": "//espera=14\n/0Is it getting better?\n/0Or do you feel the same?\n/0Will it make it easier on you now\n/0You got someone to blame?\n\n/0You say: One love, one life\n/0When it's one need in the night\n/0One love, we get to share it\n/0Leaves you, baby, if you don't care for it\n//espera=12\nDid I disappoint you\nOr leave a bad taste in your mouth?\nYou act like you never had love\nAnd you want me to go without\n//espera=4\nWell, it's too late tonight\nTo drag the past out into the light\nWe're one, but we're not the same\nWe get to carry each other, carry each other\n//espera=12\nOne\n:: Solo\nHave you come here for forgiveness?\nHave you come to raise the dead?\nHave you come here to play Jesus\nTo the lepers in your head?\n//espera=4\nDid I ask too much, more than a lot?\nYou gave me nothing, now it's all I got\nWe're one, but we're not the same\nWell, we hurt each other, then we do it again\n//espera=4\nYou say\nLove is a temple, love, a higher law\nLove is a temple, love, the higher law\nYou ask me to enter, but then you make me crawl\nAnd I can't keep holding on to what you got\nWhen all you got is hurt\n//espera=4\nOne love, one blood\nOne life, you got to do what you should\nOne life with each other: Sisters, brothers\nOne life, but we're not the same\nWe get to carry each other, carry each other\nOne! One!",
+      "notes": "Comienzo con pandereta\nDinámica alta golpes sincopados en tom base",
+      "fontSize": 1.4,
+      "active": false,
+      "createdAt": "2025-10-23T09:10:56.881Z",
+      "lastModified": "2025-10-23T10:06:16.382Z"
+    },
+    {
+      "artist": "Peter Gabriel",
+      "notes": "OJO 7/8\nPrincipio solo charles y bombo a negras\nCaja entra más tarde en \"grab your things, I've come to take you home\"",
+      "title": "Solsbury Hill",
+      "lastModified": "2025-10-09T16:53:28.359Z",
+      "active": false,
+      "createdAt": "2025-10-09T16:53:28.359Z",
+      "bpm": 105,
+      "fontSize": 1.5999999999999999,
+      "id": 1760028808359.3364,
+      "order": 10370,
+      "lyrics": "/1Climbing up on Solsbury Hill\n/1I could see the city light\n/1Wind was blowing, time stood still\n/1Eagle flew out of the night\n/1He was something to observe\n/1Came in close, I heard a voice\n/1Standing stretching every nerve\n/1Had to listen, had no choice\n/1I did not believe the information\n/1I just had to trust imagination\n/1My heart going boom boom boom\nSon, he said, grab your things, I've come to take you home\nTo keep in silence I resigned\nMy friends would think I was a nut\nTurning water into wine\nOpen doors would soon be shut\nSo I went from day to day\nThough my life was in a rut\n'Til I thought of what I'd say\nWhich connection I should cut\nI was feeling part of the scenery\nI walked right out of the machinery\nMy heart going boom boom boom\nHey, he said, grab your things, I've come to take you home\nAh, back home\nWhen illusion spin her net\nI'm never where I want to be\nAnd liberty she pirouette\nWhen I think that I am free\nWatched by empty silhouettes\nWho close their eyes but still can see\nNo one taught them etiquette\nI will show another me\nToday I don't need a replacement\nI'll tell them what the smile on my face meant\nMy heart going boom boom boom\nHey, I said, you can keep my things, they've come to take me home\nmy home\nPájaros de barro"
+    }
+  ]
+}

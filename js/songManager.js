@@ -59,6 +59,9 @@ class SongManager {
         this.copyTargetRepertoireSelect = document.getElementById('copy-target-repertoire-select');
         this.copySongBtn = document.getElementById('copy-song-btn');
         
+        // Botón para abrir archivo HTML
+        this.openHtmlBtn = document.getElementById('open-html-btn');
+        
         // Elementos del gestor de repertorios
         this.repertoireManagerBtn = document.getElementById('repertoire-manager-btn');
         this.repertoireManagerModal = document.getElementById('repertoire-manager-modal');
@@ -176,6 +179,11 @@ class SongManager {
         // Evento para cambio de repertorio objetivo (habilitar/deshabilitar botón)
         this.copyTargetRepertoireSelect.addEventListener('change', () => {
             this.updateCopyButtonState();
+        });
+        
+        // Evento para abrir archivo HTML
+        this.openHtmlBtn.addEventListener('click', () => {
+            this.openSongHtmlFile();
         });
         
         // Eventos de exportar/importar
@@ -813,6 +821,13 @@ Says, "Find a home"
         // Activar el botón de editar
         this.editCurrentSongBtn.disabled = false;
         
+        // Mostrar u ocultar botón de abrir HTML según si la canción tiene archivo HTML
+        if (song.htmlFile && song.htmlFile.trim()) {
+            this.openHtmlBtn.style.display = 'block';
+        } else {
+            this.openHtmlBtn.style.display = 'none';
+        }
+        
         // Actualizar clases activas
         document.querySelectorAll('.song-item').forEach(item => {
             item.classList.remove('active');
@@ -1023,6 +1038,7 @@ Says, "Find a home"
         document.getElementById('edit-song-order').value = song.order || 0;
         document.getElementById('edit-song-duration').value = song.duration || '';
         document.getElementById('edit-song-notes').value = song.notes || '';
+        document.getElementById('edit-song-html-file').value = song.htmlFile || '';
         document.getElementById('edit-song-structure').value = song.structure || '';
         document.getElementById('edit-song-lyrics').value = song.lyrics;
         
@@ -1050,6 +1066,7 @@ Says, "Find a home"
         const duration = document.getElementById('song-duration').value.trim();
         const lyrics = document.getElementById('song-lyrics').value.trim();
         const structure = document.getElementById('song-structure').value.trim();
+        const htmlFile = document.getElementById('song-html-file').value.trim();
         
         if (!title) {
             alert('El título es obligatorio');
@@ -1067,6 +1084,7 @@ Says, "Find a home"
             lyrics: lyrics || '',
             notes: document.getElementById('song-notes').value.trim() || '',
             structure: structure || '', // Estructura gráfica
+            htmlFile: htmlFile || '', // Ruta al archivo HTML
             fontSize: this.getDefaultFontSize(), // Tamaño de fuente por defecto
             active: false,
             createdAt: now.toISOString(),
@@ -1095,6 +1113,7 @@ Says, "Find a home"
         const notes = document.getElementById('edit-song-notes').value.trim();
         const lyrics = document.getElementById('edit-song-lyrics').value.trim();
         const structure = document.getElementById('edit-song-structure').value.trim();
+        const htmlFile = document.getElementById('edit-song-html-file').value.trim();
         
         if (!title) {
             alert('El título es obligatorio');
@@ -1114,6 +1133,7 @@ Says, "Find a home"
                 notes: notes || '',
                 lyrics: lyrics || '',
                 structure: structure || '', // Estructura gráfica
+                htmlFile: htmlFile || '', // Ruta al archivo HTML
                 fontSize: this.songs[songIndex].fontSize || 2.4, // Preservar fontSize existente
                 lastModified: new Date().toISOString()
             };
@@ -1156,6 +1176,16 @@ Says, "Find a home"
             document.getElementById('current-song').textContent = 'Selecciona una canción';
             window.lyricsScroller.clearLyrics();
         }
+    }
+    
+    openSongHtmlFile() {
+        if (!this.currentSong || !this.currentSong.htmlFile) {
+            console.warn('No hay archivo HTML configurado para esta canción');
+            return;
+        }
+        
+        // Abrir el archivo HTML en una nueva ventana/pestaña
+        window.open(this.currentSong.htmlFile, '_blank');
     }
     
     getCurrentSong() {

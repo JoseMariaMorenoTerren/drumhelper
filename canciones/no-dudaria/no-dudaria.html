@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>No Dudaría - Antonio Flores</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body, html {
+            height: 100%;
+            width: 100%;
+            overflow: hidden;
+            font-family: 'Courier New', monospace;
+            background-color: black;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            width: 100vw;
+        }
+
+        .bloque-timeline {
+            width: 100%;
+            height: 3.75vh;
+            display: flex;
+            flex-direction: row;
+            flex-shrink: 0;
+        }
+
+        .parte {
+            height: 100%;
+            background-color: #666;
+            width: 100%;
+        }
+
+        .bloque-contenido {
+            background-color: black;
+            width: 100%;
+            flex: 1;
+            color: white;
+            padding: 20px;
+            overflow-x: auto;
+            overflow-y: auto;
+            display: grid;
+            grid-auto-flow: column;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(3, auto);
+            gap: 20px;
+            align-content: start;
+        }
+
+        .seccion {
+            min-width: 250px;
+        }
+
+        .titulo-seccion {
+            color: #4A90E2;
+            font-weight: bold;
+            margin-bottom: 10px;
+            font-size: 0.9em;
+        }
+
+        .verso {
+            line-height: 1.2;
+            margin-bottom: 3px;
+        }
+
+        .anotacion {
+            color: #888;
+            font-style: italic;
+            margin: 10px 0;
+        }
+
+        .btn-home {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-family: Arial, sans-serif;
+            font-weight: bold;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .btn-home:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+        }
+    </style>
+</head>
+<body>
+    <a href="../../index.html" class="btn-home">🏠 Índice</a>
+    <div class="container">
+        <div class="bloque-timeline">
+            <div class="parte"></div>
+        </div>
+
+        <div class="bloque-contenido">
+            <div class="seccion">
+                <div class="titulo-seccion">NO DUDARÍA</div>
+                <div class="anotacion">Pendiente de añadir contenido</div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
