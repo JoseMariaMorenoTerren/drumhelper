@@ -1,6 +1,6 @@
 # The Power of Love - Huey Lewis and the News
 
-**BPM:** 110  
+**BPM:** 62  
 **Artista:** Huey Lewis and the News
 
 ## Notas

@@ -1,6 +1,6 @@
 # I Want to Break Free - Queen
 
-**BPM:** 120  
+**BPM:** 118  
 **Artista:** Queen
 
 ## Notas

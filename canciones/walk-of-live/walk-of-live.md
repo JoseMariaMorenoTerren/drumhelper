@@ -1,6 +1,6 @@
 # Walk of live - Dire Straits
 
-**BPM:** 168  
+**BPM:** 172  
 **Artista:** Dire Straits
 
 ## Notas

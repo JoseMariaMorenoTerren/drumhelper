@@ -1,6 +1,6 @@
 # Ni tu ni nadie - Alaska y Dinarama
 
-**BPM:** 135  
+**BPM:** 137  
 **Artista:** Alaska y Dinarama
 
 ## Notas

@@ -1,6 +1,6 @@
 # Escuela de calor - Radio Futura
 
-**BPM:** 127  
+**BPM:** 122  
 **Artista:** Radio Futura
 
 ## Notas

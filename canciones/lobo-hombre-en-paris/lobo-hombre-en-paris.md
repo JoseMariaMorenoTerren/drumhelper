@@ -1,6 +1,6 @@
 # Lobo hombre en París - La Unión
 
-**BPM:** 138  
+**BPM:** 147  
 **Artista:** La Unión
 
 ## Notas

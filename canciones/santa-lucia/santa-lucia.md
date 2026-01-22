@@ -8,20 +8,23 @@
 Entrada todos a la vez, marco 4
 
 ## Letras / Transcripción
-
-A menudo me recuerdas a alguien
-Tu sonrisa la /0imagino0/ sin miedo
+:: SOLO CAJA EN 4
+A menudo me recue/0rdassssss a 0/alguien
+Tu sonrisa la imagino sin miedo
+:: CAJA 2-4
 Invadido por la ausencia
 Me devora la impaciencia
 Me pregunto si algun día te veré 
-
-Ya se todo de /0tu vida0/, y sin embargo
-No conozco ni /0un detalle0/ de ti
+:: BREVE SILENCIO
+:: CAJA EN 4
+Ya se todo de vida0, y sin embargo
+No conozco ni un detalle de ti
+:: CAJA EN 2-4
 El teléfono es muy frio
 Tus llamadas son muy pocas
 Yo si quiero conocerte y tu no a mi
 Por favor!
-
+/3
 Dame una cita
 Vamos al parque
 Entra en mi vida
@@ -34,8 +37,10 @@ Poquito a poco
 Dame tus manos
 Siente las mias
 Como dos ciegos
-Santa Lucia, Santa Lucia, ohh Santa Lucia!
-
+Santa Lucia, Santa Lucia, 
+[puente]
+ohh Santa Lucia!
+[outro]
 /0A menudo me recuerdas0/ a mi
 
 ---

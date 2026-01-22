@@ -1,6 +1,6 @@
 # Maldito duende - Héroes del silencio
 
-**BPM:** 122  
+**BPM:** 115  
 **Artista:** Héroes del silencio
 
 ## Notas

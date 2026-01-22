@@ -1,6 +1,6 @@
 # La del pirata cojo - Joaquín Sabina
 
-**BPM:** 135  
+**BPM:** 134  
 **Artista:** Joaquín Sabina
 
 ## Notas

@@ -1,6 +1,6 @@
 # Mediterráneo - 
 
-**BPM:** 134  
+**BPM:** 152  
 **Artista:** 
 
 ## Notas

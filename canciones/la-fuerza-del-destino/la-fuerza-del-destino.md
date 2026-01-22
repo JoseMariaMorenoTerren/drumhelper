@@ -1,6 +1,6 @@
 # La fuerza del destino - Mecano
 
-**BPM:** 120  
+**BPM:** 90  
 **Artista:** Mecano
 
 ## Notas

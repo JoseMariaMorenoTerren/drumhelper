@@ -1,6 +1,6 @@
 # Baby Can I Hold You - Tracy Chapman
 
-**BPM:** 72  
+**BPM:** 74  
 **Artista:** Tracy Chapman
 
 ## Notas
