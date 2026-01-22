@@ -9,43 +9,52 @@ Sin notas adicionales
 
 ## Letras / Transcripción
 
+[verso]
 Cae la noche y amanece en París
 En el día en que todo ocurrió
 Como un sueño de loco sin fín
 La fortuna se ha reído de ti, ja ja
 
+[verso]
 Sorprendido espiando
 El lobo escapó aullando y
 Es mordido por el mago del Siam
 
+[verso]
 La Luna llena sobre París
 Ha transformado en hombre a Denisse
 Auuu!! Lobo hombre en París
 Auuu!! Su nombre es Denisse
 
+[verso]
 Rueda por los bares del boulevard
 Se ha alojado en un sucio hostal, ja ja
 
+[verso]
 Mientras está cenando
 Junto a el se ha sentado
 Una joven con la que irá a contemplar
 
+[verso]
 La Luna llena sobre París
 Algunos francos cobra Denisse 
 Auuu!! Lobo hombre en París
 Auuu!! Su nombre es Denisse
 Solo
 
+[verso]
 La Luna llena sobre París
 Ha transformado en hombre a Denisse
 Auuu!! Lobo hombre en París
 Auuu!! Su nombre es Denisse
 
 
+[verso]
 Mientras está cenando
 Junto a él se ha sentado
 Una joven con la que va a contemplar
 
+[verso]
 La Luna llena sobre París
 Ha transformado en hombre a Denisse
 Lobo hombre en París

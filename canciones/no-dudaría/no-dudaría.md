@@ -9,6 +9,7 @@ Sin notas adicionales
 
 ## Letras / Transcripción
 
+[verso]
 /0Si pudiera olvidar
 /0Todo aquello que fui
 /0Si pudiera borrar

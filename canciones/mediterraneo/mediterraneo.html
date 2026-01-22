@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mediterráneo - </title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body, html {
+            height: 100vh;
+            width: 100%;
+            font-family: 'Courier New', monospace;
+            background-color: black;
+            color: white;
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 8px 15px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(102, 126, 234, 0.4);
+        }
+
+        h1 {
+            font-size: 1.3em;
+            margin: 0;
+            display: inline;
+        }
+
+        .info {
+            font-size: 0.9em;
+            color: #ddd;
+            display: inline;
+            margin-left: 15px;
+        }
+
+        .container {
+            height: calc(100vh - 50px);
+            display: flex;
+            padding: 15px;
+            gap: 15px;
+            overflow: hidden;
+        }
+
+        .column {
+            flex: 1;
+            background-color: #111;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-y: auto;
+            box-shadow: 0 4px 15px rgba(255, 255, 255, 0.05);
+        }
+
+        .column::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .column::-webkit-scrollbar-track {
+            background: #222;
+            border-radius: 4px;
+        }
+
+        .column::-webkit-scrollbar-thumb {
+            background: #667eea;
+            border-radius: 4px;
+        }
+
+        .column::-webkit-scrollbar-thumb:hover {
+            background: #764ba2;
+        }
+
+        .verso {
+            line-height: 1.6;
+            margin: 6px 0;
+            font-size: 1em;
+            padding-left: 10px;
+        }
+
+        .dinamica-0 {
+            color: #FFD700;
+            font-weight: bold;
+        }
+
+        .dinamica-1 {
+            color: #66CCFF;
+        }
+
+        .dinamica-2 {
+            color: #FFFFFF;
+        }
+
+        .dinamica-3 {
+            color: #66FF66;
+            font-weight: bold;
+        }
+
+        .anotacion-especial {
+            color: #FF8C00;
+            font-style: italic;
+            font-weight: bold;
+            margin: 12px 0;
+            font-size: 1.1em;
+            padding: 8px;
+            background-color: rgba(255, 140, 0, 0.1);
+            border-left: 3px solid #FF8C00;
+        }
+
+        .notes-section {
+        .notes-section {
+            background-color: rgba(76, 175, 80, 0.15);
+            padding: 15px;
+            margin-bottom: 15px;
+            border-left: 3px solid #4CAF50;
+            border-radius: 5px;
+        }
+
+        .notes-section h2 {
+            color: #4CAF50;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        .notes-section div {
+            font-size: 0.95em;
+            line-height: 1.5;
+        }
+
+        .legend {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            background-color: rgba(34, 34, 34, 0.95);
+            padding: 12px;
+            border-radius: 6px;
+            font-size: 0.85em;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+            max-width: 250px;
+        }
+
+        .legend h3 {
+            color: #4CAF50;
+            margin-bottom: 8px;
+            font-size: 1em;
+        }
+
+        .legend-item {
+            margin: 5px 0;
+            padding: 3px;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Mediterráneo</h1>
+        <span class="info"> | BPM: 134</span>
+    </div>
+
+    <div class="container">
+        <div class="column">
+                <div class="notes-section">
+                <h2>📝 Notas de Batería</h2>
+                <div style="white-space: pre-wrap; color: #ddd;">Entrada marcando 4 y Tom base + Caja, final igual y parada en seco</div>
+            </div>
+                <div class="verso">Qué agobio de verano</div>
+                <div class="verso">Tengo el cuerpo empapado en sudor</div>
+                <div class="verso">Se me cae la casa encima</div>
+                <div class="verso">Yo ya no aguanto el calor</div>
+                <div class="verso">La vida ya no es vida en la ciudad</div>
+                <div class="verso">Llegó la hora de cambiar asfalto por mar</div>
+                <div class="verso">Cansado de vivir en una jaula como un animal</div>
+                <div class="verso">Quema la ropa de invierno y prepárate para viajar</div>
+                <div class="verso">Que la tierra prometida está más cerca de lo que puedas pensar</div>
+                <div class="verso">California ya no existe, el sueño acabó</div>
+                <div class="verso">Pero yo sé de un lugar donde brilla el sol</div>
+                <div class="verso">Déjame llevarte este verano donde está la acción</div>
+                <div class="verso">Mediterráneo</div>
+                <div class="verso">Ruta de calor</div>
+                <div class="verso">Mediterráneo</div>
+                <div class="verso">A templo del sol</div>
+                <div class="verso">Mediterráneo</div>
+                <div class="verso">Noches de luz y color</div>
+                <div class="verso">Mediterráneo</div>
+                <div class="verso">Tierra de pasión</div>
+            </div>
+        <div class="column">
+                <div class="verso">Mediterráneo</div>
+                <div class="verso">Ruta de calor</div>
+                <div class="verso">Mediterráneo</div>
+                <div class="verso">Eterno verano al sol</div>
+                <div class="verso">Si buscas sensaciones aquí hay algo realmente especial</div>
+                <div class="verso">Si quieres un paraíso esto es lo más parecido que vas a encontrar</div>
+                <div class="verso">Si buscas algo que dinero no pueda comprar</div>
+                <div class="verso">Y si quieres ver a mescalina nadar</div>
+                <div class="verso">No hay mejor rincón en el planeta si quieres soñar</div>
+                <div class="verso">Nos veremos en ibiza, en mallorca, san luís y mahón</div>
+                <div class="verso">Bailaremos en valencia, en alicante, en gandía y benidorm</div>
+                <div class="verso">Desde l'escala hasta playa san juan</div>
+                <div class="verso">En cadaqués, en sitges, playa libertad</div>
+                <div class="verso">Seremos los elegidos en el templo del dios del mar</div>
+                <div class="verso">Mediterráneo</div>
+                <div class="verso">Ruta de calor</div>
+                <div class="verso">Mediterráneo</div>
+                <div class="verso">A templo del sol</div>
+                <div class="verso">Mediterráneo</div>
+                <div class="verso">Noches de luz y color</div>
+            </div>
+        <div class="column">
+                <div class="verso">Mediterráneo</div>
+                <div class="verso">Tierra de pasión</div>
+                <div class="verso">Mediterráneo</div>
+                <div class="verso">Ruta de calor</div>
+                <div class="verso">Mediterráneo</div>
+                <div class="verso">Eterno verano al sol</div>
+                <div class="verso">Mediterráneo</div>
+                <div class="verso">Ruta de calor</div>
+                <div class="verso">Mediterráneo</div>
+                <div class="verso">A templo del sol</div>
+                <div class="verso">Mediterráneo</div>
+                <div class="verso">Noches de luz y color</div>
+                <div class="verso">Mediterráneo</div>
+                <div class="verso">Tierra de pasión</div>
+                <div class="verso">Mediterráneo</div>
+                <div class="verso">Ruta de calor</div>
+                <div class="verso">Mediterráneo</div>
+                <div class="verso">Eterno verano al sol.</div>
+            </div>
+    </div>
+
+    <div class="legend">
+        <h3>Leyenda:</h3>
+        <div class="legend-item dinamica-0">/0...0/ - Básica</div>
+        <div class="legend-item dinamica-1">//1 - Nivel 1</div>
+        <div class="legend-item dinamica-2">//2 - Nivel 2</div>
+        <div class="legend-item dinamica-3">//3 - Nivel 3</div>
+        <div class="legend-item anotacion-especial">:: - Especial</div>
+    </div>
+</body>
+</html>

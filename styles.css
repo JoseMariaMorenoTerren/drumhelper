@@ -2435,6 +2435,56 @@ body.concert-mode .playback-controls {
     transform: scale(0.95) rotate(90deg);
 }
 
+.nav-song-html {
+    position: fixed;
+    bottom: 30px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    color: white;
+    font-size: 3rem;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    z-index: 10001;
+    font-weight: bold;
+    line-height: 1;
+}
+
+.nav-song-prev {
+    left: 30px;
+}
+
+.nav-song-next {
+    right: 30px;
+}
+
+.nav-song-html:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.5);
+    transform: scale(1.1);
+}
+
+.nav-song-html:active {
+    transform: scale(0.95);
+}
+
+.nav-song-html:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+
+.nav-song-html:disabled:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.3);
+    transform: scale(1);
+}
+
 @keyframes fadeIn {
     from {
         opacity: 0;

@@ -66,11 +66,15 @@ class SongManager {
         this.htmlViewerModal = document.getElementById('html-viewer-modal');
         this.htmlViewerIframe = document.getElementById('html-viewer-iframe');
         this.closeHtmlViewer = document.getElementById('close-html-viewer');
+        this.prevSongHtmlBtn = document.getElementById('prev-song-html');
+        this.nextSongHtmlBtn = document.getElementById('next-song-html');
         
         console.log('HTML Viewer elements:', {
             modal: this.htmlViewerModal,
             iframe: this.htmlViewerIframe,
-            closeBtn: this.closeHtmlViewer
+            closeBtn: this.closeHtmlViewer,
+            prevBtn: this.prevSongHtmlBtn,
+            nextBtn: this.nextSongHtmlBtn
         });
         
         // Elementos del gestor de repertorios
@@ -204,6 +208,19 @@ class SongManager {
             });
         }
         
+        // Eventos para navegar entre canciones en el modal
+        if (this.prevSongHtmlBtn) {
+            this.prevSongHtmlBtn.addEventListener('click', () => {
+                this.navigateToSong(-1);
+            });
+        }
+        
+        if (this.nextSongHtmlBtn) {
+            this.nextSongHtmlBtn.addEventListener('click', () => {
+                this.navigateToSong(1);
+            });
+        }
+        
         // Cerrar modal al hacer clic fuera del iframe (solo si existe)
         if (this.htmlViewerModal) {
             this.htmlViewerModal.addEventListener('click', (e) => {
@@ -213,10 +230,16 @@ class SongManager {
             });
         }
         
-        // Cerrar con tecla ESC
+        // Cerrar con tecla ESC y navegar con flechas
         document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && this.htmlViewerModal && this.htmlViewerModal.classList.contains('active')) {
-                this.closeHtmlViewerModal();
+            if (this.htmlViewerModal && this.htmlViewerModal.classList.contains('active')) {
+                if (e.key === 'Escape') {
+                    this.closeHtmlViewerModal();
+                } else if (e.key === 'ArrowLeft') {
+                    this.navigateToSong(-1);
+                } else if (e.key === 'ArrowRight') {
+                    this.navigateToSong(1);
+                }
             }
         });
         
@@ -1235,12 +1258,71 @@ Says, "Find a home"
         this.htmlViewerIframe.src = this.currentSong.htmlFile;
         this.htmlViewerModal.classList.add('active');
         
+        // Actualizar estado de botones de navegación
+        this.updateNavigationButtons();
+        
         console.log('Modal abierto con src:', this.htmlViewerIframe.src);
         
         // Pausar el metrónomo si está sonando
         if (window.metronome && window.metronome.isPlaying) {
             window.metronome.stop();
         }
+    }
+    
+    updateNavigationButtons() {
+        // Obtener la lista de canciones con htmlFile en el orden actual
+        const songsWithHtml = this.songs.filter(song => song.htmlFile && song.htmlFile.trim() !== '');
+        
+        // Ordenar igual que en renderSongs
+        songsWithHtml.sort((a, b) => {
+            const orderA = a.order || 0;
+            const orderB = b.order || 0;
+            if (orderA !== orderB) {
+                return orderA - orderB;
+            }
+            return a.title.localeCompare(b.title);
+        });
+        
+        const currentIndex = songsWithHtml.findIndex(song => song.id === this.currentSong.id);
+        
+        // Actualizar estado de botones
+        if (this.prevSongHtmlBtn) {
+            this.prevSongHtmlBtn.disabled = currentIndex <= 0;
+        }
+        
+        if (this.nextSongHtmlBtn) {
+            this.nextSongHtmlBtn.disabled = currentIndex >= songsWithHtml.length - 1;
+        }
+    }
+    
+    navigateToSong(direction) {
+        // direction: -1 para anterior, 1 para siguiente
+        const songsWithHtml = this.songs.filter(song => song.htmlFile && song.htmlFile.trim() !== '');
+        
+        // Ordenar igual que en renderSongs
+        songsWithHtml.sort((a, b) => {
+            const orderA = a.order || 0;
+            const orderB = b.order || 0;
+            if (orderA !== orderB) {
+                return orderA - orderB;
+            }
+            return a.title.localeCompare(b.title);
+        });
+        
+        const currentIndex = songsWithHtml.findIndex(song => song.id === this.currentSong.id);
+        const newIndex = currentIndex + direction;
+        
+        // Verificar límites
+        if (newIndex < 0 || newIndex >= songsWithHtml.length) {
+            return;
+        }
+        
+        // Cambiar a la nueva canción
+        const newSong = songsWithHtml[newIndex];
+        this.selectSong(newSong);
+        
+        // Reabrir el HTML con la nueva canción
+        this.openSongHtmlFile();
     }
     
     closeHtmlViewerModal() {

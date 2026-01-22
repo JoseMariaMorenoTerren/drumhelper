@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>La del pirata cojo - Joaquín Sabina</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body, html {
+            height: 100vh;
+            width: 100%;
+            font-family: 'Courier New', monospace;
+            background-color: black;
+            color: white;
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 8px 15px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(102, 126, 234, 0.4);
+        }
+
+        h1 {
+            font-size: 1.3em;
+            margin: 0;
+            display: inline;
+        }
+
+        .info {
+            font-size: 0.9em;
+            color: #ddd;
+            display: inline;
+            margin-left: 15px;
+        }
+
+        .container {
+            height: calc(100vh - 50px);
+            display: flex;
+            padding: 15px;
+            gap: 15px;
+            overflow: hidden;
+        }
+
+        .column {
+            flex: 1;
+            background-color: #111;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-y: auto;
+            box-shadow: 0 4px 15px rgba(255, 255, 255, 0.05);
+        }
+
+        .column::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .column::-webkit-scrollbar-track {
+            background: #222;
+            border-radius: 4px;
+        }
+
+        .column::-webkit-scrollbar-thumb {
+            background: #667eea;
+            border-radius: 4px;
+        }
+
+        .column::-webkit-scrollbar-thumb:hover {
+            background: #764ba2;
+        }
+
+        .verso {
+            line-height: 1.6;
+            margin: 6px 0;
+            font-size: 1em;
+            padding-left: 10px;
+        }
+
+        .dinamica-0 {
+            color: #FFD700;
+            font-weight: bold;
+        }
+
+        .dinamica-1 {
+            color: #66CCFF;
+        }
+
+        .dinamica-2 {
+            color: #FFFFFF;
+        }
+
+        .dinamica-3 {
+            color: #66FF66;
+            font-weight: bold;
+        }
+
+        .anotacion-especial {
+            color: #FF8C00;
+            font-style: italic;
+            font-weight: bold;
+            margin: 12px 0;
+            font-size: 1.1em;
+            padding: 8px;
+            background-color: rgba(255, 140, 0, 0.1);
+            border-left: 3px solid #FF8C00;
+        }
+
+        .notes-section {
+        .notes-section {
+            background-color: rgba(76, 175, 80, 0.15);
+            padding: 15px;
+            margin-bottom: 15px;
+            border-left: 3px solid #4CAF50;
+            border-radius: 5px;
+        }
+
+        .notes-section h2 {
+            color: #4CAF50;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        .notes-section div {
+            font-size: 0.95em;
+            line-height: 1.5;
+        }
+
+        .legend {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            background-color: rgba(34, 34, 34, 0.95);
+            padding: 12px;
+            border-radius: 6px;
+            font-size: 0.85em;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+            max-width: 250px;
+        }
+
+        .legend h3 {
+            color: #4CAF50;
+            margin-bottom: 8px;
+            font-size: 1em;
+        }
+
+        .legend-item {
+            margin: 5px 0;
+            padding: 3px;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>La del pirata cojo</h1>
+        <span class="info">Joaquín Sabina | BPM: 135</span>
+    </div>
+
+    <div class="container">
+        <div class="column">
+                <div class="notes-section">
+                <h2>📝 Notas de Batería</h2>
+                <div style="white-space: pre-wrap; color: #ddd;">3 vueltas de piano (friends) y dos golpes, marco 4 y entramos - 
+Final juntos tras segundo vuelta de estribillo, ojo primer estribillo recortado</div>
+            </div>
+                <div class="verso">No soy un fulano con la lagrima fácil</div>
+                <div class="verso">De esos que se quejan solo por vicio</div>
+                <div class="verso">Si la vida se deja yo le meto mano</div>
+                <div class="verso">Y si no aún me excita mi oficio</div>
+                <div class="verso">Y como además sale gratis soñar</div>
+                <div class="verso">Y no creo en la reencarnación</div>
+                <div class="verso">Con un poco de imaginación</div>
+                <div class="verso">Partiré de viaje enseguida</div>
+                <div class="verso">A vivir otras vidas</div>
+                <div class="verso">A probarme otros nombres</div>
+                <div class="verso">A colarme en el traje y la piel</div>
+                <div class="verso">De todos los hombres</div>
+                <div class="verso">Que nunca seré</div>
+                <div class="anotacion-especial">:: Sube dinámica</div>
+                <div class="verso">Al Capone en Chicago</div>
+                <div class="verso">Legionario en melilla</div>
+                <div class="verso">Pintor en Montparnasse</div>
+                <div class="verso">Mercader en Damasco</div>
+                <div class="verso">Costalero en Sevilla</div>
+                <div class="verso">Negro en nueva Orleans</div>
+                <div class="verso">Viejo verde en Sodoma</div>
+                <div class="verso">Deportado en Siberia</div>
+                <div class="verso">Sultán en un harén</div>
+                <div class="verso">Policía, ni en broma</div>
+                <div class="verso">Triunfador de la feria</div>
+                <div class="verso">Gitanito en Jerez</div>
+                <div class="verso">Tahúr en Montecarlo</div>
+                <div class="verso">Cigarrillo en tu boca</div>
+                <div class="verso">Taxista en Nueva York</div>
+                <div class="verso">El más chulo del barrio</div>
+                <div class="verso">Tiro porque me toca</div>
+                <div class="verso">Suspenso en religión</div>
+                <div class="verso">Confesor de la reina</div>
+            </div>
+        <div class="column">
+                <div class="verso">Banderillero en Cádiz</div>
+                <div class="verso">Tabernero en Dublín</div>
+                <div class="verso">Comunista en las Vegas</div>
+                <div class="verso">Ahogado en el Titanic</div>
+                <div class="verso">Flautista en Hamelin</div>
+                <div class="verso">Pero si me dan a elegir</div>
+                <div class="verso">Entre todas las vidas yo escojo</div>
+                <div class="verso">La del pirata cojo</div>
+                <div class="verso">Con pata de palo</div>
+                <div class="verso">Con parche en el ojo</div>
+                <div class="verso">Con cara de malo</div>
+                <div class="verso">El viejo truhan, capitán</div>
+                <div class="verso">De un barco que tuviera por bandera</div>
+                <div class="verso">Un par de tibias y una calavera</div>
+                <div class="verso">La del pirata cojo nooooo</div>
+                <div class="verso">Con pata de palo</div>
+                <div class="verso">Con parche en el ojo</div>
+                <div class="verso">Con cara de malo</div>
+                <div class="verso">El viejo truhan, capitán</div>
+                <div class="verso">De un barco que tuviera por bandera</div>
+                <div class="verso">Un par de tibias y una calavera</div>
+                <div class="verso">Billarista a tres bandas</div>
+                <div class="verso">Insumiso en el cielo</div>
+                <div class="verso">Dueño de un cabaret</div>
+                <div class="verso">Arañazo en tu espalda</div>
+                <div class="verso">Tenor en Rigoletto</div>
+                <div class="verso">Pianista de un burdel</div>
+                <div class="verso">Bongosero en la Habana</div>
+                <div class="verso">Casanova en Venecia</div>
+                <div class="verso">Anciano en Shangri La</div>
+                <div class="verso">Polizón en tu cama</div>
+                <div class="verso">Vocalista de orquesta</div>
+                <div class="verso">Mejor tiempo en Le Mans</div>
+            </div>
+        <div class="column">
+                <div class="anotacion-especial">:: Sube dinámica</div>
+                <div class="verso">Cronista de sucesos</div>
+                <div class="verso">Detective en apuros</div>
+                <div class="verso">Conservado en alcohol</div>
+                <div class="verso">Violador en tus sueños</div>
+                <div class="verso">Suicida en el viaducto</div>
+                <div class="verso">Guapo en un culebrón</div>
+                <div class="verso">Morfinómano en China</div>
+                <div class="verso">Desertor en la guerra</div>
+                <div class="verso">Boxeador en Detroit</div>
+                <div class="verso">Cazador en la India</div>
+                <div class="verso">Marinero en Marsella</div>
+                <div class="verso">Fotógrafo en Playboy</div>
+                <div class="verso">Pero si me dan a elegir</div>
+                <div class="verso">Entre todas las vidas yo escojo</div>
+                <div class="verso">La del pirata cojo</div>
+                <div class="verso">Con pata de palo</div>
+                <div class="verso">Con parche en el ojo</div>
+                <div class="verso">Con cara de malo</div>
+                <div class="verso">El viejo truhan, capitán</div>
+                <div class="verso">De un barco que tuviera</div>
+                <div class="verso">Por bandera</div>
+                <div class="verso">Un par de tibias y una calavera</div>
+                <div class="verso">La del pirata cojo</div>
+                <div class="verso">Con pata de palo</div>
+                <div class="verso">Con parche en el ojo</div>
+                <div class="verso">Con cara de malo</div>
+                <div class="verso">El viejo truhan, capitán</div>
+                <div class="verso">De un barco que tuviera</div>
+                <div class="verso">Por bandera</div>
+                <div class="verso">Un par de tibias y una calavera</div>
+                <div class="verso">Final todos juntos solo estribillo que se repite dos veces y el segundo es el final en seco</div>
+            </div>
+    </div>
+
+    <div class="legend">
+        <h3>Leyenda:</h3>
+        <div class="legend-item dinamica-0">/0...0/ - Básica</div>
+        <div class="legend-item dinamica-1">//1 - Nivel 1</div>
+        <div class="legend-item dinamica-2">//2 - Nivel 2</div>
+        <div class="legend-item dinamica-3">//3 - Nivel 3</div>
+        <div class="legend-item anotacion-especial">:: - Especial</div>
+    </div>
+</body>
+</html>

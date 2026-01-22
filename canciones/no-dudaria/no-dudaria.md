@@ -1,6 +1,6 @@
 # No dudaría - Antonio Flores
 
-**BPM:** 70  
+**BPM:** 999  
 **Artista:** Antonio Flores
 
 ## Notas

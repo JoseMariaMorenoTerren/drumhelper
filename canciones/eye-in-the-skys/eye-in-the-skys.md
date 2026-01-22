@@ -1,6 +1,6 @@
 # Eye in the Skys - Alan Parsons
 
-**BPM:** 110  
+**BPM:** 112  
 **Artista:** Alan Parsons
 
 ## Notas
