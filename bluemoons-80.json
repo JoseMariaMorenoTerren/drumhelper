@@ -18,7 +18,8 @@
       "active": false,
       "id": 1737371000001,
       "createdAt": "2026-01-20T12:00:00.000Z",
-      "lastModified": "2026-01-20T12:00:00.000Z"
+      "lastModified": "2026-01-20T12:00:00.000Z",
+      "duration": "3:48"
     },
     {
       "id": 1760028808359.5386,
@@ -30,9 +31,10 @@
       "createdAt": "2025-10-09T16:53:28.359Z",
       "fontSize": 1.7999999999999998,
       "lyrics": "Cae la noche y amanece en París\nEn el día en que todo ocurrió\nComo un sueño de loco sin fín\nLa fortuna se ha reído de ti, ja ja\n\nSorprendido espiando\nEl lobo escapó aullando y\nEs mordido por el mago del Siam\n\nLa Luna llena sobre París\nHa transformado en hombre a Denisse\nAuuu!! Lobo hombre en París\nAuuu!! Su nombre es Denisse\n\nRueda por los bares del boulevard\nSe ha alojado en un sucio hostal, ja ja\n\nMientras está cenando\nJunto a el se ha sentado\nUna joven con la que irá a contemplar\n\nLa Luna llena sobre París\nAlgunos francos cobra Denisse \nAuuu!! Lobo hombre en París\nAuuu!! Su nombre es Denisse\nSolo\n\nLa Luna llena sobre París\nHa transformado en hombre a Denisse\nAuuu!! Lobo hombre en París\nAuuu!! Su nombre es Denisse\n\n\nMientras está cenando\nJunto a él se ha sentado\nUna joven con la que va a contemplar\n\nLa Luna llena sobre París\nHa transformado en hombre a Denisse\nLobo hombre en París\nAl final mirar a Nino",
-      "bpm": "138",
+      "bpm": 147,
       "lastModified": "2025-10-09T16:53:28.359Z",
-      "htmlFile": "lobo-hombre-en-paris.html"
+      "htmlFile": "lobo-hombre-en-paris.html",
+      "duration": "5:58"
     },
     {
       "active": false,
@@ -102,8 +104,9 @@
       ],
       "artist": "Dire Straits",
       "title": "Walk of live",
-      "bpm": 168,
-      "htmlFile": "walk-of-live.html"
+      "bpm": 172,
+      "htmlFile": "walk-of-live.html",
+      "duration": "4:08"
     },
     {
       "active": false,
@@ -114,13 +117,14 @@
       "artist": "Radio Futura",
       "lyrics": "Arde la calle al sol de poniente,\nHay tribus ocultas cerca del río\nEsperando que caiga la noche.\nHace falta valor, hace falta valor,\nVen a la escuela de calor.\nSé lo que tengo que hacer para conseguir\nQue tú estés loco por mí.\nVen a mi lado y comprueba el tejido\nMas cuida esas manos, chico.\nEsa paloma sobrevuela el peligro,\nAprendió en una escuela de calor.\nVas por ahí sin prestar atención\nY cae sobre ti una maldición.\nEn las piscina probadas las chicas\nDesnudan sus cuerpos al sol.\nNo des un mal paso, no des un mal paso,\nEsto es una escuela de calor.\nDeja que me acerque,\nDeja que me acerque a ti,\nQuiero vivir del aire,\nQuiero salir de aquí.\nArde la calle al sol de poniente.\nDon’t look back in anger",
       "id": 1760028808359.0503,
-      "bpm": 127,
+      "bpm": 122,
       "order": 40,
       "fontSize": 1.9999999999999998,
-      "htmlFile": "escuela-de-calor.html"
+      "htmlFile": "escuela-de-calor.html",
+      "duration": "3:28"
     },
     {
-      "bpm": "100",
+      "bpm": 100,
       "fontSize": 2.4,
       "title": "I Still havent found what...",
       "id": 1761293537517.6702,
@@ -131,12 +135,13 @@
       "lyrics": ":: Versión con Robbie comienza él solo\n:: Final acariciando platos\nI have climbed the highest mountains\nI have run through the fields\nOnly to be with you\nOnly to be with you\n\nI have run, I have crawled\nI have scaled\nThese city walls\nThese city walls\nOnly to be with you\n\nBut I still haven't found\nWhat I'm looking for\nBut I still haven't found\nWhat I'm looking for\n\nI have kissed honey lips\nFelt the healing in her fingertips\nIt burned like fire\nThis burning desire\n\nI have spoken with the tongue of angels\nI have held the hand of the devil\nIt was warm in the night\nI was cold as a stone\n\nBut I still haven't found\nWhat I'm looking for\nBut I still haven't found\nWhat I'm looking for\n\nI believe in the kingdom come\nThen all the colors will\nBleed into one\nBleed into one\nBut, yes, I'm still running\n\nYou broke the bonds\nAnd you loosed the chains\nYou carried the cross\nAnd all my shame\nAll my shame\nYou know I believe it\n\nBut I still haven't found\nWhat I'm looking for\nBut I still haven't found\nWhat I'm looking for\nBut I still haven't found\nWhat I'm looking for\nBut I still haven't found\nWhat I'm looking for\n:: OJO final diferente",
       "createdAt": "2025-10-24T08:12:17.517Z",
       "lastModified": "2025-10-24T08:12:17.517Z",
-      "htmlFile": "i-still-havent-found-what.html"
+      "htmlFile": "i-still-havent-found-what.html",
+      "duration": "4:33"
     },
     {
       "title": "Mediterráneo",
       "id": 1760028808359.0674,
-      "bpm": "134",
+      "bpm": 152,
       "notes": "Entrada marcando 4 y Tom base + Caja, final igual y parada en seco",
       "fontSize": 2.4,
       "createdAt": "2025-10-09T16:53:28.359Z",
@@ -145,7 +150,8 @@
       "artist": "",
       "active": false,
       "lyrics": "Qué agobio de verano\nTengo el cuerpo empapado en sudor\nSe me cae la casa encima\nYo ya no aguanto el calor\n\nLa vida ya no es vida en la ciudad\nLlegó la hora de cambiar asfalto por mar\nCansado de vivir en una jaula como un animal\n\nQuema la ropa de invierno y prepárate para viajar\nQue la tierra prometida está más cerca de lo que puedas pensar\nCalifornia ya no existe, el sueño acabó\nPero yo sé de un lugar donde brilla el sol\nDéjame llevarte este verano donde está la acción\n\nMediterráneo\nRuta de calor\nMediterráneo\nA templo del sol\nMediterráneo\nNoches de luz y color\n\nMediterráneo\nTierra de pasión\nMediterráneo\nRuta de calor\nMediterráneo\nEterno verano al sol\n\nSi buscas sensaciones aquí hay algo realmente especial\nSi quieres un paraíso esto es lo más parecido que vas a encontrar\nSi buscas algo que dinero no pueda comprar\nY si quieres ver a mescalina nadar\nNo hay mejor rincón en el planeta si quieres soñar\n\nNos veremos en ibiza, en mallorca, san luís y mahón\nBailaremos en valencia, en alicante, en gandía y benidorm\nDesde l'escala hasta playa san juan\nEn cadaqués, en sitges, playa libertad\nSeremos los elegidos en el templo del dios del mar\n\nMediterráneo\nRuta de calor\nMediterráneo\nA templo del sol\nMediterráneo\nNoches de luz y color\n\nMediterráneo\nTierra de pasión\nMediterráneo\nRuta de calor\nMediterráneo\nEterno verano al sol\n\nMediterráneo\nRuta de calor\nMediterráneo\nA templo del sol\nMediterráneo\nNoches de luz y color\n\nMediterráneo\nTierra de pasión\nMediterráneo\nRuta de calor\nMediterráneo\nEterno verano al sol.",
-      "htmlFile": "mediterraneo.html"
+      "htmlFile": "mediterraneo.html",
+      "duration": "3:52"
     },
     {
       "artist": "Alan Parsons",
@@ -159,12 +165,13 @@
       "lastModified": "2025-10-09T16:53:28.360Z",
       "title": "Eye in the Skys",
       "order": 70,
-      "htmlFile": "eye-in-the-skys.html"
+      "htmlFile": "eye-in-the-skys.html",
+      "duration": "4:36"
     },
     {
       "title": "La fuerza del destino",
       "artist": "Mecano",
-      "bpm": 120,
+      "bpm": 90,
       "order": 80,
       "lyrics": "[verso]\nNos vimos tres o cuatro veces\nPor toda la ciudad\nUna noche en el Bar del Oro\nMe decidí a atacar\n\n[verso]\nTú me dijiste diecinueve\nNo quise desconfiar\nPero es que ni mucho ni poco\nNo vi de dónde agarrar\n\n[estribillo]\nY nos metimos en el coche\nMi amigo, tu amiga, tú y yo\nTe dije nena dame un beso\nTú contestaste que no\n\nEmpezamos mal y yo que creía\nQue esto era un buen plan\n\n[verso]\nAquella noche fue un desastre\nNo me comí un colín\nÉstas son solo un par de estrechas\nNos fuimos a dormir\n\n[verso]\nPero la fuerza del destino\nNos hizo repetir\nDos cines y un par de conciertos\nY empezamos a salir\n\n[verso]\nNo sé si esa cara tan rara\nUn ojo aquí y un diente allá\nO el cuerpecillo de gitana\nMujer a medio terminar\n\nTu corazón fue lo que me\nAcabó de enamorar\n\n[estribillo]\nY nos metimos en el coche\nMi amigo, tu amiga, tú y yo\nTe dije nena dame un beso\nTú contestaste que no\n\nEmpezamos mal y yo que creía\nQue esto era un buen plan\n\n[verso]\nY desde entonces hasta ahora\nEl juego del amor\nNos tuvo tres años jugando\nLuego nos separó\n\n[verso]\nPero la fuerza del destino\nNos hizo repetir\nQue si el invierno viene frío\nQuiero estar junto a ti\n\n[outro]\nQuiero estar junto a ti\nQuiero estar junto a ti\nQuiero estar junto a ti\nQuiero estar junto a ti",
       "notes": "",
@@ -174,12 +181,13 @@
       "active": false,
       "id": 1737371000002,
       "createdAt": "2026-01-20T12:00:00.000Z",
-      "lastModified": "2026-01-20T12:00:00.000Z"
+      "lastModified": "2026-01-20T12:00:00.000Z",
+      "duration": "5:08"
     },
     {
       "title": "The Power of Love",
       "artist": "Huey Lewis and the News",
-      "bpm": 110,
+      "bpm": 62,
       "order": 90,
       "lyrics": "I'll protect you from the hooded claw\nKeep the vampires from your door\nAyayayay\nFeels like fire\nI'm so in love with you\nDreams are like angels\nThey keep bad at bay-bad at bay\nLove is the light\nScaring darkness away-yeah\nI'm so in love with you\nPurge the soul\nMake love your goal\n\nThe power of love\nA force from above\nCleaning my soul\nFlame on burnt desire\nLove with tongues of fire\nPurge the soul\nMake love your goal\n\nI'll protect you from the hooded claw\nKeep the vampires from your door\nWhen the chips are down I'll be around\nWith my undying, death-defying\nLove for you\nEnvy will hurt itself\nLet yourself be beautiful\nSparkling love, flowers\nAnd pearls and pretty girls\nLove is like an energy\nRushin' rushin' inside of me\n\nThe power of love\nA force from above\nCleaning my soul\nFlame on burnt desire\nLove with tongues of fire\nPurge the soul\nMake love your goal\n\nThis time we go sublime\nLovers entwine-divine divine\nLove is danger, love is pleasure\nLove is pure-the only treasure\nI'm so in love with you\nPurge the soul\nMake love your goal\nThe power of love\nA force from above\nCleaning my soul\n\nThe power of love\nA force from above\nA sky-scraping dove\nFlame on burnt desire\nLove with tongues of fire\nPurge the soul\nMake love your goal\nI'll protect you from the hooded claw\nKeep the vampires from your door",
       "notes": "",
@@ -189,12 +197,13 @@
       "active": false,
       "id": 1737371000003,
       "createdAt": "2026-01-20T12:00:00.000Z",
-      "lastModified": "2026-01-20T12:00:00.000Z"
+      "lastModified": "2026-01-20T12:00:00.000Z",
+      "duration": "5:27"
     },
     {
       "order": 100,
       "notes": "Entro tras 4 compases de guitarra, con flam en anacrusa. 2 Vueltas. OJO crescendos primero 1, 1 y luego 2\n\n",
-      "bpm": "136",
+      "bpm": 136,
       "title": "Insurrección",
       "artist": "El último de la fila",
       "fontSize": 1.4,
@@ -203,12 +212,13 @@
       "createdAt": "2025-10-09T16:53:28.358Z",
       "id": 1760028808358.4316,
       "lyrics": "Dónde estabas entonces \ncuando tanto te necesité?\nNadie es mejor que nadie \npero tu creíste vencer.\nSi lloré ante tu puerta de nada sirvió\nBarras de bar, vertederos de amor...\n\nOs enseñé mi trocito peor.\nRetales de mi vida,\nfotos a contraluz\n\nMe siento hoy como un halcón\nherido por las flechas de la incertidumbre.\n\nDónde estabas entonces \ncuando tanto te necesité?\nNadie es mejor que nadie \npero tu creíste vencer.\nSi lloré ante tu puerta de nada sirvió\nBarras de bar, vertederos de amor...\n\nOs enseñé mi trocito peor.\nRetales de mi vida,\nfotos a contraluz\n\nMe siento hoy como un halcón\nherido por las flechas de la incertidumbre\n\nMe corto el pelo una y otra vez.\nMe quiero defender\nDame mi alma y déjame en paz\nQuiero intentar no volver a caer\nPequeñas tretas          \npara continuar en la brecha.\n\nMe siento hoy como un halcón\nllamado a las filas de la insurrección\n\n\n",
-      "htmlFile": "insurreccion.html"
+      "htmlFile": "insurreccion.html",
+      "duration": "2:13"
     },
     {
       "title": "I Want to Break Free",
       "artist": "Queen",
-      "bpm": 120,
+      "bpm": 118,
       "order": 110,
       "lyrics": "[estribillo]\nI want to break free\nI want to break free\nI want to break free from your lies\nYou're so self-satisfied, I don't need you\nI've got to break free\nGod knows, God knows I want to break free\n\n[verso]\nI've fallen in love\nI've fallen in love for the first time\nAnd this time I know it's for real\nI've fallen in love, yeah\nGod knows, God knows I've fallen in love\n\n[puente]\nIt's strange, but it's true, yeah\nI can't get over the way you love me like you do\nBut I have to be sure\nWhen I walk out that door\nOh, how I want to be free, baby\nOh, how I want to be free\nOh, how I want to break free\n\n[verso]\nBut life still goes on\nI can't get used to living without, living without\nLiving without you by my side\nI don't want to live alone, hey\nGod knows, got to make it on my own\nSo, baby, can't you see?\nI've got to break free\n\n[outro]\nI've got to break free\nI want to break free, yeah\nI want, I want, I want, I want to break free",
       "notes": "",
@@ -218,12 +228,13 @@
       "active": false,
       "id": 1737371000004,
       "createdAt": "2026-01-20T12:00:00.000Z",
-      "lastModified": "2026-01-20T12:00:00.000Z"
+      "lastModified": "2026-01-20T12:00:00.000Z",
+      "duration": "3:29"
     },
     {
       "notes": "",
       "lastModified": "2025-10-09T16:53:28.359Z",
-      "bpm": 122,
+      "bpm": 115,
       "id": 1760028808359.7646,
       "artist": "Héroes del silencio",
       "title": "Maldito duende",
@@ -232,12 +243,13 @@
       "active": false,
       "createdAt": "2025-10-09T16:53:28.359Z",
       "order": 120,
-      "htmlFile": "maldito-duende.html"
+      "htmlFile": "maldito-duende.html",
+      "duration": "4:13"
     },
     {
       "title": "Baby Can I Hold You",
       "artist": "Tracy Chapman",
-      "bpm": 72,
+      "bpm": 74,
       "order": 130,
       "lyrics": "[intro]\n:: Intro instrumental 2 vueltas 4 compases\n:: BREVE SILENCIO en 3 de 1 pulso y al 1\n:: Aro\n\n[verso]\n/1\nSorry\nIs all that you can't say?\nYears gone by and still\nWords don't come easily\nLike sorry\nLike sorry\n:: BREVE SILENCIO\n\n[verso]\nForgive me\nIs all that you can't say?\nYears gone by and still\nWords don't come easily\nLike forgive me\nForgive me\n:: A LA CAJA\n\n[estribillo]\n/2\nBut you can say: Baby\nBaby, can I hold you tonight?\nMaybe if I told you the right words\nAt the right time\nYou'd be mine\n\n[verso]\n/2\nI love you\nIs all that you can't say?\nYears gone by and still\nWords don't come easily\nLike I love you\nI love you\n\n[estribillo]\n/2\nBut you can say: Baby\nBaby, can I hold you tonight?\nMaybe if I told you the right words\nAt the right time\nYou'd be mine\n\n[estribillo]\n/2\nBaby, can I hold you tonight?\nMaybe if I told you the right words\nAt the right time\nYou'd be mine\nYou'd be mine\nYou'd be mine\n\n[outro]\n:: OJO Final en 1 al 3er \"You'd be mine\"",
       "notes": "",
@@ -247,7 +259,8 @@
       "active": false,
       "id": 1737371000005,
       "createdAt": "2026-01-20T12:00:00.000Z",
-      "lastModified": "2026-01-20T12:00:00.000Z"
+      "lastModified": "2026-01-20T12:00:00.000Z",
+      "duration": "3:13"
     },
     {
       "artist": "Miguel Rios",
@@ -255,13 +268,14 @@
       "notes": "Entrada todos a la vez, marco 4",
       "active": false,
       "order": 140,
-      "bpm": 100,
+      "bpm": 97,
       "lastModified": "2025-10-11T09:07:11.826Z",
       "createdAt": "2025-10-09T16:53:28.359Z",
       "id": 1760028808359.8154,
       "title": "Santa Lucía",
       "fontSize": 1.5999999999999999,
-      "htmlFile": "santa-lucia.html"
+      "htmlFile": "santa-lucia.html",
+      "duration": "2:33"
     },
     {
       "title": "Comfortably Numb (The Wall)",
@@ -276,7 +290,8 @@
       "active": false,
       "id": 1737371000006,
       "createdAt": "2026-01-20T12:00:00.000Z",
-      "lastModified": "2026-01-20T12:00:00.000Z"
+      "lastModified": "2026-01-20T12:00:00.000Z",
+      "duration": "5:00"
     },
     {
       "fontSize": 1.5999999999999999,
@@ -718,14 +733,15 @@
           "timestamp": "2025-10-09T19:23:37.058Z"
         }
       ],
-      "bpm": 999,
+      "bpm": 71,
       "lastModified": "2025-10-09T16:53:28.359Z",
       "title": "No dudaría",
       "id": 1760028808359.3909,
       "order": 160,
       "lyrics": "/0Si pudiera olvidar\n/0Todo aquello que fui\n/0Si pudiera borrar\n/0Todo lo que yo vi\n/0No dudaría\n/0No dudaría en volver a reír\n/0Si pudiera explicar\n/0Las vidas que quite\n/0Si pudiera quemar\n/0Las armas que use\n/0No dudaría\n/0No dudaría en volver a reír\nPrometo ver la alegría\nEscarmentar de la experiencia\nPero nunca, nunca más\nUsar la violencia\nPrometo ver la alegría\nEscarmentar de la experiencia\nPero nunca, nunca más\nUsar la violencia\nParachuruchru.... :: x2\n/0Si pudiera sembrar\n/0Los campos que arrasé\n/0Si pudiera devolver\n/0La paz que quité\n/0No dudaría\n/0No dudaría en volver a reír\n/0Si pudiera olvidar\n/0Aquel llanto que oí\n/0Si pudiera lograr\n/0Apartarlo de mí\n/0No dudaría\n/0No dudaría en volver a reír\nPrometo ver la alegría\nEscarmentar de la experiencia\nPero nunca, nunca más\nUsar la violencia\nPrometo ver la alegría\nEscarmentar de la experiencia\nPero nunca, nunca más\nUsar la violencia\nParachuruchru.... :: x4",
       "active": false,
-      "htmlFile": "no-dudaria.html"
+      "htmlFile": "no-dudaria.html",
+      "duration": "3:30"
     },
     {
       "active": false,
@@ -739,7 +755,8 @@
       "title": "With or without you",
       "createdAt": "2025-10-09T16:53:28.360Z",
       "artist": "U2",
-      "htmlFile": "with-or-without-you.html"
+      "htmlFile": "with-or-without-you.html",
+      "duration": "4:53"
     },
     {
       "fontSize": 1.4,
@@ -747,13 +764,14 @@
       "createdAt": "2025-10-09T16:53:28.360Z",
       "lastModified": "2025-10-09T16:53:28.360Z",
       "active": false,
-      "bpm": 135,
+      "bpm": 137,
       "id": 1760028808360.3428,
       "title": "Ni tu ni nadie",
       "order": 180,
       "notes": "",
       "lyrics": "Haces muy mal en elevar mi tensión\nEn aplastar mi ambición\nTú sigue así y ya verás\nMiro el reloj y es mucho más tarde que ayer\nTe esperaría otra vez\nY no lo haré, no lo haré\nDonde está nuestro error sin solución\nFuiste tu el culpable o lo fui yo\nNi tú ni nadie, nadie puede cambiarme\nMil campanas suenan en mi corazón\nQué difícil es pedir perdón\nNi tú ni nadie, nadie puede cambiarme\nVete de aquí no me supiste entender\nYo solo pienso en tu bien\nNo es necesario mentir\nQué fácil es, atormentarse después\nPero sobreviviré, sé qué podré\nSobreviviré\nDonde está nuestro error sin solución\nFuiste tu el culpable o lo fui yo\nNi tú ni nadie, nadie puede cambiarme\nMil campanas suenan en mi corazón\nQué difícil es pedir perdón\nNi tú ni nadie, nadie puede cambiarme\nMil campanas suenan en mi corazón\nQué difícil es pedir perdón\nNi tú ni nadie, nadie puede cambiarme\nDonde está nuestro error sin solución\nFuiste tu el culpable o lo fui yo\nNi tú ni nadie, nadie puede cambiarme\nMil campanas suenan en mi corazón\nQué difícil es pedir perdón\nNi tú ni nadie, nadie puede cambiarme\nPacto entre caballeros",
-      "htmlFile": "ni-tu-ni-nadie.html"
+      "htmlFile": "ni-tu-ni-nadie.html",
+      "duration": "4:07"
     },
     {
       "id": 1760028808358.461,
@@ -766,8 +784,9 @@
       "lastModified": "2025-10-09T16:53:28.358Z",
       "lyrics": "No soy un fulano con la lagrima fácil\nDe esos que se quejan solo por vicio\nSi la vida se deja yo le meto mano\nY si no aún me excita mi oficio\n\nY como además sale gratis soñar\nY no creo en la reencarnación\nCon un poco de imaginación\nPartiré de viaje enseguida\nA vivir otras vidas\nA probarme otros nombres\n\nA colarme en el traje y la piel\nDe todos los hombres\nQue nunca seré\n:: Sube dinámica\nAl Capone en Chicago\nLegionario en melilla\nPintor en Montparnasse\n\nMercader en Damasco\nCostalero en Sevilla\nNegro en nueva Orleans\n\nViejo verde en Sodoma\nDeportado en Siberia\nSultán en un harén\n\nPolicía, ni en broma\nTriunfador de la feria\nGitanito en Jerez\n\nTahúr en Montecarlo\nCigarrillo en tu boca\nTaxista en Nueva York\n\nEl más chulo del barrio\nTiro porque me toca\nSuspenso en religión\n\nConfesor de la reina\nBanderillero en Cádiz\nTabernero en Dublín\n\nComunista en las Vegas\nAhogado en el Titanic\nFlautista en Hamelin\n\nPero si me dan a elegir\nEntre todas las vidas yo escojo\nLa del pirata cojo\nCon pata de palo\nCon parche en el ojo\nCon cara de malo\nEl viejo truhan, capitán\nDe un barco que tuviera por bandera\nUn par de tibias y una calavera\n\nLa del pirata cojo nooooo\nCon pata de palo\nCon parche en el ojo\nCon cara de malo\nEl viejo truhan, capitán\nDe un barco que tuviera por bandera\nUn par de tibias y una calavera\n\nBillarista a tres bandas\nInsumiso en el cielo\nDueño de un cabaret\n\nArañazo en tu espalda\nTenor en Rigoletto\nPianista de un burdel\n\nBongosero en la Habana\nCasanova en Venecia\nAnciano en Shangri La\n\nPolizón en tu cama\nVocalista de orquesta\nMejor tiempo en Le Mans\n:: Sube dinámica\nCronista de sucesos\nDetective en apuros\nConservado en alcohol\n\nViolador en tus sueños\nSuicida en el viaducto\nGuapo en un culebrón\n\nMorfinómano en China\nDesertor en la guerra\nBoxeador en Detroit\n\nCazador en la India\nMarinero en Marsella\nFotógrafo en Playboy\n\nPero si me dan a elegir\nEntre todas las vidas yo escojo\nLa del pirata cojo\nCon pata de palo\nCon parche en el ojo\n\nCon cara de malo\nEl viejo truhan, capitán\nDe un barco que tuviera\nPor bandera\nUn par de tibias y una calavera\n\nLa del pirata cojo\nCon pata de palo\nCon parche en el ojo\n\nCon cara de malo\nEl viejo truhan, capitán\nDe un barco que tuviera\nPor bandera\nUn par de tibias y una calavera\nFinal todos juntos solo estribillo que se repite dos veces y el segundo es el final en seco",
       "createdAt": "2025-10-09T16:53:28.358Z",
-      "bpm": 135,
-      "htmlFile": "la-del-pirata-cojo.html"
+      "bpm": 134,
+      "htmlFile": "la-del-pirata-cojo.html",
+      "duration": "4:40"
     }
   ]
 }
