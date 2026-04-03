@@ -32,7 +32,7 @@
         
         <div class="top-section-content">
             <div class="info-panel">
-                <div id="version-code">v1.3.0</div>
+                <div id="version-code">v1.3.3</div>
                 <div class="song-info">
                     <span id="current-song">Selecciona una canción</span>
                     <span id="current-bpm">BPM: 120</span>
@@ -169,8 +169,8 @@
                             <input type="text" id="song-html-file" placeholder="Ej: canciones/baby-can-i-hold-you/baby-can-i-hold-you.html">
                         </div>
                         <div class="form-group">
-                            <label for="song-structure">Estructura (gráfica):</label>
-                            <input type="text" id="song-structure" placeholder="Ej: ____EEEEEEEEEEEVVVVEEEEEEEEEE" title="_ = Silencio, E = Estribillo, V = Estrofa, B = Puente, I = Intro, O = Outro, S = Solo, P = Pre-estribillo">
+                            <label for="song-structure-input">Estructura (gráfica):</label>
+                            <input type="text" id="song-structure-input" placeholder="Ej: ____EEEEEEEEEEEVVVVEEEEEEEEEE" title="_ = Silencio, E = Estribillo, V = Estrofa, B = Puente, I = Intro, O = Outro, S = Solo, P = Pre-estribillo">
                             <small style="color: #999; display: block; margin-top: 5px;">
                                 Cada letra = 1 compás. _ silencio, E estribillo, V estrofa, B puente, I intro, O outro, S solo, P pre-estribillo
                             </small>
@@ -597,6 +597,7 @@
                         <select id="left-repertoire-select" class="panel-repertoire-select">
                             <!-- Se carga dinámicamente -->
                         </select>
+                        <input type="text" id="left-manager-search" class="panel-search-input" placeholder="Buscar canción en origen...">
                     </div>
                     <div class="panel-songs-container">
                         <ul id="left-songs-list" class="manager-songs-list">
