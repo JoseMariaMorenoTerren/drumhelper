@@ -799,12 +799,22 @@ Says, "Find a home"
             const orderValue = song.order || 0;
             titleText = `${song.title} (${orderValue})`;
         }
-        
-        li.innerHTML = `
-            <span class="song-title">${titleText}</span>
-            <span class="song-artist">${song.artist}</span>
-            <span class="song-bpm">${song.bpm} BPM</span>
-        `;
+
+        const titleSpan = document.createElement('span');
+        titleSpan.className = 'song-title';
+        titleSpan.textContent = titleText;
+
+        const artistSpan = document.createElement('span');
+        artistSpan.className = 'song-artist';
+        artistSpan.textContent = song.artist || '';
+
+        const bpmSpan = document.createElement('span');
+        bpmSpan.className = 'song-bpm';
+        bpmSpan.textContent = `${song.bpm} BPM`;
+
+        li.appendChild(titleSpan);
+        li.appendChild(artistSpan);
+        li.appendChild(bpmSpan);
         
         // Event listener para seleccionar canción
         li.addEventListener('click', (e) => {
@@ -997,22 +1007,33 @@ Says, "Find a home"
         }
     }
     
+    escapeHtml(text) {
+        if (text === null || text === undefined) return '';
+        return String(text)
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#39;');
+    }
+
     processTextHighlights(text) {
-        // Procesar imágenes primero (patrón //img=archivo.jpg)
-        let processedText = text.replace(/\/\/img=([^\s]+\.(jpg|jpeg|png|gif|webp))/gi, (match, filename) => {
+        // 1) Escapar todo el texto antes de cualquier inyección de markup propio
+        let processedText = this.escapeHtml(text);
+
+        // 2) Procesar imágenes (patrón //img=archivo.jpg) - solo nombres seguros sin '/'
+        processedText = processedText.replace(/\/\/img=([A-Za-z0-9._-]+\.(jpg|jpeg|png|gif|webp))/gi, (match, filename) => {
             return `<img src="imagenes/${filename}" alt="${filename}" onerror="this.style.display='none'" loading="lazy">`;
         });
-        
-        // Procesar instrucciones de espera (patrón //espera=XXX) - solo mostrar texto, sin funcionalidad
+
+        // 3) Procesar instrucciones de espera (patrón //espera=XXX) - solo mostrar texto, sin funcionalidad
         processedText = processedText.replace(/\/\/espera=(\d+)/gi, (match, seconds) => {
             return `<span class="wait-instruction-display">espera ${seconds}s</span>`;
         });
-        
-        // Convertir texto entre /0 y 0/ a HTML resaltado amarillo
+
+        // 4) Resaltados (sobre texto ya escapado)
         processedText = processedText.replace(/\/0(.*?)0\//g, '<span class="highlight-yellow">$1</span>');
-        // Convertir texto entre /1 y 1/ a HTML resaltado azul
         processedText = processedText.replace(/\/1(.*?)1\//g, '<span class="highlight-blue">$1</span>');
-        // Convertir texto entre /3 y 3/ a HTML resaltado verde
         processedText = processedText.replace(/\/3(.*?)3\//g, '<span class="highlight-green">$1</span>');
         return processedText;
     }
@@ -1242,27 +1263,54 @@ Says, "Find a home"
         }
     }
     
+    isSafeHtmlPath(path) {
+        if (typeof path !== 'string' || !path.trim()) return false;
+        const trimmed = path.trim();
+        // Rechazar protocolos peligrosos
+        const lower = trimmed.toLowerCase();
+        if (lower.startsWith('javascript:') ||
+            lower.startsWith('data:') ||
+            lower.startsWith('vbscript:') ||
+            lower.startsWith('file:')) {
+            return false;
+        }
+        // Permitir solo rutas relativas o http(s) del mismo origen
+        if (lower.startsWith('http://') || lower.startsWith('https://')) {
+            try {
+                const url = new URL(trimmed, window.location.href);
+                return url.origin === window.location.origin;
+            } catch {
+                return false;
+            }
+        }
+        // Rutas relativas: solo letras, dígitos, ., /, -, _ y %
+        return /^[A-Za-z0-9._\-\/%]+$/.test(trimmed);
+    }
+
     openSongHtmlFile() {
         if (!this.currentSong || !this.currentSong.htmlFile) {
             console.warn('No hay archivo HTML configurado para esta canción');
             return;
         }
-        
-        console.log('Opening HTML file:', this.currentSong.htmlFile);
-        console.log('Modal elements:', {
-            modal: this.htmlViewerModal,
-            iframe: this.htmlViewerIframe
-        });
-        
+
+        const htmlFile = this.currentSong.htmlFile;
+        if (!this.isSafeHtmlPath(htmlFile)) {
+            console.warn('Ruta HTML rechazada por seguridad:', htmlFile);
+            this.showNotification('❌ Ruta de archivo HTML no permitida', 'error');
+            return;
+        }
+
+        console.log('Opening HTML file:', htmlFile);
+
         // Verificar que los elementos del modal existan
         if (!this.htmlViewerModal || !this.htmlViewerIframe) {
             console.error('Elementos del modal no encontrados, abriendo en nueva ventana');
-            window.open(this.currentSong.htmlFile, '_blank');
+            window.open(htmlFile, '_blank', 'noopener,noreferrer');
             return;
         }
-        
+
         // Cargar el archivo HTML en el iframe y mostrar el modal
-        this.htmlViewerIframe.src = this.currentSong.htmlFile;
+        this.htmlViewerIframe.src = htmlFile;
         this.htmlViewerModal.classList.add('active');
         
         // Actualizar estado de botones de navegación
@@ -1935,41 +1983,35 @@ Says, "Find a home"
     }
     
     selectPreviousSong() {
-        if (!this.currentSong || this.songs.length === 0) return;
-        
-        const currentIndex = this.songs.findIndex(song => song.id === this.currentSong.id);
-        if (currentIndex === -1) return;
-        
-        // Ir a la canción anterior (circular)
-        const prevIndex = currentIndex === 0 ? this.songs.length - 1 : currentIndex - 1;
-        this.selectSong(this.songs[prevIndex].id);
-    }
-    
-    selectNextSong() {
-        if (!this.currentSong || this.songs.length === 0) return;
-        
-        const currentIndex = this.songs.findIndex(song => song.id === this.currentSong.id);
-        if (currentIndex === -1) return;
-        
-        // Ir a la siguiente canción (circular)
-        const nextIndex = currentIndex === this.songs.length - 1 ? 0 : currentIndex + 1;
-        this.selectSong(this.songs[nextIndex]);
-    }
-    
-    selectPreviousSong() {
         if (this.songs.length === 0) return;
-        
+
         const currentIndex = this.songs.findIndex(song => song.id === this.currentSong?.id);
         let prevIndex;
-        
+
         if (currentIndex === -1 || currentIndex === 0) {
             // Si no hay canción actual o es la primera, ir a la última
             prevIndex = this.songs.length - 1;
         } else {
             prevIndex = currentIndex - 1;
         }
-        
+
         this.selectSong(this.songs[prevIndex]);
+    }
+
+    selectNextSong() {
+        if (this.songs.length === 0) return;
+
+        const currentIndex = this.songs.findIndex(song => song.id === this.currentSong?.id);
+        let nextIndex;
+
+        if (currentIndex === -1 || currentIndex === this.songs.length - 1) {
+            // Si no hay canción actual o es la última, ir a la primera
+            nextIndex = 0;
+        } else {
+            nextIndex = currentIndex + 1;
+        }
+
+        this.selectSong(this.songs[nextIndex]);
     }
 
     // Funciones del modal de opciones de datos
@@ -2391,13 +2433,14 @@ Says, "Find a home"
                 // Mostrar mensaje de bienvenida
                 const lyricsContent = document.getElementById('lyrics-content');
                 if (lyricsContent) {
-                    lyricsContent.innerHTML = `
-                        <p class="welcome-message">
-                            Repertorio "${repertoire.name}" vacío
-                            <br><br>
-                            Agrega canciones usando el botón "+ Agregar" en la lista.
-                        </p>
-                    `;
+                    lyricsContent.innerHTML = '';
+                    const msg = document.createElement('p');
+                    msg.className = 'welcome-message';
+                    msg.appendChild(document.createTextNode(`Repertorio "${repertoire.name}" vacío`));
+                    msg.appendChild(document.createElement('br'));
+                    msg.appendChild(document.createElement('br'));
+                    msg.appendChild(document.createTextNode('Agrega canciones usando el botón "+ Agregar" en la lista.'));
+                    lyricsContent.appendChild(msg);
                 }
             }
 
@@ -2454,26 +2497,41 @@ Says, "Find a home"
 
     updateRepertoireList() {
         this.repertoireList.innerHTML = '';
-        
+
         for (const [id, repertoire] of this.repertoires) {
             const item = document.createElement('div');
             item.className = 'repertoire-item';
             if (id === this.currentRepertoireId) {
                 item.classList.add('active');
             }
-            
-            item.innerHTML = `
-                <div class="repertoire-info">
-                    <div class="repertoire-name">${repertoire.name}</div>
-                    <div class="repertoire-count">${(repertoire.songs || []).length} canciones</div>
-                </div>
-                <div class="repertoire-item-actions">
-                    <button class="repertoire-item-btn" onclick="songManager.switchRepertoire('${id}')">
-                        Activar
-                    </button>
-                </div>
-            `;
-            
+
+            const info = document.createElement('div');
+            info.className = 'repertoire-info';
+
+            const nameDiv = document.createElement('div');
+            nameDiv.className = 'repertoire-name';
+            nameDiv.textContent = repertoire.name;
+
+            const countDiv = document.createElement('div');
+            countDiv.className = 'repertoire-count';
+            countDiv.textContent = `${(repertoire.songs || []).length} canciones`;
+
+            info.appendChild(nameDiv);
+            info.appendChild(countDiv);
+
+            const actions = document.createElement('div');
+            actions.className = 'repertoire-item-actions';
+
+            const button = document.createElement('button');
+            button.className = 'repertoire-item-btn';
+            button.textContent = 'Activar';
+            button.addEventListener('click', () => this.switchRepertoire(id));
+
+            actions.appendChild(button);
+
+            item.appendChild(info);
+            item.appendChild(actions);
+
             this.repertoireList.appendChild(item);
         }
     }
@@ -3001,13 +3059,27 @@ Says, "Find a home"
                 li.classList.add('selected');
             }
             
-            li.innerHTML = `
-                <div class="manager-song-info">
-                    <div class="manager-song-title">${song.title}</div>
-                    <div class="manager-song-artist">${song.artist || 'Sin artista'}</div>
-                </div>
-                <input type="checkbox" class="manager-song-checkbox" ${selectedSongs.has(song.id) ? 'checked' : ''}>
-            `;
+            const info = document.createElement('div');
+            info.className = 'manager-song-info';
+
+            const titleDiv = document.createElement('div');
+            titleDiv.className = 'manager-song-title';
+            titleDiv.textContent = song.title;
+
+            const artistDiv = document.createElement('div');
+            artistDiv.className = 'manager-song-artist';
+            artistDiv.textContent = song.artist || 'Sin artista';
+
+            info.appendChild(titleDiv);
+            info.appendChild(artistDiv);
+
+            const checkbox = document.createElement('input');
+            checkbox.type = 'checkbox';
+            checkbox.className = 'manager-song-checkbox';
+            checkbox.checked = selectedSongs.has(song.id);
+
+            li.appendChild(info);
+            li.appendChild(checkbox);
             
             // Event listener para seleccionar/deseleccionar
             li.addEventListener('click', (e) => {

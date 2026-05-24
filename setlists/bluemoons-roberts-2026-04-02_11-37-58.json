@@ -1,0 +1,1180 @@
+{
+  "version": "1.0",
+  "exportDate": "2026-04-02T09:37:58.111Z",
+  "setlistName": "Canciones",
+  "repertoireName": "Bluemoons Roberts",
+  "repertoireId": "repertoire_1775119241396",
+  "songs": [
+    {
+      "notes": "Entrada solo piano 8 compases\nOJO a los oh, ooh, ooh, ooh, después esperar final.\nFinal solo piano tras \"I know Saint Peter won't call my name ... Never a\" STOP y honest word...",
+      "order": 10,
+      "active": false,
+      "title": "Viva la vida",
+      "lastModified": "2026-04-02T09:34:44.152Z",
+      "lyrics": "I used to rule the world     \nSeas would rise when I gave the word\nNow in the morning I sleep alone\nSweep the streets I used to own\n\nI used to roll the dice\nFeel the fear in my enemy's eyes\nListened as the crowd would sing\nNow the old king is dead!\nLong live the king!\n\nOne minute I held the key\nNext the walls were closed on me\nAnd I discovered that my castles stand\nUpon pillars of salt and pillars of sand\n\nI hear Jerusalem bells are ringing\nRoman Cavalry choirs are singing\nBe my mirror, my sword and shield\nMy missionaries in a foreign field\n\nFor some reason I can't explain\nOnce you'd gone, there was never\nNever an honest word\nThat was when I ruled the world\nSOLO\nIt was the wicked and wild wind\nBlew down the doors to let me in\nShattered windows and the sound of drums\nPeople couldn't believe what I'd become\n\nRevolutionaries wait\nFor my head on a silver plate\nJust a puppet on a lonely string\nOh, who would ever want to be king?\n\nI hear Jerusalem bells are ringing\nRoman Cavalry choirs are singing\nBe my mirror, my sword and shield\nMy missionaries in a foreign field\n\nFor some reason I can't explain\nI know Saint Peter won't call my name\nNever an honest word\nBut that was when I ruled the world  \n\nOoh, ooh, ooh, ooh\n\nHear Jerusalem bells are ringing\nRoman Cavalry choirs are singing\nBe my mirror, my sword and shield\nMy missionaries in a foreign field\n\nFor some reason I can't explain\nI know Saint Peter won't call my name\nNever an /0honest word0/\n/0But that was when I ruled the world",
+      "fontSize": 1.5999999999999999,
+      "createdAt": "2025-10-09T16:53:28.359Z",
+      "artist": "Coldplay",
+      "bpm": 140,
+      "id": 1775119161062.2266,
+      "duration": "",
+      "structure": "",
+      "htmlFile": ""
+    },
+    {
+      "recordings": [
+        {
+          "events": [
+            {
+              "direction": "down",
+              "type": "scroll",
+              "timestamp": 70,
+              "position": 30
+            },
+            {
+              "direction": "down",
+              "position": 60,
+              "type": "scroll",
+              "timestamp": 71
+            },
+            {
+              "position": 90,
+              "type": "scroll",
+              "timestamp": 72,
+              "direction": "down"
+            },
+            {
+              "type": "scroll",
+              "timestamp": 72,
+              "position": 120,
+              "direction": "down"
+            },
+            {
+              "direction": "down",
+              "timestamp": 73,
+              "type": "scroll",
+              "position": 150
+            },
+            {
+              "type": "scroll",
+              "timestamp": 74,
+              "position": 180,
+              "direction": "down"
+            },
+            {
+              "position": 210,
+              "direction": "down",
+              "timestamp": 75,
+              "type": "scroll"
+            },
+            {
+              "direction": "down",
+              "timestamp": 75,
+              "type": "scroll",
+              "position": 240
+            },
+            {
+              "timestamp": 82,
+              "position": 270,
+              "type": "scroll",
+              "direction": "down"
+            },
+            {
+              "direction": "down",
+              "type": "scroll",
+              "timestamp": 83,
+              "position": 300
+            },
+            {
+              "position": 330,
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 83
+            },
+            {
+              "direction": "down",
+              "type": "scroll",
+              "timestamp": 84,
+              "position": 360
+            },
+            {
+              "timestamp": 84,
+              "type": "scroll",
+              "direction": "down",
+              "position": 390
+            },
+            {
+              "direction": "down",
+              "position": 420,
+              "timestamp": 85,
+              "type": "scroll"
+            },
+            {
+              "timestamp": 92,
+              "position": 450,
+              "direction": "down",
+              "type": "scroll"
+            },
+            {
+              "timestamp": 92,
+              "direction": "down",
+              "type": "scroll",
+              "position": 480
+            },
+            {
+              "type": "scroll",
+              "timestamp": 93,
+              "position": 510,
+              "direction": "down"
+            },
+            {
+              "direction": "down",
+              "timestamp": 93,
+              "type": "scroll",
+              "position": 540
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 112,
+              "position": 570
+            },
+            {
+              "direction": "down",
+              "position": 600,
+              "type": "scroll",
+              "timestamp": 112
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "position": 630,
+              "timestamp": 112
+            },
+            {
+              "direction": "down",
+              "type": "scroll",
+              "position": 660,
+              "timestamp": 113
+            },
+            {
+              "position": 690,
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 113
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "position": 720,
+              "timestamp": 114
+            },
+            {
+              "position": 750,
+              "timestamp": 124,
+              "type": "scroll",
+              "direction": "down"
+            },
+            {
+              "direction": "down",
+              "timestamp": 125,
+              "type": "scroll",
+              "position": 780
+            },
+            {
+              "direction": "down",
+              "position": 810,
+              "type": "scroll",
+              "timestamp": 125
+            },
+            {
+              "timestamp": 125,
+              "position": 840,
+              "direction": "down",
+              "type": "scroll"
+            },
+            {
+              "direction": "down",
+              "position": 870,
+              "type": "scroll",
+              "timestamp": 125
+            },
+            {
+              "timestamp": 126,
+              "type": "scroll",
+              "position": 900,
+              "direction": "down"
+            },
+            {
+              "direction": "down",
+              "type": "scroll",
+              "timestamp": 152,
+              "position": 930
+            },
+            {
+              "direction": "down",
+              "timestamp": 153,
+              "type": "scroll",
+              "position": 960
+            },
+            {
+              "type": "scroll",
+              "timestamp": 153,
+              "direction": "down",
+              "position": 990
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "position": 1020,
+              "timestamp": 161
+            },
+            {
+              "position": 1050,
+              "timestamp": 168,
+              "direction": "down",
+              "type": "scroll"
+            },
+            {
+              "position": 1080,
+              "direction": "down",
+              "type": "scroll",
+              "timestamp": 170
+            },
+            {
+              "type": "scroll",
+              "position": 1110,
+              "direction": "down",
+              "timestamp": 178
+            },
+            {
+              "type": "scroll",
+              "position": 1140,
+              "timestamp": 178,
+              "direction": "down"
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 179,
+              "position": 1170
+            },
+            {
+              "timestamp": 212,
+              "position": 1200,
+              "type": "scroll",
+              "direction": "down"
+            },
+            {
+              "timestamp": 212,
+              "position": 1230,
+              "type": "scroll",
+              "direction": "down"
+            },
+            {
+              "direction": "down",
+              "timestamp": 212,
+              "position": 1260,
+              "type": "scroll"
+            },
+            {
+              "type": "scroll",
+              "position": 1290,
+              "timestamp": 212,
+              "direction": "down"
+            },
+            {
+              "position": 1320,
+              "timestamp": 213,
+              "direction": "down",
+              "type": "scroll"
+            },
+            {
+              "timestamp": 220,
+              "type": "scroll",
+              "position": 1350,
+              "direction": "down"
+            },
+            {
+              "type": "scroll",
+              "timestamp": 220,
+              "position": 1380,
+              "direction": "down"
+            },
+            {
+              "direction": "down",
+              "position": 1410,
+              "type": "scroll",
+              "timestamp": 221
+            },
+            {
+              "timestamp": 221,
+              "direction": "down",
+              "position": 1440,
+              "type": "scroll"
+            },
+            {
+              "position": 1470,
+              "direction": "down",
+              "timestamp": 221,
+              "type": "scroll"
+            },
+            {
+              "direction": "down",
+              "timestamp": 228,
+              "position": 1500,
+              "type": "scroll"
+            },
+            {
+              "position": 1530,
+              "timestamp": 237,
+              "direction": "down",
+              "type": "scroll"
+            },
+            {
+              "position": 1560,
+              "timestamp": 238,
+              "type": "scroll",
+              "direction": "down"
+            },
+            {
+              "direction": "down",
+              "position": 1590,
+              "type": "scroll",
+              "timestamp": 238
+            },
+            {
+              "type": "scroll",
+              "timestamp": 246,
+              "position": 1620,
+              "direction": "down"
+            },
+            {
+              "direction": "down",
+              "position": 1650,
+              "type": "scroll",
+              "timestamp": 247
+            },
+            {
+              "direction": "down",
+              "position": 1680,
+              "type": "scroll",
+              "timestamp": 247
+            },
+            {
+              "timestamp": 265,
+              "position": 1710,
+              "direction": "down",
+              "type": "scroll"
+            },
+            {
+              "direction": "down",
+              "timestamp": 265,
+              "type": "scroll",
+              "position": 1740
+            },
+            {
+              "direction": "down",
+              "type": "scroll",
+              "timestamp": 266,
+              "position": 1770
+            },
+            {
+              "type": "scroll",
+              "position": 1800,
+              "direction": "down",
+              "timestamp": 266
+            },
+            {
+              "position": 1830,
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 266
+            },
+            {
+              "position": 1860,
+              "direction": "down",
+              "type": "scroll",
+              "timestamp": 274
+            },
+            {
+              "type": "scroll",
+              "position": 1890,
+              "timestamp": 274,
+              "direction": "down"
+            },
+            {
+              "position": 1920,
+              "timestamp": 274,
+              "direction": "down",
+              "type": "scroll"
+            },
+            {
+              "timestamp": 282,
+              "position": 1950,
+              "type": "scroll",
+              "direction": "down"
+            },
+            {
+              "position": 1980,
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 282
+            },
+            {
+              "timestamp": 289,
+              "type": "scroll",
+              "position": 2010,
+              "direction": "down"
+            },
+            {
+              "timestamp": 289,
+              "position": 2040,
+              "direction": "down",
+              "type": "scroll"
+            },
+            {
+              "direction": "down",
+              "timestamp": 289,
+              "type": "scroll",
+              "position": 2070
+            },
+            {
+              "direction": "down",
+              "type": "scroll",
+              "timestamp": 301,
+              "position": 2100
+            },
+            {
+              "type": "scroll",
+              "position": 2130,
+              "timestamp": 301,
+              "direction": "down"
+            },
+            {
+              "type": "scroll",
+              "position": 2160,
+              "timestamp": 306,
+              "direction": "down"
+            },
+            {
+              "timestamp": 306,
+              "type": "scroll",
+              "direction": "down",
+              "position": 2190
+            },
+            {
+              "direction": "down",
+              "timestamp": 307,
+              "type": "scroll",
+              "position": 2220
+            },
+            {
+              "position": 2250,
+              "direction": "down",
+              "type": "scroll",
+              "timestamp": 308
+            },
+            {
+              "direction": "down",
+              "timestamp": 314,
+              "type": "scroll",
+              "position": 2280
+            },
+            {
+              "position": 2310,
+              "type": "scroll",
+              "timestamp": 315,
+              "direction": "down"
+            },
+            {
+              "type": "scroll",
+              "position": 2340,
+              "timestamp": 330,
+              "direction": "down"
+            },
+            {
+              "position": 2370,
+              "timestamp": 331,
+              "direction": "down",
+              "type": "scroll"
+            },
+            {
+              "type": "scroll",
+              "timestamp": 331,
+              "position": 2400,
+              "direction": "down"
+            },
+            {
+              "direction": "down",
+              "type": "scroll",
+              "position": 2430,
+              "timestamp": 331
+            },
+            {
+              "position": 2460,
+              "direction": "down",
+              "type": "scroll",
+              "timestamp": 331
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 336,
+              "position": 2490
+            },
+            {
+              "direction": "down",
+              "type": "scroll",
+              "timestamp": 337,
+              "position": 2520
+            },
+            {
+              "timestamp": 349,
+              "position": 2544,
+              "direction": "down",
+              "type": "scroll"
+            },
+            {
+              "position": 2544,
+              "timestamp": 349,
+              "direction": "down",
+              "type": "scroll"
+            },
+            {
+              "direction": "down",
+              "timestamp": 350,
+              "type": "scroll",
+              "position": 2544
+            },
+            {
+              "direction": "down",
+              "timestamp": 350,
+              "type": "scroll",
+              "position": 2544
+            },
+            {
+              "direction": "down",
+              "timestamp": 350,
+              "type": "scroll",
+              "position": 2544
+            },
+            {
+              "timestamp": 350,
+              "direction": "down",
+              "type": "scroll",
+              "position": 2544
+            },
+            {
+              "position": 2544,
+              "type": "scroll",
+              "timestamp": 351,
+              "direction": "down"
+            },
+            {
+              "position": 2544,
+              "direction": "down",
+              "timestamp": 351,
+              "type": "scroll"
+            },
+            {
+              "timestamp": 353,
+              "position": 2544,
+              "direction": "down",
+              "type": "scroll"
+            },
+            {
+              "position": 2544,
+              "type": "scroll",
+              "timestamp": 353,
+              "direction": "down"
+            },
+            {
+              "position": 2544,
+              "direction": "down",
+              "type": "scroll",
+              "timestamp": 353
+            }
+          ],
+          "duration": 353,
+          "timestamp": "2025-10-09T19:13:35.741Z",
+          "id": 1760037215741
+        }
+      ],
+      "id": 1775119161063.33,
+      "title": "Heroes",
+      "active": false,
+      "createdAt": "2025-10-09T16:53:28.359Z",
+      "artist": "David Bowie",
+      "bpm": 128,
+      "fontSize": 1.4,
+      "order": 20,
+      "notes": "Entramos todos juntos",
+      "lastModified": "2026-04-02T08:44:25.444Z",
+      "lyrics": "I, I will be king\nAnd you, you will be queen\nThough nothing will drive them away\nWe can beat them, just for one day\nWe can be heroes, just for one day\nAnd you, you can be mean\nAnd I, I'll drink all the time\n'Cause we're lovers, and that is a fact\nYes we're lovers, and that is that\nThough nothing will keep us together\nWe could steal time just for one day\nWe can be heroes for ever and ever\nWhat d'you say?\nI, I wish you could swim\nLike the dolphins, like dolphins can swim\nThough nothing, nothing will keep us together\nWe can beat them, for ever and ever\nOh we can be Heroes, just for one day\nI, I will be king\nAnd you, you will be queen\nThough nothing will drive them away\nWe can be Heroes, just for one day\nWe can be us, just for one day\nI, I can remember (I remember)\nStanding, by the wall (by the wall)\nAnd the guns, shot above our heads (over our heads)\nAnd we kissed, as though nothing could fall (nothing could fall)\nAnd the shame, was on the other side\nOh we can beat them, for ever and ever\nThen we could be Heroes, just for one day\nWe can be Heroes\nWe can be Heroes\nWe can be Heroes\nJust for one day\nWe can be Heroes\nWe're nothing, and nothing will help us\nMaybe we're lying, then you better not stay\nBut we could be safer, just for one day\nOh-oh-oh-ohh, oh-oh-oh-ohh, just for one day\nImagine"
+    },
+    {
+      "order": 30,
+      "notes": "Entro tras 4 compases de guitarra, con flam en anacrusa. 2 Vueltas. OJO crescendos primero 1, 1 y luego 2\n\n",
+      "bpm": "136",
+      "title": "Insurrección",
+      "artist": "El último de la fila",
+      "fontSize": 1.4,
+      "lastModified": "2026-04-02T08:46:18.177Z",
+      "active": false,
+      "createdAt": "2025-10-09T16:53:28.358Z",
+      "id": 1775119161061.4111,
+      "lyrics": "Dónde estabas entonces \ncuando tanto te necesité?\nNadie es mejor que nadie \npero tu creíste vencer.\nSi lloré ante tu puerta de nada sirvió\nBarras de bar, vertederos de amor...\n\nOs enseñé mi trocito peor.\nRetales de mi vida,\nfotos a contraluz\n\nMe siento hoy como un halcón\nherido por las flechas de la incertidumbre.\n\nDónde estabas entonces \ncuando tanto te necesité?\nNadie es mejor que nadie \npero tu creíste vencer.\nSi lloré ante tu puerta de nada sirvió\nBarras de bar, vertederos de amor...\n\nOs enseñé mi trocito peor.\nRetales de mi vida,\nfotos a contraluz\n\nMe siento hoy como un halcón\nherido por las flechas de la incertidumbre\n\nMe corto el pelo una y otra vez.\nMe quiero defender\nDame mi alma y déjame en paz\nQuiero intentar no volver a caer\nPequeñas tretas          \npara continuar en la brecha.\n\nMe siento hoy como un halcón\nllamado a las filas de la insurrección\n\n\n"
+    },
+    {
+      "id": 1775119161061.5854,
+      "notes": "3 vueltas de piano (friends) y dos golpes segudo es el 1, contar 3 y luego marcar  \nFinal juntos tras segundo vuelta de estribillo, ojo primer estribillo recortado",
+      "title": "La del pirata cojo",
+      "artist": "Joaquín Sabina",
+      "fontSize": 1.4,
+      "active": true,
+      "order": 40,
+      "lastModified": "2026-04-02T09:37:44.118Z",
+      "lyrics": "No soy un fulano con la lagrima fácil\nDe esos que se quejan solo por vicio\nSi la vida se deja yo le meto mano\nY si no aún me excita mi oficio\n\nY como además sale gratis soñar\nY no creo en la reencarnación\nCon un poco de imaginación\nPartiré de viaje enseguida\nA vivir otras vidas\nA probarme otros nombres\n\nA colarme en el traje y la piel\nDe todos los hombres\nQue nunca seré\n:: Sube dinámica\nAl Capone en Chicago\nLegionario en melilla\nPintor en Montparnasse\n\nMercader en Damasco\nCostalero en Sevilla\nNegro en nueva Orleans\n\nViejo verde en Sodoma\nDeportado en Siberia\nSultán en un harén\n\nPolicía, ni en broma\nTriunfador de la feria\nGitanito en Jerez\n\nTahúr en Montecarlo\nCigarrillo en tu boca\nTaxista en Nueva York\n\nEl más chulo del barrio\nTiro porque me toca\nSuspenso en religión\n\nConfesor de la reina\nBanderillero en Cádiz\nTabernero en Dublín\n\nComunista en las Vegas\nAhogado en el Titanic\nFlautista en Hamelin\n\nPero si me dan a elegir\nEntre todas las vidas yo escojo\nLa del pirata cojo\nCon pata de palo\nCon parche en el ojo\nCon cara de malo\nEl viejo truhan, capitán\nDe un barco que tuviera por bandera\nUn par de tibias y una calavera\n\nLa del pirata cojo nooooo\nCon pata de palo\nCon parche en el ojo\nCon cara de malo\nEl viejo truhan, capitán\nDe un barco que tuviera por bandera\nUn par de tibias y una calavera\n\nBillarista a tres bandas\nInsumiso en el cielo\nDueño de un cabaret\n\nArañazo en tu espalda\nTenor en Rigoletto\nPianista de un burdel\n\nBongosero en la Habana\nCasanova en Venecia\nAnciano en Shangri La\n\nPolizón en tu cama\nVocalista de orquesta\nMejor tiempo en Le Mans\n:: Sube dinámica\nCronista de sucesos\nDetective en apuros\nConservado en alcohol\n\nViolador en tus sueños\nSuicida en el viaducto\nGuapo en un culebrón\n\nMorfinómano en China\nDesertor en la guerra\nBoxeador en Detroit\n\nCazador en la India\nMarinero en Marsella\nFotógrafo en Playboy\n\nPero si me dan a elegir\nEntre todas las vidas yo escojo\nLa del pirata cojo\nCon pata de palo\nCon parche en el ojo\n\nCon cara de malo\nEl viejo truhan, capitán\nDe un barco que tuviera\nPor bandera\nUn par de tibias y una calavera\n\nLa del pirata cojo\nCon pata de palo\nCon parche en el ojo\n\nCon cara de malo\nEl viejo truhan, capitán\nDe un barco que tuviera\nPor bandera\nUn par de tibias y una calavera\nFinal todos juntos solo estribillo que se repite dos veces y el segundo es el final en seco",
+      "createdAt": "2025-10-09T16:53:28.358Z",
+      "bpm": 135,
+      "duration": "",
+      "structure": "",
+      "htmlFile": ""
+    },
+    {
+      "artist": "Mecano",
+      "title": "La Fuerza del Destino",
+      "active": false,
+      "lastModified": "2026-04-02T08:46:58.527Z",
+      "notes": "Entrada todos juntos, marco 4",
+      "fontSize": 1.2,
+      "id": 1775119161063.0312,
+      "bpm": 90,
+      "createdAt": "2025-10-09T16:53:28.359Z",
+      "lyrics": "Nos vimos tres o cuatro veces    \nPor toda la ciudad\nUna noche en el Bar del Oro\nMe decidí a atacar\n\nTú me dijiste diecinueve\nNo quise desconfiar\nPero es que ni mucho ni poco\nNo vi de dónde agarrar\n\nY nos metimos en el coche\nMi amigo, tu amiga, tú y yo\nTe dije nena dame un beso\nTú contestaste que no\n\nEmpezamos mal y yo que creía\nQue esto era un buen plan               \n\nAquella noche fue un desastre\nNo me comí un colín\nÉstas son solo un par de estrechas\nNos fuimos a dormir\n\nPero la fuerza del destino\nNos hizo repetir\nDos cines y un par de conciertos\nY empezamos a salir\n\nNo sé si esa cara tan rara\nUn ojo aquí y un diente allá\nO el cuerpecillo de gitana\nMujer a medio terminar\n\nTu corazón fue lo que me\nAcabó de enamorar\n:: Silencio y solo\n\nY nos metimos en el coche\nMi amigo, tu amiga, tú y yo\nTe dije nena dame un beso\nTú contestaste que no\n\nEmpezamos mal y yo que creía\nQue esto era un buen plan\n\nY desde entonces hasta ahora\nEl juego del amor\nNos tuvo tres años jugando\nLuego nos separó\n\nPero la fuerza del destino\nNos hizo repetir\nQue si el invierno viene frío\nQuiero estar junto a ti\n\nQuiero estar junto a ti\nQuiero estar junto a ti\nQuiero estar junto a ti\nQuiero estar junto a ti",
+      "order": 50
+    },
+    {
+      "id": 1775120618777.937,
+      "title": "The Power of Love",
+      "artist": "Frankie Goes To Hollywood",
+      "bpm": 62,
+      "order": 55,
+      "duration": "5:32",
+      "lyrics": ":: Empieza solo piano\n:: Verse\nEm\n/0I'll protect you from the hooded claw\nC\n/0Keep the vampires from your door\nEm                              C              Em\naye   ay   ye    ay   ye   aye      /0feels like fire\n                    C\n/0I'm so in love with you\nEm                           C\n/0Dreams are like angels, they keep bad at bay (bad at bay)\nBm                        C\n/0Love is the light scaring darkness a away ye aaaa ay yay\nEm                   C                    Bm\n/0I'm so in love with you, purge the soul\nBm   Bm    C            C\n/0Make love yooouurrr  gooooaal\n:: Entra la batería suave, PANDERETA\n:: Chorus\nEm             C                 Bm                C      D    Em\n/3The power of love a force from above cleaning my soul\n      D         C                          D\n/3Flame on burn desire, love with tongues of fire purge the soul\nC    C        Em\n/3Make love       yoooouuurr gooooaal\n\n:: Break\nD     Em    D\n            \n\n:: Verse\nEm                        C\nI'll protect you from the hooded claw\n                            Bm\nKeep the vampires from your door\n                             C\nWhen the chips are down I'll be around\n                Em\nWith my undying death defying love for you\nC                     Bm\nEnvy will hurt itself let yourself be beautiful\nC                                     Em\nSparkling like flowers and pearls and pretty girls\n                    C                        Bm              C\nLove is like an energy, rushing in rushing inside of me  hey yeah\n\n:: Chorus\nEm           C                 Bm                C      D    Em\nThe power of love a force from above cleaning my soul\n      D         C                          D\nFlame on burn desire, love with tongues of fire purge the soul\nC    C       Em\nMake love       yooouuurr goooaal\n\n:: Break\nEm\n\nEm\n\nEm\n\n\n:: Bridge\nC                                       Bm\nThis time we go so blind,               Lovers entwined divine, divine\n        C                               Bm\nLove is danger, love is pleasure,       Love is pure the only treasure\nEm                    C                      Bm\n  I'm so in love with you, purge the soul\nBm   Bm     C            C\nMake love yooourrr    goooaal\n\n:: Ending\nEm             C                 Bm                 C\n  The power of love a force from above, cleaning my soul\nD              C                 D                     C\n  The power of love a force from above a skyscraping do--ove\nD                 C                          D\n  Flame on burn desire, love with tongues of fire, purge the soul\nC    C\nMake love       yooooouuurr gooooaal\nEm\n\nEm\n\nEm\n\nEm\n\nEm\n\nEm\n\nEm\n\nEm\n\n\nEnding:\nEm                        Em\nI'll protect you from the hooded claw\nC\nKeep the vampires from your door",
+      "notes": "OJO al Puente\nFinal termino mirándo a Ian\nEntra batería suave en \"Make love yooouurrr  gooooaal\"\nB C B C alternando caja con pandereta. \nOJO PANDERETA CON CAJA AL FINAL\nKey: Em\nIntro - Verse 1 - Chorus - Verse 2 - Chorus - Bridge - Chorus repetido - Outro",
+      "fontSize": 1,
+      "active": false,
+      "createdAt": "2026-04-02T09:03:38.777Z",
+      "lastModified": "2026-04-02T09:03:59.461Z",
+      "structure": "",
+      "htmlFile": ""
+    },
+    {
+      "createdAt": "2025-10-09T16:53:28.359Z",
+      "active": false,
+      "bpm": "100",
+      "notes": "Breve entrada guitarra y Crash, apertura charles y caja+bombo, luego bombo a negras\nX O      O     O     O     O      O   \nB   CB    B     CB    B     CB    B      ",
+      "artist": "Juanes",
+      "fontSize": 1.4,
+      "title": "La camisa negra ....",
+      "id": 1775119161062.4053,
+      "lyrics": "Uno por pobre y feo, hombre\nPero antoja'o, ay ome\n\nTengo la camisa negra\nHoy mi amor está de luto\nHoy tengo en el alma una pena\nY es por culpa de tu embrujo\n\nHoy sé que tú ya no me quieres\nY eso es lo que más me hiere\nQue tengo la camisa negra\nY una pena que me duele\n\nMal parece que solo me quedé\nY fue pura todita tu mentira\nQué maldita mala suerte la mía\nQue aquel día te encontré\n\nPor beber del veneno malevo de tu amor\nYo quedé moribundo y lleno de dolor\nRespiré de ese humo amargo de tu adiós\nY desde que tú te fuiste, yo solo\n\nTengo\nTengo la camisa negra\nPorque negra tengo el alma\nYo por ti perdí la calma\nY casi pierdo hasta mi cama\n\nCama, cama, come on, baby\nTe digo con disimulo\nQue tengo la camisa negra\nY debajo tengo el difunto\n\nPa' enterrártelo cuando quieras, mamita\n\nAsí como lo oyes, mi'ja\n\nTengo la camisa negra\nYa tu amor no me interesa\nLo que ayer me supo a gloria\nHoy me sabe a pura\n\nMiércoles por la tarde y tú que no llegas\nNi siquiera muestras señas\nY yo con la camisa negra\nY tus maletas en la puerta\n\nMal parece que solo me quedé\nY fue pura todita tu mentira\nQué maldita mala suerte la mía\nQue aquel día te encontré\n\nPor beber del veneno malevo de tu amor\nYo quedé moribundo y lleno de dolor\nRespiré de ese humo amargo de tu adiós\nY desde que tú te fuiste, yo solo\n\nTengo\nTengo la camisa negra\nPorque negra tengo el alma\nYo por ti perdí la calma\nY casi pierdo hasta mi cama\n\nCama, cama, come on, baby\nTe digo con disimulo\nQue tengo la camisa negra\nY debajo tengo el difunto\n\nTengo la camisa negra\nPorque negra tengo el alma\nYo por ti perdí la calma\nY casi pierdo hasta mi cama\n\nCama, cama, come on, baby\nTe digo con disimulo\nQue tengo la camisa negra\nY debajo tengo el difunto\n\n",
+      "lastModified": "2026-04-02T08:47:25.744Z",
+      "order": 60
+    },
+    {
+      "notes": "",
+      "lastModified": "2026-04-02T08:47:33.960Z",
+      "bpm": 122,
+      "id": 1775119161061.8113,
+      "artist": "Héroes del silencio",
+      "title": "Maldito duende",
+      "fontSize": 1.7999999999999998,
+      "lyrics": "He oído que la noche es toda magia\nY que el duende te invita a soñar\nY sé que últimamente apenas he parado\nY tengo la impresión de divagar\nAmanece tan pronto y yo estoy tan solo\nY no me arrepiento de lo de ayer\nSi las estrellas te iluminan\nHoy y te sirven de guía\nTe sientes tan fuerte que piensas\nQue nadie te puede tocar\nLas distancias se hacen cortas\nPasan rápidas las horas\nY este cuarto no para de menguar\nY tantas cosas por decir tanta charla por aquí\nSi fuera posible escapar de este lugar\nAmanece tan pronto y yo estoy tan solo\nQue no arrepiento de lo de lo de ayer\nSi las estrellas te iluminan\nHoy y te sirven de guía\nTe sientes tan fuerte que piensas\nQue nadie te puede tocar\nAmanece tan pronto y yo estoy tan solo\nQue no me arrepiento de lo de ayer\nSi las estrellas te iluminan\nHoy y te sirven de guía\nTe sientes tan fuerte que piensas\nQue nadie te puede tocar\nEs por ti",
+      "active": false,
+      "createdAt": "2025-10-09T16:53:28.359Z",
+      "order": 70
+    },
+    {
+      "active": false,
+      "lastModified": "2026-04-02T08:47:37.977Z",
+      "notes": "",
+      "createdAt": "2025-10-09T16:53:28.360Z",
+      "fontSize": 1.5999999999999999,
+      "id": 1775119161061.3967,
+      "lyrics": "Here comes Johnny singing Oldies, Goldies\nBe-bop-a-lula, baby, what I say\nHere comes Johnny singing I gotta woman\nDown in the tunnels, trying to make it pay\nHe got the action, he got the motion\nOh yeah, the boy can play\nDedication, devotion\n/0Turning all the night time into the day\nHe do the song about the sweet lovin' woman\nHe do the song about the knife\nAnd he do the walk, he do the walk of life\nYeah, he do the walk of life\nHere comes Johnny goin' tell you the story\nHand me down my walkin' shoes\nHere come Johnny with the power and the glory\nBackbeat, the talkin' blues\nHe got the action, he got the motion\nYeah, the boy can play\nDedication, devotion\n/0Turning all the night time into the day\nHe do the song about the sweet lovin' woman\nHe do the song about the knife\nAnd he do the walk, he do the walk of life\nYeah, he do the walk of life\n::SOLO\nHere comes Johnny singing oldies, goldies\nBe-bop-a-lula, baby what I say\nHere comes Johnny singing \"I Gotta Woman\"\nDown in the tunnels, trying to make it pay\nHe got the action, he got the motion\nOh yeah, the boy can play\nDedication, devotion\n/0Turning all the night time into the day\nAnd after all the violence and double talk\nThere's just a song in all the trouble and the strife\nYou do the walk, you do the walk of life\nHum, you do the walk of life\nInsurrección",
+      "order": 80,
+      "recordings": [
+        {
+          "events": [
+            {
+              "timestamp": 1,
+              "direction": "down",
+              "position": 30,
+              "type": "scroll"
+            },
+            {
+              "position": 60,
+              "direction": "down",
+              "type": "scroll",
+              "timestamp": 1
+            },
+            {
+              "position": 90,
+              "timestamp": 1,
+              "direction": "down",
+              "type": "scroll"
+            },
+            {
+              "direction": "down",
+              "timestamp": 2,
+              "position": 120,
+              "type": "scroll"
+            },
+            {
+              "type": "scroll",
+              "timestamp": 2,
+              "direction": "down",
+              "position": 150
+            },
+            {
+              "timestamp": 3,
+              "position": 180,
+              "type": "scroll",
+              "direction": "down"
+            },
+            {
+              "direction": "down",
+              "type": "scroll",
+              "position": 210,
+              "timestamp": 3
+            },
+            {
+              "direction": "down",
+              "type": "scroll",
+              "position": 240,
+              "timestamp": 3
+            }
+          ],
+          "timestamp": "2025-10-10T10:08:32.222Z",
+          "id": 1760090912222,
+          "duration": 3
+        }
+      ],
+      "artist": "Dire Straits",
+      "title": "Walk of live",
+      "bpm": 168
+    },
+    {
+      "artist": "Alan Parsons",
+      "id": 1775119161062.5232,
+      "notes": "",
+      "createdAt": "2025-10-09T16:53:28.360Z",
+      "lyrics": "Don't think sorry's easily said\nDon't try turning tables instead\nYou've taken lots of chances before\nBut I ain't gonna give anymore, don't ask me\nThat's how it goes\nCause part of me knows what you're thinkin'\nDon't say words you're gonna regret\nDon't let the fire rush to your head\nI've heard the accusation before\nAnd I ain't gonna take anymore, believe me\nThe Sun in your eyes\nMade some of the lies worth believing\nI am the eye in the sky looking at you\nI can read your mind\nI am the maker of rules, dealing with fools\nI can cheat you blind\nAnd I don't need to see anymore to know that\nI can read your mind (looking at you)\nI can read your mind (looking at you)\nI can read your mind (looking at you)\nI can read your mind (looking at you)\nDon't leave false illusions behind\nDon't cry I ain't changing my mind\nSo find another fool like before\nCause I ain't gonna live anymore believing\nSome of the lies while all of the signs are deceiving\nI am the eye in the sky looking at you\nI can read your mind\nI am the maker of rules, dealing with fools\nI can cheat you blind\nAnd I don't need to see anymore to know that\nI can read your mind (looking at you)\nI can read your mind (looking at you)\nI can read your mind (looking at you)\nI can read your mind (looking at you)\nI am the eye in the sky looking at you\nI can read your mind\nI am the maker of rules, dealing with fools\nI can cheat you blind\nAnd I don't need to see anymore to know that\nI can read your mind (looking at you)\nI can read your mind (looking at you)\nI can read your mind (looking at you)\nI can read your mind (looking at you)\nRocking all over the world",
+      "active": false,
+      "bpm": 110,
+      "fontSize": 1.9999999999999998,
+      "lastModified": "2026-04-02T08:47:44.177Z",
+      "title": "Eye in the Skys",
+      "order": 90
+    },
+    {
+      "lyrics": "Don't let me down\nDon't let me down\nDon't let me down\nDon't let me down\n\nNobody ever loved me like she does\nOh, she does, yeah, she does\nAnd if somebody loved me like she does\nOh, she does, yes, she does\n\nDon't let me down\nDon't let me down\nDon't let me down\nDon't let me down\n\nI'm in love for the first time\nDon't you know it's gonna last\nIt's a love that lasts forever\nIt's a love that has no past\n\nDon't let me down\nDon't let me down\nDon't let me down\nDon't let me down\n\nAnd from the first time\nThat she really done me\nOh, she done me, she done me good\nI guess nobody ever really done me\nOh, she done me, she done me good\n\nDon't let me down\nDon't let me down\nDon't let me down\nDon't let me down",
+      "fontSize": 1.7999999999999998,
+      "id": 1775119161061.7544,
+      "createdAt": "2025-10-09T16:53:28.358Z",
+      "title": "Don’t let me down",
+      "lastModified": "2026-04-02T08:47:50.426Z",
+      "notes": "",
+      "order": 100,
+      "bpm": "",
+      "active": false,
+      "artist": "The Beatles"
+    },
+    {
+      "title": "Mediterráneo",
+      "id": 1775119161063.644,
+      "bpm": "134",
+      "notes": "Entrada marcando 4 y Tom base + Caja, final igual y parada en seco",
+      "fontSize": 2.4,
+      "createdAt": "2025-10-09T16:53:28.359Z",
+      "order": 110,
+      "lastModified": "2026-04-02T08:48:04.594Z",
+      "artist": "",
+      "active": false,
+      "lyrics": "Qué agobio de verano\nTengo el cuerpo empapado en sudor\nSe me cae la casa encima\nYo ya no aguanto el calor\n\nLa vida ya no es vida en la ciudad\nLlegó la hora de cambiar asfalto por mar\nCansado de vivir en una jaula como un animal\n\nQuema la ropa de invierno y prepárate para viajar\nQue la tierra prometida está más cerca de lo que puedas pensar\nCalifornia ya no existe, el sueño acabó\nPero yo sé de un lugar donde brilla el sol\nDéjame llevarte este verano donde está la acción\n\nMediterráneo\nRuta de calor\nMediterráneo\nA templo del sol\nMediterráneo\nNoches de luz y color\n\nMediterráneo\nTierra de pasión\nMediterráneo\nRuta de calor\nMediterráneo\nEterno verano al sol\n\nSi buscas sensaciones aquí hay algo realmente especial\nSi quieres un paraíso esto es lo más parecido que vas a encontrar\nSi buscas algo que dinero no pueda comprar\nY si quieres ver a mescalina nadar\nNo hay mejor rincón en el planeta si quieres soñar\n\nNos veremos en ibiza, en mallorca, san luís y mahón\nBailaremos en valencia, en alicante, en gandía y benidorm\nDesde l'escala hasta playa san juan\nEn cadaqués, en sitges, playa libertad\nSeremos los elegidos en el templo del dios del mar\n\nMediterráneo\nRuta de calor\nMediterráneo\nA templo del sol\nMediterráneo\nNoches de luz y color\n\nMediterráneo\nTierra de pasión\nMediterráneo\nRuta de calor\nMediterráneo\nEterno verano al sol\n\nMediterráneo\nRuta de calor\nMediterráneo\nA templo del sol\nMediterráneo\nNoches de luz y color\n\nMediterráneo\nTierra de pasión\nMediterráneo\nRuta de calor\nMediterráneo\nEterno verano al sol."
+    },
+    {
+      "artist": "Peter Gabriel",
+      "notes": "OJO 7/8\nPrincipio solo charles y bombo a negras\nCaja entra más tarde en \"grab your things, I've come to take you home\"",
+      "title": "Solsbury Hill",
+      "lastModified": "2026-04-02T08:49:39.360Z",
+      "active": false,
+      "createdAt": "2025-10-09T16:53:28.359Z",
+      "bpm": 105,
+      "fontSize": 1.5999999999999999,
+      "id": 1775119161062.818,
+      "order": 120,
+      "lyrics": "/1Climbing up on Solsbury Hill\n/1I could see the city light\n/1Wind was blowing, time stood still\n/1Eagle flew out of the night\n/1He was something to observe\n/1Came in close, I heard a voice\n/1Standing stretching every nerve\n/1Had to listen, had no choice\n/1I did not believe the information\n/1I just had to trust imagination\n/1My heart going boom boom boom\nSon, he said, grab your things, I've come to take you home\nTo keep in silence I resigned\nMy friends would think I was a nut\nTurning water into wine\nOpen doors would soon be shut\nSo I went from day to day\nThough my life was in a rut\n'Til I thought of what I'd say\nWhich connection I should cut\nI was feeling part of the scenery\nI walked right out of the machinery\nMy heart going boom boom boom\nHey, he said, grab your things, I've come to take you home\nAh, back home\nWhen illusion spin her net\nI'm never where I want to be\nAnd liberty she pirouette\nWhen I think that I am free\nWatched by empty silhouettes\nWho close their eyes but still can see\nNo one taught them etiquette\nI will show another me\nToday I don't need a replacement\nI'll tell them what the smile on my face meant\nMy heart going boom boom boom\nHey, I said, you can keep my things, they've come to take me home\nmy home\nPájaros de barro"
+    },
+    {
+      "active": false,
+      "id": 1775119161062.4854,
+      "lastModified": "2026-04-02T08:49:17.777Z",
+      "order": 130,
+      "fontSize": 2.4,
+      "createdAt": "2025-10-09T16:53:28.360Z",
+      "bpm": 112,
+      "notes": "Mazas y bombo a negras",
+      "lyrics": "Daddy's flown across the ocean\nLeaving just a memory\nA snapshot in the family album\nDaddy, what else did you leave for me?\nDaddy, what'd ya leave behind for me?\nAll in all, it was just a brick in the wall\nAll in all, it was all just bricks in the wall\nHey!\nWe don't need no education\nWe don't need no thought control\nNo dark sarcasm in the classroom\nTeacher, leave them kids alone\nHey, teacher, leave them kids alone\nAll in all, it's just another brick in the wall\nAll in all, you're just another brick in the wall\nWe don't need no education\nWe don't need no thought control\nNo dark sarcasm in the classroom\nTeachers, leave them kids alone\nHey, teacher, leave us kids alone\nAll in all, you're just another brick in the wall\nAll in all, you're just another brick in the wall\n(Solo)\nIf you don't eat yer meat, you can't have any pudding\nHow can you have any pudding if you don't eat yer meat?\nYou! Yes, you behind the bike stands\nStand still, laddy!\nI don't need no arms around me\nAnd I don't need no drugs to calm me\nI have seen the writing on the wall\nDon't think I need anything at all\nNo, don't think I'll need anything at all\nAll in all, it was all just bricks in the wall\nAll in all, you were all just bricks in the wall\nInsoportable",
+      "artist": "Pink Floyd",
+      "title": "Another brick in the wall 1+2+3",
+      "duration": ""
+    },
+    {
+      "bpm": 110,
+      "fontSize": 2.4,
+      "active": false,
+      "artist": "The Police",
+      "id": 1775120022066.7322,
+      "notes": "",
+      "title": "Every breath you take",
+      "order": 135,
+      "lyrics": "Every breath you take\nAnd every move you make\nEvery bond you break\nEvery step you take\nI'll be watching you\nEvery single day\nAnd every word you say\nEvery game you play\nEvery night you stay\nI'll be watching you\nOh, can't you see\nYou belong to me?\nHow my poor heart aches\nWith every step you take?\nEvery move you make\nAnd every vow you break\nEvery smile you fake\nEvery claim you stake\nI'll be watching you\nSince you've gone, I've been lost without a trace\nI dream at night, I can only see your face\nI look around, but it's you I can't replace\nI feel so cold, and I long for your embrace\nI keep crying, baby, baby please\nOh, can't you see\nYou belong to me?\nHow my poor heart aches\nWith every step you take?\nEvery move you make\nAnd every vow you break\nEvery smile you fake\nEvery claim you stake\nI'll be watching you\nEvery move you make\nEvery step you take\nI'll be watching you\nI'll be watching you\n(Every breath you take)\n(Every move you make)\n(Every bond you break)\n(Every step you take) I'll be watching you\nI'll be watching you\nI'll be watching you\nwhoo, hoo\n(Every game you play)\n(Every night you stay) I'll be watching you\nI'll be watching you\nI'll be watching you\nI'll be watching you\n(Every single day)\n(Every word you say)\n(Every game you play)\n(Every night you stay) I'll be watching you\nLobo hombre en París",
+      "createdAt": "2026-04-02T08:53:42.066Z",
+      "lastModified": "2026-04-02T09:04:44.427Z",
+      "duration": "",
+      "structure": "",
+      "htmlFile": ""
+    },
+    {
+      "fontSize": 2.4,
+      "id": 1775120721793.1838,
+      "notes": "",
+      "title": "I want to break free",
+      "artist": "Queen",
+      "bpm": 110,
+      "order": 137,
+      "lyrics": "solo de teclado acariciar platos\nsolo caja 2-4\nsilencio y B C B C\nI want to break free\nI want to break free\nI want to break free from your lies\nYou're so self satisfied, I don't need you\nI've got to break free\nGod knows, God knows I want to break free\nSILENCIO\nI've fallen in love\nI've fallen in love for the first time\nAnd this time I know it's for real\nI've fallen in love, yeah\nGod knows, God knows I've fallen in love\nIt's strange, but it's true, yeah\nI can't get over the way you love me like you do\nBut I have to be sure\nWhen I walk out that door\nOh, how I want to be free, baby\nOh, how I want to be free\nOh, how I want to break free\nSILENCIO y SOLO\nSILENCIO\nBut life still goes on\nI can't get used to living without, living without\nLiving without you by my side\nI don't want to live alone, hey\nGod knows, got to make it on my own\nSo, baby, can't you see?\nI've got to break free\nSILENCIO\nI've got to break free\nI want to break free, yeah\nI want, I want, I want, I want to break free\nSanta Lucía",
+      "active": false,
+      "createdAt": "2026-04-02T09:05:21.793Z",
+      "lastModified": "2026-04-02T09:13:34.059Z",
+      "duration": "",
+      "structure": "",
+      "htmlFile": ""
+    },
+    {
+      "order": 140,
+      "fontSize": 1.7999999999999998,
+      "artist": "Artista desconocido",
+      "notes": "",
+      "lastModified": "2026-04-02T08:48:24.243Z",
+      "active": false,
+      "title": "Pájaros de barro",
+      "bpm": 133,
+      "createdAt": "2025-10-09T16:53:28.359Z",
+      "id": 1775119161062.41,
+      "lyrics": "/0Por si el tiempo me arrastra\n/0A playas desiertas\n/0Hoy cierro ya el libro\n/0De las horas muertas\n/0Hago pájaros de barro\n/0Hago pájaros de barro y los echo a volar\n\nPor si el tiempo me arrastra\nA playas desiertas\nHoy rechazo la bajeza\nDel abandono y la pena\nNi una página en blanco más\nSiento el asombro de un transeúnte solitario\n\n/3En los mapas me pierdo\n/3Por sus hojas navego\n/3Ahora sopla el viento\n/3Cuando el mar quedó lejos, hace tiempo\n\n/0Ya no subo la cuesta.     \n/0Que me lleva a tu casa\nYa no duerme mi perro junto a tu candela\nEn los vértices del tiempo anidan los sentimientos\nHoy son pájaros de barro que quieren volar\n\n/3En los valles me pierdo\n/3En las carreteras duermo\n/3Ahora sopla el viento\n/3Cuando el mar quedó lejos, hace tiempo\n\n/0Cuando no tengo barca, remos ni guitarra\n/0Cuando ya no canta el ruise0/ñor de la mañana\nAhora sopla el viento\nCuando el mar quedó lejos, hace tiempo\n\nEn los valles me pierdo\nEn las carreteras duermo"
+    },
+    {
+      "title": "Sweet Caroline",
+      "notes": "",
+      "createdAt": "2025-10-09T16:53:28.360Z",
+      "artist": "Neil Diamond",
+      "order": 150,
+      "recordings": [
+        {
+          "duration": 9,
+          "events": [
+            {
+              "direction": "down",
+              "position": 30,
+              "timestamp": 1,
+              "type": "scroll"
+            },
+            {
+              "timestamp": 2,
+              "direction": "down",
+              "position": 60,
+              "type": "scroll"
+            },
+            {
+              "type": "scroll",
+              "timestamp": 3,
+              "direction": "down",
+              "position": 90
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 4,
+              "position": 120
+            },
+            {
+              "timestamp": 5,
+              "type": "scroll",
+              "position": 150,
+              "direction": "down"
+            },
+            {
+              "direction": "down",
+              "type": "scroll",
+              "position": 180,
+              "timestamp": 5
+            },
+            {
+              "position": 210,
+              "direction": "down",
+              "type": "scroll",
+              "timestamp": 5
+            },
+            {
+              "timestamp": 5,
+              "type": "scroll",
+              "direction": "down",
+              "position": 240
+            },
+            {
+              "direction": "down",
+              "timestamp": 6,
+              "position": 270,
+              "type": "scroll"
+            },
+            {
+              "timestamp": 6,
+              "type": "scroll",
+              "position": 300,
+              "direction": "down"
+            },
+            {
+              "position": 330,
+              "direction": "down",
+              "type": "scroll",
+              "timestamp": 6
+            },
+            {
+              "direction": "up",
+              "position": 300,
+              "timestamp": 7,
+              "type": "scroll"
+            },
+            {
+              "position": 270,
+              "timestamp": 7,
+              "direction": "up",
+              "type": "scroll"
+            },
+            {
+              "timestamp": 7,
+              "direction": "up",
+              "type": "scroll",
+              "position": 240
+            },
+            {
+              "type": "scroll",
+              "timestamp": 7,
+              "direction": "up",
+              "position": 210
+            },
+            {
+              "type": "scroll",
+              "direction": "up",
+              "timestamp": 7,
+              "position": 180
+            },
+            {
+              "type": "scroll",
+              "timestamp": 7,
+              "direction": "up",
+              "position": 150
+            },
+            {
+              "timestamp": 7,
+              "type": "scroll",
+              "direction": "up",
+              "position": 120
+            },
+            {
+              "timestamp": 8,
+              "position": 90,
+              "type": "scroll",
+              "direction": "up"
+            },
+            {
+              "timestamp": 8,
+              "type": "scroll",
+              "position": 60,
+              "direction": "up"
+            },
+            {
+              "type": "scroll",
+              "direction": "up",
+              "position": 30,
+              "timestamp": 8
+            },
+            {
+              "type": "scroll",
+              "timestamp": 8,
+              "direction": "up",
+              "position": 0
+            },
+            {
+              "direction": "up",
+              "timestamp": 8,
+              "position": 0,
+              "type": "scroll"
+            },
+            {
+              "position": 30,
+              "type": "scroll",
+              "timestamp": 9,
+              "direction": "down"
+            },
+            {
+              "direction": "down",
+              "position": 60,
+              "type": "scroll",
+              "timestamp": 9
+            }
+          ],
+          "id": 1759939784532,
+          "timestamp": "2025-10-08T16:09:44.532Z"
+        },
+        {
+          "duration": 3,
+          "timestamp": "2025-10-08T16:11:46.917Z",
+          "events": [
+            {
+              "direction": "down",
+              "position": 30,
+              "type": "scroll",
+              "timestamp": 1
+            },
+            {
+              "direction": "down",
+              "position": 60,
+              "type": "scroll",
+              "timestamp": 2
+            },
+            {
+              "type": "scroll",
+              "direction": "down",
+              "timestamp": 3,
+              "position": 90
+            }
+          ],
+          "id": 1759939906917
+        }
+      ],
+      "fontSize": 1.5999999999999999,
+      "bpm": 130,
+      "id": 1775119161062.4275,
+      "lastModified": "2026-04-02T08:49:50.310Z",
+      "lyrics": "Where it began?\nI can't begin to knowing\nBut then I know\nIt's growing strong\nWas in the spring\nAnd spring became the summer\nWho'd have believed\nYou'd come along\nHands, touching hands\nReaching out\nTouching me\nTouching you\nSweet Caroline\nGood times never seemed so good\nI've been inclined\nTo believe they never would\nBut now I\nLook at the night\nAnd it don't seem so lonely\nWe fill it up with only two\nAnd when I hurt\nHurting runs off my shoulders\nHow can I hurt when holding you?\nWarm, touching warm\nReaching out\nTouching me\nTouching you\nSweet Caroline\nGood times never seemed so good\nI've been inclined\nTo believe they never would\nNo, no, no\nSweet Caroline\nGood times never seemed so good\nSweet Caroline\nI believe it never could\nSweet Caroline\nLa Fuerza del Destino",
+      "active": false
+    },
+    {
+      "artist": "Jonh Paul Jon",
+      "title": "Love is in the air",
+      "notes": "",
+      "bpm": 115,
+      "fontSize": 2.1999999999999997,
+      "lastModified": "2026-04-02T08:49:59.193Z",
+      "lyrics": "Love is in the air, everywhere I look around\nLove is in the air, every sight and every sound\nAnd I don't know if I'm being foolish\nDon't know if I'm being wise\nBut it's something that I must believe in\nAnd it's there when I look in your eyes\nLove is in the air, in the whisper of the tree\nLove is in the air, in the thunder of the sea\nAnd I don't know if I'm just dreaming\nDon't know if I feel safe\nBut it's something that I must believe in\nAnd it's there when you call out my name\nLove is in the air\nLove is in the air\nOh, oh, oh, oh\nLove is in the air, in the rising of the sun\nLove is in the air, when the day is nearly done\nAnd I don't know if you're illusion\nDon't know if I see truth\nBut you're something that I must believe in\nAnd you're there when I reach out for you\nLove is in the air, everywhere I look around\nLove is in the air, every sight and every sound\nAnd I don't know if I'm being foolish\nDon't know if I'm being wise\nBut it's something that I must believe in\nAnd it's there when I look in your eyes\nLove is in the air\nLove is in the air\nOh, oh, oh, oh\nOh, love is in the air\nLove is in the air\nLove's is in the air\nLove's is in the air\nLove is in the air\nLa camisa negra ....",
+      "order": 160,
+      "id": 1775119161062.5442,
+      "active": false,
+      "createdAt": "2025-10-09T16:53:28.359Z"
+    },
+    {
+      "active": false,
+      "title": "Escuela de calor",
+      "createdAt": "2025-10-09T16:53:28.359Z",
+      "lastModified": "2026-04-02T08:50:56.593Z",
+      "notes": "",
+      "artist": "Radio Futura",
+      "lyrics": "Arde la calle al sol de poniente,\nHay tribus ocultas cerca del río\nEsperando que caiga la noche.\nHace falta valor, hace falta valor,\nVen a la escuela de calor.\nSé lo que tengo que hacer para conseguir\nQue tú estés loco por mí.\nVen a mi lado y comprueba el tejido\nMas cuida esas manos, chico.\nEsa paloma sobrevuela el peligro,\nAprendió en una escuela de calor.\nVas por ahí sin prestar atención\nY cae sobre ti una maldición.\nEn las piscina probadas las chicas\nDesnudan sus cuerpos al sol.\nNo des un mal paso, no des un mal paso,\nEsto es una escuela de calor.\nDeja que me acerque,\nDeja que me acerque a ti,\nQuiero vivir del aire,\nQuiero salir de aquí.\nArde la calle al sol de poniente.\nDon’t look back in anger",
+      "id": 1775119161063.8813,
+      "bpm": 127,
+      "order": 170,
+      "fontSize": 1.9999999999999998
+    },
+    {
+      "lyrics": "Haces muy mal en elevar mi tensión\nEn aplastar mi ambición\nTú sigue así y ya verás\nMiro el reloj y es mucho más tarde que ayer\nTe esperaría otra vez\nY no lo haré, no lo haré\nDonde está nuestro error sin solución\nFuiste tu el culpable o lo fui yo\nNi tú ni nadie, nadie puede cambiarme\nMil campanas suenan en mi corazón\nQué difícil es pedir perdón\nNi tú ni nadie, nadie puede cambiarme\nVete de aquí no me supiste entender\nYo solo pienso en tu bien\nNo es necesario mentir\nQué fácil es, atormentarse después\nPero sobreviviré, sé qué podré\nSobreviviré\nDonde está nuestro error sin solución\nFuiste tu el culpable o lo fui yo\nNi tú ni nadie, nadie puede cambiarme\nMil campanas suenan en mi corazón\nQué difícil es pedir perdón\nNi tú ni nadie, nadie puede cambiarme\nMil campanas suenan en mi corazón\nQué difícil es pedir perdón\nNi tú ni nadie, nadie puede cambiarme\nDonde está nuestro error sin solución\nFuiste tu el culpable o lo fui yo\nNi tú ni nadie, nadie puede cambiarme\nMil campanas suenan en mi corazón\nQué difícil es pedir perdón\nNi tú ni nadie, nadie puede cambiarme\nPacto entre caballeros",
+      "notes": "",
+      "bpm": 135,
+      "artist": "Alaska y Dinarama",
+      "order": 185,
+      "id": 1775120022066.6743,
+      "title": "Ni tu ni nadie",
+      "fontSize": 2.4,
+      "active": false,
+      "createdAt": "2026-04-02T08:53:42.066Z",
+      "lastModified": "2026-04-02T09:07:07.110Z",
+      "duration": "",
+      "structure": "",
+      "htmlFile": ""
+    },
+    {
+      "active": false,
+      "lyrics": "Hey, Jude, don't make it bad\nTake a sad song and make it better\nRemember to let her into your heart\nThen you can start to make it better\n:: Solo pandereta en 2-4\nHey, Jude, don't be afraid\nYou were made to go out and get her\nThe minute you let her under your skin\nThen you begin to make it better\n:: Entra la batería\nAnd anytime you feel the pain\nHey, Jude, refrain\nDon't carry the world upon your shoulders\n\nFor well you know that it's a fool\nWho plays it cool\nBy making his world a little colder\nNa-na-na-na-na-na-na-na\n:: SILENCIO\nHey, Jude, don't let me down\nYou have found her, now go and get her\nRemember to let her into your heart\nThen you can start to make it better\n\nSo let it out and let it in\nHey, Jude, begin\nYou're waiting for someone to perform with\nAnd don't you know that is just you?\nHey, Jude, you'll do\nThe movement you need is on your shoulder\nNa-na-na-na-na-na-na-na\n:: SILENCIO\nHey, Jude, don't make it bad\nTake a sad song and make it better\nRemember to let her under your skin\nThen you'll begin to make it better\n(Better, better, better, better, better, oh, yeah)\n\nNa, na-na-na-na-na-na-na-na, hey, Jude\nNa, na-na-na-na-na-na-na-na, hey, Jude\nNa, na-na-na-na-na-na-na-na, hey, Jude\nNa, na-na-na-na-na-na-na-na, hey, Jude",
+      "title": "Hey Jude",
+      "artist": "The Beatles",
+      "order": 190,
+      "fontSize": 2.4,
+      "bpm": 75,
+      "notes": "",
+      "id": 1775119161062.295,
+      "createdAt": "2025-11-29T18:25:41.698Z",
+      "lastModified": "2026-04-02T08:51:28.593Z",
+      "duration": ""
+    },
+    {
+      "id": 1775121835023,
+      "title": "Pacto entre caballeros",
+      "artist": "Artista desconocido",
+      "bpm": 190,
+      "order": 195,
+      "duration": "4:05",
+      "lyrics": "No pasaba de los veinte\nEl mayor de los tres chicos\nQue vinieron a atracarme el mes pasado\n\nSubvenciónanos un pico\nY no te hagas el valiente\nQue me pongo muy nervioso si me enfado\n\nMe pillaron diez quinientas\nY un peluco marca omega\nCon un pincho de cocina en la garganta\nPero el bizco se dio cuenta\nY me dijo: Oye, colega\nTe pareces al sabina ese que canta\n\nEra un noche cualquiera\nPuede ser que fuera trece\n¿Qué más da? Pudiera ser que fuera martes\nSolo se que algunas veces\nCuando menos te lo esperas\nEl diablo va y se pone de tu parte\n\nEste encuentro hay que mojarlo\nCon jarabe de litrona\nCompañeros antes de que cante el gallo\nTranquilo, tronco, perdona\nY un trago pa celebrarlo\nLos tres iban hasta el culo de caballo\n\nA una barra americana\nMe llevaron por la cara\nNo dejaron que pagara ni una ronda\nControlaban tres fulanas\nPero a mí me reservaban\nLos encantos de Maruja, la cachonda\n\nNos pusimos como motos\nCon la birra y los canutos\nSe cortaron de meterse algo más fuerte\nNos hicimos unas fotos\nDe cabina en tres minutos\nParecemos la cuadrilla de la muerte\n\nProtegidos por la Luna\nCogieron prestado un coche\nMe dejaron en mi queli y se borraron\nPor las venas de la noche\nEnróllate y haznos una\nCopla guapa de la tuyas, me gritaron\n\nMe devolvieron intacto\nCon un guiño mi dinero\nLa cadena, la cartera y el reloj\nYo, que siempre cumplo un pacto\nCuando es entre caballeros\nLes tenía que escribir esta canción\n\nHoy venía en el diario\nEl careto del más alto\nNo lo había vuelto a ver desde aquel día\nEscapaba del asalto\nAl chalé de un millonario\nY en la puerta le esperó la policía\nMucha, mucha policía",
+      "notes": "OJO, Tema original a 205BPM, la hacemos algo más lento, pongo metrónomo a 190",
+      "structure": "",
+      "htmlFile": "",
+      "fontSize": 1.4,
+      "active": false,
+      "createdAt": "2026-04-02T09:23:55.023Z",
+      "lastModified": "2026-04-02T09:25:11.538Z"
+    },
+    {
+      "fontSize": 2.4,
+      "id": 1775120022066.4055,
+      "bpm": 160,
+      "title": "I'm a believer",
+      "lyrics": "I thought love was only true in fairy tales\nMeant for someone else but not for me\nOh, love was out to get me\nThat's the way it seems\nDisappointment haunted all my dreams\nThen I saw her face\nNow I'm a believer\nNot a trace\nOf doubt in my mind\nI'm in love\nI'm a believer\nI couldn't leave her if I tried\nI thought love was more or less a given thing\nSeems the more I gave the less I got\nOh, what's the use in trying\nAll you get is pain\nWhen I needed sunshine I got rain\nThen I saw her face\nNow I'm a believer\nNot a trace\nOf doubt in my mind\nI'm in love\nI'm a believer\nI couldn't leave her if I tried\nOh, love was out to get me\nThat's the way it seems\nDisappointment haunted all my dreams\nThen I saw her face\nNow I'm a believer\nNot a trace\nOf doubt in my mind\nI'm in love\nI'm a believer\nI couldn't leave her if I tried\nYes, I saw her face\nNow I'm a believer\nNo not a trace\nOf doubt in my mind\nSaid I'm a believer\n(6x)\nYeah\nI'm a believer\nSaid I'm a believer, yeah\nI'm a believer\nSaid I'm a believer, yeah\nI'm a believer\nBorn to be wild",
+      "notes": "",
+      "order": 360,
+      "artist": "The Monkees",
+      "active": false,
+      "createdAt": "2026-04-02T08:53:42.066Z",
+      "lastModified": "2026-04-02T09:00:47.561Z"
+    },
+    {
+      "bpm": 145,
+      "fontSize": 2.4,
+      "active": false,
+      "notes": "Entrada todos juntos marcando 4",
+      "lyrics": "Get your motor running\nHead out on the highway\nLooking for adventure\nAnd whatever comes our way\n\nYeah, darling, gonna make it happen\nTake the world in a love embrace\nFire all of your guns at once and\nExplode into space\n\nI like smoke and lightning\nHeavy metal thunder\nRacing in the wind\nAnd the feeling that I'm under\n\nYeah, darling, gonna make it happen\nTake the world in a love embrace\nFire all of your guns at once and\nExplode into space\n\nLike a true nature's child\nWe were born, born to be wild\nWe can climb so high\nI never wanna die\n\nBorn to be wild\nBorn to be wild\n\nGet your motor running\nHead out on the highway\nLooking for adventure\nAnd whatever comes our way\n\nYeah, darling, gonna make it happen\nTake the world in a love embrace\nFire all of your guns at once and\nExplode into space\n\nLike a true nature's child\nWe were born, born to be wild\nWe can climb so high\nI never wanna die\n\nBorn to be wild\nBorn to be wild",
+      "id": 1775120022061.805,
+      "order": 999,
+      "artist": "Artista desconocido",
+      "title": "Born to be wild",
+      "createdAt": "2026-04-02T08:53:42.061Z",
+      "lastModified": "2026-04-02T09:13:04.859Z",
+      "duration": "",
+      "structure": "",
+      "htmlFile": ""
+    }
+  ]
+}

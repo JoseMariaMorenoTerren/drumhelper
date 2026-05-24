@@ -266,33 +266,41 @@ class LyricsScroller {
         this.resetScroll();
     }
     
+    escapeHtml(text) {
+        if (text === null || text === undefined) return '';
+        return String(text)
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#39;');
+    }
+
     processTextHighlights(text) {
-        // Procesar imágenes primero (patrón //img=archivo.jpg)
-        let processedText = text.replace(/\/\/img=([^\s]+\.(jpg|jpeg|png|gif|webp))/gi, (match, filename) => {
+        // 1) Escapar HTML antes de inyectar markup propio
+        let processedText = this.escapeHtml(text);
+
+        // 2) Imágenes (solo nombres seguros sin '/')
+        processedText = processedText.replace(/\/\/img=([A-Za-z0-9._-]+\.(jpg|jpeg|png|gif|webp))/gi, (match, filename) => {
             return `<img src="imagenes/${filename}" alt="${filename}" onerror="this.style.display='none'" loading="lazy">`;
         });
-        
-        // Procesar instrucciones de espera (patrón //espera=XXX)
+
+        // 3) Instrucciones de espera
         processedText = processedText.replace(/\/\/espera=(\d+)/gi, (match, seconds) => {
             const waitId = `wait-instruction-${LyricsScroller.globalWaitCounter++}`;
             return `<span class="wait-instruction" id="${waitId}" data-seconds="${seconds}">espera ${seconds}s</span>`;
         });
-        
-        // Convertir texto entre /0 y 0/ a HTML resaltado amarillo
+
+        // 4) Resaltados (sobre texto ya escapado)
         processedText = processedText.replace(/\/0(.*?)0\//g, '<span class="highlight-yellow">$1</span>');
-        // Convertir texto entre /1 y 1/ a HTML resaltado azul
         processedText = processedText.replace(/\/1(.*?)1\//g, '<span class="highlight-blue">$1</span>');
-        // Convertir texto entre /3 y 3/ a HTML resaltado verde
         processedText = processedText.replace(/\/3(.*?)3\//g, '<span class="highlight-green">$1</span>');
-        
-        // Aplicar colores cuando el código está al principio de línea (sin cierre)
-        // /0 al principio = resto de línea en amarillo
+
+        // 5) Códigos al principio de línea (resto de línea coloreada)
         processedText = processedText.replace(/^\/0(.*)$/gm, '<span class="highlight-yellow">$1</span>');
-        // /1 al principio = resto de línea en azul
         processedText = processedText.replace(/^\/1(.*)$/gm, '<span class="highlight-blue">$1</span>');
-        // /3 al principio = resto de línea en verde
         processedText = processedText.replace(/^\/3(.*)$/gm, '<span class="highlight-green">$1</span>');
-        
+
         return processedText;
     }
     

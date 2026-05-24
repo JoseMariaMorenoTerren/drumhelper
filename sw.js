@@ -1,5 +1,5 @@
 // Service Worker para Drum Helper PWA
-const CACHE_NAME = 'drum-helper-v1.3.3';
+const CACHE_NAME = 'drum-helper-v1.3.4';
 const urlsToCache = [
     './',
     './index.html',
@@ -8,8 +8,14 @@ const urlsToCache = [
     './js/metronome.js',
     './js/lyricsScroller.js',
     './js/songManager.js',
+    './js/midiHandler.js',
     './manifest.json'
 ];
+
+// Solo cacheamos respuestas correctas y básicas (mismo origen).
+function isCacheable(response) {
+    return response && response.ok && response.type === 'basic';
+}
 
 // Instalación del Service Worker
 self.addEventListener('install', (event) => {
@@ -56,12 +62,14 @@ self.addEventListener('fetch', (event) => {
         event.respondWith(
             fetch(event.request)
                 .then((response) => {
-                    // Si la red funciona, cachear la nueva versión
-                    const responseClone = response.clone();
-                    caches.open(CACHE_NAME)
-                        .then((cache) => {
-                            cache.put(event.request, responseClone);
-                        });
+                    // Solo cachear si la respuesta es válida (evita persistir 404/500)
+                    if (isCacheable(response)) {
+                        const responseClone = response.clone();
+                        caches.open(CACHE_NAME)
+                            .then((cache) => {
+                                cache.put(event.request, responseClone);
+                            });
+                    }
                     return response;
                 })
                 .catch((error) => {
@@ -91,11 +99,13 @@ self.addEventListener('fetch', (event) => {
                     // Si no está en cache, buscar en red y cachear
                     return fetch(event.request)
                         .then((response) => {
-                            const responseClone = response.clone();
-                            caches.open(CACHE_NAME)
-                                .then((cache) => {
-                                    cache.put(event.request, responseClone);
-                                });
+                            if (isCacheable(response)) {
+                                const responseClone = response.clone();
+                                caches.open(CACHE_NAME)
+                                    .then((cache) => {
+                                        cache.put(event.request, responseClone);
+                                    });
+                            }
                             return response;
                         });
                 })

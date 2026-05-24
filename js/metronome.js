@@ -2,10 +2,17 @@ class Metronome {
     constructor() {
         this.bpm = 120;
         this.isPlaying = false;
-        this.intervalId = null;
         this.beatCount = 0;
         this.tapTimes = [];
-        
+
+        // --- Scheduler (Web Audio lookahead) ---
+        // Basado en el patrón de Chris Wilson "A Tale of Two Clocks".
+        this.lookahead = 25.0;          // ms: cada cuánto corre el scheduler
+        this.scheduleAheadTime = 0.1;   // s: cuánto futuro programar por adelantado
+        this.nextNoteTime = 0.0;        // s: tiempo absoluto del próximo beat (audioContext.currentTime)
+        this.schedulerTimerId = null;   // setInterval del scheduler
+        this.scheduledVisuals = [];     // timeouts pendientes para parpadeo visual
+
         this.beatIndicator = document.getElementById('beat-indicator');
         this.bpmInput = document.getElementById('bpm-input');
         this.bpmText = document.getElementById('bpm-text');
@@ -14,16 +21,16 @@ class Metronome {
         this.bpmMinus10Btn = document.getElementById('bpm-minus-10');
         this.bpmPlus1Btn = document.getElementById('bpm-plus-1');
         this.bpmPlus10Btn = document.getElementById('bpm-plus-10');
-        
+
         this.initializeEventListeners();
         this.createAudioContext();
-        
+
         // Inicializar el texto BPM en el círculo
         if (this.bpmText) {
             this.bpmText.textContent = this.bpm;
         }
     }
-    
+
     createAudioContext() {
         try {
             this.audioContext = new (window.AudioContext || window.webkitAudioContext)();
@@ -32,73 +39,60 @@ class Metronome {
             this.audioContext = null;
         }
     }
-    
+
     initializeEventListeners() {
+        // 'change' evita que cada keystroke reinicie el metrónomo.
+        // Para feedback visual mientras se teclea, actualizamos el círculo en 'input'
+        // pero sólo aplicamos un setBPM real en 'change'.
         this.bpmInput.addEventListener('input', (e) => {
+            const v = parseInt(e.target.value);
+            if (!isNaN(v) && this.bpmText) {
+                this.bpmText.textContent = v;
+            }
+        });
+
+        this.bpmInput.addEventListener('change', (e) => {
             this.setBPM(parseInt(e.target.value));
         });
-        
+
         this.tapTempoBtn.addEventListener('click', () => {
             this.tapTempo();
         });
-        
-        // Beat indicator como botón de play/pause (clic) y stop (doble clic)
+
         this.beatIndicator.addEventListener('click', () => {
             this.togglePlayPause();
         });
-        
+
         this.beatIndicator.addEventListener('dblclick', () => {
             this.stop();
         });
-        
-        // Botones de incremento/decremento BPM
-        this.bpmMinus1Btn.addEventListener('click', () => {
-            this.changeBPM(-1);
-        });
-        
-        this.bpmMinus10Btn.addEventListener('click', () => {
-            this.changeBPM(-10);
-        });
-        
-        this.bpmPlus1Btn.addEventListener('click', () => {
-            this.changeBPM(1);
-        });
-        
-        this.bpmPlus10Btn.addEventListener('click', () => {
-            this.changeBPM(10);
-        });
+
+        this.bpmMinus1Btn.addEventListener('click', () => { this.changeBPM(-1); });
+        this.bpmMinus10Btn.addEventListener('click', () => { this.changeBPM(-10); });
+        this.bpmPlus1Btn.addEventListener('click', () => { this.changeBPM(1); });
+        this.bpmPlus10Btn.addEventListener('click', () => { this.changeBPM(10); });
     }
-    
+
     setBPM(bpm) {
-        if (bpm >= 40 && bpm <= 300) {
-            this.bpm = bpm;
-            this.bpmInput.value = bpm;
-            
-            // Actualizar información en el header
-            document.getElementById('current-bpm').textContent = `BPM: ${bpm}`;
-            
-            // Actualizar el texto dentro del círculo del metrónomo
-            const bpmText = document.getElementById('bpm-text');
-            if (bpmText) {
-                bpmText.textContent = bpm;
-            }
-            
-            // Si está reproduciendo, reiniciar con el nuevo tempo
-            if (this.isPlaying) {
-                this.stop();
-                this.play();
-            }
-            
-            // Notificar a otros componentes del cambio de BPM
-            this.dispatchBPMChange();
-        }
+        if (isNaN(bpm) || bpm < 40 || bpm > 300) return;
+
+        this.bpm = bpm;
+        this.bpmInput.value = bpm;
+
+        const currentBpm = document.getElementById('current-bpm');
+        if (currentBpm) currentBpm.textContent = `BPM: ${bpm}`;
+        if (this.bpmText) this.bpmText.textContent = bpm;
+
+        // El scheduler usa this.bpm directamente cada tick, así que el cambio
+        // se aplica sin reiniciar el reloj de audio (sin clicks ni glitches).
+
+        this.dispatchBPMChange();
     }
-    
+
     changeBPM(delta) {
-        const newBPM = this.bpm + delta;
-        this.setBPM(newBPM);
+        this.setBPM(this.bpm + delta);
     }
-    
+
     togglePlayPause() {
         if (this.isPlaying) {
             this.pause();
@@ -106,124 +100,164 @@ class Metronome {
             this.play();
         }
     }
-    
+
     play() {
-        if (!this.isPlaying) {
+        if (this.isPlaying) return;
+        if (!this.audioContext) {
+            // No hay audio - emulamos el ciclo solo para los eventos visuales.
             this.isPlaying = true;
-            
-            // Reanudar el contexto de audio si está suspendido
-            if (this.audioContext && this.audioContext.state === 'suspended') {
-                this.audioContext.resume();
-            }
-            
-            const interval = (60 / this.bpm) * 1000; // Convertir BPM a milisegundos
-            
-            this.intervalId = setInterval(() => {
-                this.beat();
-            }, interval);
-            
-            // Ejecutar el primer beat inmediatamente
-            this.beat();
+            this.beatCount = 0;
+            this._fallbackInterval = setInterval(() => this._fallbackTick(), (60 / this.bpm) * 1000);
+            this._fallbackTick();
+            return;
         }
+
+        // Reanudar el contexto de audio si está suspendido (autoplay policy).
+        if (this.audioContext.state === 'suspended') {
+            this.audioContext.resume();
+        }
+
+        this.isPlaying = true;
+        this.beatCount = 0;
+        this.nextNoteTime = this.audioContext.currentTime + 0.05; // pequeño lead-in
+        this.scheduler();
+        this.schedulerTimerId = setInterval(() => this.scheduler(), this.lookahead);
     }
-    
+
     pause() {
-        if (this.isPlaying) {
-            this.isPlaying = false;
-            
-            if (this.intervalId) {
-                clearInterval(this.intervalId);
-                this.intervalId = null;
-            }
+        if (!this.isPlaying) return;
+        this.isPlaying = false;
+
+        if (this.schedulerTimerId) {
+            clearInterval(this.schedulerTimerId);
+            this.schedulerTimerId = null;
         }
+        if (this._fallbackInterval) {
+            clearInterval(this._fallbackInterval);
+            this._fallbackInterval = null;
+        }
+
+        // Cancelar parpadeos visuales pendientes
+        this.scheduledVisuals.forEach(t => clearTimeout(t));
+        this.scheduledVisuals = [];
     }
-    
+
     stop() {
         this.pause();
         this.beatCount = 0;
         this.resetBeatIndicator();
     }
-    
-    beat() {
+
+    // Patrón de scheduler con lookahead: programa cada beat usando el reloj de audio
+    scheduler() {
+        if (!this.audioContext) return;
+
+        while (this.nextNoteTime < this.audioContext.currentTime + this.scheduleAheadTime) {
+            this.scheduleBeat(this.nextNoteTime);
+            this.advanceBeat();
+        }
+    }
+
+    scheduleBeat(time) {
+        // Audio: oscilador programado en tiempo absoluto
+        try {
+            const osc = this.audioContext.createOscillator();
+            const gain = this.audioContext.createGain();
+
+            osc.connect(gain);
+            gain.connect(this.audioContext.destination);
+
+            osc.frequency.setValueAtTime(400, time);
+            gain.gain.setValueAtTime(0.3, time);
+            gain.gain.exponentialRampToValueAtTime(0.01, time + 0.1);
+
+            osc.start(time);
+            osc.stop(time + 0.1);
+        } catch (error) {
+            console.warn('Error programando beat:', error);
+        }
+
+        // Visual + evento: se ejecutan cuando el beat suena
+        const delayMs = Math.max(0, (time - this.audioContext.currentTime) * 1000);
+        const beatCountSnapshot = this.beatCount + 1;
+        const bpmSnapshot = this.bpm;
+
+        const visualTimer = setTimeout(() => {
+            if (!this.isPlaying) return;
+            this.beatCount = beatCountSnapshot;
+            this.visualBeat();
+            window.dispatchEvent(new CustomEvent('metronome-beat', {
+                detail: {
+                    beatCount: beatCountSnapshot,
+                    bpm: bpmSnapshot,
+                    isStrongBeat: false
+                }
+            }));
+        }, delayMs);
+
+        this.scheduledVisuals.push(visualTimer);
+        // Limpieza periódica: eliminamos los timers cuya callback ya disparó
+        if (this.scheduledVisuals.length > 32) {
+            this.scheduledVisuals = this.scheduledVisuals.slice(-16);
+        }
+    }
+
+    advanceBeat() {
+        const secondsPerBeat = 60.0 / this.bpm;
+        this.nextNoteTime += secondsPerBeat;
+    }
+
+    // Camino de fallback cuando no hay AudioContext
+    _fallbackTick() {
         this.beatCount++;
         this.visualBeat();
-        this.audioBeat();
-        
-        // Notificar a otros componentes del beat
         window.dispatchEvent(new CustomEvent('metronome-beat', {
-            detail: { 
-                beatCount: this.beatCount,
-                bpm: this.bpm,
-                isStrongBeat: false // Todos los beats son iguales
-            }
+            detail: { beatCount: this.beatCount, bpm: this.bpm, isStrongBeat: false }
         }));
     }
-    
+
     visualBeat() {
         this.beatIndicator.classList.add('active');
         setTimeout(() => {
             this.beatIndicator.classList.remove('active');
         }, 100);
     }
-    
-    audioBeat() {
-        if (!this.audioContext) return;
-        
-        try {
-            const oscillator = this.audioContext.createOscillator();
-            const gainNode = this.audioContext.createGain();
-            
-            oscillator.connect(gainNode);
-            gainNode.connect(this.audioContext.destination);
-            
-            // Frecuencia igual para todos los beats
-            oscillator.frequency.setValueAtTime(400, this.audioContext.currentTime);
-            
-            // Volumen
-            gainNode.gain.setValueAtTime(0.3, this.audioContext.currentTime);
-            gainNode.gain.exponentialRampToValueAtTime(0.01, this.audioContext.currentTime + 0.1);
-            
-            oscillator.start(this.audioContext.currentTime);
-            oscillator.stop(this.audioContext.currentTime + 0.1);
-        } catch (error) {
-            console.warn('Error reproduciendo sonido del metrónomo:', error);
-        }
-    }
-    
+
     resetBeatIndicator() {
         this.beatIndicator.classList.remove('active');
     }
-    
+
     tapTempo() {
         const now = Date.now();
+
+        // Descartar taps antiguos (más de 2s desde el último) antes de añadir el nuevo
+        if (this.tapTimes.length > 0 && now - this.tapTimes[this.tapTimes.length - 1] > 2000) {
+            this.tapTimes = [];
+        }
+
         this.tapTimes.push(now);
-        
+
         // Mantener solo los últimos 5 taps
         if (this.tapTimes.length > 5) {
             this.tapTimes.shift();
         }
-        
+
         // Calcular BPM si tenemos al menos 2 taps
         if (this.tapTimes.length >= 2) {
             const intervals = [];
             for (let i = 1; i < this.tapTimes.length; i++) {
                 intervals.push(this.tapTimes[i] - this.tapTimes[i - 1]);
             }
-            
+
             const averageInterval = intervals.reduce((a, b) => a + b, 0) / intervals.length;
             const calculatedBPM = Math.round(60000 / averageInterval);
-            
+
             if (calculatedBPM >= 40 && calculatedBPM <= 300) {
                 this.setBPM(calculatedBPM);
             }
         }
-        
-        // Limpiar taps antiguos (más de 3 segundos)
-        setTimeout(() => {
-            this.tapTimes = this.tapTimes.filter(time => now - time < 3000);
-        }, 3000);
     }
-    
+
     dispatchBPMChange() {
         window.dispatchEvent(new CustomEvent('bpm-change', {
             detail: { bpm: this.bpm }
