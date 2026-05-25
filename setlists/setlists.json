@@ -9,127 +9,103 @@
       "setlistName": "Setlist Concierto",
       "showArtistBpm": false,
       "hideNotes": false,
-      "activeSongId": "song_0003",
+      "activeSongId": "song_0021",
       "entries": [
         {
-          "songId": "song_0003",
+          "songId": "song_0021",
           "order": 10
         },
         {
-          "songId": "song_0007",
+          "songId": "song_0019",
           "order": 20
         },
         {
-          "songId": "song_0010",
+          "songId": "song_0101",
           "order": 30
         },
         {
-          "songId": "song_0002",
+          "songId": "song_0045",
           "order": 40
         },
         {
-          "songId": "song_0004",
+          "songId": "song_0008",
           "order": 50
         },
         {
-          "songId": "song_0023",
+          "songId": "song_0001",
           "order": 60
         },
         {
-          "songId": "song_0042",
+          "songId": "song_0011",
           "order": 70
         },
         {
-          "songId": "song_0044",
+          "songId": "song_0100",
           "order": 80
         },
         {
-          "songId": "song_0043",
+          "songId": "song_0007",
           "order": 90
         },
         {
-          "songId": "song_0019",
+          "songId": "song_0006",
           "order": 100
         },
         {
-          "songId": "song_0006",
+          "songId": "song_0026",
           "order": 110
         },
         {
-          "songId": "song_0034",
+          "songId": "song_0025",
           "order": 120
         },
         {
-          "songId": "song_0014",
+          "songId": "song_0010",
           "order": 130
         },
         {
-          "songId": "song_0012",
+          "songId": "song_0024",
           "order": 140
         },
         {
-          "songId": "song_0025",
+          "songId": "song_0023",
           "order": 150
         },
         {
-          "songId": "song_0011",
+          "songId": "song_0020",
           "order": 160
         },
         {
-          "songId": "song_0100",
+          "songId": "song_0032",
           "order": 170
         },
         {
-          "songId": "song_0016",
+          "songId": "song_0012",
           "order": 180
         },
         {
-          "songId": "song_0101",
+          "songId": "song_0028",
           "order": 190
         },
         {
-          "songId": "song_0026",
+          "songId": "song_0030",
           "order": 200
         },
         {
-          "songId": "song_0017",
+          "songId": "song_0033",
           "order": 210
         },
         {
-          "songId": "song_0001",
+          "songId": "song_0018",
           "order": 220
         },
         {
-          "songId": "song_0051",
+          "songId": "song_0017",
           "order": 230
-        },
-        {
-          "songId": "song_0008",
-          "order": 240
-        },
-        {
-          "songId": "song_0029",
-          "order": 250
-        },
-        {
-          "songId": "song_0028",
-          "order": 260
-        },
-        {
-          "songId": "song_0018",
-          "order": 270
-        },
-        {
-          "songId": "song_0020",
-          "order": 280
-        },
-        {
-          "songId": "song_0030",
-          "order": 290
         }
       ],
       "createdAt": "2026-05-24T10:06:55.375293",
-      "lastModified": "2026-05-24T11:13:26.298156"
+      "lastModified": "2026-05-25T11:18:23.698093"
     },
     "repertoire_bluemoons_setlist_01": {
       "id": "repertoire_bluemoons_setlist_01",

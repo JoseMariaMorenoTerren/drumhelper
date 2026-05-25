@@ -46,6 +46,7 @@ class SongManager {
         this.modalImportCompleteBtn = document.getElementById('modal-import-complete-btn');
         this.modalExportJsonBtn = document.getElementById('modal-export-json-btn');
         this.modalClearAllBtn = document.getElementById('modal-clear-all-btn');
+        this.modalResetAppBtn = document.getElementById('modal-reset-app-btn');
         this.importFileInput = document.getElementById('import-file-input');
         this.importTxtFileInput = document.getElementById('import-txt-file-input');
         this.importCompleteFileInput = document.getElementById('import-complete-file-input');
@@ -294,6 +295,13 @@ class SongManager {
             this.closeDataOptionsModalFunc();
             this.clearAllSongs();
         });
+
+        if (this.modalResetAppBtn) {
+            this.modalResetAppBtn.addEventListener('click', () => {
+                this.closeDataOptionsModalFunc();
+                this.resetAppData();
+            });
+        }
         
         // Cerrar modal al hacer click fuera
         this.dataOptionsModal.addEventListener('click', (e) => {
@@ -2331,6 +2339,44 @@ Says, "Find a home"
     }
 
     // Función para borrar todas las canciones con confirmación
+    // Reinicia la app: borra localStorage, limpia caches del SW y recarga.
+    // Equivalente a abrir la URL con ?reset=1 — útil para iPad / móvil donde no se puede modificar la URL fácilmente.
+    async resetAppData() {
+        const confirmMessage =
+            '⚠️ REINICIAR APLICACIÓN\n\n' +
+            'Esto borrará TODOS los datos locales (canciones, repertorios, ajustes) y recargará la app ' +
+            'descargando el catálogo y setlists desde el servidor.\n\n' +
+            'Tus cambios locales se perderán si no los has exportado.\n\n' +
+            '¿Continuar?';
+
+        if (!confirm(confirmMessage)) {
+            console.log('Reset cancelado por el usuario');
+            return;
+        }
+
+        try {
+            // 1) Borrar todas las claves drumhelper-* de localStorage
+            const keys = Object.keys(localStorage);
+            const drumKeys = keys.filter(k => k.startsWith('drumhelper-'));
+            drumKeys.forEach(k => localStorage.removeItem(k));
+            console.log(`🧹 Eliminadas ${drumKeys.length} claves de localStorage`);
+
+            // 2) Borrar caches del Service Worker (para que el bootstrap descargue JSON fresco)
+            if ('caches' in window) {
+                const names = await caches.keys();
+                await Promise.all(names.map(n => caches.delete(n)));
+                console.log(`🧹 Eliminados ${names.length} caches del SW`);
+            }
+
+            // 3) Recargar — el bootstrap repoblará todo desde setlists/songs.json y setlists/setlists.json
+            this.showNotification('🔄 Reiniciando aplicación…', 'info');
+            setTimeout(() => window.location.reload(), 300);
+        } catch (e) {
+            console.error('Error reiniciando la app:', e);
+            this.showNotification('❌ Error reiniciando la app: ' + e.message, 'error');
+        }
+    }
+
     clearAllSongs() {
         console.log(`🗑️  Iniciando proceso de borrado de todas las canciones...`);
         console.log(`📊 Canciones actuales: ${this.songs.length}`);
