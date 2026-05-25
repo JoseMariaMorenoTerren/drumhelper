@@ -685,6 +685,24 @@ function handleMIDIEvent(midiEvent) {
     }
 }
 
+// Soporte de ?reset=1 para vaciar localStorage antes de inicializar (útil para desarrollo / bootstrap).
+(function handleResetParam() {
+    try {
+        const params = new URLSearchParams(window.location.search);
+        if (params.has('reset')) {
+            const keys = Object.keys(localStorage);
+            const drumKeys = keys.filter(k => k.startsWith('drumhelper-'));
+            drumKeys.forEach(k => localStorage.removeItem(k));
+            console.log(`🧹 Reset: eliminadas ${drumKeys.length} claves de localStorage`, drumKeys);
+            // Quitar el parámetro de la URL para que un reload no repita el reset
+            const cleanUrl = window.location.pathname + window.location.hash;
+            window.history.replaceState({}, '', cleanUrl);
+        }
+    } catch (e) {
+        console.warn('Error procesando ?reset:', e);
+    }
+})();
+
 // Inicializar la aplicación
 const app = new DrumHelperApp();
 

@@ -1,12 +1,27 @@
 class SongManager {
     constructor() {
+        // --- Modelo v2 (catálogo global + setlists por referencia) ---
+        // Catálogo de canciones único: songId -> objeto canción.
+        this.catalog = new Map();
+        // Repertorios: repertoireId -> { id, name, ..., entries: [{songId, order}], activeSongId }
+        this.repertoires = new Map();
+        this.currentRepertoireId = 'default';
+
+        // Estado derivado (no se persiste): canciones del repertorio actual resueltas desde el catálogo,
+        // con `order` inyectado para preservar compatibilidad con el resto de la UI.
         this.songs = [];
         this.currentSong = null;
-        this.setlistName = 'Canciones'; // Nombre por defecto
-        this.storageKey = 'drumhelper-songs';
-        this.repertoiresKey = 'drumhelper-repertoires';
-        this.currentRepertoireId = 'default';
-        this.repertoires = new Map();
+        this.setlistName = 'Canciones';
+
+        // Claves de almacenamiento
+        this.catalogKey = 'drumhelper-catalog-v2';
+        this.repertoiresKeyV2 = 'drumhelper-repertoires-v2';
+        // Claves del formato antiguo (para migración)
+        this.legacySongsKey = 'drumhelper-songs';
+        this.legacyRepertoiresKey = 'drumhelper-repertoires';
+        // Compatibilidad: algunas funciones leen estos nombres
+        this.storageKey = this.legacySongsKey;
+        this.repertoiresKey = this.legacyRepertoiresKey;
         
         this.songList = document.getElementById('song-list');
         this.orderModeBtn = document.getElementById('order-mode-btn');
@@ -103,9 +118,9 @@ class SongManager {
         this.tempOrderCounter = 0; // Variable temporal que empieza en 0
         
         this.initializeEventListeners();
-        this.loadRepertoires();
-        this.loadSongs();
-        this.loadDefaultSongs();
+        this._loadFromStorage();      // Carga v2 o migra desde v1
+        this.loadDefaultSongs();      // Inicializa canciones por defecto si está vacío
+        this._rebuildSongs();         // Materializa this.songs desde el repertorio actual
         this.renderSongs();
         
         // Seleccionar canción activa después de un breve delay para asegurar que todos los componentes estén listos
@@ -424,7 +439,27 @@ class SongManager {
     }
     
     loadDefaultSongs() {
-        if (this.songs.length === 0) {
+        // Solo añadir defaults si catálogo Y repertorio actual están vacíos.
+        const rep = this.repertoires.get(this.currentRepertoireId);
+        if (this.catalog.size > 0 || (rep && rep.entries.length > 0)) {
+            return;
+        }
+
+        // Bootstrap: intentar cargar setlists/songs.json + setlists/setlists.json del servidor.
+        // Si tiene éxito, sustituye a las canciones de muestra hardcoded.
+        this._bootstrapFromServer().then(loaded => {
+            if (loaded) {
+                this._rebuildSongs();
+                this.renderSongs();
+                this.updateRepertoireSelect();
+                this.updateCurrentRepertoireName();
+                // Activar la primera canción del repertorio cargado
+                setTimeout(() => this.selectActiveSong(), 50);
+                this.showNotification(`✅ Cargado catálogo inicial: ${this.catalog.size} canciones, ${this.repertoires.size} repertorios`, 'success');
+            }
+        }).catch(err => console.warn('Bootstrap desde servidor falló:', err));
+
+        if (true) {
             const defaultSongs = [
                 {
                     id: 1,
@@ -539,131 +574,370 @@ Says, "Find a home"
                 }
             ];
             
-            defaultSongs.forEach(song => {
-                this.songs.push(song);
+            // Insertar en el catálogo y como entries del repertorio actual
+            const currentRep = this.repertoires.get(this.currentRepertoireId);
+            defaultSongs.forEach((song, idx) => {
+                const newId = this._newSongId();
+                const now = new Date().toISOString();
+                const canonical = {
+                    id: newId,
+                    title: song.title,
+                    artist: song.artist,
+                    bpm: song.bpm,
+                    lyrics: song.lyrics,
+                    notes: song.notes || '',
+                    structure: '',
+                    duration: '',
+                    htmlFile: '',
+                    fontSize: song.fontSize || 2.4,
+                    recordings: [],
+                    createdAt: now,
+                    lastModified: now
+                };
+                this.catalog.set(newId, canonical);
+                if (currentRep) {
+                    currentRep.entries.push({ songId: newId, order: (idx + 1) * 10 });
+                    if (song.active) currentRep.activeSongId = newId;
+                }
             });
-            
-            this.saveSongs();
+            this._saveCatalog();
+            this._saveRepertoiresV2();
         }
     }
-    
-    loadSongs() {
-        console.log('🎵 Cargando canciones del repertorio actual...');
-        
-        // Primero verificar si ya tenemos repertorios configurados
-        if (this.repertoires.size > 0) {
-            console.log('📁 Usando sistema de repertorios');
-            const currentRepertoire = this.repertoires.get(this.currentRepertoireId);
-            
-            if (currentRepertoire) {
-                this.songs = [...(currentRepertoire.songs || [])];
-                this.setlistName = currentRepertoire.setlistName || 'Canciones';
-                console.log(`📂 Cargadas ${this.songs.length} canciones del repertorio "${currentRepertoire.name}"`);
+
+    // ===== CAPA DE DATOS v2 (catálogo + setlists por referencia) =====
+
+    // Clave de deduplicación: title + artist normalizados
+    _canonicalKey(title, artist) {
+        const norm = (s) => (s || '')
+            .toString()
+            .normalize('NFKD')
+            .replace(/[̀-ͯ]/g, '')
+            .replace(/[^\w\s]/g, '')
+            .replace(/\s+/g, ' ')
+            .trim()
+            .toLowerCase();
+        return `${norm(title)}|${norm(artist)}`;
+    }
+
+    _findInCatalog(title, artist) {
+        const key = this._canonicalKey(title, artist);
+        for (const song of this.catalog.values()) {
+            if (this._canonicalKey(song.title, song.artist) === key) {
+                return song;
+            }
+        }
+        return null;
+    }
+
+    _newSongId() {
+        return `song_${Date.now().toString(36)}_${Math.floor(Math.random() * 1e6).toString(36)}`;
+    }
+
+    _newRepertoireId(name) {
+        const slug = (name || 'repertoire')
+            .normalize('NFKD').replace(/[̀-ͯ]/g, '')
+            .toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/^_|_$/g, '')
+            .substring(0, 30);
+        return `repertoire_${slug}_${Date.now().toString(36)}`;
+    }
+
+    // Carga desde localStorage v2; si no existe, migra desde v1 con backup.
+    _loadFromStorage() {
+        try {
+            const v2Catalog = localStorage.getItem(this.catalogKey);
+            const v2Reps = localStorage.getItem(this.repertoiresKeyV2);
+
+            if (v2Catalog && v2Reps) {
+                console.log('📚 Cargando datos v2 desde localStorage');
+                const catalogData = JSON.parse(v2Catalog);
+                const repsData = JSON.parse(v2Reps);
+                this.catalog = new Map(Object.entries(catalogData.songs || {}));
+                this.repertoires = new Map(Object.entries(repsData.repertoires || {}));
+                this.currentRepertoireId = repsData.currentRepertoireId || 'default';
             } else {
-                console.log('⚠️ Repertorio actual no encontrado, inicializando vacío');
-                this.songs = [];
-                this.setlistName = 'Canciones';
-            }
-        } else {
-            // Si no hay repertorios, cargar del formato anterior (migración)
-            console.log('🔄 Migrando desde formato anterior...');
-            const stored = localStorage.getItem(this.storageKey);
-            if (stored) {
-                const data = JSON.parse(stored);
-                
-                // Si el dato es un array (formato antiguo), convertir al nuevo formato
-                if (Array.isArray(data)) {
-                    this.songs = data;
-                    this.setlistName = 'Canciones';
+                // Sin datos v2 — intentar migrar desde v1
+                const hasV1 = localStorage.getItem(this.legacyRepertoiresKey) || localStorage.getItem(this.legacySongsKey);
+                if (hasV1) {
+                    console.log('🔄 Migrando datos v1 → v2…');
+                    this._migrateFromV1();
                 } else {
-                    // Nuevo formato con setlistName
-                    this.songs = data.songs || [];
-                    this.setlistName = data.setlistName || 'Canciones';
-                }
-                
-                // Migrar al repertorio por defecto
-                if (this.repertoires.has('default')) {
-                    const defaultRepertoire = this.repertoires.get('default');
-                    defaultRepertoire.songs = [...this.songs];
-                    defaultRepertoire.setlistName = this.setlistName;
-                    this.saveRepertoires();
-                    console.log('✅ Migración completada');
+                    console.log('🆕 Sin datos previos — inicializando vacío');
+                    this.catalog = new Map();
+                    this.repertoires = new Map();
+                    this.currentRepertoireId = 'default';
                 }
             }
+
+            // Garantizar repertorio por defecto
+            if (!this.repertoires.has('default') && this.repertoires.size === 0) {
+                this.repertoires.set('default', {
+                    id: 'default',
+                    name: 'Repertorio Principal',
+                    setlistName: 'Canciones',
+                    showArtistBpm: false,
+                    hideNotes: false,
+                    activeSongId: null,
+                    entries: [],
+                    createdAt: new Date().toISOString(),
+                    lastModified: new Date().toISOString()
+                });
+            }
+
+            // Si el currentRepertoireId no existe, caer al primero disponible
+            if (!this.repertoires.has(this.currentRepertoireId)) {
+                this.currentRepertoireId = this.repertoires.keys().next().value || 'default';
+            }
+
+            // Migrar repertorios v2 existentes con campos faltantes
+            this.repertoires.forEach((rep) => {
+                if (!Array.isArray(rep.entries)) rep.entries = [];
+                if (rep.showArtistBpm === undefined) rep.showArtistBpm = false;
+                if (rep.hideNotes === undefined) rep.hideNotes = false;
+                if (rep.activeSongId === undefined) rep.activeSongId = null;
+                if (!rep.lastModified) rep.lastModified = rep.createdAt || new Date().toISOString();
+            });
+
+            const current = this.repertoires.get(this.currentRepertoireId);
+            this.setlistName = (current && current.setlistName) || 'Canciones';
+
+            this.updateRepertoireSelect && this.updateRepertoireSelect();
+            this.updateCurrentRepertoireName && this.updateCurrentRepertoireName();
+            if (current) {
+                this.applyDisplaySettings && this.applyDisplaySettings(current);
+            }
+            console.log(`✅ Estado cargado: ${this.catalog.size} canciones, ${this.repertoires.size} repertorios`);
+        } catch (error) {
+            console.error('❌ Error cargando datos:', error);
+            this.catalog = new Map();
+            this.repertoires = new Map();
+            this.currentRepertoireId = 'default';
         }
-        
-        // Añadir propiedades faltantes a canciones existentes
-        let hasActiveSong = false;
-        let needsSave = false;
-        
-        this.songs.forEach(song => {
-            if (song.active === undefined) {
-                song.active = false;
-                needsSave = true;
-            }
-            if (song.notes === undefined) {
-                song.notes = '';
-                needsSave = true;
-            }
-            if (song.order === undefined) {
-                song.order = 0;
-                needsSave = true;
-            }
-            // Migrar fechas para canciones existentes
-            if (!song.createdAt) {
-                // Usar el ID como fecha aproximada de creación (si es timestamp)
-                const createdDate = (typeof song.id === 'number' && song.id > 1000000000000) 
-                    ? new Date(song.id).toISOString() 
-                    : new Date().toISOString();
-                song.createdAt = createdDate;
-                song.lastModified = createdDate;
-                needsSave = true;
-            }
-            if (!song.lastModified && song.createdAt) {
-                song.lastModified = song.createdAt;
-                needsSave = true;
-            }
-            if (song.active === true) {
-                hasActiveSong = true;
-            }
-        });
-        
-        // Guardar cambios de migración si es necesario
-        if (needsSave) {
-            console.log('📅 Migrando fechas de canciones existentes...');
-            this.saveSongs();
-        }
-        
-        // Si no hay ninguna canción activa, marcar la primera como activa
-        if (!hasActiveSong && this.songs.length > 0) {
-            this.songs[0].active = true;
-            this.saveSongs(); // Guardar el cambio
-        }
-        
-        console.log(`🎼 Canciones finales cargadas: ${this.songs.length}`);
     }
-    
-    saveSongs() {
-        // Ordenar las canciones por el campo 'order' antes de guardar
-        const sortedSongs = [...this.songs].sort((a, b) => {
-            // Primero por orden (ascendente), luego por título si el orden es igual
-            if (a.order !== b.order) {
-                return a.order - b.order;
-            }
-            return a.title.localeCompare(b.title);
-        });
-        
-        const data = {
-            setlistName: this.setlistName,
-            songs: sortedSongs
+
+    // Migra del modelo v1 (canciones incrustadas) al v2 (catálogo + entries)
+    _migrateFromV1() {
+        // Backup en localStorage por si algo va mal
+        const backupKey = `drumhelper-backup-v1-${Date.now()}`;
+        const backup = {
+            songs: localStorage.getItem(this.legacySongsKey),
+            repertoires: localStorage.getItem(this.legacyRepertoiresKey)
         };
-        localStorage.setItem(this.storageKey, JSON.stringify(data));
-        
-        // Actualizar el array interno con el orden correcto
-        this.songs = sortedSongs;
-        
-        // Actualizar fecha de modificación del repertorio actual
+        try {
+            localStorage.setItem(backupKey, JSON.stringify(backup));
+            console.log(`💾 Backup v1 guardado en localStorage: ${backupKey}`);
+        } catch (e) {
+            console.warn('No se pudo guardar backup v1:', e);
+        }
+
+        // Leer repertorios v1
+        const legacyReps = localStorage.getItem(this.legacyRepertoiresKey);
+        let repsV1 = {};
+        let currentId = 'default';
+        if (legacyReps) {
+            try {
+                const data = JSON.parse(legacyReps);
+                repsV1 = data.repertoires || {};
+                currentId = data.currentRepertoireId || 'default';
+            } catch {}
+        }
+        // Si no hay repertorios v1 pero sí lista plana de canciones, crear repertorio por defecto
+        if (Object.keys(repsV1).length === 0) {
+            const legacySongs = localStorage.getItem(this.legacySongsKey);
+            if (legacySongs) {
+                try {
+                    const data = JSON.parse(legacySongs);
+                    const songs = Array.isArray(data) ? data : (data.songs || []);
+                    repsV1.default = {
+                        id: 'default',
+                        name: 'Repertorio Principal',
+                        setlistName: Array.isArray(data) ? 'Canciones' : (data.setlistName || 'Canciones'),
+                        songs: songs
+                    };
+                } catch {}
+            }
+        }
+
+        // Construir catálogo y entries
+        this.catalog = new Map();
+        this.repertoires = new Map();
+        this.currentRepertoireId = currentId;
+
+        for (const [repId, rep] of Object.entries(repsV1)) {
+            const entries = [];
+            let activeSongId = null;
+            const seen = new Set();
+            const v1Songs = Array.isArray(rep.songs) ? rep.songs : [];
+
+            v1Songs.forEach((s, idx) => {
+                if (!s || !s.title) return;
+                let canonical = this._findInCatalog(s.title, s.artist);
+                if (!canonical) {
+                    // Añadir al catálogo
+                    const newId = this._newSongId();
+                    const bpmNum = (typeof s.bpm === 'string') ? parseInt(s.bpm, 10) : s.bpm;
+                    canonical = {
+                        id: newId,
+                        title: (s.title || '').trim(),
+                        artist: (s.artist || '').trim(),
+                        bpm: isNaN(bpmNum) ? 0 : bpmNum,
+                        lyrics: s.lyrics || '',
+                        notes: s.notes || '',
+                        structure: s.structure || '',
+                        duration: s.duration || '',
+                        htmlFile: s.htmlFile || '',
+                        fontSize: s.fontSize || 2.4,
+                        recordings: s.recordings || [],
+                        createdAt: s.createdAt || new Date().toISOString(),
+                        lastModified: s.lastModified || s.createdAt || new Date().toISOString()
+                    };
+                    this.catalog.set(newId, canonical);
+                } else {
+                    // Conflicto: si v1 es más reciente, actualizamos
+                    const v1Time = s.lastModified || s.createdAt || '';
+                    if (v1Time && v1Time > (canonical.lastModified || '')) {
+                        canonical.lyrics = s.lyrics || canonical.lyrics;
+                        canonical.notes = s.notes || canonical.notes;
+                        canonical.bpm = (typeof s.bpm === 'string') ? parseInt(s.bpm, 10) : (s.bpm || canonical.bpm);
+                        canonical.lastModified = v1Time;
+                    }
+                }
+                if (seen.has(canonical.id)) return; // misma canción 2 veces en el setlist
+                seen.add(canonical.id);
+                const order = s.order || ((idx + 1) * 10);
+                entries.push({ songId: canonical.id, order });
+                if (s.active === true) activeSongId = canonical.id;
+            });
+
+            this.repertoires.set(repId, {
+                id: repId,
+                name: rep.name || repId,
+                setlistName: rep.setlistName || 'Canciones',
+                showArtistBpm: rep.showArtistBpm === true,
+                hideNotes: rep.hideNotes === true,
+                activeSongId,
+                entries,
+                createdAt: rep.createdAt || new Date().toISOString(),
+                lastModified: rep.lastModified || new Date().toISOString()
+            });
+        }
+
+        // Persistir v2 inmediatamente
+        this._saveCatalog();
+        this._saveRepertoiresV2();
+        console.log(`✅ Migración completa: ${this.catalog.size} canciones únicas, ${this.repertoires.size} repertorios`);
+    }
+
+    // Carga inicial desde setlists/songs.json + setlists/setlists.json (solo si localStorage está vacío)
+    async _bootstrapFromServer() {
+        try {
+            const [songsRes, setlistsRes] = await Promise.all([
+                fetch('setlists/songs.json', { cache: 'no-cache' }),
+                fetch('setlists/setlists.json', { cache: 'no-cache' })
+            ]);
+
+            if (!songsRes.ok || !setlistsRes.ok) {
+                console.log('Bootstrap: ficheros JSON no disponibles, usando defaults hardcoded');
+                return false;
+            }
+
+            const songsData = await songsRes.json();
+            const setlistsData = await setlistsRes.json();
+
+            if (!songsData.songs || !setlistsData.repertoires) {
+                console.log('Bootstrap: formato JSON inválido');
+                return false;
+            }
+
+            console.log(`🌱 Bootstrap: cargando ${Object.keys(songsData.songs).length} canciones y ${Object.keys(setlistsData.repertoires).length} setlists`);
+
+            this.catalog = new Map(Object.entries(songsData.songs));
+            this.repertoires = new Map(Object.entries(setlistsData.repertoires));
+            this.currentRepertoireId = setlistsData.currentRepertoireId || 'default';
+
+            if (!this.repertoires.has(this.currentRepertoireId)) {
+                this.currentRepertoireId = this.repertoires.keys().next().value || 'default';
+            }
+
+            this._saveCatalog();
+            this._saveRepertoiresV2();
+            return true;
+        } catch (e) {
+            console.warn('Bootstrap falló:', e);
+            return false;
+        }
+    }
+
+    _saveCatalog() {
+        try {
+            // Limpiar campos transitorios (`order`, `active`) que viven en this.songs
+            const clean = {};
+            for (const [id, song] of this.catalog) {
+                const { order, active, ...rest } = song;
+                clean[id] = rest;
+            }
+            localStorage.setItem(this.catalogKey, JSON.stringify({
+                version: 2,
+                songs: clean
+            }));
+        } catch (e) {
+            console.error('Error guardando catálogo:', e);
+        }
+    }
+
+    _saveRepertoiresV2() {
+        try {
+            const payload = {
+                version: 2,
+                currentRepertoireId: this.currentRepertoireId,
+                repertoires: Object.fromEntries(this.repertoires)
+            };
+            localStorage.setItem(this.repertoiresKeyV2, JSON.stringify(payload));
+        } catch (e) {
+            console.error('Error guardando repertorios v2:', e);
+        }
+    }
+
+    // Resuelve entries del repertorio actual a objetos canción del catálogo,
+    // inyectando `order` para mantener compatibilidad con UI existente.
+    _rebuildSongs() {
+        const rep = this.repertoires.get(this.currentRepertoireId);
+        if (!rep) { this.songs = []; this.setlistName = 'Canciones'; return; }
+
+        this.setlistName = rep.setlistName || 'Canciones';
+
+        const result = [];
+        // Mantengo el orden de entries; aplico sort por order
+        const entriesSorted = [...rep.entries].sort((a, b) => (a.order || 0) - (b.order || 0));
+        for (const entry of entriesSorted) {
+            const song = this.catalog.get(entry.songId);
+            if (!song) continue; // entry huérfana — la limpiamos al guardar
+            song.order = entry.order || 0; // inyección temporal (limpia en _saveCatalog)
+            result.push(song);
+        }
+        this.songs = result;
+    }
+
+    // Sincroniza order desde this.songs (modificados por UI) a entries del repertorio actual
+    _syncOrdersToEntries() {
+        const rep = this.repertoires.get(this.currentRepertoireId);
+        if (!rep) return;
+        const byId = new Map(rep.entries.map(e => [e.songId, e]));
+        for (const s of this.songs) {
+            const entry = byId.get(s.id);
+            if (entry) entry.order = s.order || 0;
+        }
+    }
+
+    // Compat: la API antigua de la app llamaba a loadSongs/saveSongs/loadRepertoires/saveRepertoires
+    loadSongs() { /* no-op: v2 carga todo en _loadFromStorage */ this._rebuildSongs(); }
+
+    saveSongs() {
+        // Las "canciones" de this.songs apuntan al catálogo (orden inyectado). Persistimos:
+        this._syncOrdersToEntries();
+        this._saveCatalog();
         this.updateCurrentRepertoireModified();
+        this._saveRepertoiresV2();
     }
     
     reorderSongs() {
@@ -824,11 +1098,11 @@ Says, "Find a home"
         // Agregar menú contextual para opciones adicionales
         li.addEventListener('contextmenu', (e) => {
             e.preventDefault();
-            const action = confirm(`Opciones para "${song.title}":\n\nOK = Editar\nCancelar = Eliminar`);
+            const action = confirm(`Opciones para "${song.title}":\n\nOK = Editar\nCancelar = Quitar del setlist`);
             if (action === true) {
                 this.openEditSongModal(song);
             } else if (action === false) {
-                if (confirm(`¿Eliminar "${song.title}"?`)) {
+                if (confirm(`¿Quitar "${song.title}" de este setlist?\n\nLa canción seguirá en el catálogo global y otros setlists.`)) {
                     this.deleteSong(song.id);
                 }
             }
@@ -847,17 +1121,13 @@ Says, "Find a home"
             this.renderSongs();
             return; // No seleccionar la canción, solo asignar orden
         }
-        
+
         this.currentSong = song;
-        
-        // Desmarcar la canción anteriormente activa
-        this.songs.forEach(s => s.active = false);
-        
-        // Marcar la nueva canción como activa
-        song.active = true;
-        
-        // Guardar cambios en localStorage
-        this.saveSongs();
+
+        // Marcar la canción activa en el repertorio (no en la canción)
+        const rep = this.repertoires.get(this.currentRepertoireId);
+        if (rep) rep.activeSongId = song.id;
+        this._saveRepertoiresV2();
         
         // Actualizar información en el header
         const songElement = document.getElementById('current-song');
@@ -926,9 +1196,17 @@ Says, "Find a home"
     }
     
     selectActiveSong() {
-        // Buscar la canción marcada como activa
-        const activeSong = this.songs.find(song => song.active === true);
-        
+        // En v2 la canción activa se identifica por activeSongId del repertorio
+        const rep = this.repertoires.get(this.currentRepertoireId);
+        let activeSong = null;
+        if (rep && rep.activeSongId) {
+            activeSong = this.songs.find(s => s.id === rep.activeSongId);
+        }
+        if (!activeSong && this.songs.length > 0) {
+            activeSong = this.songs[0];
+            if (rep) rep.activeSongId = activeSong.id;
+        }
+
         if (activeSong) {
             // Seleccionar la canción activa sin guardar de nuevo (para evitar loop)
             this.currentSong = activeSong;
@@ -1152,44 +1430,62 @@ Says, "Find a home"
         const lyrics = document.getElementById('song-lyrics').value.trim();
         const structure = document.getElementById('song-structure-input').value.trim();
         const htmlFile = document.getElementById('song-html-file').value.trim();
-        
+
         if (!title) {
             alert('El título es obligatorio');
             return;
         }
-        
-        const now = new Date();
-        const newSong = {
-            id: Date.now(), // Simple ID basado en timestamp
-            title,
-            artist: artist || 'Artista desconocido',
-            bpm: bpm || 120,
-            order: order,
-            duration: duration || '', // Duración personalizada (mm:ss)
-            lyrics: lyrics || '',
-            notes: document.getElementById('song-notes').value.trim() || '',
-            structure: structure || '', // Estructura gráfica
-            htmlFile: htmlFile || '', // Ruta al archivo HTML
-            fontSize: this.getDefaultFontSize(), // Tamaño de fuente por defecto
-            active: false,
-            createdAt: now.toISOString(),
-            lastModified: now.toISOString()
-        };
-        
-        this.songs.push(newSong);
-        this.saveSongs();
+
+        const finalArtist = artist || 'Artista desconocido';
+
+        // Si la canción ya existe en el catálogo, añadimos solo la entry al setlist actual.
+        let canonical = this._findInCatalog(title, finalArtist);
+        const now = new Date().toISOString();
+        if (!canonical) {
+            const newId = this._newSongId();
+            canonical = {
+                id: newId,
+                title,
+                artist: finalArtist,
+                bpm: bpm || 120,
+                duration: duration || '',
+                lyrics: lyrics || '',
+                notes: document.getElementById('song-notes').value.trim() || '',
+                structure: structure || '',
+                htmlFile: htmlFile || '',
+                fontSize: this.getDefaultFontSize(),
+                recordings: [],
+                createdAt: now,
+                lastModified: now
+            };
+            this.catalog.set(newId, canonical);
+            this._saveCatalog();
+        }
+
+        // Añadir entry al repertorio actual (evitar duplicar)
+        const rep = this.repertoires.get(this.currentRepertoireId);
+        if (rep) {
+            if (!rep.entries.some(e => e.songId === canonical.id)) {
+                rep.entries.push({ songId: canonical.id, order });
+            }
+            rep.lastModified = now;
+            this._saveRepertoiresV2();
+        }
+
+        this._rebuildSongs();
         this.renderSongs();
         this.closeAddSongModal();
-        
+
         // Seleccionar la nueva canción automáticamente
-        this.selectSong(newSong);
-        
+        const songWithOrder = this.songs.find(s => s.id === canonical.id);
+        if (songWithOrder) this.selectSong(songWithOrder);
+
         this.showNotification(`✅ Canción "${title}" agregada correctamente`, 'success');
     }
     
     updateSong() {
         if (!this.editingSong) return;
-        
+
         const title = document.getElementById('edit-song-title').value.trim();
         const artist = document.getElementById('edit-song-artist').value.trim();
         const bpm = parseInt(document.getElementById('edit-song-bpm').value);
@@ -1199,67 +1495,100 @@ Says, "Find a home"
         const lyrics = document.getElementById('edit-song-lyrics').value.trim();
         const structure = document.getElementById('edit-song-structure').value.trim();
         const htmlFile = document.getElementById('edit-song-html-file').value.trim();
-        
+
         if (!title) {
             alert('El título es obligatorio');
             return;
         }
-        
-        // Encontrar la canción en el array y actualizarla
-        const songIndex = this.songs.findIndex(song => song.id === this.editingSong.id);
-        if (songIndex !== -1) {
-            const updatedSong = {
-                ...this.songs[songIndex],
-                title,
-                artist: artist || 'Artista desconocido',
-                bpm: bpm || 120,
-                order: order,
-                duration: duration || '', // Duración personalizada
-                notes: notes || '',
-                lyrics: lyrics || '',
-                structure: structure || '', // Estructura gráfica
-                htmlFile: htmlFile || '', // Ruta al archivo HTML
-                fontSize: this.songs[songIndex].fontSize || 2.4, // Preservar fontSize existente
-                lastModified: new Date().toISOString()
-            };
-            
-            this.songs[songIndex] = updatedSong;
-            this.saveSongs();
-            this.renderSongs();
-            
-            // Si era la canción actual, actualizar la interfaz
-            if (this.currentSong && this.currentSong.id === this.editingSong.id) {
-                this.currentSong = updatedSong;
-                this.selectSong(updatedSong);
-            }
-            
-            this.closeEditSongModal();
-            this.showNotification(`✅ Canción "${title}" actualizada correctamente`, 'success');
+
+        const canonical = this.catalog.get(this.editingSong.id);
+        if (!canonical) {
+            this.showNotification('❌ Canción no encontrada en el catálogo', 'error');
+            return;
         }
+
+        // Actualizar campos en el catálogo (afecta a TODOS los setlists donde aparezca)
+        canonical.title = title;
+        canonical.artist = artist || 'Artista desconocido';
+        canonical.bpm = bpm || 120;
+        canonical.duration = duration || '';
+        canonical.notes = notes || '';
+        canonical.lyrics = lyrics || '';
+        canonical.structure = structure || '';
+        canonical.htmlFile = htmlFile || '';
+        canonical.lastModified = new Date().toISOString();
+
+        // El `order` es por setlist, no por canción global
+        const rep = this.repertoires.get(this.currentRepertoireId);
+        if (rep) {
+            const entry = rep.entries.find(e => e.songId === canonical.id);
+            if (entry) entry.order = order;
+        }
+
+        this._saveCatalog();
+        this._saveRepertoiresV2();
+        this._rebuildSongs();
+        this.renderSongs();
+
+        // Si era la canción actual, refrescar la interfaz
+        if (this.currentSong && this.currentSong.id === canonical.id) {
+            const refreshed = this.songs.find(s => s.id === canonical.id);
+            if (refreshed) this.selectSong(refreshed);
+        }
+
+        this.closeEditSongModal();
+        this.showNotification(`✅ Canción "${title}" actualizada correctamente`, 'success');
     }
-    
+
     deleteCurrentEditingSong() {
         if (!this.editingSong) return;
-        
-        const confirmMessage = `¿Estás seguro de que deseas eliminar "${this.editingSong.title}"?\n\nEsta acción no se puede deshacer.`;
-        
+
+        const confirmMessage = `¿Quitar "${this.editingSong.title}" de este setlist?\n\n` +
+            `La canción seguirá en el catálogo global y en otros setlists donde aparezca.`;
+
         if (confirm(confirmMessage)) {
             this.deleteSong(this.editingSong.id);
             this.closeEditSongModal();
-            this.showNotification(`✅ Canción "${this.editingSong.title}" eliminada`, 'success');
+            this.showNotification(`✅ "${this.editingSong.title}" quitada del setlist`, 'success');
         }
     }
     
+    // Quita la entry del repertorio actual. NO borra la canción del catálogo global.
     deleteSong(songId) {
-        this.songs = this.songs.filter(song => song.id !== songId);
-        this.saveSongs();
+        const rep = this.repertoires.get(this.currentRepertoireId);
+        if (rep) {
+            rep.entries = rep.entries.filter(e => e.songId !== songId);
+            if (rep.activeSongId === songId) rep.activeSongId = null;
+            rep.lastModified = new Date().toISOString();
+            this._saveRepertoiresV2();
+        }
+        this._rebuildSongs();
         this.renderSongs();
-        
-        // Si era la canción actual, limpiar selección
+
         if (this.currentSong && this.currentSong.id === songId) {
             this.currentSong = null;
             document.getElementById('current-song').textContent = 'Selecciona una canción';
-            window.lyricsScroller.clearLyrics();
+            if (window.lyricsScroller) window.lyricsScroller.clearLyrics();
+        }
+    }
+
+    // Borra la canción del catálogo global y de TODOS los setlists. Operación destructiva.
+    deleteSongFromCatalog(songId) {
+        if (!this.catalog.has(songId)) return;
+        this.catalog.delete(songId);
+        // Quitar entries en todos los repertorios
+        this.repertoires.forEach(rep => {
+            rep.entries = rep.entries.filter(e => e.songId !== songId);
+            if (rep.activeSongId === songId) rep.activeSongId = null;
+        });
+        this._saveCatalog();
+        this._saveRepertoiresV2();
+        this._rebuildSongs();
+        this.renderSongs();
+        if (this.currentSong && this.currentSong.id === songId) {
+            this.currentSong = null;
+            document.getElementById('current-song').textContent = 'Selecciona una canción';
+            if (window.lyricsScroller) window.lyricsScroller.clearLyrics();
         }
     }
     
@@ -1393,123 +1722,57 @@ Says, "Find a home"
         return this.currentSong;
     }
     
+    // Exporta dos ficheros: songs.json (catálogo global) + setlists.json (repertorios con entries).
     exportSongs() {
         try {
-            console.log(`🚀 Iniciando exportación de repertorios por separado...`);
-            console.log(`� Total de repertorios: ${this.repertoires.size}`);
-            
-            let totalExportedFiles = 0;
-            let totalExportedSongs = 0;
-            let totalValidSongs = 0;
-            let totalInvalidSongs = 0;
-            
-            // Generar timestamp común para todos los archivos
+            console.log(`🚀 Exportación v2: catálogo + setlists`);
             const now = new Date();
-            const year = now.getFullYear();
-            const month = String(now.getMonth() + 1).padStart(2, '0');
-            const day = String(now.getDate()).padStart(2, '0');
-            const hours = String(now.getHours()).padStart(2, '0');
-            const minutes = String(now.getMinutes()).padStart(2, '0');
-            const seconds = String(now.getSeconds()).padStart(2, '0');
-            const timeStamp = `${year}-${month}-${day}_${hours}-${minutes}-${seconds}`;
-            
-            // Exportar cada repertorio por separado
-            this.repertoires.forEach((repertoire, repertoireId) => {
-                console.log(`📁 Exportando repertorio: "${repertoire.name}" (${repertoire.songs.length} canciones)`);
-                
-                // Validar canciones del repertorio
-                let validSongs = 0;
-                let invalidSongs = 0;
-                
-                repertoire.songs.forEach((song, index) => {
-                    try {
-                        const validationResult = this.validateSong(song);
-                        if (validationResult === true) {
-                            validSongs++;
-                            console.log(`  ✅ Canción ${index + 1}: "${song.title}" - Válida`);
-                        } else {
-                            invalidSongs++;
-                            console.log(`  ⚠️  Canción ${index + 1}: "${song.title}" - Problema: ${validationResult}`);
-                        }
-                    } catch (error) {
-                        invalidSongs++;
-                        console.error(`  💥 Canción ${index + 1}: Error validando - ${error.message}`);
-                    }
-                });
-                
-                totalValidSongs += validSongs;
-                totalInvalidSongs += invalidSongs;
-                totalExportedSongs += repertoire.songs.length;
-                
-                // Crear estructura de datos para este repertorio
-                const dataToExport = {
-                    version: "1.0",
-                    exportDate: new Date().toISOString(),
-                    setlistName: repertoire.setlistName || repertoire.name,
-                    repertoireName: repertoire.name,
-                    repertoireId: repertoireId,
-                    songs: repertoire.songs
-                };
-                
-                console.log(`📦 Datos de repertorio "${repertoire.name}":`, {
-                    version: dataToExport.version,
-                    repertoireName: dataToExport.repertoireName,
-                    setlistName: dataToExport.setlistName,
-                    songsCount: dataToExport.songs.length
-                });
-                
-                // Convertir a JSON
-                const dataStr = JSON.stringify(dataToExport, null, 2);
-                const dataBlob = new Blob([dataStr], { type: 'application/json' });
-                
-                // Crear enlace de descarga
-                const downloadLink = document.createElement('a');
-                downloadLink.href = URL.createObjectURL(dataBlob);
-                
-                // Limpiar el nombre del repertorio para usar en archivo
-                const cleanRepertoireName = repertoire.name
-                    .replace(/[^a-zA-Z0-9\s]/g, '')  // Quitar caracteres especiales
-                    .replace(/\s+/g, '-')             // Reemplazar espacios por guiones
-                    .toLowerCase();
-                
-                downloadLink.download = `${cleanRepertoireName}-${timeStamp}.json`;
-                
-                console.log(`📁 Archivo generado: ${downloadLink.download} (${dataBlob.size} bytes)`);
-                
-                // Descargar archivo
-                document.body.appendChild(downloadLink);
-                downloadLink.click();
-                document.body.removeChild(downloadLink);
-                
-                // Limpiar URL del blob
-                URL.revokeObjectURL(downloadLink.href);
-                
-                totalExportedFiles++;
-                console.log(`✅ Repertorio "${repertoire.name}" exportado exitosamente`);
-            });
-            
-            console.log(`🎉 Exportación completa:`);
-            console.log(`  📁 Archivos generados: ${totalExportedFiles}`);
-            console.log(`  🎵 Total de canciones: ${totalExportedSongs}`);
-            console.log(`  ✅ Válidas: ${totalValidSongs}`);
-            console.log(`  ⚠️  Con problemas: ${totalInvalidSongs}`);
-            
-            let message = `✅ Exportados ${totalExportedFiles} repertorios con ${totalExportedSongs} canciones`;
-            if (totalInvalidSongs > 0) {
-                message += ` (${totalInvalidSongs} canciones con problemas - ver consola)`;
+            const ts = now.toISOString().replace(/[:T]/g, '-').replace(/\..+/, '');
+
+            // 1) songs.json — catálogo entero
+            const catalogObj = {};
+            for (const [id, song] of this.catalog) {
+                const { order, active, ...rest } = song;
+                catalogObj[id] = rest;
             }
-            
-            const notificationType = totalInvalidSongs > 0 ? 'warning' : 'success';
-            this.showNotification(message, notificationType);
-            
+            const songsBlob = new Blob([JSON.stringify({
+                version: 2,
+                exportDate: now.toISOString(),
+                songs: catalogObj
+            }, null, 2)], { type: 'application/json' });
+
+            const songsLink = document.createElement('a');
+            songsLink.href = URL.createObjectURL(songsBlob);
+            songsLink.download = `songs-${ts}.json`;
+            document.body.appendChild(songsLink);
+            songsLink.click();
+            document.body.removeChild(songsLink);
+            URL.revokeObjectURL(songsLink.href);
+
+            // 2) setlists.json — todos los setlists con entries (referencias)
+            const setlistsBlob = new Blob([JSON.stringify({
+                version: 2,
+                exportDate: now.toISOString(),
+                currentRepertoireId: this.currentRepertoireId,
+                repertoires: Object.fromEntries(this.repertoires)
+            }, null, 2)], { type: 'application/json' });
+
+            const setlistsLink = document.createElement('a');
+            setlistsLink.href = URL.createObjectURL(setlistsBlob);
+            setlistsLink.download = `setlists-${ts}.json`;
+            document.body.appendChild(setlistsLink);
+            setlistsLink.click();
+            document.body.removeChild(setlistsLink);
+            URL.revokeObjectURL(setlistsLink.href);
+
+            console.log(`✅ Exportados: ${this.catalog.size} canciones, ${this.repertoires.size} setlists`);
+            this.showNotification(
+                `✅ Exportados songs-${ts}.json (${this.catalog.size} canciones) y setlists-${ts}.json (${this.repertoires.size} setlists)`,
+                'success'
+            );
         } catch (error) {
-            console.error('💥 Error crítico exportando repertorios:', error);
-            console.log(`📊 Estado actual:`, {
-                repertoiresCount: this.repertoires.size,
-                currentRepertoire: this.currentRepertoireId,
-                timestamp: new Date().toISOString()
-            });
-            this.showNotification('❌ Error al exportar los repertorios', 'error');
+            console.error('💥 Error exportando:', error);
+            this.showNotification('❌ Error al exportar', 'error');
         }
     }
     
@@ -1531,87 +1794,135 @@ Says, "Find a home"
                     songsCount: importedData.songs?.length
                 });
                 
-                // Validar estructura del archivo
-                if (!importedData.songs || !Array.isArray(importedData.songs)) {
-                    throw new Error('Formato de archivo inválido - falta array de canciones');
-                }
-                
-                console.log(`🎵 Archivo válido con ${importedData.songs.length} canciones`);
-                
-                // Mostrar confirmación
-                const confirmMessage = `¿Deseas importar ${importedData.songs.length} canciones?\n\n` +
-                    `Esto ${this.songs.length > 0 ? 'se agregará a' : 'reemplazará'} tu colección actual.\n` +
-                    `Fecha de exportación: ${importedData.exportDate ? new Date(importedData.exportDate).toLocaleString() : 'Desconocida'}`;
-                
-                if (!confirm(confirmMessage)) {
-                    console.log(`❌ Importación cancelada por el usuario`);
-                    return;
-                }
-                
-                console.log(`🔄 Procesando ${importedData.songs.length} canciones...`);
-                
-                // Procesar canciones importadas
-                let importedCount = 0;
-                let skippedCount = 0;
-                let errorCount = 0;
-                
-                importedData.songs.forEach((song, index) => {
-                    try {
-                        console.log(`🎵 Procesando canción ${index + 1}/${importedData.songs.length}: "${song.title || '[Sin título]'}"`);
-                        
-                        // Validar estructura de cada canción
-                        const validationResult = this.validateSong(song);
-                        if (validationResult === true) {
-                            // Generar nuevo ID para evitar conflictos
-                            const newSong = {
-                                ...song,
-                                id: Date.now() + Math.random(), // ID único
-                                notes: song.notes || '', // Asegurar que tenga el campo notes
-                                fontSize: song.fontSize || 2.4, // Asegurar que tenga el campo fontSize
-                                active: false // Las canciones importadas no están activas por defecto
-                            };
-                            
-                            this.songs.push(newSong);
-                            importedCount++;
-                            console.log(`  ✅ Importada: "${song.title}" - Nuevo ID: ${newSong.id}`);
-                        } else {
-                            skippedCount++;
-                            console.log(`  ⏭️  Saltada por validación: "${song.title || '[Sin título]'}" - Razón: ${validationResult || 'Formato inválido'}`);
-                        }
-                    } catch (error) {
-                        errorCount++;
-                        console.error(`  💥 Error procesando canción ${index + 1}:`, error.message);
-                        console.log(`     Datos problemáticos:`, song);
+                const isV2Catalog = importedData.version === 2 && importedData.songs && !Array.isArray(importedData.songs);
+                const isV2Setlists = importedData.version === 2 && importedData.repertoires;
+                const isV1 = Array.isArray(importedData.songs);
+
+                let importedCount = 0, skippedCount = 0, errorCount = 0;
+
+                if (isV2Catalog) {
+                    // Importar catálogo v2 — fusionar canciones (dedup por título+artista)
+                    const songsObj = importedData.songs;
+                    const songList = Object.values(songsObj);
+                    if (!confirm(`¿Importar catálogo de ${songList.length} canciones?\n\nSe fusionarán por título+artista (las existentes pueden actualizarse si la importada es más reciente).`)) {
+                        return;
                     }
-                });
-                
-                // Guardar y actualizar interfaz
-                console.log(`💾 Guardando canciones...`);
-                this.saveSongs();
-                this.renderSongs();
-                
-                // Si no hay canción activa después del import, activar la primera
-                if (!this.songs.find(song => song.active) && this.songs.length > 0) {
-                    this.selectSong(this.songs[0]);
-                    console.log(`🎯 Activada la primera canción: "${this.songs[0].title}"`);
+                    songList.forEach((song) => {
+                        try {
+                            const existing = this._findInCatalog(song.title, song.artist);
+                            if (existing) {
+                                const incoming = song.lastModified || '';
+                                if (incoming > (existing.lastModified || '')) {
+                                    Object.assign(existing, song, { id: existing.id });
+                                    importedCount++;
+                                } else {
+                                    skippedCount++;
+                                }
+                            } else {
+                                const newId = song.id && !this.catalog.has(song.id) ? song.id : this._newSongId();
+                                this.catalog.set(newId, { ...song, id: newId });
+                                importedCount++;
+                            }
+                        } catch (e) {
+                            errorCount++;
+                            console.error('Error importando canción:', e);
+                        }
+                    });
+                    this._saveCatalog();
+
+                } else if (isV2Setlists) {
+                    // Importar setlists v2 — fusionar repertorios
+                    const repsObj = importedData.repertoires;
+                    const repCount = Object.keys(repsObj).length;
+                    if (!confirm(`¿Importar ${repCount} setlist(s)?\n\nLas entries que apunten a canciones desconocidas se ignorarán. Importa primero el catálogo si no lo has hecho.`)) {
+                        return;
+                    }
+                    Object.entries(repsObj).forEach(([repId, rep]) => {
+                        try {
+                            // Si el id colisiona, generar uno nuevo
+                            let finalId = repId;
+                            if (this.repertoires.has(repId)) finalId = this._newRepertoireId(rep.name || repId);
+
+                            const cleanEntries = (rep.entries || []).filter(e => this.catalog.has(e.songId));
+                            const droppedEntries = (rep.entries || []).length - cleanEntries.length;
+
+                            this.repertoires.set(finalId, {
+                                id: finalId,
+                                name: rep.name || finalId,
+                                setlistName: rep.setlistName || rep.name || 'Canciones',
+                                showArtistBpm: rep.showArtistBpm === true,
+                                hideNotes: rep.hideNotes === true,
+                                activeSongId: rep.activeSongId && this.catalog.has(rep.activeSongId) ? rep.activeSongId : null,
+                                entries: cleanEntries,
+                                createdAt: rep.createdAt || new Date().toISOString(),
+                                lastModified: rep.lastModified || new Date().toISOString()
+                            });
+                            importedCount++;
+                            if (droppedEntries > 0) console.warn(`  ⚠️ "${rep.name}": ${droppedEntries} entries descartadas (canciones no en catálogo)`);
+                        } catch (e) {
+                            errorCount++;
+                            console.error('Error importando setlist:', e);
+                        }
+                    });
+                    this._saveRepertoiresV2();
+                    this.updateRepertoireSelect();
+
+                } else if (isV1) {
+                    // Formato antiguo — canciones embebidas en un setlist
+                    if (!confirm(`¿Importar ${importedData.songs.length} canciones al repertorio actual?\n\nSe deduplicarán por título+artista contra el catálogo global.`)) {
+                        return;
+                    }
+                    const rep = this.repertoires.get(this.currentRepertoireId);
+                    const maxOrder = rep ? rep.entries.reduce((m, e) => Math.max(m, e.order || 0), 0) : 0;
+                    let nextOrder = maxOrder + 10;
+                    importedData.songs.forEach((song) => {
+                        try {
+                            const v = this.validateSong(song);
+                            if (v !== true) { skippedCount++; return; }
+                            let canonical = this._findInCatalog(song.title, song.artist);
+                            if (!canonical) {
+                                const newId = this._newSongId();
+                                const bpmNum = typeof song.bpm === 'string' ? parseInt(song.bpm, 10) : song.bpm;
+                                canonical = {
+                                    id: newId,
+                                    title: song.title,
+                                    artist: song.artist || '',
+                                    bpm: isNaN(bpmNum) ? 0 : bpmNum,
+                                    lyrics: song.lyrics || '',
+                                    notes: song.notes || '',
+                                    structure: song.structure || '',
+                                    duration: song.duration || '',
+                                    htmlFile: song.htmlFile || '',
+                                    fontSize: song.fontSize || 2.4,
+                                    recordings: song.recordings || [],
+                                    createdAt: song.createdAt || new Date().toISOString(),
+                                    lastModified: song.lastModified || new Date().toISOString()
+                                };
+                                this.catalog.set(newId, canonical);
+                            }
+                            if (rep && !rep.entries.some(e => e.songId === canonical.id)) {
+                                rep.entries.push({ songId: canonical.id, order: nextOrder });
+                                nextOrder += 10;
+                            }
+                            importedCount++;
+                        } catch (e) {
+                            errorCount++;
+                        }
+                    });
+                    this._saveCatalog();
+                    this._saveRepertoiresV2();
+
+                } else {
+                    throw new Error('Formato de archivo no reconocido');
                 }
-                
-                // Mostrar resultado detallado
-                console.log(`📈 Resumen de importación JSON:`);
-                console.log(`  ✅ Importadas: ${importedCount}`);
-                console.log(`  ⏭️  Saltadas (formato inválido): ${skippedCount}`);
-                console.log(`  💥 Errores: ${errorCount}`);
-                console.log(`  📊 Total en archivo: ${importedData.songs.length}`);
-                console.log(`  🎵 Total en colección actual: ${this.songs.length}`);
-                
-                let message = `✅ Importadas ${importedCount} canciones`;
-                if (skippedCount > 0) message += `, ${skippedCount} saltadas (formato inválido)`;
-                if (errorCount > 0) message += `, ${errorCount} errores (ver consola)`;
-                
-                const notificationType = errorCount > 0 || skippedCount > 0 ? 'warning' : 'success';
-                this.showNotification(message, notificationType);
-                
-                // Limpiar input de archivo
+
+                this._rebuildSongs();
+                this.renderSongs();
+
+                let message = `✅ Importadas ${importedCount} entradas`;
+                if (skippedCount > 0) message += `, ${skippedCount} saltadas`;
+                if (errorCount > 0) message += `, ${errorCount} errores`;
+                this.showNotification(message, errorCount ? 'warning' : 'success');
                 this.importFileInput.value = '';
                 
             } catch (error) {
@@ -1711,38 +2022,44 @@ Says, "Find a home"
                 
                 const txtContent = e.target.result;
                 const songs = this.parseTxtSongs(txtContent);
-            
-            let importedCount = 0;
-            
-            songs.forEach(song => {
-                // Verificar si la canción ya existe (por título y artista)
-                const existingSong = this.songs.find(s => 
-                    s.title.toLowerCase() === song.title.toLowerCase() && 
-                    s.artist.toLowerCase() === song.artist.toLowerCase()
-                );
-                
-                if (!existingSong) {
-                    const newSong = {
-                        id: Date.now() + Math.random(),
-                        title: song.title,
-                        artist: song.artist,
-                        bpm: song.bpm,
-                        lyrics: song.lyrics,
-                        notes: song.notes || '',
-                        fontSize: this.getDefaultFontSize(), // Tamaño por defecto para canciones importadas
-                        active: false
-                    };
-                    
-                    this.songs.push(newSong);
-                    importedCount++;
-                }
-            });
-            
-                // Guardar y actualizar interfaz
-                this.saveSongs();
+
+                let importedCount = 0;
+                const rep = this.repertoires.get(this.currentRepertoireId);
+                const maxOrder = rep ? rep.entries.reduce((m, e) => Math.max(m, e.order || 0), 0) : 0;
+                let nextOrder = maxOrder + 10;
+
+                songs.forEach(song => {
+                    let canonical = this._findInCatalog(song.title, song.artist);
+                    if (!canonical) {
+                        const newId = this._newSongId();
+                        canonical = {
+                            id: newId,
+                            title: song.title,
+                            artist: song.artist || '',
+                            bpm: song.bpm || 0,
+                            lyrics: song.lyrics || '',
+                            notes: song.notes || '',
+                            structure: '',
+                            duration: '',
+                            htmlFile: '',
+                            fontSize: this.getDefaultFontSize(),
+                            recordings: [],
+                            createdAt: new Date().toISOString(),
+                            lastModified: new Date().toISOString()
+                        };
+                        this.catalog.set(newId, canonical);
+                    }
+                    if (rep && !rep.entries.some(e => e.songId === canonical.id)) {
+                        rep.entries.push({ songId: canonical.id, order: nextOrder });
+                        nextOrder += 10;
+                        importedCount++;
+                    }
+                });
+
+                this._saveCatalog();
+                this._saveRepertoiresV2();
+                this._rebuildSongs();
                 this.renderSongs();
-                
-                // Mostrar resultado
                 this.showNotification(`✅ Importadas ${importedCount} canciones del archivo TXT`, 'success');
                 
             } catch (error) {
@@ -1842,48 +2159,34 @@ Says, "Find a home"
     }
     
     updateCurrentSongFontSize(fontSize) {
-        if (this.currentSong) {
-            // Actualizar el fontSize en la canción actual
-            this.currentSong.fontSize = fontSize;
-            
-            // Encontrar la canción en el array y actualizarla
-            const songIndex = this.songs.findIndex(song => song.id === this.currentSong.id);
-            if (songIndex !== -1) {
-                this.songs[songIndex].fontSize = fontSize;
-                this.saveSongs();
-            }
+        if (!this.currentSong) return;
+        const canonical = this.catalog.get(this.currentSong.id);
+        if (canonical) {
+            canonical.fontSize = fontSize;
+            this._saveCatalog();
         }
     }
-    
+
     addRecordingEventsToCurrentSong(events) {
-        if (this.currentSong && events && events.length > 0) {
-            // Inicializar el array de grabaciones si no existe
-            if (!this.currentSong.recordings) {
-                this.currentSong.recordings = [];
-            }
-            
-            // Añadir nueva grabación con timestamp
-            const recording = {
-                id: Date.now(),
-                timestamp: new Date().toISOString(),
-                events: events,
-                duration: events.length > 0 ? Math.max(...events.map(e => e.timestamp)) : 0
-            };
-            
-            this.currentSong.recordings.push(recording);
-            
-            // Actualizar la canción en el array
-            const songIndex = this.songs.findIndex(song => song.id === this.currentSong.id);
-            if (songIndex !== -1) {
-                this.songs[songIndex] = { ...this.currentSong };
-                this.saveSongs();
-            }
-            
-            console.log(`💾 Grabación guardada en "${this.currentSong.title}":`, recording);
-            console.log(`📊 Total de grabaciones: ${this.currentSong.recordings.length}`);
-        }
+        if (!this.currentSong || !events || events.length === 0) return;
+        const canonical = this.catalog.get(this.currentSong.id);
+        if (!canonical) return;
+
+        if (!canonical.recordings) canonical.recordings = [];
+        const recording = {
+            id: Date.now(),
+            timestamp: new Date().toISOString(),
+            events: events,
+            duration: events.length > 0 ? Math.max(...events.map(e => e.timestamp)) : 0
+        };
+        canonical.recordings.push(recording);
+        canonical.lastModified = new Date().toISOString();
+        this._saveCatalog();
+
+        console.log(`💾 Grabación guardada en "${canonical.title}":`, recording);
+        console.log(`📊 Total de grabaciones: ${canonical.recordings.length}`);
     }
-    
+
     toggleOrderMode() {
         this.isOrderMode = !this.isOrderMode;
         
@@ -2052,46 +2355,28 @@ Says, "Find a home"
         console.log(`🔤 Texto ingresado por el usuario: "${userInput}"`);
         
         if (userInput.toUpperCase() === 'BORRAR') {
-            console.log(`✅ Confirmación válida - Procediendo con el borrado...`);
-            
+            console.log(`✅ Confirmación válida — vaciando setlist actual (catálogo intacto)`);
+
             const songsCount = this.songs.length;
-            const songsBackup = [...this.songs]; // Respaldo para logging
-            
-            // Borrar todas las canciones
-            this.songs = [];
+            const rep = this.repertoires.get(this.currentRepertoireId);
+            if (rep) {
+                rep.entries = [];
+                rep.activeSongId = null;
+                rep.lastModified = new Date().toISOString();
+                this._saveRepertoiresV2();
+            }
             this.currentSong = null;
-            
-            // Actualizar almacenamiento y UI
-            this.saveSongs();
+            this._rebuildSongs();
             this.renderSongs();
-            
-            // Limpiar el área de letras
+
             const lyricsContainer = document.getElementById('lyrics-container');
             if (lyricsContainer) {
                 lyricsContainer.innerHTML = '<p>Selecciona una canción para ver sus letras</p>';
             }
-            
-            // Deshabilitar botón de edición
-            if (this.editCurrentSongBtn) {
-                this.editCurrentSongBtn.disabled = true;
-            }
-            
-            console.log(`🗑️  Borrado completado exitosamente`);
-            console.log(`📈 Resumen del borrado:`);
-            console.log(`  🎵 Canciones eliminadas: ${songsCount}`);
-            console.log(`  📋 Canciones restantes: ${this.songs.length}`);
-            console.log(`  🎯 Canción activa: ${this.currentSong ? this.currentSong.title : 'Ninguna'}`);
-            
-            // Log de las canciones eliminadas (solo títulos)
-            if (songsBackup.length > 0) {
-                console.log(`📝 Canciones que fueron eliminadas:`);
-                songsBackup.forEach((song, index) => {
-                    console.log(`  ${index + 1}. "${song.title}" - ${song.artist || '[Sin artista]'}`);
-                });
-            }
-            
-            this.showNotification(`🗑️ Eliminadas ${songsCount} canciones exitosamente`, 'success');
-            
+            if (this.editCurrentSongBtn) this.editCurrentSongBtn.disabled = true;
+
+            this.showNotification(`🗑️ Vaciadas ${songsCount} entradas del setlist (catálogo global intacto)`, 'success');
+
         } else {
             console.log(`❌ Confirmación inválida: "${userInput}" (se esperaba "BORRAR")`);
             this.showNotification('❌ Confirmación incorrecta. Debes escribir exactamente "BORRAR"', 'error');
@@ -2122,46 +2407,51 @@ Says, "Find a home"
                 
                 console.log(`🔄 Procesando ${songs.length} canciones para importar...`);
                 
+                const rep = this.repertoires.get(this.currentRepertoireId);
+                const maxOrder = rep ? rep.entries.reduce((m, e) => Math.max(m, e.order || 0), 0) : 0;
+                let nextOrder = maxOrder + 10;
+
                 songs.forEach((songData, index) => {
                     try {
                         console.log(`🎵 Procesando canción ${index + 1}/${songs.length}: "${songData.title}"`);
-                        
-                        // Verificar si la canción ya existe
-                        const existingSong = this.songs.find(s => 
-                            s.title.toLowerCase() === songData.title.toLowerCase() && 
-                            (songData.artist ? s.artist.toLowerCase() === songData.artist.toLowerCase() : true)
-                        );
-                        
-                        if (!existingSong) {
-                            const newSong = {
-                                id: Date.now() + Math.random(),
+
+                        let canonical = this._findInCatalog(songData.title, songData.artist);
+                        if (!canonical) {
+                            const newId = this._newSongId();
+                            const bpmNum = typeof songData.bpm === 'string' ? parseInt(songData.bpm, 10) : songData.bpm;
+                            canonical = {
+                                id: newId,
                                 title: songData.title,
                                 artist: songData.artist || '',
-                                bpm: songData.bpm || '',
+                                bpm: isNaN(bpmNum) ? 0 : (bpmNum || 0),
                                 lyrics: songData.lyrics || '',
                                 notes: songData.notes || '',
+                                structure: '',
+                                duration: '',
+                                htmlFile: '',
                                 fontSize: this.getDefaultFontSize(),
-                                active: false,
-                                order: songData.order || 0
+                                recordings: [],
+                                createdAt: new Date().toISOString(),
+                                lastModified: new Date().toISOString()
                             };
-                            
-                            this.songs.push(newSong);
+                            this.catalog.set(newId, canonical);
+                        }
+                        if (rep && !rep.entries.some(e => e.songId === canonical.id)) {
+                            rep.entries.push({ songId: canonical.id, order: songData.order || nextOrder });
+                            nextOrder += 10;
                             importedCount++;
-                            console.log(`  ✅ Importada: "${songData.title}" - ID: ${newSong.id}`);
                         } else {
                             skippedCount++;
-                            console.log(`  ⏭️  Saltada (ya existe): "${songData.title}"`);
                         }
                     } catch (error) {
                         errorCount++;
                         console.error(`  💥 Error importando "${songData.title}":`, error.message);
-                        console.log(`     Datos problemáticos:`, songData);
-                        // Continuar con la siguiente canción
                     }
                 });
-                
-                // Guardar y actualizar interfaz
-                this.saveSongs();
+
+                this._saveCatalog();
+                this._saveRepertoiresV2();
+                this._rebuildSongs();
                 this.renderSongs();
                 
                 // Mostrar resultado detallado
@@ -2258,100 +2548,12 @@ Says, "Find a home"
 
     // ===== FUNCIONES DE GESTIÓN DE REPERTORIOS =====
 
-    loadRepertoires() {
-        try {
-            console.log('🏁 Cargando repertorios...');
-            const stored = localStorage.getItem(this.repertoiresKey);
-            
-            if (stored) {
-                const data = JSON.parse(stored);
-                this.repertoires = new Map(Object.entries(data.repertoires || {}));
-                this.currentRepertoireId = data.currentRepertoireId || 'default';
-                console.log(`📚 Repertorios cargados: ${this.repertoires.size}, actual: ${this.currentRepertoireId}`);
-            }
-
-            // Asegurar que existe el repertorio por defecto
-            if (!this.repertoires.has('default')) {
-                console.log('🆕 Creando repertorio por defecto...');
-                this.repertoires.set('default', {
-                    id: 'default',
-                    name: 'Repertorio Principal',
-                    songs: [],
-                    setlistName: 'Canciones',
-                    showArtistBpm: false, // No mostrar por defecto
-                    hideNotes: false, // No ocultar notas por defecto
-                    createdAt: new Date().toISOString()
-                });
-            }
-            
-            // Migrar repertorios existentes para añadir propiedades si no existen
-            this.repertoires.forEach((repertoire, id) => {
-                if (!Array.isArray(repertoire.songs)) {
-                    repertoire.songs = [];
-                    console.log(`🔄 Migrado repertorio ${id} con songs=[]`);
-                }
-                if (repertoire.showArtistBpm === undefined) {
-                    repertoire.showArtistBpm = false; // No mostrar por defecto
-                    console.log(`🔄 Migrado repertorio ${id} con showArtistBpm`);
-                }
-                if (repertoire.hideNotes === undefined) {
-                    repertoire.hideNotes = false; // No ocultar notas por defecto
-                    console.log(`🔄 Migrado repertorio ${id} con hideNotes`);
-                }
-                if (repertoire.lastModified === undefined) {
-                    repertoire.lastModified = repertoire.createdAt || new Date().toISOString();
-                    console.log(`🔄 Migrado repertorio ${id} con lastModified`);
-                }
-            });
-
-            // Verificar que el repertorio actual existe
-            if (!this.repertoires.has(this.currentRepertoireId)) {
-                console.log(`⚠️ Repertorio actual ${this.currentRepertoireId} no existe, cambiando a default`);
-                this.currentRepertoireId = 'default';
-            }
-
-            this.updateRepertoireSelect();
-            this.updateCurrentRepertoireName();
-            
-            // Aplicar configuración de visualización del repertorio actual
-            const currentRepertoire = this.repertoires.get(this.currentRepertoireId);
-            if (currentRepertoire) {
-                this.applyDisplaySettings(currentRepertoire);
-            }
-            
-            console.log('✅ Repertorios inicializados correctamente');
-        } catch (error) {
-            console.error('❌ Error cargando repertorios:', error);
-            // Inicializar repertorio por defecto en caso de error
-            this.repertoires.set('default', {
-                id: 'default',
-                name: 'Repertorio Principal',
-                songs: [],
-                setlistName: 'Canciones',
-                createdAt: new Date().toISOString()
-            });
-            this.currentRepertoireId = 'default';
-        }
-    }
+    // Compat: en v2 la carga la hace _loadFromStorage (constructor). Aquí no-op.
+    loadRepertoires() { /* no-op en v2 */ }
 
     saveRepertoires() {
-        try {
-            // Guardar el repertorio actual
-            const currentRepertoire = this.repertoires.get(this.currentRepertoireId);
-            if (currentRepertoire) {
-                currentRepertoire.songs = this.songs;
-                currentRepertoire.setlistName = this.setlistName;
-            }
-
-            // Guardar todos los repertorios
-            const data = {
-                currentRepertoireId: this.currentRepertoireId,
-                repertoires: Object.fromEntries(this.repertoires)
-            };
-            localStorage.setItem(this.repertoiresKey, JSON.stringify(data));
-        } catch (error) {
-            console.error('Error guardando repertorios:', error);
-        }
+        this.updateCurrentRepertoireModified();
+        this._saveRepertoiresV2();
     }
 
     switchRepertoire(repertoireId) {
@@ -2359,110 +2561,66 @@ Says, "Find a home"
 
         console.log(`🔄 Cambiando al repertorio: ${repertoireId}`);
 
-        // Guardar el estado actual
-        this.saveCurrentRepertoire();
+        // Sincronizar orders del actual antes de salir
+        this._syncOrdersToEntries();
+        this._saveRepertoiresV2();
 
-        // Cambiar al nuevo repertorio
         this.currentRepertoireId = repertoireId;
         const repertoire = this.repertoires.get(repertoireId);
-        
-        if (repertoire) {
-            console.log(`📂 Cargando repertorio "${repertoire.name}" con ${(repertoire.songs || []).length} canciones`);
-            
-            // Limpiar canciones actuales
-            this.currentSong = null;
-            
-            // Cargar las canciones del nuevo repertorio
-            this.songs = [...(repertoire.songs || [])]; // Hacer una copia para evitar referencias
-            this.setlistName = repertoire.setlistName || 'Canciones';
-            
-            // Aplicar configuración de visualización
-            this.applyDisplaySettings(repertoire);
-            
-            console.log(`🎵 Canciones cargadas:`, this.songs.map(s => s.title));
-            
-            // Asegurar propiedades necesarias en las canciones
-            let hasActiveSong = false;
-            this.songs.forEach(song => {
-                if (song.active === undefined) {
-                    song.active = false;
-                }
-                if (song.notes === undefined) {
-                    song.notes = '';
-                }
-                if (song.order === undefined) {
-                    song.order = 0;
-                }
-                if (song.active === true) {
-                    hasActiveSong = true;
-                }
-            });
-            
-            // Actualizar UI
-            this.renderSongs();
-            this.updateSongsTitle(this.songs.length);
-            this.updateCurrentRepertoireName();
-            
-            // Seleccionar canción activa o la primera si existe
-            if (this.songs.length > 0) {
-                let songToSelect = hasActiveSong ? 
-                    this.songs.find(song => song.active === true) : 
-                    this.songs[0];
-                
-                if (songToSelect) {
-                    // Limpiar estados activos previos
-                    this.songs.forEach(song => song.active = false);
-                    songToSelect.active = true;
-                    this.selectSong(songToSelect);
-                }
-            } else {
-                // Limpiar vista si no hay canciones
-                this.currentSong = null;
-                this.editCurrentSongBtn.disabled = true;
-                
-                // Limpiar info del header
-                document.getElementById('current-song').textContent = '';
-                document.getElementById('current-bpm').textContent = '';
-                document.getElementById('current-notes').style.display = 'none';
-                
-                // Limpiar letras
-                if (window.lyricsScroller) {
-                    window.lyricsScroller.loadLyrics('');
-                }
-                
-                // Mostrar mensaje de bienvenida
-                const lyricsContent = document.getElementById('lyrics-content');
-                if (lyricsContent) {
-                    lyricsContent.innerHTML = '';
-                    const msg = document.createElement('p');
-                    msg.className = 'welcome-message';
-                    msg.appendChild(document.createTextNode(`Repertorio "${repertoire.name}" vacío`));
-                    msg.appendChild(document.createElement('br'));
-                    msg.appendChild(document.createElement('br'));
-                    msg.appendChild(document.createTextNode('Agrega canciones usando el botón "+ Agregar" en la lista.'));
-                    lyricsContent.appendChild(msg);
-                }
-            }
 
-            // Guardar el cambio
-            this.saveRepertoires();
-            
-            this.showNotification(`Cambiado a repertorio: ${repertoire.name}`, 'success');
-            
-            console.log(`✅ Cambio completado. Canciones en lista:`, this.songs.length);
-        } else {
+        if (!repertoire) {
             console.error(`❌ Repertorio no encontrado: ${repertoireId}`);
             this.showNotification(`Error: Repertorio no encontrado`, 'error');
+            return;
         }
+
+        console.log(`📂 Cargando repertorio "${repertoire.name}" con ${repertoire.entries.length} canciones`);
+        this.currentSong = null;
+        this._rebuildSongs();
+        this.applyDisplaySettings(repertoire);
+
+        this.renderSongs();
+        this.updateSongsTitle(this.songs.length);
+        this.updateCurrentRepertoireName();
+
+        if (this.songs.length > 0) {
+            let songToSelect = null;
+            if (repertoire.activeSongId) {
+                songToSelect = this.songs.find(s => s.id === repertoire.activeSongId);
+            }
+            if (!songToSelect) songToSelect = this.songs[0];
+            this.selectSong(songToSelect);
+        } else {
+            this.editCurrentSongBtn.disabled = true;
+            document.getElementById('current-song').textContent = '';
+            document.getElementById('current-bpm').textContent = '';
+            document.getElementById('current-notes').style.display = 'none';
+
+            if (window.lyricsScroller) {
+                window.lyricsScroller.loadLyrics('');
+            }
+
+            const lyricsContent = document.getElementById('lyrics-content');
+            if (lyricsContent) {
+                lyricsContent.innerHTML = '';
+                const msg = document.createElement('p');
+                msg.className = 'welcome-message';
+                msg.appendChild(document.createTextNode(`Repertorio "${repertoire.name}" vacío`));
+                msg.appendChild(document.createElement('br'));
+                msg.appendChild(document.createElement('br'));
+                msg.appendChild(document.createTextNode('Agrega canciones usando el botón "+ Agregar" en la lista.'));
+                lyricsContent.appendChild(msg);
+            }
+        }
+
+        this._saveRepertoiresV2();
+        this.showNotification(`Cambiado a repertorio: ${repertoire.name}`, 'success');
     }
 
     saveCurrentRepertoire() {
-        const currentRepertoire = this.repertoires.get(this.currentRepertoireId);
-        if (currentRepertoire) {
-            console.log(`💾 Guardando repertorio actual "${currentRepertoire.name}" con ${this.songs.length} canciones`);
-            currentRepertoire.songs = [...this.songs]; // Copia profunda
-            currentRepertoire.setlistName = this.setlistName;
-        }
+        // En v2 esto solo sincroniza orders + persiste
+        this._syncOrdersToEntries();
+        this._saveRepertoiresV2();
     }
 
     updateRepertoireSelect() {
@@ -2514,7 +2672,7 @@ Says, "Find a home"
 
             const countDiv = document.createElement('div');
             countDiv.className = 'repertoire-count';
-            countDiv.textContent = `${(repertoire.songs || []).length} canciones`;
+            countDiv.textContent = `${(repertoire.entries || []).length} canciones`;
 
             info.appendChild(nameDiv);
             info.appendChild(countDiv);
@@ -2648,24 +2806,23 @@ Says, "Find a home"
     }
 
     createNewRepertoire(name) {
-        const newId = 'repertoire_' + Date.now();
+        const newId = this._newRepertoireId(name);
         const now = new Date().toISOString();
-        const newRepertoire = {
+        this.repertoires.set(newId, {
             id: newId,
             name: name,
-            songs: [],
             setlistName: 'Canciones',
-            showArtistBpm: false, // No mostrar artista y BPM por defecto
-            hideNotes: false, // No ocultar notas por defecto
+            showArtistBpm: false,
+            hideNotes: false,
+            activeSongId: null,
+            entries: [],
             createdAt: now,
             lastModified: now
-        };
-
-        this.repertoires.set(newId, newRepertoire);
-        this.saveRepertoires();
+        });
+        this._saveRepertoiresV2();
         this.updateRepertoireSelect();
         this.updateRepertoireList();
-        
+
         this.showNotification(`Repertorio "${name}" creado`, 'success');
     }
 
@@ -2673,31 +2830,28 @@ Says, "Find a home"
         const currentRepertoire = this.repertoires.get(this.currentRepertoireId);
         if (!currentRepertoire) return;
 
-        const newId = 'repertoire_' + Date.now();
+        const newId = this._newRepertoireId(name);
         const now = new Date().toISOString();
-        const duplicatedRepertoire = {
+        // Duplicar entries (referencias a canciones), NO clonar canciones
+        const dupEntries = currentRepertoire.entries.map(e => ({ songId: e.songId, order: e.order }));
+
+        this.repertoires.set(newId, {
             id: newId,
             name: name,
-            songs: JSON.parse(JSON.stringify(currentRepertoire.songs || [])), // Deep copy
             setlistName: currentRepertoire.setlistName,
-            showArtistBpm: currentRepertoire.showArtistBpm === true, // Heredar configuración
-            hideNotes: currentRepertoire.hideNotes === true, // Heredar configuración
+            showArtistBpm: currentRepertoire.showArtistBpm === true,
+            hideNotes: currentRepertoire.hideNotes === true,
+            activeSongId: null,
+            entries: dupEntries,
             createdAt: now,
             lastModified: now
-        };
-
-        // Asignar nuevos IDs a las canciones duplicadas
-        duplicatedRepertoire.songs.forEach(song => {
-            song.id = Date.now() + Math.random();
-            song.active = false; // Ninguna canción duplicada debe estar activa
         });
 
-        this.repertoires.set(newId, duplicatedRepertoire);
-        this.saveRepertoires();
+        this._saveRepertoiresV2();
         this.updateRepertoireSelect();
         this.updateRepertoireList();
-        
-        this.showNotification(`Repertorio "${name}" duplicado con ${duplicatedRepertoire.songs.length} canciones`, 'success');
+
+        this.showNotification(`Repertorio "${name}" duplicado con ${dupEntries.length} canciones`, 'success');
     }
 
     renameCurrentRepertoire(name) {
@@ -2850,64 +3004,40 @@ Says, "Find a home"
         this.copySongBtn.disabled = !hasSelection;
     }
 
-    // Copiar canción actual a otro repertorio
+    // Añadir referencia a la canción actual en otro repertorio.
+    // En v2 esto es solo una nueva entry — no se duplica la canción.
     copySongToRepertoire() {
         const targetRepertoireId = this.copyTargetRepertoireSelect.value;
-        
+
         if (!targetRepertoireId || !this.editingSong) {
             alert('Por favor selecciona un repertorio de destino.');
             return;
         }
-        
+
         const targetRepertoire = this.repertoires.get(targetRepertoireId);
         if (!targetRepertoire) {
             alert('El repertorio seleccionado no existe.');
             return;
         }
-        
-        // Crear una copia de la canción con nuevo ID
-        const now = new Date().toISOString();
-        const songCopy = {
-            ...this.editingSong,
-            id: this.generateId(),
-            order: 0, // Resetear el orden en el nuevo repertorio
-            createdAt: now, // Nueva fecha de creación para la copia
-            lastModified: now
-        };
-        
-        // Verificar si ya existe una canción con el mismo título y artista
-        const existingSong = targetRepertoire.songs.find(s => 
-            s.title.toLowerCase() === songCopy.title.toLowerCase() && 
-            s.artist.toLowerCase() === songCopy.artist.toLowerCase()
-        );
-        
-        if (existingSong) {
-            const confirmOverwrite = confirm(
-                `Ya existe una canción "${songCopy.title}" de "${songCopy.artist}" en el repertorio "${targetRepertoire.name}".\n\n¿Deseas reemplazarla?`
-            );
-            
-            if (confirmOverwrite) {
-                // Reemplazar la canción existente manteniendo ID y fechas originales
-                const originalId = existingSong.id;
-                const originalCreatedAt = existingSong.createdAt;
-                Object.assign(existingSong, songCopy);
-                existingSong.id = originalId; // Mantener el ID original
-                existingSong.createdAt = originalCreatedAt; // Mantener fecha de creación original
-                existingSong.lastModified = new Date().toISOString(); // Actualizar solo fecha de modificación
-            } else {
-                return; // Cancelar la operación
-            }
-        } else {
-            // Agregar la nueva canción
-            targetRepertoire.songs.push(songCopy);
+
+        const songId = this.editingSong.id;
+        const songTitle = this.editingSong.title;
+
+        // ¿Ya está la canción en el destino?
+        if (targetRepertoire.entries.some(e => e.songId === songId)) {
+            alert(`La canción "${songTitle}" ya está en el repertorio "${targetRepertoire.name}".`);
+            return;
         }
-        
-        // Guardar cambios
-        this.saveRepertoires();
-        
-        // Mostrar confirmación
-        alert(`Canción "${songCopy.title}" copiada exitosamente al repertorio "${targetRepertoire.name}".`);
-        
+
+        // Calcular siguiente order
+        const maxOrder = targetRepertoire.entries.reduce((m, e) => Math.max(m, e.order || 0), 0);
+        targetRepertoire.entries.push({ songId, order: maxOrder + 10 });
+        targetRepertoire.lastModified = new Date().toISOString();
+
+        this._saveRepertoiresV2();
+
+        alert(`Canción "${songTitle}" añadida al repertorio "${targetRepertoire.name}".`);
+
         // Limpiar selección
         this.copyTargetRepertoireSelect.value = '';
         this.updateCopyButtonState();
@@ -3024,13 +3154,20 @@ Says, "Find a home"
         // Limpiar la lista
         list.innerHTML = '';
         
-        if (!repertoire.songs || repertoire.songs.length === 0) {
+        if (!repertoire.entries || repertoire.entries.length === 0) {
             list.innerHTML = '<li style="color: #888; padding: 20px; text-align: center;">No hay canciones en este repertorio</li>';
             return;
         }
-        
-        // Ordenar canciones por orden y título
-        const sortedSongs = [...repertoire.songs].sort((a, b) => {
+
+        // Resolver entries → canciones del catálogo, con order inyectado
+        const repSongs = repertoire.entries
+            .map(e => {
+                const song = this.catalog.get(e.songId);
+                return song ? { ...song, order: e.order || 0 } : null;
+            })
+            .filter(Boolean);
+
+        const sortedSongs = repSongs.sort((a, b) => {
             if (a.order !== b.order) return a.order - b.order;
             return a.title.localeCompare(b.title);
         });
@@ -3114,96 +3251,74 @@ Says, "Find a home"
         const fromRepertoireId = fromSide === 'left' ? this.leftRepertoireSelect.value : this.rightRepertoireSelect.value;
         const toRepertoireId = toSide === 'left' ? this.leftRepertoireSelect.value : this.rightRepertoireSelect.value;
         const selectedSongs = fromSide === 'left' ? this.selectedLeftSongs : this.selectedRightSongs;
-        
+
         if (selectedSongs.size === 0) {
             this.showNotification('❌ No hay canciones seleccionadas', 'error');
             return;
         }
-        
+
         if (fromRepertoireId === toRepertoireId) {
             this.showNotification('❌ No puedes transferir canciones al mismo repertorio', 'error');
             return;
         }
-        
+
         const fromRepertoire = this.repertoires.get(fromRepertoireId);
         const toRepertoire = this.repertoires.get(toRepertoireId);
-        
+
         if (!fromRepertoire || !toRepertoire) {
             this.showNotification('❌ Error: Repertorio no encontrado', 'error');
             return;
         }
 
-        // Compatibilidad con repertorios antiguos o corruptos sin el campo songs.
-        if (!Array.isArray(fromRepertoire.songs)) {
-            fromRepertoire.songs = [];
-        }
-        if (!Array.isArray(toRepertoire.songs)) {
-            toRepertoire.songs = [];
-        }
-        
+        if (!Array.isArray(fromRepertoire.entries)) fromRepertoire.entries = [];
+        if (!Array.isArray(toRepertoire.entries)) toRepertoire.entries = [];
+
         let transferred = 0;
-        const songsToTransfer = [];
-        
-        // Recopilar canciones a transferir
+        const maxOrderTo = toRepertoire.entries.reduce((m, e) => Math.max(m, e.order || 0), 0);
+        let nextOrder = maxOrderTo + 10;
+
         selectedSongs.forEach(songId => {
-            const song = fromRepertoire.songs.find(s => s.id === songId);
-            if (song) {
-                songsToTransfer.push(song);
-            }
-        });
-        
-        // Transferir canciones
-        songsToTransfer.forEach(song => {
+            const fromEntry = fromRepertoire.entries.find(e => e.songId === songId);
+            if (!fromEntry) return;
+
+            const alreadyInTarget = toRepertoire.entries.some(e => e.songId === songId);
+
             if (isCopy) {
-                // Copiar: crear nueva canción con nuevo ID
-                const songCopy = JSON.parse(JSON.stringify(song));
-                songCopy.id = Date.now() + Math.random();
-                songCopy.active = false;
-                songCopy.createdAt = new Date().toISOString();
-                songCopy.lastModified = new Date().toISOString();
-                
-                toRepertoire.songs.push(songCopy);
+                if (alreadyInTarget) return; // no duplicar referencias
+                toRepertoire.entries.push({ songId, order: nextOrder });
+                nextOrder += 10;
             } else {
-                // Mover: quitar del origen y agregar al destino
-                const index = fromRepertoire.songs.findIndex(s => s.id === song.id);
-                if (index !== -1) {
-                    fromRepertoire.songs.splice(index, 1);
+                // Mover = quitar del origen y, si no existía, añadir al destino
+                fromRepertoire.entries = fromRepertoire.entries.filter(e => e.songId !== songId);
+                if (fromRepertoire.activeSongId === songId) fromRepertoire.activeSongId = null;
+                if (!alreadyInTarget) {
+                    toRepertoire.entries.push({ songId, order: nextOrder });
+                    nextOrder += 10;
                 }
-                song.active = false;
-                song.lastModified = new Date().toISOString();
-                toRepertoire.songs.push(song);
             }
             transferred++;
         });
-        
-        // Actualizar fechas de modificación
-        fromRepertoire.lastModified = new Date().toISOString();
-        toRepertoire.lastModified = new Date().toISOString();
-        
-        // Guardar cambios
-        this.saveRepertoires();
-        
-        // Si el repertorio actual es uno de los afectados, refrescar la vista actual.
+
+        const now = new Date().toISOString();
+        fromRepertoire.lastModified = now;
+        toRepertoire.lastModified = now;
+
+        this._saveRepertoiresV2();
+
+        // Si el repertorio actual es uno de los afectados, refrescar la vista
         if (fromRepertoireId === this.currentRepertoireId || toRepertoireId === this.currentRepertoireId) {
-            const currentRepertoire = this.repertoires.get(this.currentRepertoireId);
-            this.songs = [...(currentRepertoire?.songs || [])];
+            this._rebuildSongs();
             this.renderSongs();
             this.updateSongsTitle(this.songs.length);
         }
-        
-        // Limpiar selecciones
+
         selectedSongs.clear();
-        
-        // Recargar ambas listas
         this.loadManagerSongs('left');
         this.loadManagerSongs('right');
-        
-        // Actualizar contadores
         this.updateSelectionCounts();
-        
+
         const verb = isCopy ? 'copiadas' : 'movidas';
         this.showNotification(`✅ ${transferred} canción${transferred !== 1 ? 'es' : ''} ${verb} correctamente`, 'success');
-        
         console.log(`📋 ${transferred} canciones ${verb} de "${fromRepertoire.name}" a "${toRepertoire.name}"`);
     }
 }
