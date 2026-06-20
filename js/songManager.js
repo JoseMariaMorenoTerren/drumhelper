@@ -57,6 +57,7 @@ class SongManager {
         this.repertoireOptionsModal = document.getElementById('repertoire-options-modal');
         this.closeRepertoireOptionsModal = document.getElementById('close-repertoire-options-modal');
         this.currentRepertoireName = document.getElementById('current-repertoire-name');
+        this.activeSetlistName = document.getElementById('active-setlist-name');
         this.newRepertoireBtn = document.getElementById('new-repertoire-btn');
         this.duplicateRepertoireBtn = document.getElementById('duplicate-repertoire-btn');
         this.renameRepertoireBtn = document.getElementById('rename-repertoire-btn');
@@ -2685,6 +2686,9 @@ Says, "Find a home"
         const currentRepertoire = this.repertoires.get(this.currentRepertoireId);
         if (currentRepertoire && this.currentRepertoireName) {
             this.currentRepertoireName.textContent = currentRepertoire.name;
+        }
+        if (currentRepertoire && this.activeSetlistName) {
+            this.activeSetlistName.textContent = currentRepertoire.name;
         }
     }
 

@@ -540,6 +540,16 @@ body {
 
 
 
+.active-setlist-label {
+    font-size: 0.72rem;
+    color: #888888;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 0 2px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
 .song-search {
     padding-top: 15px;
 }

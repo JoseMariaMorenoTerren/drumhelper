@@ -1,7 +1,7 @@
 {
   "version": 2,
-  "generatedAt": "2026-06-19T08:46:55.692690+00:00",
-  "currentRepertoireId": "repertoire_boda_raquel_carlos",
+  "generatedAt": "2026-05-24T11:13:26.298163",
+  "currentRepertoireId": "default",
   "repertoires": {
     "default": {
       "id": "default",
@@ -762,130 +762,6 @@
       ],
       "createdAt": "2026-05-24T10:06:55.374733",
       "lastModified": "2026-05-24T10:06:55.374734"
-    },
-    "repertoire_boda_raquel_carlos": {
-      "id": "repertoire_boda_raquel_carlos",
-      "name": "Boda 20 de junio 2026",
-      "setlistName": "Boda 20 de junio 2026",
-      "showArtistBpm": false,
-      "hideNotes": false,
-      "activeSongId": "song_0056",
-      "entries": [
-        {
-          "songId": "song_0056",
-          "order": 10
-        },
-        {
-          "songId": "song_0027",
-          "order": 20
-        },
-        {
-          "songId": "song_0184",
-          "order": 30
-        },
-        {
-          "songId": "song_0143",
-          "order": 40
-        },
-        {
-          "songId": "song_0042",
-          "order": 50
-        },
-        {
-          "songId": "song_0043",
-          "order": 60
-        },
-        {
-          "songId": "song_0004",
-          "order": 70
-        },
-        {
-          "songId": "song_0012",
-          "order": 80
-        },
-        {
-          "songId": "song_0008",
-          "order": 90
-        },
-        {
-          "songId": "song_0019",
-          "order": 100
-        },
-        {
-          "songId": "song_0230",
-          "order": 110
-        },
-        {
-          "songId": "song_0238",
-          "order": 120
-        },
-        {
-          "songId": "song_0239",
-          "order": 130
-        },
-        {
-          "songId": "song_0240",
-          "order": 140
-        },
-        {
-          "songId": "song_0015",
-          "order": 150
-        },
-        {
-          "songId": "song_0014",
-          "order": 160
-        },
-        {
-          "songId": "song_0100",
-          "order": 170
-        },
-        {
-          "songId": "song_0241",
-          "order": 180
-        },
-        {
-          "songId": "song_0037",
-          "order": 190
-        },
-        {
-          "songId": "song_0038",
-          "order": 200
-        },
-        {
-          "songId": "song_0023",
-          "order": 210
-        },
-        {
-          "songId": "song_0011",
-          "order": 220
-        },
-        {
-          "songId": "song_0010",
-          "order": 230
-        },
-        {
-          "songId": "song_0006",
-          "order": 240
-        },
-        {
-          "songId": "song_0018",
-          "order": 250
-        },
-        {
-          "songId": "song_0044",
-          "order": 260
-        },
-        {
-          "songId": "song_0030",
-          "order": 270
-        },
-        {
-          "songId": "song_0017",
-          "order": 280
-        }
-      ],
-      "createdAt": "2026-06-19T07:44:00.900606+00:00",
-      "lastModified": "2026-06-19T08:46:55.692690+00:00"
     }
   }
 }

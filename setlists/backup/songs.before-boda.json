@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "generatedAt": "2026-06-19T07:44:00.900606+00:00",
+  "generatedAt": "2026-05-24T10:06:55.375401",
   "songs": {
     "song_0001": {
       "id": "song_0001",
@@ -6708,66 +6708,6 @@
       "recordings": [],
       "createdAt": "2026-05-24T10:06:55.374600",
       "lastModified": "2026-05-24T10:06:55.374601"
-    },
-    "song_0238": {
-      "id": "song_0238",
-      "title": "Volando voy",
-      "artist": "Kiko Veneno / Camarón",
-      "bpm": 0,
-      "lyrics": "",
-      "notes": "",
-      "structure": "",
-      "duration": "",
-      "htmlFile": "",
-      "fontSize": 1.7999999999999998,
-      "recordings": [],
-      "createdAt": "2026-06-19T07:44:00.900606+00:00",
-      "lastModified": "2026-06-19T07:44:00.900606+00:00"
-    },
-    "song_0239": {
-      "id": "song_0239",
-      "title": "Bamboleo",
-      "artist": "Gipsy Kings",
-      "bpm": 0,
-      "lyrics": "",
-      "notes": "",
-      "structure": "",
-      "duration": "",
-      "htmlFile": "",
-      "fontSize": 1.7999999999999998,
-      "recordings": [],
-      "createdAt": "2026-06-19T07:44:00.900606+00:00",
-      "lastModified": "2026-06-19T07:44:00.900606+00:00"
-    },
-    "song_0240": {
-      "id": "song_0240",
-      "title": "19 días y 500 noches",
-      "artist": "Joaquín Sabina",
-      "bpm": 0,
-      "lyrics": "",
-      "notes": "",
-      "structure": "",
-      "duration": "",
-      "htmlFile": "",
-      "fontSize": 1.7999999999999998,
-      "recordings": [],
-      "createdAt": "2026-06-19T07:44:00.900606+00:00",
-      "lastModified": "2026-06-19T07:44:00.900606+00:00"
-    },
-    "song_0241": {
-      "id": "song_0241",
-      "title": "Joselito",
-      "artist": "Artista desconocido",
-      "bpm": 0,
-      "lyrics": "",
-      "notes": "",
-      "structure": "",
-      "duration": "",
-      "htmlFile": "",
-      "fontSize": 1.7999999999999998,
-      "recordings": [],
-      "createdAt": "2026-06-19T07:44:00.900606+00:00",
-      "lastModified": "2026-06-19T07:44:00.900606+00:00"
     }
   }
 }
