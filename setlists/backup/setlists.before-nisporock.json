@@ -1,7 +1,7 @@
 {
   "version": 2,
   "exportDate": "2026-06-20T16:32:57.444Z",
-  "currentRepertoireId": "repertoire_nisporock_2026",
+  "currentRepertoireId": "repertoire_boda_raquel_carlos",
   "repertoires": {
     "default": {
       "id": "default",
@@ -886,130 +886,6 @@
       ],
       "createdAt": "2026-06-19T07:44:00.900606+00:00",
       "lastModified": "2026-06-19T09:28:56.727Z"
-    },
-    "repertoire_nisporock_2026": {
-      "id": "repertoire_nisporock_2026",
-      "name": "Nisporock 2026",
-      "setlistName": "Nisporock 2026",
-      "showArtistBpm": false,
-      "hideNotes": false,
-      "activeSongId": "song_0034",
-      "entries": [
-        {
-          "songId": "song_0034",
-          "order": 10
-        },
-        {
-          "songId": "song_0016",
-          "order": 20
-        },
-        {
-          "songId": "song_0042",
-          "order": 30
-        },
-        {
-          "songId": "song_0043",
-          "order": 40
-        },
-        {
-          "songId": "song_0027",
-          "order": 50
-        },
-        {
-          "songId": "song_0004",
-          "order": 60
-        },
-        {
-          "songId": "song_0012",
-          "order": 70
-        },
-        {
-          "songId": "song_0008",
-          "order": 80
-        },
-        {
-          "songId": "song_0039",
-          "order": 90
-        },
-        {
-          "songId": "song_0003",
-          "order": 100
-        },
-        {
-          "songId": "song_0051",
-          "order": 110
-        },
-        {
-          "songId": "song_0050",
-          "order": 120
-        },
-        {
-          "songId": "song_0019",
-          "order": 130
-        },
-        {
-          "songId": "song_0001",
-          "order": 140
-        },
-        {
-          "songId": "song_0015",
-          "order": 150
-        },
-        {
-          "songId": "song_0014",
-          "order": 160
-        },
-        {
-          "songId": "song_0037",
-          "order": 170
-        },
-        {
-          "songId": "song_0023",
-          "order": 180
-        },
-        {
-          "songId": "song_0011",
-          "order": 190
-        },
-        {
-          "songId": "song_0010",
-          "order": 200
-        },
-        {
-          "songId": "song_0028",
-          "order": 210
-        },
-        {
-          "songId": "song_0006",
-          "order": 220
-        },
-        {
-          "songId": "song_0018",
-          "order": 230
-        },
-        {
-          "songId": "song_0032",
-          "order": 240
-        },
-        {
-          "songId": "song_0033",
-          "order": 250
-        },
-        {
-          "songId": "song_0032",
-          "order": 260
-        },
-        {
-          "songId": "song_0033",
-          "order": 270
-        },
-        {
-          "songId": "song_0242",
-          "order": 280
-        }
-      ],
-      "createdAt": "2026-06-26T10:40:05.463478+00:00",
-      "lastModified": "2026-06-26T10:40:05.463478+00:00"
     }
   }
 }

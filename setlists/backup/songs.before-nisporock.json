@@ -7190,21 +7190,6 @@
       "recordings": [],
       "createdAt": "2026-06-19T07:44:00.900606+00:00",
       "lastModified": "2026-06-20T16:23:02.448Z"
-    },
-    "song_0242": {
-      "id": "song_0242",
-      "title": "Mucha Policía",
-      "artist": "Eskorbuto",
-      "bpm": 0,
-      "lyrics": "",
-      "notes": "",
-      "structure": "",
-      "duration": "",
-      "htmlFile": "",
-      "fontSize": 1.7999999999999998,
-      "recordings": [],
-      "createdAt": "2026-06-26T10:40:05.463478+00:00",
-      "lastModified": "2026-06-26T10:40:05.463478+00:00"
     }
   }
 }
