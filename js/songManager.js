@@ -2688,7 +2688,13 @@ Says, "Find a home"
             this.currentRepertoireName.textContent = currentRepertoire.name;
         }
         if (currentRepertoire && this.activeSetlistName) {
-            this.activeSetlistName.textContent = currentRepertoire.name;
+            const dur = this.getRepertoireDuration(currentRepertoire);
+            let txt = currentRepertoire.name;
+            if (dur.totalSongs > 0) {
+                const approx = dur.counted < dur.totalSongs ? '~' : '';
+                txt += ` · ${approx}${this.formatDuration(dur.seconds)}`;
+            }
+            this.activeSetlistName.textContent = txt;
         }
     }
 
@@ -2722,7 +2728,18 @@ Says, "Find a home"
 
             const countDiv = document.createElement('div');
             countDiv.className = 'repertoire-count';
-            countDiv.textContent = `${(repertoire.entries || []).length} canciones`;
+            const dur = this.getRepertoireDuration(repertoire);
+            const songsTxt = `${(repertoire.entries || []).length} canciones`;
+            if (dur.totalSongs > 0) {
+                const approx = dur.counted < dur.totalSongs ? '~' : '';
+                let durTxt = `${approx}${this.formatDuration(dur.seconds)}`;
+                if (dur.counted < dur.totalSongs) {
+                    durTxt += ` (faltan ${dur.totalSongs - dur.counted} sin duración)`;
+                }
+                countDiv.textContent = `${songsTxt} · ${durTxt}`;
+            } else {
+                countDiv.textContent = songsTxt;
+            }
 
             info.appendChild(nameDiv);
             info.appendChild(countDiv);
@@ -2742,6 +2759,36 @@ Says, "Find a home"
 
             this.repertoireList.appendChild(item);
         }
+    }
+
+    // Parsea una duración "mm:ss" a segundos. Devuelve null si no es válida.
+    parseDuration(str) {
+        if (!str) return null;
+        const m = String(str).trim().match(/^(\d{1,2}):([0-5]\d)$/);
+        if (!m) return null;
+        return parseInt(m[1], 10) * 60 + parseInt(m[2], 10);
+    }
+
+    // Formatea segundos a "Xh Ymin" o "Ymin".
+    formatDuration(totalSeconds) {
+        const h = Math.floor(totalSeconds / 3600);
+        const m = Math.round((totalSeconds % 3600) / 60);
+        return h > 0 ? `${h}h ${m}min` : `${m}min`;
+    }
+
+    // Duración total de un repertorio = suma de duraciones de canciones
+    // + 20 s de pausa entre canción y canción (n-1 pausas).
+    getRepertoireDuration(repertoire) {
+        const entries = repertoire.entries || [];
+        let total = 0, counted = 0;
+        for (const entry of entries) {
+            const song = this.catalog.get(entry.songId);
+            if (!song) continue;
+            const secs = this.parseDuration(song.duration);
+            if (secs != null) { total += secs; counted++; }
+        }
+        const pauses = Math.max(0, entries.length - 1) * 20;
+        return { seconds: total + pauses, counted, totalSongs: entries.length };
     }
 
     updateDeleteButtonVisibility() {
