@@ -1,7 +1,7 @@
 {
   "version": 2,
   "exportDate": "2026-06-20T16:32:57.444Z",
-  "currentRepertoireId": "repertoire_bambu_29jun26",
+  "currentRepertoireId": "repertoire_nisporock_2026",
   "repertoires": {
     "default": {
       "id": "default",
@@ -1002,122 +1002,6 @@
       ],
       "createdAt": "2026-06-26T10:40:05.463478+00:00",
       "lastModified": "2026-06-26T11:40:49.920789+00:00"
-    },
-    "repertoire_bambu_29jun26": {
-      "id": "repertoire_bambu_29jun26",
-      "name": "Bambú 29jun26",
-      "setlistName": "Bambú 29jun26",
-      "showArtistBpm": false,
-      "hideNotes": false,
-      "activeSongId": "song_0034",
-      "entries": [
-        {
-          "songId": "song_0034",
-          "order": 10
-        },
-        {
-          "songId": "song_0021",
-          "order": 20
-        },
-        {
-          "songId": "song_0019",
-          "order": 30
-        },
-        {
-          "songId": "song_0027",
-          "order": 40
-        },
-        {
-          "songId": "song_0045",
-          "order": 50
-        },
-        {
-          "songId": "song_0008",
-          "order": 60
-        },
-        {
-          "songId": "song_0001",
-          "order": 70
-        },
-        {
-          "songId": "song_0042",
-          "order": 80
-        },
-        {
-          "songId": "song_0043",
-          "order": 90
-        },
-        {
-          "songId": "song_0011",
-          "order": 100
-        },
-        {
-          "songId": "song_0007",
-          "order": 110
-        },
-        {
-          "songId": "song_0006",
-          "order": 120
-        },
-        {
-          "songId": "song_0015",
-          "order": 130
-        },
-        {
-          "songId": "song_0025",
-          "order": 140
-        },
-        {
-          "songId": "song_0010",
-          "order": 150
-        },
-        {
-          "songId": "song_0024",
-          "order": 160
-        },
-        {
-          "songId": "song_0023",
-          "order": 170
-        },
-        {
-          "songId": "song_0020",
-          "order": 180
-        },
-        {
-          "songId": "song_0032",
-          "order": 190
-        },
-        {
-          "songId": "song_0012",
-          "order": 200
-        },
-        {
-          "songId": "song_0028",
-          "order": 210
-        },
-        {
-          "songId": "song_0033",
-          "order": 220
-        },
-        {
-          "songId": "song_0029",
-          "order": 230
-        },
-        {
-          "songId": "song_0018",
-          "order": 240
-        },
-        {
-          "songId": "song_0030",
-          "order": 250
-        },
-        {
-          "songId": "song_0017",
-          "order": 260
-        }
-      ],
-      "createdAt": "2026-06-29T13:30:52.520510+00:00",
-      "lastModified": "2026-06-29T13:30:52.520510+00:00"
     }
   }
 }
