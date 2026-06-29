@@ -44,7 +44,8 @@ class SongManager {
         this.modalImportJsonBtn = document.getElementById('modal-import-json-btn');
         this.modalImportTxtBtn = document.getElementById('modal-import-txt-btn');
         this.modalImportCompleteBtn = document.getElementById('modal-import-complete-btn');
-        this.modalExportJsonBtn = document.getElementById('modal-export-json-btn');
+        this.modalExportSongsBtn = document.getElementById('modal-export-songs-btn');
+        this.modalExportSetlistsBtn = document.getElementById('modal-export-setlists-btn');
         this.modalClearAllBtn = document.getElementById('modal-clear-all-btn');
         this.modalResetAppBtn = document.getElementById('modal-reset-app-btn');
         this.importFileInput = document.getElementById('import-file-input');
@@ -272,9 +273,14 @@ class SongManager {
             this.closeDataOptionsModalFunc();
         });
         
-        this.modalExportJsonBtn.addEventListener('click', () => {
+        this.modalExportSongsBtn.addEventListener('click', () => {
             this.closeDataOptionsModalFunc();
             this.exportSongs();
+        });
+
+        this.modalExportSetlistsBtn.addEventListener('click', () => {
+            this.closeDataOptionsModalFunc();
+            this.exportSetlists();
         });
         
         this.modalImportJsonBtn.addEventListener('click', () => {
@@ -1731,57 +1737,61 @@ Says, "Find a home"
         return this.currentSong;
     }
     
-    // Exporta dos ficheros: songs.json (catálogo global) + setlists.json (repertorios con entries).
+    // Descarga un objeto como fichero JSON con nombre `<prefix>-<timestamp>.json`.
+    _downloadJson(prefix, dataObj) {
+        const ts = new Date().toISOString().replace(/[:T]/g, '-').replace(/\..+/, '');
+        const blob = new Blob([JSON.stringify(dataObj, null, 2)], { type: 'application/json' });
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = `${prefix}-${ts}.json`;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(link.href);
+        return link.download;
+    }
+
+    // Exporta solo el catálogo de canciones (songs.json).
     exportSongs() {
         try {
-            console.log(`🚀 Exportación v2: catálogo + setlists`);
-            const now = new Date();
-            const ts = now.toISOString().replace(/[:T]/g, '-').replace(/\..+/, '');
-
-            // 1) songs.json — catálogo entero
             const catalogObj = {};
             for (const [id, song] of this.catalog) {
                 const { order, active, ...rest } = song;
                 catalogObj[id] = rest;
             }
-            const songsBlob = new Blob([JSON.stringify({
+            const filename = this._downloadJson('songs', {
                 version: 2,
-                exportDate: now.toISOString(),
+                exportDate: new Date().toISOString(),
                 songs: catalogObj
-            }, null, 2)], { type: 'application/json' });
-
-            const songsLink = document.createElement('a');
-            songsLink.href = URL.createObjectURL(songsBlob);
-            songsLink.download = `songs-${ts}.json`;
-            document.body.appendChild(songsLink);
-            songsLink.click();
-            document.body.removeChild(songsLink);
-            URL.revokeObjectURL(songsLink.href);
-
-            // 2) setlists.json — todos los setlists con entries (referencias)
-            const setlistsBlob = new Blob([JSON.stringify({
-                version: 2,
-                exportDate: now.toISOString(),
-                currentRepertoireId: this.currentRepertoireId,
-                repertoires: Object.fromEntries(this.repertoires)
-            }, null, 2)], { type: 'application/json' });
-
-            const setlistsLink = document.createElement('a');
-            setlistsLink.href = URL.createObjectURL(setlistsBlob);
-            setlistsLink.download = `setlists-${ts}.json`;
-            document.body.appendChild(setlistsLink);
-            setlistsLink.click();
-            document.body.removeChild(setlistsLink);
-            URL.revokeObjectURL(setlistsLink.href);
-
-            console.log(`✅ Exportados: ${this.catalog.size} canciones, ${this.repertoires.size} setlists`);
+            });
+            console.log(`✅ Exportado ${filename}: ${this.catalog.size} canciones`);
             this.showNotification(
-                `✅ Exportados songs-${ts}.json (${this.catalog.size} canciones) y setlists-${ts}.json (${this.repertoires.size} setlists)`,
+                `✅ Exportado ${filename} (${this.catalog.size} canciones)`,
                 'success'
             );
         } catch (error) {
-            console.error('💥 Error exportando:', error);
-            this.showNotification('❌ Error al exportar', 'error');
+            console.error('💥 Error exportando canciones:', error);
+            this.showNotification('❌ Error al exportar canciones', 'error');
+        }
+    }
+
+    // Exporta solo los repertorios/setlists (setlists.json).
+    exportSetlists() {
+        try {
+            const filename = this._downloadJson('setlists', {
+                version: 2,
+                exportDate: new Date().toISOString(),
+                currentRepertoireId: this.currentRepertoireId,
+                repertoires: Object.fromEntries(this.repertoires)
+            });
+            console.log(`✅ Exportado ${filename}: ${this.repertoires.size} setlists`);
+            this.showNotification(
+                `✅ Exportado ${filename} (${this.repertoires.size} repertorios)`,
+                'success'
+            );
+        } catch (error) {
+            console.error('💥 Error exportando repertorios:', error);
+            this.showNotification('❌ Error al exportar repertorios', 'error');
         }
     }
     
