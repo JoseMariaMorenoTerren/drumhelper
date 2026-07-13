@@ -1,7 +1,7 @@
 {
   "version": 2,
-  "exportDate": "2026-06-20T16:32:57.444Z",
-  "currentRepertoireId": "repertoire_bambu_29jun26",
+  "exportDate": "2026-07-13T15:32:58.874Z",
+  "currentRepertoireId": "default",
   "repertoires": {
     "default": {
       "id": "default",
@@ -113,8 +113,20 @@
       "setlistName": "Todas las canciones",
       "showArtistBpm": false,
       "hideNotes": false,
-      "activeSongId": null,
+      "activeSongId": "song_0034",
       "entries": [
+        {
+          "songId": "song_0034",
+          "order": 10
+        },
+        {
+          "songId": "song_0016",
+          "order": 20
+        },
+        {
+          "songId": "song_0024",
+          "order": 30
+        },
         {
           "songId": "song_0010",
           "order": 40
@@ -156,12 +168,28 @@
           "order": 100
         },
         {
+          "songId": "song_0032",
+          "order": 100
+        },
+        {
           "songId": "song_0027",
           "order": 110
         },
         {
           "songId": "song_0014",
           "order": 120
+        },
+        {
+          "songId": "song_0020",
+          "order": 120
+        },
+        {
+          "songId": "song_0039",
+          "order": 130
+        },
+        {
+          "songId": "song_0028",
+          "order": 130
         },
         {
           "songId": "song_0023",
@@ -176,8 +204,16 @@
           "order": 150
         },
         {
+          "songId": "song_0029",
+          "order": 150
+        },
+        {
           "songId": "song_0030",
           "order": 155
+        },
+        {
+          "songId": "song_0041",
+          "order": 160
         },
         {
           "songId": "song_0042",
@@ -220,16 +256,44 @@
           "order": 9999
         },
         {
+          "songId": "song_0005",
+          "order": 9999
+        },
+        {
+          "songId": "song_0048",
+          "order": 10010
+        },
+        {
           "songId": "song_0049",
           "order": 10040
+        },
+        {
+          "songId": "song_0050",
+          "order": 10080
         },
         {
           "songId": "song_0004",
           "order": 10090
         },
         {
+          "songId": "song_0051",
+          "order": 10100
+        },
+        {
+          "songId": "song_0052",
+          "order": 10170
+        },
+        {
           "songId": "song_0053",
           "order": 10180
+        },
+        {
+          "songId": "song_0054",
+          "order": 10250
+        },
+        {
+          "songId": "song_0002",
+          "order": 10260
         },
         {
           "songId": "song_0006",
@@ -249,7 +313,7 @@
         }
       ],
       "createdAt": "2026-05-24T10:06:55.374913",
-      "lastModified": "2026-06-19T09:28:56.727Z"
+      "lastModified": "2026-05-24T10:06:55.374914"
     },
     "repertoire_los_80s_02": {
       "id": "repertoire_los_80s_02",
@@ -698,426 +762,6 @@
       ],
       "createdAt": "2026-05-24T10:06:55.374733",
       "lastModified": "2026-05-24T10:06:55.374734"
-    },
-    "repertoire_boda_raquel_carlos": {
-      "id": "repertoire_boda_raquel_carlos",
-      "name": "Boda 20 de junio 2026",
-      "setlistName": "Boda 20 de junio 2026",
-      "showArtistBpm": false,
-      "hideNotes": false,
-      "activeSongId": "song_0240",
-      "entries": [
-        {
-          "songId": "song_0056",
-          "order": 10
-        },
-        {
-          "songId": "song_0027",
-          "order": 20
-        },
-        {
-          "songId": "song_0184",
-          "order": 30
-        },
-        {
-          "songId": "song_0143",
-          "order": 40
-        },
-        {
-          "songId": "song_0042",
-          "order": 50
-        },
-        {
-          "songId": "song_0043",
-          "order": 60
-        },
-        {
-          "songId": "song_0004",
-          "order": 70
-        },
-        {
-          "songId": "song_0012",
-          "order": 80
-        },
-        {
-          "songId": "song_0008",
-          "order": 90
-        },
-        {
-          "songId": "song_0019",
-          "order": 100
-        },
-        {
-          "songId": "song_0230",
-          "order": 110
-        },
-        {
-          "songId": "song_0238",
-          "order": 120
-        },
-        {
-          "songId": "song_0239",
-          "order": 130
-        },
-        {
-          "songId": "song_0240",
-          "order": 140
-        },
-        {
-          "songId": "song_0015",
-          "order": 150
-        },
-        {
-          "songId": "song_0014",
-          "order": 160
-        },
-        {
-          "songId": "song_0100",
-          "order": 170
-        },
-        {
-          "songId": "song_0241",
-          "order": 180
-        },
-        {
-          "songId": "song_0037",
-          "order": 190
-        },
-        {
-          "songId": "song_0038",
-          "order": 200
-        },
-        {
-          "songId": "song_0023",
-          "order": 210
-        },
-        {
-          "songId": "song_0011",
-          "order": 220
-        },
-        {
-          "songId": "song_0010",
-          "order": 230
-        },
-        {
-          "songId": "song_0006",
-          "order": 240
-        },
-        {
-          "songId": "song_0018",
-          "order": 250
-        },
-        {
-          "songId": "song_0044",
-          "order": 260
-        },
-        {
-          "songId": "song_0030",
-          "order": 270
-        },
-        {
-          "songId": "song_0017",
-          "order": 280
-        },
-        {
-          "songId": "song_0034",
-          "order": 290
-        },
-        {
-          "songId": "song_0016",
-          "order": 300
-        },
-        {
-          "songId": "song_0024",
-          "order": 310
-        },
-        {
-          "songId": "song_0032",
-          "order": 320
-        },
-        {
-          "songId": "song_0020",
-          "order": 330
-        },
-        {
-          "songId": "song_0039",
-          "order": 340
-        },
-        {
-          "songId": "song_0028",
-          "order": 350
-        },
-        {
-          "songId": "song_0029",
-          "order": 360
-        },
-        {
-          "songId": "song_0041",
-          "order": 370
-        },
-        {
-          "songId": "song_0005",
-          "order": 380
-        },
-        {
-          "songId": "song_0048",
-          "order": 390
-        },
-        {
-          "songId": "song_0052",
-          "order": 400
-        },
-        {
-          "songId": "song_0050",
-          "order": 410
-        },
-        {
-          "songId": "song_0051",
-          "order": 420
-        },
-        {
-          "songId": "song_0054",
-          "order": 430
-        },
-        {
-          "songId": "song_0002",
-          "order": 440
-        }
-      ],
-      "createdAt": "2026-06-19T07:44:00.900606+00:00",
-      "lastModified": "2026-06-19T09:28:56.727Z"
-    },
-    "repertoire_nisporock_2026": {
-      "id": "repertoire_nisporock_2026",
-      "name": "Nisporock 2026",
-      "setlistName": "Nisporock 2026",
-      "showArtistBpm": false,
-      "hideNotes": false,
-      "activeSongId": "song_0034",
-      "entries": [
-        {
-          "songId": "song_0034",
-          "order": 10
-        },
-        {
-          "songId": "song_0016",
-          "order": 20
-        },
-        {
-          "songId": "song_0042",
-          "order": 30
-        },
-        {
-          "songId": "song_0043",
-          "order": 40
-        },
-        {
-          "songId": "song_0027",
-          "order": 50
-        },
-        {
-          "songId": "song_0004",
-          "order": 60
-        },
-        {
-          "songId": "song_0012",
-          "order": 70
-        },
-        {
-          "songId": "song_0008",
-          "order": 80
-        },
-        {
-          "songId": "song_0039",
-          "order": 90
-        },
-        {
-          "songId": "song_0003",
-          "order": 100
-        },
-        {
-          "songId": "song_0051",
-          "order": 110
-        },
-        {
-          "songId": "song_0050",
-          "order": 120
-        },
-        {
-          "songId": "song_0019",
-          "order": 130
-        },
-        {
-          "songId": "song_0001",
-          "order": 140
-        },
-        {
-          "songId": "song_0015",
-          "order": 150
-        },
-        {
-          "songId": "song_0014",
-          "order": 160
-        },
-        {
-          "songId": "song_0037",
-          "order": 170
-        },
-        {
-          "songId": "song_0023",
-          "order": 180
-        },
-        {
-          "songId": "song_0011",
-          "order": 190
-        },
-        {
-          "songId": "song_0010",
-          "order": 200
-        },
-        {
-          "songId": "song_0028",
-          "order": 210
-        },
-        {
-          "songId": "song_0006",
-          "order": 220
-        },
-        {
-          "songId": "song_0018",
-          "order": 230
-        },
-        {
-          "songId": "song_0032",
-          "order": 240
-        },
-        {
-          "songId": "song_0033",
-          "order": 250
-        },
-        {
-          "songId": "song_0242",
-          "order": 280
-        }
-      ],
-      "createdAt": "2026-06-26T10:40:05.463478+00:00",
-      "lastModified": "2026-06-26T11:40:49.920789+00:00"
-    },
-    "repertoire_bambu_29jun26": {
-      "id": "repertoire_bambu_29jun26",
-      "name": "Bambú 29jun26",
-      "setlistName": "Bambú 29jun26",
-      "showArtistBpm": false,
-      "hideNotes": false,
-      "activeSongId": "song_0034",
-      "entries": [
-        {
-          "songId": "song_0034",
-          "order": 10
-        },
-        {
-          "songId": "song_0021",
-          "order": 20
-        },
-        {
-          "songId": "song_0019",
-          "order": 30
-        },
-        {
-          "songId": "song_0027",
-          "order": 40
-        },
-        {
-          "songId": "song_0045",
-          "order": 50
-        },
-        {
-          "songId": "song_0008",
-          "order": 60
-        },
-        {
-          "songId": "song_0001",
-          "order": 70
-        },
-        {
-          "songId": "song_0042",
-          "order": 80
-        },
-        {
-          "songId": "song_0043",
-          "order": 90
-        },
-        {
-          "songId": "song_0011",
-          "order": 100
-        },
-        {
-          "songId": "song_0007",
-          "order": 110
-        },
-        {
-          "songId": "song_0006",
-          "order": 120
-        },
-        {
-          "songId": "song_0015",
-          "order": 130
-        },
-        {
-          "songId": "song_0025",
-          "order": 140
-        },
-        {
-          "songId": "song_0010",
-          "order": 150
-        },
-        {
-          "songId": "song_0024",
-          "order": 160
-        },
-        {
-          "songId": "song_0023",
-          "order": 170
-        },
-        {
-          "songId": "song_0020",
-          "order": 180
-        },
-        {
-          "songId": "song_0032",
-          "order": 190
-        },
-        {
-          "songId": "song_0012",
-          "order": 200
-        },
-        {
-          "songId": "song_0028",
-          "order": 210
-        },
-        {
-          "songId": "song_0033",
-          "order": 220
-        },
-        {
-          "songId": "song_0029",
-          "order": 230
-        },
-        {
-          "songId": "song_0018",
-          "order": 240
-        },
-        {
-          "songId": "song_0030",
-          "order": 250
-        },
-        {
-          "songId": "song_0017",
-          "order": 260
-        }
-      ],
-      "createdAt": "2026-06-29T13:30:52.520510+00:00",
-      "lastModified": "2026-06-29T13:30:52.520510+00:00"
     }
   }
 }
