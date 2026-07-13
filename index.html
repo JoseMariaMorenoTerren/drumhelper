@@ -21,7 +21,10 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <!-- Sección superior fija (1/4 de la pantalla) -->
+    <!-- Marco luminoso del metrónomo (parpadea con cada beat) -->
+    <div id="beat-frame" class="beat-frame"></div>
+
+    <!-- Sección superior -->
     <header class="top-section">
         <!-- Estructura gráfica de la canción -->
         <div class="song-structure-container" id="song-structure-container">
@@ -32,31 +35,38 @@
         
         <div class="top-section-content">
             <div class="info-panel">
-                <div id="version-code">v1.4.2</div>
-                <div class="song-info">
+                <div id="version-code">v1.4.8</div>
+                <div class="song-header-row">
                     <span id="current-song">Selecciona una canción</span>
                     <span id="current-bpm">BPM: 120</span>
+                    <button id="notes-toggle-btn" class="notes-toggle-btn" style="display: none;" title="Mostrar/ocultar notas">Notas ▾</button>
+                </div>
+                <div class="song-info">
                     <span id="current-notes" class="song-notes"></span>
                 </div>
                 <button id="open-html-btn" class="open-html-btn" style="display: none;" title="Abrir archivo HTML de la canción">📄 Ver Notas</button>
             </div>
-            
+
             <!-- Metrónomo -->
             <div class="metronome-container">
-            <div class="metronome-display">
-                <div class="beat-indicator" id="beat-indicator" title="Clic: Reproducir/Pausar | Doble clic: Parar">
-                    <div class="bpm-text" id="bpm-text">120</div>
-                </div>
-                <div class="bpm-display">
-                    <div class="bpm-controls">
-                        <button id="bpm-minus-10" class="bpm-btn">-10</button>
-                        <button id="bpm-minus-1" class="bpm-btn">-1</button>
+                <div class="metronome-display">
+                    <div class="beat-indicator" id="beat-indicator" title="Clic: Reproducir/Pausar | Doble clic: Parar">
+                        <div class="bpm-text" id="bpm-text">120</div>
                     </div>
-                    <input type="number" id="bpm-input" value="120" min="40" max="300">
-                    <button id="tap-tempo-btn" class="control-btn">TAP</button>
-                    <div class="bpm-controls">
-                        <button id="bpm-plus-1" class="bpm-btn">+1</button>
-                        <button id="bpm-plus-10" class="bpm-btn">+10</button>
+                    <div class="bpm-display">
+                        <div class="bpm-controls">
+                            <button id="bpm-minus-10" class="bpm-btn">-10</button>
+                            <button id="bpm-minus-1" class="bpm-btn">-1</button>
+                        </div>
+                        <input type="number" id="bpm-input" value="120" min="40" max="300">
+                        <button id="metronome-compact-btn" class="metronome-compact-btn" title="Clic: Reproducir/Pausar | Doble clic: Parar">
+                            <span id="bpm-text-compact">120</span>
+                        </button>
+                        <button id="tap-tempo-btn" class="control-btn">TAP</button>
+                        <div class="bpm-controls">
+                            <button id="bpm-plus-1" class="bpm-btn">+1</button>
+                            <button id="bpm-plus-10" class="bpm-btn">+10</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -79,14 +89,9 @@
                 <!-- Las canciones se cargarán dinámicamente -->
             </ul>
             <div class="add-song-section">
-                <button id="add-song-btn" class="add-btn">+ Agregar</button>
-                <button id="edit-current-song-btn" class="edit-btn" disabled>Editar</button>
-            </div>
-            <div class="data-management">
-                <button id="data-options-btn" class="data-btn">Opciones</button>
-                <button id="repertoire-options-btn" class="repertoire-options-btn" title="Opciones de repertorio">⚙️</button>
-                <button id="repertoire-manager-btn" class="repertoire-manager-btn" title="Editar repertorios">📋</button>
-                <button id="midi-toggle-btn" class="midi-btn" title="Habilitar MIDI">🎹</button>
+                <button id="add-song-btn" class="add-btn" title="Agregar canción">+</button>
+                <button id="edit-current-song-btn" class="edit-btn" disabled title="Editar canción">✎</button>
+                <button id="data-options-btn" class="data-btn" title="Opciones">⚙︎</button>
                 <input type="file" id="import-file-input" accept=".json" style="display: none;">
                 <input type="file" id="import-txt-file-input" accept=".txt" style="display: none;">
                 <input type="file" id="import-complete-file-input" accept=".txt" style="display: none;">
@@ -434,10 +439,28 @@
     <div id="data-options-modal" class="modal" style="display: none;">
         <div class="modal-content" style="max-width: 500px;">
             <div class="modal-header">
-                <h2>Opciones de Datos</h2>
+                <h2>Opciones</h2>
                 <span id="close-data-options-modal" class="close">&times;</span>
             </div>
             <div class="modal-body">
+                <div class="data-options-section">
+                    <h3>🎼 Repertorios</h3>
+                    <div class="data-options-grid">
+                        <button id="repertoire-options-btn" class="data-option-btn">
+                            <span class="option-text">⚙️ Opciones de repertorio</span>
+                            <small>Crear, duplicar, renombrar, ordenamiento y visualización</small>
+                        </button>
+                        <button id="repertoire-manager-btn" class="data-option-btn">
+                            <span class="option-text">📋 Editar repertorios</span>
+                            <small>Mover o copiar canciones entre repertorios</small>
+                        </button>
+                        <button id="midi-toggle-btn" class="data-option-btn" title="Habilitar MIDI">
+                            <span class="option-text">🎹 Control MIDI</span>
+                            <small>Habilitar o deshabilitar el control por MIDI</small>
+                        </button>
+                    </div>
+                </div>
+
                 <div class="data-options-section">
                     <h3>📥 Importar</h3>
                     <div class="data-options-grid">

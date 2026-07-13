@@ -581,8 +581,60 @@ function forceAppUpdate() {
     }
 }
 
+// Plegado de la sección de notas y visor de imágenes con anotaciones
+function initializeNotesPanel() {
+    const NOTES_COLLAPSED_KEY = 'drumhelper-notes-collapsed';
+    const toggleBtn = document.getElementById('notes-toggle-btn');
+    const notesElement = document.getElementById('current-notes');
+
+    const updateToggleLabel = () => {
+        if (!toggleBtn) return;
+        const collapsed = document.body.classList.contains('notes-collapsed');
+        toggleBtn.textContent = collapsed ? 'Notas ▸' : 'Notas ▾';
+        toggleBtn.title = collapsed ? 'Mostrar notas' : 'Ocultar notas para dar más espacio';
+    };
+
+    // Restaurar el estado guardado
+    if (localStorage.getItem(NOTES_COLLAPSED_KEY) === '1') {
+        document.body.classList.add('notes-collapsed');
+    }
+    updateToggleLabel();
+
+    if (toggleBtn) {
+        toggleBtn.addEventListener('click', () => {
+            const collapsed = document.body.classList.toggle('notes-collapsed');
+            localStorage.setItem(NOTES_COLLAPSED_KEY, collapsed ? '1' : '0');
+            updateToggleLabel();
+        });
+    }
+
+    // Visor a pantalla completa: clic en una imagen de las notas la amplía
+    if (notesElement) {
+        notesElement.addEventListener('click', (e) => {
+            const img = e.target.closest('img');
+            if (!img) return;
+
+            let lightbox = document.getElementById('notes-lightbox');
+            if (!lightbox) {
+                lightbox = document.createElement('div');
+                lightbox.id = 'notes-lightbox';
+                lightbox.className = 'notes-lightbox';
+                lightbox.appendChild(document.createElement('img'));
+                lightbox.addEventListener('click', () => {
+                    lightbox.style.display = 'none';
+                });
+                document.body.appendChild(lightbox);
+            }
+
+            lightbox.querySelector('img').src = img.src;
+            lightbox.style.display = 'flex';
+        });
+    }
+}
+
 // Inicializar modal de ayuda cuando el DOM esté listo
 document.addEventListener('DOMContentLoaded', initializeHelpModal);
+document.addEventListener('DOMContentLoaded', initializeNotesPanel);
 
 // Inicializar controlador MIDI
 document.addEventListener('DOMContentLoaded', () => {

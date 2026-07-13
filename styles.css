@@ -1,3 +1,28 @@
+/* ============================================================
+   Drum Helper — restyling minimalista (fondo negro)
+   ============================================================ */
+
+:root {
+    --bg: #000000;
+    --surface: #0d0d0d;      /* paneles */
+    --surface-2: #161616;    /* tarjetas, inputs */
+    --surface-3: #1f1f1f;    /* hover */
+    --border: #262626;
+    --border-strong: #3a3a3a;
+    --text: #f2f2f2;
+    --text-dim: #9a9a9a;
+    --text-faint: #5c5c5c;
+    --accent: #ffcc00;       /* beat, elementos activos */
+    --accent-soft: rgba(255, 204, 0, 0.12);
+    --danger: #ff4d4d;
+    --ok: #4caf50;
+    --radius: 10px;
+    --radius-sm: 6px;
+    /* compatibilidad con reglas antiguas que usaban --primary-color */
+    --primary-color: #2b2b2b;
+    --primary-dark: #1f1f1f;
+}
+
 /* Reset y estilos base */
 * {
     margin: 0;
@@ -26,70 +51,76 @@ input, textarea, select {
     touch-action: auto;
 }
 
-/* Configuración específica para botones en dispositivos táctiles */
 button {
     touch-action: manipulation;
     -webkit-tap-highlight-color: transparent;
     -webkit-touch-callout: none;
+    font-family: inherit;
+}
+
+html {
+    height: 100%;
 }
 
 body {
-    font-family: 'Arial', sans-serif;
-    background-color: #000000;
-    color: #ffffff;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    background-color: var(--bg);
+    color: var(--text);
     height: 100vh;
-    height: -webkit-fill-available;
+    height: 100dvh;
     overflow: hidden;
-    /* Prevenir zoom adicional en iOS */
     -webkit-text-size-adjust: 100%;
     -ms-text-size-adjust: 100%;
-    /* Soporte para pantalla completa en iOS */
     -webkit-overflow-scrolling: touch;
-    /* Optimizaciones PWA para iPad */
     position: fixed;
     width: 100%;
     top: 0;
     left: 0;
+    /* Layout principal: cabecera arriba, contenido flexible debajo */
+    display: flex;
+    flex-direction: column;
 }
 
-/* Soporte para pantalla completa y safe areas en dispositivos con notch */
+/* Safe areas en dispositivos con notch */
 @supports (padding: max(0px)) {
     body {
         padding-left: max(0px, env(safe-area-inset-left));
         padding-right: max(0px, env(safe-area-inset-right));
+        padding-top: max(0px, env(safe-area-inset-top));
     }
 }
 
-/* Optimización específica para iPad */
-@media (max-width: 1024px) and (orientation: landscape) {
-    body {
-        height: 100vh;
-        height: -webkit-fill-available;
-    }
+/* ============================================================
+   Marco luminoso del metrónomo (~20px alrededor de la pantalla)
+   ============================================================ */
+.beat-frame {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 20000;
+    opacity: 0;
+    transition: opacity 160ms ease-out;
+    box-shadow: inset 0 0 0 20px rgba(255, 204, 0, 0.75),
+                inset 0 0 42px 22px rgba(255, 204, 0, 0.28);
 }
 
-@media (max-width: 834px) and (orientation: portrait) {
-    body {
-        height: 100vh;
-        height: -webkit-fill-available;
-    }
+.beat-frame.active {
+    opacity: 1;
+    transition: none;
 }
 
-/* Sección superior fija */
+/* ============================================================
+   Sección superior
+   ============================================================ */
 .top-section {
-    height: 25vh;
-    min-height: 180px;
-    background-color: #111111;
-    border-bottom: 2px solid #333333;
+    flex: 0 0 auto;
+    background-color: var(--bg);
+    border-bottom: 1px solid var(--border);
     display: flex;
     flex-direction: column;
     align-items: stretch;
-    justify-content: space-between;
-    padding: 10px 20px;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
+    padding: 10px 16px 12px;
+    position: relative;
     z-index: 100;
 }
 
@@ -98,153 +129,96 @@ body {
     width: 100%;
     overflow-y: auto;
     overflow-x: hidden;
-    padding: 8px;
-    margin-bottom: 5px;
-    background-color: #0a0a0a;
-    border-radius: 4px;
-    max-height: 80px;
+    padding: 6px 8px;
+    margin-bottom: 8px;
+    background-color: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    max-height: 76px;
     box-sizing: border-box;
 }
 
 .song-structure-container::-webkit-scrollbar {
-    width: 6px;
+    width: 5px;
 }
 
 .song-structure-container::-webkit-scrollbar-track {
-    background: #1a1a1a;
-    border-radius: 3px;
+    background: transparent;
 }
 
 .song-structure-container::-webkit-scrollbar-thumb {
-    background: #444;
+    background: var(--border-strong);
     border-radius: 3px;
-}
-
-.song-structure-container::-webkit-scrollbar-thumb:hover {
-    background: #555;
 }
 
 .song-structure {
     display: flex;
     flex-wrap: wrap;
-    gap: 4px;
+    gap: 3px;
     align-items: center;
 }
 
 .structure-bar {
     width: 9px;
-    height: 28px;
+    height: 26px;
     border-radius: 2px;
     flex-shrink: 0;
-    transition: transform 0.2s, box-shadow 0.2s;
+    transition: transform 0.15s;
     cursor: pointer;
-    border: 1px solid rgba(0, 0, 0, 0.4);
-    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.3);
+    opacity: 0.9;
 }
 
 .structure-bar:hover {
-    transform: scale(1.2);
-    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.5);
+    transform: scaleY(1.15);
+    opacity: 1;
 }
 
 /* Colores para cada tipo de compás */
-.structure-bar.silence {
-    background-color: #FFD700; /* Amarillo - Silencio */
-}
+.structure-bar.silence     { background-color: #FFD700; } /* Amarillo - Silencio */
+.structure-bar.chorus      { background-color: #00FF00; } /* Verde - Estribillo */
+.structure-bar.verse       { background-color: #FFFFFF; } /* Blanco - Estrofa */
+.structure-bar.bridge      { background-color: #FF6B6B; } /* Rojo - Puente */
+.structure-bar.intro       { background-color: #4ECDC4; } /* Cian - Intro */
+.structure-bar.outro       { background-color: #9B59B6; } /* Morado - Outro */
+.structure-bar.solo        { background-color: #FF8C00; } /* Naranja - Solo */
+.structure-bar.pre-chorus  { background-color: #87CEEB; } /* Azul claro - Pre-estribillo */
+.structure-bar.unknown     { background-color: #666666; } /* Gris - Desconocido */
 
-.structure-bar.chorus {
-    background-color: #00FF00; /* Verde - Estribillo */
-}
-
-.structure-bar.verse {
-    background-color: #FFFFFF; /* Blanco - Estrofa */
-}
-
-.structure-bar.bridge {
-    background-color: #FF6B6B; /* Rojo - Puente */
-}
-
-.structure-bar.intro {
-    background-color: #4ECDC4; /* Cian - Intro */
-}
-
-.structure-bar.outro {
-    background-color: #9B59B6; /* Morado - Outro */
-}
-
-.structure-bar.solo {
-    background-color: #FF8C00; /* Naranja - Solo */
-}
-
-.structure-bar.pre-chorus {
-    background-color: #87CEEB; /* Azul claro - Pre-estribillo */
-}
-
-.structure-bar.unknown {
-    background-color: #666666; /* Gris - Desconocido */
-}
-
-/* Contenedor inferior con info y metrónomo */
+/* Contenedor con info y metrónomo */
 .top-section-content {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: space-between;
+    gap: 16px;
     flex: 1;
+    min-height: 0;
 }
 
 .info-panel {
     position: relative;
     flex: 1;
+    min-width: 0;
     display: flex;
     flex-direction: column;
+    gap: 6px;
+}
+
+/* Fila con título de canción y botón de notas */
+.song-header-row {
+    display: flex;
+    align-items: center;
     gap: 10px;
+    flex-wrap: wrap;
+    min-width: 0;
 }
 
-.open-html-btn {
-    padding: 8px 15px;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 0.9rem;
-    font-weight: bold;
-    transition: background-color 0.3s;
-    align-self: flex-start;
-    margin-top: 5px;
-}
-
-.open-html-btn:hover {
-    background-color: #45a049;
-}
-
-.open-html-btn:active {
-    background-color: #3d8b40;
-    transform: scale(0.98);
-}
-
-.info-panel h1 {
-    font-size: 2.5rem;
-    margin-bottom: 10px;
-    color: #ffffff;
-}
-
-.song-info {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-}
-
-.song-info span {
-    font-size: 1.1rem;
-    color: #cccccc;
-}
-
-/* Título de la canción más grande y en negrita */
 #current-song {
-    font-size: 1.4rem !important;
-    font-weight: bold !important;
-    color: #ffffff !important;
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--text);
+    letter-spacing: 0.01em;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 /* Ocultar el elemento BPM de la cabecera */
@@ -252,28 +226,82 @@ body {
     display: none !important;
 }
 
+/* Botón para plegar/desplegar las notas */
+.notes-toggle-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text-dim);
+    border-radius: 999px;
+    padding: 3px 12px;
+    font-size: 0.75rem;
+    line-height: 1.4;
+    cursor: pointer;
+    transition: color 0.2s, border-color 0.2s;
+    flex-shrink: 0;
+}
+
+.notes-toggle-btn:hover {
+    color: var(--text);
+    border-color: var(--border-strong);
+}
+
+/* Notas plegadas: liberan espacio para el resto de secciones */
+body.notes-collapsed #current-notes {
+    display: none !important;
+}
+
+.song-info {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    min-height: 0;
+}
+
 .song-notes {
-    font-size: 1.6rem !important;
-    color: #ffdd44 !important;
-    font-style: italic;
+    font-size: 1.35rem;
+    color: var(--accent);
     margin-top: 0;
     display: block;
-    max-height: 140px;
+    max-height: 24vh;
     overflow-y: auto;
-    line-height: 1.5;
-    font-weight: normal;
+    line-height: 1.45;
+    font-weight: 400;
     text-align: left;
     white-space: pre-wrap;
 }
 
-/* Imágenes en notas (limitadas al alto de la cabecera) */
+/* Imágenes con anotaciones en las notas */
 .song-notes img {
+    display: block;
     max-width: 100%;
-    max-height: 100px;
+    max-height: 20vh;
     object-fit: contain;
-    margin: 5px 0;
-    border-radius: 4px;
-    border: 1px solid #666;
+    margin: 6px 0;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border);
+    cursor: zoom-in;
+    background: var(--surface);
+}
+
+/* Visor a pantalla completa para imágenes de notas */
+.notes-lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 15000;
+    background: rgba(0, 0, 0, 0.96);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: zoom-out;
+}
+
+.notes-lightbox img {
+    max-width: 96vw;
+    max-height: 94vh;
+    object-fit: contain;
 }
 
 /* Imágenes en letras (más grandes) */
@@ -281,9 +309,32 @@ body {
     max-width: 100%;
     height: auto;
     margin: 10px 0;
-    border-radius: 8px;
-    border: 2px solid #444;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border-strong);
     display: block;
+}
+
+.open-html-btn {
+    padding: 6px 14px;
+    background-color: transparent;
+    color: var(--text-dim);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    font-size: 0.85rem;
+    transition: all 0.2s;
+    align-self: flex-start;
+    margin-top: 2px;
+}
+
+.open-html-btn:hover {
+    color: var(--text);
+    border-color: var(--border-strong);
+    background-color: var(--surface-2);
+}
+
+.open-html-btn:active {
+    transform: scale(0.98);
 }
 
 /* Texto resaltado en amarillo para notas y letras */
@@ -353,64 +404,64 @@ body {
     transform: scale(1.1);
 }
 
-/* Metrónomo */
+/* ============================================================
+   Metrónomo
+   ============================================================ */
 .metronome-container {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 15px;
-    height: 100%;
+    gap: 12px;
+    flex-shrink: 0;
+    /* Deja sitio al código de versión fijado en la esquina superior derecha */
+    padding-top: 22px;
 }
 
 .metronome-display {
     display: flex;
     align-items: center;
-    gap: 30px;
+    gap: 20px;
 }
 
+/* Círculo del metrónomo (solo tablet/PC): botón play-pause + BPM */
 .beat-indicator {
-    width: 140px;
-    height: 140px;
+    width: 110px;
+    height: 110px;
     border-radius: 50%;
-    background-color: #444444;
-    border: 4px solid #333333;
-    transition: all 0.1s ease;
+    background-color: transparent;
+    border: 2px solid var(--border-strong);
+    transition: border-color 0.2s, background-color 0.2s;
     cursor: pointer;
     user-select: none;
     display: flex;
     align-items: center;
     justify-content: center;
     position: relative;
-    /* Prevenir zoom específicamente en dispositivos táctiles */
     touch-action: manipulation;
     -webkit-tap-highlight-color: transparent;
 }
 
 .beat-indicator:hover {
-    background-color: #555555;
-    border-color: #666666;
-    transform: scale(1.02);
+    border-color: var(--text-dim);
+    background-color: var(--surface);
 }
 
-.beat-indicator.active {
-    background-color: #ffcc00;
-    border-color: #ffaa00;
-    transform: scale(1.05);
+.beat-indicator.playing {
+    border-color: var(--accent);
+    background-color: var(--accent-soft);
 }
 
 .bpm-text {
-    font-size: 1.8rem;
-    font-weight: bold;
-    color: #ffffff;
-    text-shadow: 0 0 4px rgba(0, 0, 0, 0.8);
+    font-size: 1.9rem;
+    font-weight: 700;
+    color: var(--text);
+    font-variant-numeric: tabular-nums;
     pointer-events: none;
-    transition: color 0.1s ease;
 }
 
-.beat-indicator.active .bpm-text {
-    color: #000000;
-    text-shadow: 0 0 2px rgba(255, 255, 255, 0.5);
+.beat-indicator.playing .bpm-text {
+    color: var(--accent);
 }
 
 .bpm-display {
@@ -422,45 +473,92 @@ body {
 
 .bpm-controls {
     display: flex;
-    gap: 5px;
+    gap: 6px;
 }
 
 .bpm-btn {
-    background-color: #444444;
-    color: #ffffff;
-    border: 1px solid #666666;
-    border-radius: 4px;
-    padding: 4px 8px;
+    background-color: transparent;
+    color: var(--text-dim);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 6px 10px;
     font-size: 0.8rem;
     cursor: pointer;
-    transition: background-color 0.2s;
-    min-width: 32px;
+    transition: all 0.15s;
+    min-width: 38px;
 }
 
 .bpm-btn:hover {
-    background-color: #555555;
+    color: var(--text);
+    border-color: var(--border-strong);
+    background-color: var(--surface-2);
 }
 
 .bpm-btn:active {
     transform: scale(0.95);
-    background-color: #666666;
 }
 
 .bpm-display input {
-    background-color: #222222;
-    color: #ffffff;
-    border: 2px solid #444444;
-    border-radius: 5px;
+    background-color: var(--surface-2);
+    color: var(--text);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
     padding: 8px;
     font-size: 1.2rem;
     text-align: center;
     width: 80px;
-    display: none;    
+    display: none;
 }
 
-.bpm-display label {
+/* Botón compacto de metrónomo (solo móvil): BPM + play/pause */
+.metronome-compact-btn {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    min-width: 72px;
+    height: 40px;
+    background-color: var(--surface-2);
+    color: var(--text);
+    border: 1px solid var(--border-strong);
+    border-radius: 999px;
+    font-size: 1.15rem;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    cursor: pointer;
+    transition: all 0.15s;
+}
+
+.metronome-compact-btn.playing {
+    color: var(--accent);
+    border-color: var(--accent);
+    background-color: var(--accent-soft);
+}
+
+.metronome-compact-btn:active {
+    transform: scale(0.96);
+}
+
+.control-btn {
+    background-color: transparent;
+    color: var(--text-dim);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 8px 16px;
     font-size: 0.9rem;
-    color: #cccccc;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    cursor: pointer;
+    transition: all 0.15s;
+}
+
+.control-btn:hover {
+    color: var(--text);
+    border-color: var(--border-strong);
+    background-color: var(--surface-2);
+}
+
+.control-btn:active {
+    transform: scale(0.95);
 }
 
 .metronome-controls {
@@ -469,52 +567,32 @@ body {
     gap: 10px;
 }
 
-.control-btn {
-    background-color: #333333;
-    color: #ffffff;
-    border: none;
-    border-radius: 8px;
-    padding: 12px 20px;
-    font-size: 1.1rem;
-    cursor: pointer;
-    transition: background-color 0.2s;
-}
-
-.control-btn:hover {
-    background-color: #555555;
-}
-
-.control-btn:active {
-    transform: scale(0.95);
-}
-
-/* Contenedor principal */
+/* ============================================================
+   Contenedor principal
+   ============================================================ */
 .main-container {
     display: flex;
-    height: 74vh;
-   margin-top: 25vh;
+    flex: 1 1 auto;
+    min-height: 0;
 }
 
 /* Panel de lista de canciones */
 .song-list-panel {
-    width: 25vw;
-    background-color: #111111;
-    border-right: 2px solid #333333;
-    padding: 20px;
+    flex: 0 0 clamp(220px, 25vw, 320px);
+    background-color: var(--surface);
+    border-right: 1px solid var(--border);
+    padding: 14px;
     overflow-y: auto;
     display: flex;
     flex-direction: column;
+    min-height: 0;
 }
 
-
-
-
-
 .order-mode-btn {
-    background-color: #333333;
-    color: #ffffff;
+    background-color: var(--surface-3);
+    color: var(--text);
     border: none;
-    border-radius: 6px;
+    border-radius: var(--radius-sm);
     width: 32px;
     height: 32px;
     font-size: 1rem;
@@ -534,80 +612,83 @@ body {
     color: #ffffff;
 }
 
-.order-mode-btn.active:hover {
-    background-color: #ff8c42;
-}
-
-
-
 .active-setlist-label {
-    font-size: 0.72rem;
-    color: #888888;
+    font-size: 0.7rem;
+    color: var(--text-faint);
     text-transform: uppercase;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.08em;
     padding: 0 2px;
     white-space: nowrap;
+    overflow: hidden;
     text-overflow: ellipsis;
 }
 
 .song-search {
-    padding-top: 15px;
+    padding-top: 10px;
 }
 
 .song-search input {
     width: 100%;
-    background-color: #222222;
-    color: #ffffff;
-    border: 1px solid #444444;
-    border-radius: 5px;
-    padding: 10px;
-    margin-bottom: 15px;
-    font-size: 1rem;
+    background-color: var(--surface-2);
+    color: var(--text);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 9px 12px;
+    margin-bottom: 10px;
+    font-size: 0.95rem;
+}
+
+.song-search input:focus {
+    outline: none;
+    border-color: var(--border-strong);
 }
 
 .song-list {
     list-style: none;
     flex-grow: 1;
     overflow-y: auto;
+    min-height: 0;
 }
 
 .song-item {
-    background-color: #222222;
-    margin-bottom: 8px;
-    padding: 15px;
-    border-radius: 8px;
+    background-color: transparent;
+    margin-bottom: 2px;
+    padding: 10px 12px;
+    border-radius: var(--radius-sm);
     cursor: pointer;
-    transition: background-color 0.2s;
-    border-left: 4px solid transparent;
+    transition: background-color 0.15s;
+    border-left: 3px solid transparent;
 }
 
 .song-item:hover {
-    background-color: #333333;
+    background-color: var(--surface-2);
 }
 
 .song-item.active {
-    background-color: #444444;
-    border-left-color: #ff4444;
+    background-color: var(--surface-3);
+    border-left-color: var(--accent);
 }
 
 .song-title {
-    font-weight: bold;
-    font-size: 1.1rem;
+    font-weight: 600;
+    font-size: 1rem;
     display: block;
-    margin-bottom: 5px;
+    margin-bottom: 2px;
+    color: var(--text);
 }
 
 .song-artist {
-    color: #cccccc;
-    font-size: 0.9rem;
+    color: var(--text-dim);
+    font-size: 0.82rem;
     display: block;
 }
 
 .song-bpm {
-    color: #aaaaaa;
-    font-size: 0.8rem;
+    color: var(--text-faint);
+    font-size: 0.75rem;
     float: right;
-    margin-top: -20px;
+    margin-top: -18px;
+    font-variant-numeric: tabular-nums;
 }
 
 /* Ocultar artista y BPM cuando la opción está desactivada */
@@ -621,116 +702,61 @@ body.hide-notes .special-line {
     display: none !important;
 }
 
+/* Fila única de acciones con iconos: agregar, editar, opciones */
 .add-song-section {
-    margin-top: 15px;
+    margin-top: 12px;
     display: flex;
     gap: 8px;
 }
 
-.add-btn {
-    flex: 1;
-    background-color: rgba(255, 255, 255, 0.08);
-    color: #cccccc;
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    border-radius: 6px;
-    padding: 10px 12px;
-    font-size: 0.85rem;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    font-weight: 400;
-}
-
-.add-btn:hover {
-    background-color: rgba(255, 255, 255, 0.12);
-    border-color: rgba(255, 255, 255, 0.25);
-    color: #ffffff;
-    transform: translateY(-1px);
-}
-
-.edit-btn {
-    flex: 1;
-    background-color: rgba(255, 255, 255, 0.05);
-    color: #aaaaaa;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 6px;
-    padding: 10px 12px;
-    font-size: 0.85rem;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    font-weight: 400;
-}
-
-.edit-btn:hover:not(:disabled) {
-    background-color: rgba(255, 255, 255, 0.1);
-    border-color: rgba(255, 255, 255, 0.2);
-    color: #ffffff;
-    transform: translateY(-1px);
-}
-
-.edit-btn:disabled {
-    background-color: rgba(255, 255, 255, 0.02);
-    color: #555555;
-    border-color: rgba(255, 255, 255, 0.05);
-    cursor: not-allowed;
-    transform: none;
-}
-
-.data-management {
-    margin-top: 10px;
-    display: flex;
-    gap: 5px;
-    align-items: center;
-}
-
+.add-btn,
+.edit-btn,
 .data-btn {
     flex: 1;
-    background-color: #333333;
-    color: #ffffff;
-    border: none;
-    border-radius: 6px;
-    padding: 8px 10px;
-    font-size: 0.85rem;
+    background-color: transparent;
+    color: var(--text-dim);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    height: 38px;
+    padding: 0;
+    font-size: 1.25rem;
+    line-height: 1;
     cursor: pointer;
-    transition: background-color 0.2s;
-    max-width: calc(100% - 45px); /* Reducir ancho para hacer espacio al botón de repertorio */
-}
-
-/* Botón de repertorio en la sección data-management */
-.data-management .repertoire-options-btn {
-    width: 40px;
-    height: 36px;
-    padding: 8px;
-    background-color: #333333;
-    color: #ffffff;
-    border: 1px solid #555555;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 1rem;
+    transition: all 0.2s ease;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: background-color 0.2s;
-    flex-shrink: 0;
 }
 
-.data-management .repertoire-options-btn:hover {
-    background-color: #444444;
-}
-
-.data-btn:hover {
-    background-color: #444444;
+.add-btn:hover,
+.data-btn:hover,
+.edit-btn:hover:not(:disabled) {
+    background-color: var(--surface-2);
+    border-color: var(--border-strong);
+    color: var(--text);
 }
 
 .data-btn:active {
-    transform: scale(0.95);
+    transform: scale(0.97);
 }
 
-/* Panel de letras */
+.edit-btn:disabled {
+    color: var(--text-faint);
+    border-color: var(--border);
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* ============================================================
+   Panel de letras
+   ============================================================ */
 .lyrics-panel {
-    width: 75vw;
+    flex: 1;
+    min-width: 0;
     display: flex;
     flex-direction: column;
     position: relative;
+    min-height: 0;
 }
 
 .lyrics-container {
@@ -741,6 +767,7 @@ body.hide-notes .special-line {
     position: relative;
     -webkit-overflow-scrolling: touch;
     touch-action: pan-y;
+    min-height: 0;
 }
 
 .lyrics-content {
@@ -776,65 +803,75 @@ body.hide-notes .special-line {
 
 .welcome-message {
     text-align: center;
-    font-size: 3rem;
-    color: #cccccc;
-    margin-top: 20vh;
+    font-size: 2.2rem;
+    color: var(--text-dim);
+    margin-top: 18vh;
+    font-weight: 300;
 }
 
 /* Controles de desplazamiento */
 .scroll-controls {
-    background-color: #111111;
-    border-top: 2px solid #333333;
-    padding: 15px;
+    background-color: var(--bg);
+    border-top: 1px solid var(--border);
+    padding: 10px 14px;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 15px;
+    gap: 12px;
+    flex-wrap: wrap;
 }
 
 .playback-controls {
     display: flex;
     align-items: center;
     gap: 10px;
-    margin-right: 20px;
+    margin-right: 16px;
 }
 
 .timer-display {
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: #222222;
-    border: 1px solid #444444;
-    border-radius: 8px;
+    background-color: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
     padding: 8px 12px;
     min-width: 60px;
 }
 
 .timer-display span {
-    font-family: 'Courier New', monospace;
-    font-size: 1rem;
-    font-weight: bold;
-    color: #ffdd44;
+    font-family: 'SF Mono', 'Menlo', 'Courier New', monospace;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--accent);
+    font-variant-numeric: tabular-nums;
 }
 
 .scroll-btn {
-    background-color: #333333;
-    color: #ffffff;
-    border: none;
+    background-color: transparent;
+    color: var(--text-dim);
+    border: 1px solid var(--border);
     border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    font-size: 1.2rem;
+    width: 46px;
+    height: 46px;
+    font-size: 1.1rem;
     cursor: pointer;
-    transition: background-color 0.2s;
+    transition: all 0.15s;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .scroll-btn:hover {
-    background-color: #555555;
+    color: var(--text);
+    border-color: var(--border-strong);
+    background-color: var(--surface-2);
 }
 
 .scroll-btn.active {
-    background-color: #ff4444;
+    background-color: var(--accent-soft);
+    border-color: var(--accent);
+    color: var(--accent);
 }
 
 /* Ocultar botón automático */
@@ -844,25 +881,22 @@ body.hide-notes .special-line {
 
 /* Estilos específicos para el botón de grabación */
 #record-btn {
-    background-color: #333333;
     transition: all 0.3s ease;
 }
 
-#record-btn:hover {
-    background-color: #555555;
-}
-
 #record-btn.recording {
-    background-color: #ff4444;
+    background-color: var(--danger);
+    border-color: var(--danger);
+    color: #ffffff;
     animation: recordPulse 1.5s infinite;
 }
 
 @keyframes recordPulse {
     0%, 100% {
-        box-shadow: 0 0 0 0 rgba(255, 68, 68, 0.7);
+        box-shadow: 0 0 0 0 rgba(255, 77, 77, 0.7);
     }
     50% {
-        box-shadow: 0 0 0 10px rgba(255, 68, 68, 0);
+        box-shadow: 0 0 0 10px rgba(255, 77, 77, 0);
     }
 }
 
@@ -877,11 +911,13 @@ body.hide-notes .special-line {
 .font-size-controls {
     display: flex;
     align-items: center;
-    gap: 10px;
-    margin-left: 20px;
+    gap: 8px;
+    margin-left: 16px;
 }
 
-/* Modal */
+/* ============================================================
+   Modales
+   ============================================================ */
 .modal {
     display: none;
     position: fixed;
@@ -890,15 +926,15 @@ body.hide-notes .special-line {
     top: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.8);
+    background-color: rgba(0, 0, 0, 0.85);
 }
 
 .modal-content {
-    background-color: #222222;
+    background-color: #121212;
     margin: 5% auto;
-    padding: 30px;
-    border: 1px solid #444444;
-    border-radius: 10px;
+    padding: 28px;
+    border: 1px solid var(--border);
+    border-radius: 14px;
     width: 80%;
     max-width: 600px;
     max-height: 80vh;
@@ -906,37 +942,46 @@ body.hide-notes .special-line {
 }
 
 .close {
-    color: #aaaaaa;
+    color: var(--text-dim);
     float: right;
     font-size: 28px;
     font-weight: bold;
     cursor: pointer;
+    line-height: 1;
 }
 
 .close:hover {
-    color: #ffffff;
+    color: var(--text);
 }
 
 .form-group {
-    margin-bottom: 20px;
+    margin-bottom: 18px;
 }
 
 .form-group label {
     display: block;
     margin-bottom: 5px;
-    font-weight: bold;
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--text-dim);
 }
 
 .form-group input,
 .form-group textarea {
     width: 100%;
-    background-color: #111111;
-    color: #ffffff;
-    border: 1px solid #444444;
-    border-radius: 5px;
+    background-color: var(--surface-2);
+    color: var(--text);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
     padding: 10px;
     font-size: 1rem;
     font-family: inherit;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--border-strong);
 }
 
 .form-group textarea {
@@ -946,9 +991,9 @@ body.hide-notes .special-line {
 
 /* Sección de información de canción */
 .song-info-display {
-    background-color: #1a1a1a;
-    border: 1px solid #333;
-    border-radius: 4px;
+    background-color: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
     padding: 10px;
 }
 
@@ -964,13 +1009,13 @@ body.hide-notes .special-line {
 }
 
 .info-label {
-    color: #999;
+    color: var(--text-dim);
     font-size: 0.9rem;
     font-weight: normal;
 }
 
 .info-value {
-    color: #ccc;
+    color: var(--text);
     font-size: 0.9rem;
     font-family: monospace;
 }
@@ -984,50 +1029,54 @@ body.hide-notes .special-line {
 .form-actions button {
     padding: 10px 20px;
     border: none;
-    border-radius: 5px;
+    border-radius: var(--radius-sm);
     font-size: 1rem;
     cursor: pointer;
-    transition: background-color 0.2s;
+    transition: all 0.2s;
 }
 
 .form-actions button[type="submit"] {
-    background-color: #ff4444;
-    color: #ffffff;
+    background-color: var(--accent);
+    color: #000000;
+    font-weight: 600;
 }
 
 .form-actions button[type="submit"]:hover {
-    background-color: #ff6666;
+    filter: brightness(1.1);
 }
 
 .cancel-btn {
-    background-color: #666666;
-    color: #ffffff;
+    background-color: transparent;
+    color: var(--text-dim);
+    border: 1px solid var(--border) !important;
 }
 
 .cancel-btn:hover {
-    background-color: #888888;
+    color: var(--text);
+    border-color: var(--border-strong) !important;
 }
 
 .delete-btn {
-    background-color: #cc3333;
-    color: #ffffff;
+    background-color: rgba(255, 77, 77, 0.12);
+    color: var(--danger);
+    border: 1px solid rgba(255, 77, 77, 0.35) !important;
 }
 
 .delete-btn:hover {
-    background-color: #ff4444;
+    background-color: rgba(255, 77, 77, 0.25);
 }
 
 /* Sección de copia a otro repertorio */
 .form-copy-section {
     margin-top: 20px;
     padding-top: 15px;
-    border-top: 1px solid #444;
+    border-top: 1px solid var(--border);
 }
 
 .form-copy-section h3 {
     margin: 0 0 10px 0;
-    font-size: 1.1rem;
-    color: #cccccc;
+    font-size: 1.05rem;
+    color: var(--text-dim);
 }
 
 .copy-controls {
@@ -1039,33 +1088,32 @@ body.hide-notes .special-line {
 .copy-target-select {
     flex: 1;
     padding: 8px 12px;
-    border: 1px solid #555;
-    border-radius: 4px;
-    background-color: #2a2a2a;
-    color: #ffffff;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    background-color: var(--surface-2);
+    color: var(--text);
     font-size: 0.9rem;
 }
 
 .copy-btn {
     padding: 8px 16px;
-    border: none;
-    border-radius: 4px;
-    background-color: #4CAF50;
-    color: #ffffff;
+    border: 1px solid rgba(76, 175, 80, 0.4);
+    border-radius: var(--radius-sm);
+    background-color: rgba(76, 175, 80, 0.12);
+    color: var(--ok);
     font-size: 0.9rem;
     cursor: pointer;
-    transition: background-color 0.2s;
+    transition: all 0.2s;
     white-space: nowrap;
 }
 
 .copy-btn:hover:not(:disabled) {
-    background-color: #5CBF60;
+    background-color: rgba(76, 175, 80, 0.25);
 }
 
 .copy-btn:disabled {
-    background-color: #666;
+    opacity: 0.4;
     cursor: not-allowed;
-    opacity: 0.6;
 }
 
 /* Layout de formularios */
@@ -1089,17 +1137,17 @@ body.hide-notes .special-line {
         flex-direction: row;
         gap: 25px;
     }
-    
+
     .form-left {
         flex: 0 0 45%;
         max-width: 45%;
     }
-    
+
     .form-right {
         flex: 1;
         max-width: 55%;
     }
-    
+
     .form-right textarea {
         height: 400px;
         min-height: 400px;
@@ -1111,17 +1159,17 @@ body.hide-notes .special-line {
     .form-layout {
         gap: 30px;
     }
-    
+
     .form-left {
         flex: 0 0 40%;
         max-width: 40%;
     }
-    
+
     .form-right {
         flex: 1;
         max-width: 60%;
     }
-    
+
     .form-right textarea {
         height: 450px;
         min-height: 450px;
@@ -1134,90 +1182,29 @@ body.hide-notes .special-line {
 }
 
 ::-webkit-scrollbar-track {
-    background: #222222;
+    background: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
-    background: #555555;
+    background: var(--border-strong);
     border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: #777777;
+    background: #555555;
 }
 
-/* Responsive */
-@media (max-width: 768px) {
-    .top-section {
-        flex-direction: column;
-        height: auto;
-        min-height: 220px;
-        padding: 15px;
-    }
-    
-    .beat-indicator {
-        width: 100px;
-        height: 100px;
-        border-width: 3px;
-    }
-    
-    .bpm-text {
-        font-size: 1.4rem;
-    }
-    
-    .metronome-display {
-        gap: 20px;
-    }
-    
-    .main-container {
-        flex-direction: column;
-        margin-top: 0;
-        height: auto;
-        min-height: calc(100vh - 220px);
-    }
-    
-    .song-list-panel {
-        width: 100%;
-        height: 200px;
-        border-right: none;
-        border-bottom: 2px solid #333333;
-    }
-    
-    .info-panel h1 {
-        font-size: 1.8rem;
-    }
-}
-
-@media (max-width: 480px) {
-    .beat-indicator {
-        width: 80px;
-        height: 80px;
-        border-width: 2px;
-    }
-    
-    .bpm-text {
-        font-size: 1.2rem;
-    }
-    
-    .top-section {
-        min-height: 200px;
-    }
-    
-    .metronome-display {
-        flex-direction: column;
-        gap: 15px;
-    }
-}
-
-/* Botones flotantes para control de modos */
+/* ============================================================
+   Botones flotantes para control de modos
+   ============================================================ */
 .mode-toggle-btn {
     position: fixed;
     bottom: 100px;
     right: 20px;
     background-color: rgba(0, 0, 0, 0.7);
-    color: #ffffff;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 6px;
+    color: var(--text-dim);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
     padding: 4px 8px;
     font-size: 0.8rem;
     font-weight: normal;
@@ -1229,11 +1216,8 @@ body.hide-notes .special-line {
 
 .mode-toggle-btn:hover {
     background-color: rgba(0, 0, 0, 0.9);
-    border-color: rgba(255, 255, 255, 0.4);
-}
-
-.mode-toggle-btn:active {
-    background-color: rgba(0, 0, 0, 1);
+    color: var(--text);
+    border-color: var(--border-strong);
 }
 
 .songlist-toggle-btn {
@@ -1241,9 +1225,9 @@ body.hide-notes .special-line {
     bottom: 135px;
     right: 20px;
     background-color: rgba(0, 0, 0, 0.7);
-    color: #ffffff;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 6px;
+    color: var(--text-dim);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
     padding: 4px 8px;
     font-size: 0.8rem;
     font-weight: normal;
@@ -1255,20 +1239,17 @@ body.hide-notes .special-line {
 
 .songlist-toggle-btn:hover {
     background-color: rgba(0, 0, 0, 0.9);
-    border-color: rgba(255, 255, 255, 0.4);
-}
-
-.songlist-toggle-btn:active {
-    background-color: rgba(0, 0, 0, 1);
+    color: var(--text);
+    border-color: var(--border-strong);
 }
 
 /* Botones de control para concierto/prompter */
 .concert-control-btn {
     position: fixed;
     right: 20px;
-    background-color: rgba(51, 51, 51, 0.9);
-    color: #ffffff;
-    border: none;
+    background-color: rgba(20, 20, 20, 0.85);
+    color: var(--text);
+    border: 1px solid var(--border);
     border-radius: 50%;
     width: 60px;
     height: 60px;
@@ -1276,18 +1257,16 @@ body.hide-notes .special-line {
     cursor: pointer;
     z-index: 1000;
     backdrop-filter: blur(5px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-    transition: all 0.3s ease;
+    transition: all 0.2s ease;
 }
 
 .concert-control-btn:hover {
-    background-color: rgba(68, 68, 68, 1);
-    transform: scale(1.05);
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+    background-color: rgba(40, 40, 40, 1);
+    border-color: var(--border-strong);
 }
 
 .concert-control-btn:active {
-    transform: scale(0.98);
+    transform: scale(0.96);
 }
 
 /* Posicionamiento específico de cada botón */
@@ -1304,24 +1283,20 @@ body.hide-notes .special-line {
     position: fixed;
     bottom: 30px;
     background-color: rgba(0, 0, 0, 0.7);
-    color: #ffffff;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 8px;
+    color: var(--text);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
     width: 80px;
     height: 50px;
     font-size: 1.5rem;
     cursor: pointer;
     z-index: 1000;
-    transition: all 0.3s ease;
+    transition: all 0.2s ease;
 }
 
 .prompter-control-btn:hover {
     background-color: rgba(0, 0, 0, 0.9);
-    border-color: rgba(255, 255, 255, 0.4);
-}
-
-.prompter-control-btn:active {
-    background-color: rgba(0, 0, 0, 1);
+    border-color: var(--border-strong);
 }
 
 /* Posicionamiento de botones del prompter */
@@ -1350,15 +1325,15 @@ body.hide-notes .special-line {
     bottom: 20px;
     left: 50%;
     transform: translateX(-50%);
-    background-color: rgba(128, 128, 128, 0.9);
-    color: rgba(0, 0, 0, 0.9);
+    background-color: rgba(30, 30, 30, 0.9);
+    color: var(--text-dim);
     padding: 8px 15px;
-    border-radius: 6px;
+    border-radius: var(--radius-sm);
     font-size: 0.9rem;
     z-index: 1000;
     max-width: 300px;
     text-align: center;
-    border: 1px solid rgba(0, 0, 0, 0.1);
+    border: 1px solid var(--border);
 }
 
 /* Botones de navegación para modo concierto y edición */
@@ -1367,29 +1342,27 @@ body.hide-notes .special-line {
     top: 50%;
     transform: translateY(-50%);
     background-color: rgba(0, 0, 0, 0.6);
-    color: #ffffff;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 8px;
+    color: var(--text);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
     width: 45px;
     height: 70px;
     font-size: 1.6rem;
     cursor: pointer;
     z-index: 1000;
-    transition: all 0.3s ease;
+    transition: all 0.2s ease;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
 .general-nav-btn:hover {
-    background-color: rgba(0, 0, 0, 0.8);
-    border-color: rgba(255, 255, 255, 0.4);
-    transform: translateY(-50%) scale(1.05);
+    background-color: rgba(0, 0, 0, 0.85);
+    border-color: var(--border-strong);
 }
 
 .general-nav-btn:active {
     background-color: rgba(0, 0, 0, 1);
-    transform: translateY(-50%) scale(0.95);
 }
 
 /* Posicionamiento de botones generales - centrados y juntos en el lateral derecho */
@@ -1405,7 +1378,9 @@ body.hide-notes .special-line {
     transform: translateY(-50%);
 }
 
-/* Estilos para los diferentes modos */
+/* ============================================================
+   Modos de vista
+   ============================================================ */
 body.prompter-mode .top-section {
     display: none !important;
 }
@@ -1416,11 +1391,6 @@ body.prompter-mode .song-list-panel {
 
 body.prompter-mode .scroll-controls {
     display: none !important;
-}
-
-body.prompter-mode .main-container {
-    margin-top: 0 !important;
-    height: 100vh !important;
 }
 
 body.prompter-mode .lyrics-panel {
@@ -1444,11 +1414,6 @@ body.concert-mode .scroll-controls {
     display: none !important;
 }
 
-body.concert-mode .main-container {
-    margin-top: 25vh !important;
-    height: 75vh !important;
-}
-
 body.concert-mode .lyrics-panel {
     width: 100%;
 }
@@ -1458,7 +1423,8 @@ body.concert-mode.hide-songlist .song-list-panel {
 }
 
 /* Ocultar botones de edición en modo concierto */
-body.concert-mode .data-management,
+body.concert-mode .add-song-section,
+body.concert-mode #data-options-btn,
 body.concert-mode #add-song-btn,
 body.concert-mode #edit-current-song-btn,
 body.concert-mode #import-txt-songs-btn,
@@ -1468,83 +1434,9 @@ body.concert-mode .playback-controls {
     display: none !important;
 }
 
-/* Estilos responsivos para botones flotantes */
-@media (max-width: 768px) {
-    .mode-toggle-btn {
-        bottom: 70px;
-        right: 15px;
-        padding: 4px 6px;
-        font-size: 0.75rem;
-        min-width: 50px;
-    }
-    
-    .songlist-toggle-btn {
-        bottom: 125px;
-        right: 15px;
-        padding: 4px 6px;
-        font-size: 0.75rem;
-        min-width: 50px;
-    }
-    
-    .concert-control-btn {
-        right: 15px;
-        width: 50px;
-        height: 50px;
-        font-size: 1.2rem;
-    }
-    
-    #concert-goto-top-btn {
-        bottom: 220px;
-    }
-    
-    #concert-play-btn {
-        bottom: 160px;
-    }
-    
-    /* Controles del prompter en móvil */
-    .prompter-control-btn {
-        width: 70px;
-        height: 45px;
-        font-size: 1.3rem;
-    }
-    
-    #prompter-prev-btn {
-        left: 15px;
-    }
-    
-    #prompter-next-btn {
-        right: 15px;
-    }
-    
-    .prompter-song-title {
-        left: 50%;
-        transform: translateX(-50%);
-        max-width: 200px;
-        font-size: 0.8rem;
-        padding: 6px 10px;
-    }
-    
-    /* Botones de navegación generales en móvil - centrados y juntos en el lateral derecho */
-    .general-nav-btn {
-        width: 45px;
-        height: 60px;
-        font-size: 1.5rem;
-    }
-    
-    #general-prev-btn {
-        right: 5px;
-        top: calc(50% - 32px);
-        transform: translateY(-50%);
-    }
-    
-    #general-next-btn {
-        right: 5px;
-        top: calc(50% + 32px);
-        transform: translateY(-50%);
-    }
-}
-
-/* Botón de ayuda */
+/* ============================================================
+   Ayuda y versión
+   ============================================================ */
 .help-btn {
     position: fixed;
     top: 20px;
@@ -1552,19 +1444,17 @@ body.concert-mode .playback-controls {
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    background: var(--primary-color);
-    color: white;
-    border: none;
+    background: var(--surface-3);
+    color: var(--text);
+    border: 1px solid var(--border);
     font-size: 18px;
     cursor: pointer;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
     z-index: 1000;
-    transition: all 0.3s ease;
+    transition: all 0.2s ease;
 }
 
 .help-btn:hover {
-    background: var(--primary-dark);
-    transform: scale(1.1);
+    background: var(--border-strong);
 }
 
 /* Código de versión */
@@ -1597,55 +1487,57 @@ body.concert-mode .playback-controls {
     top: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0,0,0,0.5);
+    background-color: rgba(0, 0, 0, 0.6);
 }
 
 .help-modal-content {
-    background-color: #1e1e1e;
+    background-color: #121212;
     margin: 5% auto;
     padding: 0;
-    border-radius: 8px;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+    border-radius: 14px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
     width: 90%;
     max-width: 600px;
     max-height: 80vh;
     overflow: hidden;
-    border: 1px solid #333;
+    border: 1px solid var(--border);
 }
 
 .help-modal-header {
-    background: var(--primary-color);
-    color: white;
-    padding: 20px;
+    background: var(--surface-2);
+    color: var(--text);
+    padding: 18px 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    border-bottom: 1px solid var(--border);
 }
 
 .help-modal-header h3 {
     margin: 0;
-    font-size: 1.5em;
+    font-size: 1.3em;
+    font-weight: 600;
 }
 
 .help-close {
     font-size: 28px;
     font-weight: bold;
     cursor: pointer;
-    color: white;
-    opacity: 0.7;
-    transition: opacity 0.3s ease;
+    color: var(--text-dim);
+    transition: color 0.3s ease;
+    line-height: 1;
 }
 
 .help-close:hover {
-    opacity: 1;
+    color: var(--text);
 }
 
 .help-modal-body {
     padding: 20px;
     max-height: 60vh;
     overflow-y: auto;
-    background-color: #1e1e1e;
-    color: #e0e0e0;
+    background-color: #121212;
+    color: var(--text);
 }
 
 .shortcut-section {
@@ -1653,10 +1545,10 @@ body.concert-mode .playback-controls {
 }
 
 .shortcut-section h4 {
-    color: #4CAF50;
-    margin-bottom: 15px;
-    font-size: 1.1em;
-    border-bottom: 2px solid #4CAF50;
+    color: var(--accent);
+    margin-bottom: 12px;
+    font-size: 1rem;
+    border-bottom: 1px solid var(--border);
     padding-bottom: 5px;
 }
 
@@ -1665,7 +1557,7 @@ body.concert-mode .playback-controls {
     justify-content: space-between;
     align-items: center;
     padding: 8px 0;
-    border-bottom: 1px solid #333;
+    border-bottom: 1px solid var(--border);
 }
 
 .shortcut-item:last-child {
@@ -1673,13 +1565,13 @@ body.concert-mode .playback-controls {
 }
 
 .key {
-    background: #2d2d2d;
-    border: 1px solid #555;
+    background: var(--surface-2);
+    border: 1px solid var(--border-strong);
     border-radius: 4px;
     padding: 4px 8px;
     font-family: 'Courier New', monospace;
     font-weight: bold;
-    color: #4CAF50;
+    color: var(--accent);
     min-width: 60px;
     text-align: center;
     white-space: nowrap;
@@ -1691,60 +1583,21 @@ body.concert-mode .playback-controls {
 .description {
     flex: 1;
     margin-left: 15px;
-    color: #bbb;
+    color: var(--text-dim);
 }
 
-/* Responsividad para ayuda y versión */
-@media (max-width: 768px) {
-    .help-btn {
-        top: 15px;
-        right: 15px;
-        width: 35px;
-        height: 35px;
-        font-size: 16px;
-    }
-
-    .version-code {
-        top: 15px;
-        right: 55px;
-        font-size: 0.6rem;
-        padding: 1px 4px;
-    }
-    
-    .help-modal-content {
-        margin: 10% auto;
-        width: 95%;
-    }
-    
-    .help-modal-header {
-        padding: 15px;
-    }
-    
-    .help-modal-body {
-        padding: 15px;
-    }
-    
-    .shortcut-item {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 5px;
-    }
-    
-    .description {
-        margin-left: 0;
-    }
-}
-
-/* Modal de opciones de datos */
+/* ============================================================
+   Modal de opciones de datos
+   ============================================================ */
 .data-options-section {
     margin-bottom: 25px;
 }
 
 .data-options-section h3 {
-    color: #ffffff;
+    color: var(--text);
     margin-bottom: 15px;
-    font-size: 1.1rem;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    font-size: 1.05rem;
+    border-bottom: 1px solid var(--border);
     padding-bottom: 5px;
 }
 
@@ -1759,40 +1612,39 @@ body.concert-mode .playback-controls {
     flex-direction: column;
     align-items: flex-start;
     gap: 4px;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 8px;
-    padding: 15px;
-    color: #ffffff;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 14px;
+    color: var(--text);
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: all 0.2s ease;
     text-align: left;
 }
 
 .data-option-btn:hover {
-    background: rgba(255, 255, 255, 0.1);
-    border-color: rgba(255, 255, 255, 0.3);
-    transform: translateY(-2px);
+    background: var(--surface-3);
+    border-color: var(--border-strong);
 }
 
 .data-option-btn.danger {
-    border-color: rgba(255, 68, 68, 0.3);
-    background: rgba(255, 68, 68, 0.1);
+    border-color: rgba(255, 77, 77, 0.3);
+    background: rgba(255, 77, 77, 0.08);
 }
 
 .data-option-btn.danger:hover {
-    border-color: rgba(255, 68, 68, 0.5);
-    background: rgba(255, 68, 68, 0.2);
+    border-color: rgba(255, 77, 77, 0.5);
+    background: rgba(255, 77, 77, 0.16);
 }
 
 .option-text {
     font-weight: 600;
-    font-size: 1rem;
+    font-size: 0.95rem;
 }
 
 .data-option-btn small {
     display: block;
-    color: rgba(255, 255, 255, 0.7);
+    color: var(--text-dim);
     font-size: 0.8rem;
     margin-top: 2px;
 }
@@ -1801,25 +1653,22 @@ body.concert-mode .playback-controls {
     color: rgba(255, 170, 170, 0.8);
 }
 
-@media (max-width: 768px) {
-    .data-options-grid {
-        grid-template-columns: 1fr;
-    }
-    
-    .data-option-btn {
-        padding: 12px;
-        gap: 3px;
-    }
-    
-    .option-text {
-        font-size: 0.9rem;
-    }
+/* Estado activo (p. ej. MIDI habilitado) */
+.data-option-btn.active {
+    border-color: var(--ok);
+    background: rgba(39, 174, 96, 0.12);
 }
 
-/* Estilos para gestión de repertorios */
+.data-option-btn.active .option-text {
+    color: var(--ok);
+}
+
+/* ============================================================
+   Gestión de repertorios
+   ============================================================ */
 .repertoire-header {
     padding: 10px 15px;
-    border-bottom: 1px solid #333;
+    border-bottom: 1px solid var(--border);
     margin-bottom: 10px;
 }
 
@@ -1832,36 +1681,36 @@ body.concert-mode .playback-controls {
 .repertoire-select {
     flex: 1;
     padding: 6px 10px;
-    background-color: #2a2a2a;
-    color: #ffffff;
-    border: 1px solid #444;
-    border-radius: 4px;
+    background-color: var(--surface-2);
+    color: var(--text);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
     font-size: 0.9rem;
 }
 
 .repertoire-select:focus {
     outline: none;
-    border-color: #666;
+    border-color: var(--border-strong);
 }
 
 .repertoire-options-btn {
     padding: 6px 8px;
-    background-color: rgba(255, 255, 255, 0.1);
-    color: rgba(255, 255, 255, 0.8);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 4px;
+    background-color: var(--surface-2);
+    color: var(--text-dim);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
     cursor: pointer;
     font-size: 0.8rem;
 }
 
 .repertoire-options-btn:hover {
-    background-color: rgba(255, 255, 255, 0.15);
+    background-color: var(--surface-3);
 }
 
 .repertoire-management-section h4 {
-    color: #ffffff;
+    color: var(--text);
     margin-bottom: 15px;
-    font-size: 1.1rem;
+    font-size: 1.05rem;
 }
 
 .repertoire-actions {
@@ -1873,33 +1722,33 @@ body.concert-mode .playback-controls {
 
 .repertoire-action-btn {
     padding: 10px 15px;
-    background-color: #2a2a2a;
-    color: #ffffff;
-    border: 1px solid #444;
-    border-radius: 6px;
+    background-color: var(--surface-2);
+    color: var(--text);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
     cursor: pointer;
     font-size: 0.9rem;
     transition: all 0.2s ease;
 }
 
 .repertoire-action-btn:hover {
-    background-color: #3a3a3a;
-    border-color: #555;
+    background-color: var(--surface-3);
+    border-color: var(--border-strong);
 }
 
 .repertoire-action-btn.danger {
-    background-color: #4a2a2a;
-    border-color: #664444;
+    background-color: rgba(255, 77, 77, 0.08);
+    border-color: rgba(255, 77, 77, 0.3);
 }
 
 .repertoire-action-btn.danger:hover {
-    background-color: #5a3a3a;
+    background-color: rgba(255, 77, 77, 0.16);
 }
 
 /* Sección de configuración de visualización */
 .repertoire-display-section {
     margin-bottom: 25px;
-    border-top: 1px solid #444;
+    border-top: 1px solid var(--border);
     padding-top: 20px;
 }
 
@@ -1912,7 +1761,7 @@ body.concert-mode .playback-controls {
     align-items: center;
     gap: 8px;
     cursor: pointer;
-    color: #ffffff;
+    color: var(--text);
     font-size: 0.9rem;
     user-select: none;
 }
@@ -1920,7 +1769,7 @@ body.concert-mode .playback-controls {
 .checkbox-label input[type="checkbox"] {
     width: 16px;
     height: 16px;
-    accent-color: #ff4444;
+    accent-color: var(--accent);
     cursor: pointer;
 }
 
@@ -1930,7 +1779,7 @@ body.concert-mode .playback-controls {
 
 .repertoire-ordering-section {
     margin-bottom: 25px;
-    border-top: 1px solid #444;
+    border-top: 1px solid var(--border);
     padding-top: 20px;
 }
 
@@ -1947,9 +1796,9 @@ body.concert-mode .playback-controls {
 .repertoire-list {
     max-height: 200px;
     overflow-y: auto;
-    border: 1px solid #444;
-    border-radius: 6px;
-    background-color: #1a1a1a;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    background-color: var(--surface);
 }
 
 .repertoire-item {
@@ -1957,18 +1806,18 @@ body.concert-mode .playback-controls {
     align-items: center;
     justify-content: space-between;
     padding: 10px 15px;
-    border-bottom: 1px solid #333;
+    border-bottom: 1px solid var(--border);
     cursor: pointer;
     transition: background-color 0.2s ease;
 }
 
 .repertoire-item:hover {
-    background-color: #2a2a2a;
+    background-color: var(--surface-2);
 }
 
 .repertoire-item.active {
-    background-color: #2d4a3d;
-    border-left: 4px solid #4caf50;
+    background-color: var(--accent-soft);
+    border-left: 3px solid var(--accent);
 }
 
 .repertoire-info {
@@ -1976,14 +1825,14 @@ body.concert-mode .playback-controls {
 }
 
 .repertoire-name {
-    font-weight: bold;
-    color: #ffffff;
+    font-weight: 600;
+    color: var(--text);
     margin-bottom: 2px;
 }
 
 .repertoire-count {
     font-size: 0.8rem;
-    color: #888;
+    color: var(--text-dim);
 }
 
 .repertoire-item-actions {
@@ -1993,8 +1842,8 @@ body.concert-mode .playback-controls {
 
 .repertoire-item-btn {
     padding: 4px 8px;
-    background-color: rgba(255, 255, 255, 0.1);
-    color: rgba(255, 255, 255, 0.8);
+    background-color: var(--surface-2);
+    color: var(--text-dim);
     border: none;
     border-radius: 3px;
     cursor: pointer;
@@ -2002,35 +1851,30 @@ body.concert-mode .playback-controls {
 }
 
 .repertoire-item-btn:hover {
-    background-color: rgba(255, 255, 255, 0.15);
+    background-color: var(--surface-3);
+    color: var(--text);
 }
 
 .song-transfer-section {
-    border-top: 1px solid #444;
+    border-top: 1px solid var(--border);
     padding-top: 20px;
-}
-
-.transfer-controls {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
 }
 
 .target-repertoire-select {
     padding: 8px 12px;
-    background-color: #2a2a2a;
-    color: #ffffff;
-    border: 1px solid #444;
-    border-radius: 4px;
+    background-color: var(--surface-2);
+    color: var(--text);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
     font-size: 0.9rem;
 }
 
 .selected-songs {
     max-height: 150px;
     overflow-y: auto;
-    border: 1px solid #444;
-    border-radius: 4px;
-    background-color: #1a1a1a;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    background-color: var(--surface);
     padding: 10px;
 }
 
@@ -2039,126 +1883,16 @@ body.concert-mode .playback-controls {
     align-items: center;
     justify-content: space-between;
     padding: 5px 0;
-    border-bottom: 1px solid #333;
+    border-bottom: 1px solid var(--border);
 }
 
 .selected-song-item:last-child {
     border-bottom: none;
 }
 
-.transfer-btn {
-    padding: 10px 20px;
-    background-color: #4caf50;
-    color: white;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 0.9rem;
-    transition: background-color 0.2s ease;
-}
-
-.transfer-btn:hover:not(:disabled) {
-    background-color: #45a049;
-}
-
-.transfer-btn:disabled {
-    background-color: #333;
-    color: #666;
-    cursor: not-allowed;
-}
-
-/* Responsive para repertorios */
-@media (max-width: 768px) {
-    .repertoire-actions {
-        grid-template-columns: 1fr;
-    }
-    
-    .ordering-actions {
-        grid-template-columns: 1fr;
-    }
-    
-    .repertoire-selector {
-        font-size: 14px;
-    }
-}
-
-/* Estilos específicos para PWA en pantalla completa */
-@media (display-mode: fullscreen), 
-       (display-mode: standalone), 
-       (display-mode: minimal-ui) {
-    body {
-        height: 100vh;
-        height: -webkit-fill-available;
-    }
-    
-    /* Asegurarse de que el contenido use toda la pantalla */
-    .container {
-        height: 100vh;
-        height: -webkit-fill-available;
-    }
-}
-
-/* Estilos específicos para iPad en orientación landscape */
-@media screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: landscape) {
-    body {
-        height: 100vh;
-        height: -webkit-fill-available;
-        min-height: -webkit-fill-available;
-    }
-    
-    .container {
-        height: 100vh;
-        height: -webkit-fill-available;
-        min-height: -webkit-fill-available;
-    }
-    
-    /* Ajustar tamaños de fuente para mejor legibilidad en landscape */
-    .lyrics-display {
-        font-size: calc(1.2em + 0.5vw);
-    }
-}
-
-/* Estilos específicos para iPad en orientación portrait */
-@media screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: portrait) {
-    body {
-        height: 100vh;
-        height: -webkit-fill-available;
-        min-height: -webkit-fill-available;
-    }
-    
-    .container {
-        height: 100vh;
-        height: -webkit-fill-available;
-        min-height: -webkit-fill-available;
-    }
-}
-
-/* Código de versión */
-#version-code {
-    position: fixed;
-    top: 5px;
-    right: 5px;
-    font-size: 0.8em;
-    color: #666;
-    font-family: 'Courier New', monospace;
-    background: rgba(0, 0, 0, 0.3);
-    padding: 2px 6px;
-    border-radius: 3px;
-    border: 1px solid #333;
-    z-index: 10;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    user-select: none;
-}
-
-#version-code:hover {
-    color: #888;
-    background: rgba(0, 0, 0, 0.5);
-    border-color: #555;
-    transform: scale(1.05);
-}
-
-/* Modal de gestión de repertorios */
+/* ============================================================
+   Modal de gestión de repertorios (dos paneles)
+   ============================================================ */
 .repertoire-manager-modal {
     position: fixed;
     top: 0;
@@ -2174,19 +1908,19 @@ body.concert-mode .playback-controls {
 }
 
 .repertoire-manager-content {
-    background: #1a1a1a;
-    border-radius: 12px;
+    background: #121212;
+    border-radius: 14px;
     width: 95%;
     height: 90%;
     display: flex;
     flex-direction: column;
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
-    border: 1px solid #333;
+    border: 1px solid var(--border);
 }
 
 .repertoire-manager-header {
-    padding: 20px 30px;
-    border-bottom: 2px solid #333;
+    padding: 18px 26px;
+    border-bottom: 1px solid var(--border);
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -2194,8 +1928,22 @@ body.concert-mode .playback-controls {
 
 .repertoire-manager-header h2 {
     margin: 0;
-    color: #ffffff;
+    color: var(--text);
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.repertoire-manager-header .close-btn {
+    background: transparent;
+    border: none;
+    color: var(--text-dim);
     font-size: 1.8rem;
+    cursor: pointer;
+    line-height: 1;
+}
+
+.repertoire-manager-header .close-btn:hover {
+    color: var(--text);
 }
 
 .repertoire-manager-body {
@@ -2208,40 +1956,41 @@ body.concert-mode .playback-controls {
 
 .repertoire-panel {
     flex: 1;
-    background: #222;
-    border-radius: 8px;
+    background: var(--surface);
+    border-radius: var(--radius);
     display: flex;
     flex-direction: column;
-    border: 2px solid #333;
+    border: 1px solid var(--border);
 }
 
 .left-panel {
-    border-color: #4a90e2;
+    border-color: #3a5a7d;
 }
 
 .right-panel {
-    border-color: #e24a4a;
+    border-color: #7d3a3a;
 }
 
 .panel-header {
     padding: 15px 20px;
-    border-bottom: 2px solid #333;
+    border-bottom: 1px solid var(--border);
     background: rgba(0, 0, 0, 0.3);
 }
 
 .panel-header h3 {
     margin: 0 0 10px 0;
-    color: #ffffff;
-    font-size: 1.3rem;
+    color: var(--text);
+    font-size: 1.15rem;
+    font-weight: 600;
 }
 
 .panel-repertoire-select {
     width: 100%;
     padding: 10px;
-    background: #333;
-    color: #ffffff;
-    border: 1px solid #555;
-    border-radius: 6px;
+    background: var(--surface-2);
+    color: var(--text);
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius-sm);
     font-size: 1rem;
     cursor: pointer;
 }
@@ -2255,10 +2004,10 @@ body.concert-mode .playback-controls {
     width: 100%;
     margin-top: 10px;
     padding: 10px;
-    background: #2f2f2f;
-    color: #ffffff;
-    border: 1px solid #555;
-    border-radius: 6px;
+    background: var(--surface-2);
+    color: var(--text);
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius-sm);
     font-size: 0.95rem;
 }
 
@@ -2281,20 +2030,20 @@ body.concert-mode .playback-controls {
 
 .manager-song-item {
     padding: 12px 15px;
-    margin-bottom: 8px;
-    background: #2a2a2a;
-    border-radius: 6px;
+    margin-bottom: 6px;
+    background: var(--surface-2);
+    border-radius: var(--radius-sm);
     cursor: pointer;
-    border: 2px solid transparent;
-    transition: all 0.2s ease;
+    border: 1px solid transparent;
+    transition: all 0.15s ease;
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
 .manager-song-item:hover {
-    background: #333;
-    border-color: #555;
+    background: var(--surface-3);
+    border-color: var(--border-strong);
 }
 
 .manager-song-item.selected {
@@ -2307,14 +2056,14 @@ body.concert-mode .playback-controls {
 }
 
 .manager-song-title {
-    color: #ffffff;
-    font-weight: bold;
-    font-size: 1.1rem;
+    color: var(--text);
+    font-weight: 600;
+    font-size: 1.05rem;
     margin-bottom: 4px;
 }
 
 .manager-song-artist {
-    color: #888;
+    color: var(--text-dim);
     font-size: 0.9rem;
 }
 
@@ -2334,22 +2083,21 @@ body.concert-mode .playback-controls {
 }
 
 .transfer-btn {
-    width: 60px;
-    height: 60px;
-    background: #4a90e2;
-    border: none;
+    width: 56px;
+    height: 56px;
+    background: var(--surface-2);
+    border: 1px solid var(--border-strong);
     border-radius: 50%;
-    color: #ffffff;
-    font-size: 2rem;
+    color: var(--text);
+    font-size: 1.7rem;
     cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    transition: all 0.2s ease;
 }
 
 .transfer-btn:hover {
-    background: #357abd;
-    transform: scale(1.1);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+    background: var(--surface-3);
+    border-color: #4a90e2;
+    color: #4a90e2;
 }
 
 .transfer-btn:active {
@@ -2357,23 +2105,37 @@ body.concert-mode .playback-controls {
 }
 
 .transfer-btn:disabled {
-    background: #444;
+    opacity: 0.35;
     cursor: not-allowed;
-    opacity: 0.5;
 }
 
 .repertoire-manager-footer {
-    padding: 20px 30px;
-    border-top: 2px solid #333;
+    padding: 16px 26px;
+    border-top: 1px solid var(--border);
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
+.repertoire-manager-footer .modal-btn {
+    padding: 9px 22px;
+    background: var(--surface-2);
+    color: var(--text);
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius-sm);
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.repertoire-manager-footer .modal-btn:hover {
+    background: var(--surface-3);
+}
+
 .selection-info {
     display: flex;
     gap: 30px;
-    color: #888;
+    color: var(--text-dim);
     font-size: 0.95rem;
 }
 
@@ -2384,23 +2146,9 @@ body.concert-mode .playback-controls {
     border: 1px solid #4a90e2;
 }
 
-.repertoire-manager-btn {
-    background: #4a90e2;
-    border: none;
-    padding: 8px 12px;
-    border-radius: 6px;
-    color: #ffffff;
-    font-size: 1.2rem;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.repertoire-manager-btn:hover {
-    background: #357abd;
-    transform: scale(1.05);
-}
-
-/* Modal visor de HTML */
+/* ============================================================
+   Modal visor de HTML
+   ============================================================ */
 .html-viewer-modal {
     display: none;
     position: fixed;
@@ -2434,51 +2182,43 @@ body.concert-mode .playback-controls {
     position: fixed;
     top: 20px;
     right: 20px;
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.08);
     backdrop-filter: blur(10px);
-    border: 2px solid rgba(255, 255, 255, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.25);
     color: white;
-    font-size: 2rem;
-    width: 50px;
-    height: 50px;
+    font-size: 1.6rem;
+    width: 48px;
+    height: 48px;
     border-radius: 50%;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: all 0.3s ease;
+    transition: all 0.2s ease;
     z-index: 10001;
-    font-weight: bold;
 }
 
 .close-html-viewer:hover {
-    background: rgba(255, 255, 255, 0.2);
-    border-color: rgba(255, 255, 255, 0.5);
-    transform: scale(1.1) rotate(90deg);
-}
-
-.close-html-viewer:active {
-    transform: scale(0.95) rotate(90deg);
+    background: rgba(255, 255, 255, 0.18);
 }
 
 .nav-song-html {
     position: fixed;
     bottom: 30px;
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.08);
     backdrop-filter: blur(10px);
-    border: 2px solid rgba(255, 255, 255, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.25);
     color: white;
-    font-size: 3rem;
-    width: 60px;
-    height: 60px;
+    font-size: 2.4rem;
+    width: 58px;
+    height: 58px;
     border-radius: 50%;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: all 0.3s ease;
+    transition: all 0.2s ease;
     z-index: 10001;
-    font-weight: bold;
     line-height: 1;
 }
 
@@ -2491,13 +2231,7 @@ body.concert-mode .playback-controls {
 }
 
 .nav-song-html:hover {
-    background: rgba(255, 255, 255, 0.2);
-    border-color: rgba(255, 255, 255, 0.5);
-    transform: scale(1.1);
-}
-
-.nav-song-html:active {
-    transform: scale(0.95);
+    background: rgba(255, 255, 255, 0.18);
 }
 
 .nav-song-html:disabled {
@@ -2505,42 +2239,370 @@ body.concert-mode .playback-controls {
     cursor: not-allowed;
 }
 
-.nav-song-html:disabled:hover {
-    background: rgba(255, 255, 255, 0.1);
-    border-color: rgba(255, 255, 255, 0.3);
-    transform: scale(1);
-}
-
 @keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
+    from { opacity: 0; }
+    to { opacity: 1; }
 }
 
-.midi-btn {
-    background: #9b59b6;
-    border: none;
-    padding: 8px 12px;
-    border-radius: 6px;
-    color: #ffffff;
-    font-size: 1.2rem;
+/* ============================================================
+   Código de versión (elemento del header)
+   ============================================================ */
+#version-code {
+    position: fixed;
+    top: 5px;
+    right: 5px;
+    font-size: 0.7rem;
+    color: var(--text-faint);
+    font-family: 'Courier New', monospace;
+    background: rgba(0, 0, 0, 0.3);
+    padding: 2px 6px;
+    border-radius: 3px;
+    border: 1px solid var(--border);
+    z-index: 10;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: all 0.2s ease;
+    user-select: none;
 }
 
-.midi-btn:hover {
-    background: #8e44ad;
-    transform: scale(1.05);
+#version-code:hover {
+    color: var(--text-dim);
+    border-color: var(--border-strong);
 }
 
-.midi-btn.active {
-    background: #27ae60;
-    box-shadow: 0 0 15px rgba(39, 174, 96, 0.5);
+/* ============================================================
+   PWA pantalla completa
+   ============================================================ */
+@media (display-mode: fullscreen),
+       (display-mode: standalone),
+       (display-mode: minimal-ui) {
+    body {
+        height: 100vh;
+        height: 100dvh;
+    }
 }
 
-.midi-btn.active:hover {
-    background: #229954;
+/* ============================================================
+   Responsive — Tablet (≤768px): paneles apilados
+   ============================================================ */
+@media (max-width: 768px) {
+    .top-section {
+        padding: 8px 12px 10px;
+    }
+
+    .main-container {
+        flex-direction: column;
+    }
+
+    .song-list-panel {
+        flex: 0 0 200px;
+        width: 100%;
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+        padding: 10px 12px;
+    }
+
+    .beat-indicator {
+        width: 90px;
+        height: 90px;
+    }
+
+    .bpm-text {
+        font-size: 1.5rem;
+    }
+
+    .metronome-display {
+        gap: 14px;
+    }
+
+    .mode-toggle-btn {
+        bottom: 70px;
+        right: 15px;
+        padding: 4px 6px;
+        font-size: 0.75rem;
+        min-width: 50px;
+    }
+
+    .songlist-toggle-btn {
+        bottom: 125px;
+        right: 15px;
+        padding: 4px 6px;
+        font-size: 0.75rem;
+        min-width: 50px;
+    }
+
+    .concert-control-btn {
+        right: 15px;
+        width: 50px;
+        height: 50px;
+        font-size: 1.2rem;
+    }
+
+    #concert-goto-top-btn {
+        bottom: 220px;
+    }
+
+    #concert-play-btn {
+        bottom: 160px;
+    }
+
+    /* Controles del prompter */
+    .prompter-control-btn {
+        width: 70px;
+        height: 45px;
+        font-size: 1.3rem;
+    }
+
+    #prompter-prev-btn {
+        left: 15px;
+    }
+
+    #prompter-next-btn {
+        right: 15px;
+    }
+
+    .prompter-song-title {
+        left: 50%;
+        transform: translateX(-50%);
+        max-width: 200px;
+        font-size: 0.8rem;
+        padding: 6px 10px;
+    }
+
+    .general-nav-btn {
+        width: 45px;
+        height: 60px;
+        font-size: 1.5rem;
+    }
+
+    #general-prev-btn {
+        right: 5px;
+        top: calc(50% - 32px);
+        transform: translateY(-50%);
+    }
+
+    #general-next-btn {
+        right: 5px;
+        top: calc(50% + 32px);
+        transform: translateY(-50%);
+    }
+
+    .help-btn {
+        top: 15px;
+        right: 15px;
+        width: 35px;
+        height: 35px;
+        font-size: 16px;
+    }
+
+    .version-code {
+        top: 15px;
+        right: 55px;
+        font-size: 0.6rem;
+        padding: 1px 4px;
+    }
+
+    .help-modal-content {
+        margin: 10% auto;
+        width: 95%;
+    }
+
+    .help-modal-header {
+        padding: 15px;
+    }
+
+    .help-modal-body {
+        padding: 15px;
+    }
+
+    .shortcut-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 5px;
+    }
+
+    .description {
+        margin-left: 0;
+    }
+
+    .data-option-btn {
+        padding: 12px;
+        gap: 3px;
+    }
+
+    .option-text {
+        font-size: 0.9rem;
+    }
+
+    .repertoire-actions {
+        grid-template-columns: 1fr;
+    }
+
+    .ordering-actions {
+        grid-template-columns: 1fr;
+    }
+
+    .repertoire-selector {
+        font-size: 14px;
+    }
+
+    .modal-content {
+        width: 92%;
+        padding: 20px;
+    }
+}
+
+/* ============================================================
+   Responsive — Teléfono móvil (pantalla estrecha o baja):
+   se oculta el círculo del metrónomo y se usa el botón compacto
+   ============================================================ */
+@media (max-width: 700px), (max-height: 500px) {
+    /* El círculo desaparece: el beat se ve en el marco de pantalla */
+    .beat-indicator {
+        display: none;
+    }
+
+    .metronome-compact-btn {
+        display: inline-flex;
+    }
+
+    .top-section {
+        padding: 6px 10px 8px;
+    }
+
+    .top-section-content {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 8px;
+    }
+
+    .song-structure-container {
+        max-height: 46px;
+        padding: 4px 6px;
+        margin-bottom: 6px;
+    }
+
+    .structure-bar {
+        width: 7px;
+        height: 18px;
+    }
+
+    #current-song {
+        font-size: 1.05rem;
+    }
+
+    .song-notes {
+        font-size: 1.05rem;
+        max-height: 28vh;
+    }
+
+    .song-notes img {
+        max-height: 24vh;
+    }
+
+    .metronome-container {
+        width: 100%;
+        padding-top: 0;
+    }
+
+    .metronome-display {
+        width: 100%;
+        justify-content: center;
+        gap: 0;
+    }
+
+    /* Controles de BPM en una sola fila */
+    .bpm-display {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 6px;
+        width: 100%;
+    }
+
+    .bpm-btn {
+        min-width: 42px;
+        padding: 9px 8px;
+        font-size: 0.85rem;
+    }
+
+    .control-btn {
+        padding: 9px 14px;
+        font-size: 0.85rem;
+    }
+
+    .song-list-panel {
+        flex: 0 0 240px;
+        padding: 8px 10px;
+    }
+
+    /* Botones de la lista más compactos para dejar espacio a las canciones */
+    .add-btn,
+    .edit-btn,
+    .data-btn {
+        height: 32px;
+        font-size: 1.1rem;
+    }
+
+    .add-song-section {
+        margin-top: 8px;
+        gap: 6px;
+    }
+
+    .song-item {
+        padding: 8px 10px;
+    }
+
+    .lyrics-container {
+        padding: 14px;
+    }
+
+    .lyrics-content {
+        font-size: 1.8rem;
+    }
+
+    .welcome-message {
+        font-size: 1.5rem;
+        margin-top: 10vh;
+    }
+
+    /* Barra inferior en una sola fila */
+    .scroll-controls {
+        gap: 5px;
+        padding: 6px 8px;
+        flex-wrap: nowrap;
+    }
+
+    .playback-controls {
+        margin-right: 0;
+        gap: 5px;
+    }
+
+    .font-size-controls {
+        margin-left: 0;
+        gap: 5px;
+    }
+
+    .scroll-btn {
+        width: 36px;
+        height: 36px;
+        font-size: 0.95rem;
+    }
+
+    .timer-display {
+        padding: 5px 6px;
+        min-width: 48px;
+    }
+
+    .timer-display span {
+        font-size: 0.85rem;
+    }
+
+    /* Botones de navegación de canción: sobre la zona de letras */
+    #general-prev-btn {
+        top: 62%;
+    }
+
+    #general-next-btn {
+        top: calc(62% + 68px);
+    }
 }

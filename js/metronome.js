@@ -14,6 +14,9 @@ class Metronome {
         this.scheduledVisuals = [];     // timeouts pendientes para parpadeo visual
 
         this.beatIndicator = document.getElementById('beat-indicator');
+        this.beatFrame = document.getElementById('beat-frame');
+        this.compactBtn = document.getElementById('metronome-compact-btn');
+        this.bpmTextCompact = document.getElementById('bpm-text-compact');
         this.bpmInput = document.getElementById('bpm-input');
         this.bpmText = document.getElementById('bpm-text');
         this.tapTempoBtn = document.getElementById('tap-tempo-btn');
@@ -25,9 +28,12 @@ class Metronome {
         this.initializeEventListeners();
         this.createAudioContext();
 
-        // Inicializar el texto BPM en el círculo
+        // Inicializar el texto BPM en el círculo y en el botón compacto
         if (this.bpmText) {
             this.bpmText.textContent = this.bpm;
+        }
+        if (this.bpmTextCompact) {
+            this.bpmTextCompact.textContent = this.bpm;
         }
     }
 
@@ -46,8 +52,9 @@ class Metronome {
         // pero sólo aplicamos un setBPM real en 'change'.
         this.bpmInput.addEventListener('input', (e) => {
             const v = parseInt(e.target.value);
-            if (!isNaN(v) && this.bpmText) {
-                this.bpmText.textContent = v;
+            if (!isNaN(v)) {
+                if (this.bpmText) this.bpmText.textContent = v;
+                if (this.bpmTextCompact) this.bpmTextCompact.textContent = v;
             }
         });
 
@@ -67,6 +74,17 @@ class Metronome {
             this.stop();
         });
 
+        // Botón compacto (móvil): mismas interacciones que el círculo
+        if (this.compactBtn) {
+            this.compactBtn.addEventListener('click', () => {
+                this.togglePlayPause();
+            });
+
+            this.compactBtn.addEventListener('dblclick', () => {
+                this.stop();
+            });
+        }
+
         this.bpmMinus1Btn.addEventListener('click', () => { this.changeBPM(-1); });
         this.bpmMinus10Btn.addEventListener('click', () => { this.changeBPM(-10); });
         this.bpmPlus1Btn.addEventListener('click', () => { this.changeBPM(1); });
@@ -82,6 +100,7 @@ class Metronome {
         const currentBpm = document.getElementById('current-bpm');
         if (currentBpm) currentBpm.textContent = `BPM: ${bpm}`;
         if (this.bpmText) this.bpmText.textContent = bpm;
+        if (this.bpmTextCompact) this.bpmTextCompact.textContent = bpm;
 
         // El scheduler usa this.bpm directamente cada tick, así que el cambio
         // se aplica sin reiniciar el reloj de audio (sin clicks ni glitches).
@@ -107,6 +126,7 @@ class Metronome {
             // No hay audio - emulamos el ciclo solo para los eventos visuales.
             this.isPlaying = true;
             this.beatCount = 0;
+            this.updatePlayingState();
             this._fallbackInterval = setInterval(() => this._fallbackTick(), (60 / this.bpm) * 1000);
             this._fallbackTick();
             return;
@@ -119,6 +139,7 @@ class Metronome {
 
         this.isPlaying = true;
         this.beatCount = 0;
+        this.updatePlayingState();
         this.nextNoteTime = this.audioContext.currentTime + 0.05; // pequeño lead-in
         this.scheduler();
         this.schedulerTimerId = setInterval(() => this.scheduler(), this.lookahead);
@@ -127,6 +148,7 @@ class Metronome {
     pause() {
         if (!this.isPlaying) return;
         this.isPlaying = false;
+        this.updatePlayingState();
 
         if (this.schedulerTimerId) {
             clearInterval(this.schedulerTimerId);
@@ -216,15 +238,28 @@ class Metronome {
         }));
     }
 
+    // El beat se ilumina en el marco alrededor de la pantalla (móvil, tablet y PC)
     visualBeat() {
-        this.beatIndicator.classList.add('active');
+        if (!this.beatFrame) return;
+        this.beatFrame.classList.add('active');
         setTimeout(() => {
-            this.beatIndicator.classList.remove('active');
+            this.beatFrame.classList.remove('active');
         }, 100);
     }
 
     resetBeatIndicator() {
+        if (this.beatFrame) this.beatFrame.classList.remove('active');
         this.beatIndicator.classList.remove('active');
+    }
+
+    // Refleja el estado play/pausa en el círculo y en el botón compacto
+    updatePlayingState() {
+        if (this.beatIndicator) {
+            this.beatIndicator.classList.toggle('playing', this.isPlaying);
+        }
+        if (this.compactBtn) {
+            this.compactBtn.classList.toggle('playing', this.isPlaying);
+        }
     }
 
     tapTempo() {

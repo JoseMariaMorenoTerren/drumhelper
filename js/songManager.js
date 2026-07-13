@@ -341,6 +341,8 @@ class SongManager {
         });
 
         this.repertoireOptionsBtn.addEventListener('click', () => {
+            // El botón vive dentro del modal de opciones: cerrarlo antes de abrir el otro
+            this.closeDataOptionsModalFunc();
             this.openRepertoireOptionsModal();
         });
 
@@ -372,6 +374,8 @@ class SongManager {
 
         // Event listeners para el gestor de repertorios
         this.repertoireManagerBtn.addEventListener('click', () => {
+            // El botón vive dentro del modal de opciones: cerrarlo antes de abrir el gestor
+            this.closeDataOptionsModalFunc();
             this.openRepertoireManager();
         });
 
@@ -1158,11 +1162,13 @@ Says, "Find a home"
             bpmElement.style.display = 'block';
             notesElement.innerHTML = this.processTextHighlights(song.notes);
             notesElement.style.display = 'block';
+            this.updateNotesToggleVisibility(true);
         } else {
             // Si no hay notas, mostrar título y BPM
             bpmElement.style.display = 'block';
             notesElement.textContent = '';
             notesElement.style.display = 'none';
+            this.updateNotesToggleVisibility(false);
         }
         
         // Actualizar BPM del metrónomo
@@ -1240,11 +1246,13 @@ Says, "Find a home"
                 bpmElement.style.display = 'block';
                 notesElement.innerHTML = this.processTextHighlights(activeSong.notes);
                 notesElement.style.display = 'block';
+                this.updateNotesToggleVisibility(true);
             } else {
                 // Si no hay notas, mostrar título y BPM
                 bpmElement.style.display = 'block';
                 notesElement.textContent = '';
                 notesElement.style.display = 'none';
+                this.updateNotesToggleVisibility(false);
             }
             
             // Actualizar BPM del metrónomo
@@ -1329,6 +1337,14 @@ Says, "Find a home"
         processedText = processedText.replace(/\/1(.*?)1\//g, '<span class="highlight-blue">$1</span>');
         processedText = processedText.replace(/\/3(.*?)3\//g, '<span class="highlight-green">$1</span>');
         return processedText;
+    }
+
+    // El botón de plegar notas solo se muestra si la canción tiene notas
+    updateNotesToggleVisibility(hasNotes) {
+        const toggleBtn = document.getElementById('notes-toggle-btn');
+        if (toggleBtn) {
+            toggleBtn.style.display = hasNotes ? 'inline-flex' : 'none';
+        }
     }
     
     renderSongStructure(song) {
@@ -2652,6 +2668,7 @@ Says, "Find a home"
             document.getElementById('current-song').textContent = '';
             document.getElementById('current-bpm').textContent = '';
             document.getElementById('current-notes').style.display = 'none';
+            this.updateNotesToggleVisibility(false);
 
             if (window.lyricsScroller) {
                 window.lyricsScroller.loadLyrics('');
