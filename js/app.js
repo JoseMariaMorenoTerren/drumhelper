@@ -32,11 +32,15 @@ class DrumHelperApp {
             this.components.metronome = new Metronome();
             this.components.lyricsScroller = new LyricsScroller();
             this.components.songManager = new SongManager();
-            
+
             // Hacer componentes disponibles globalmente
             window.metronome = this.components.metronome;
             window.lyricsScroller = this.components.lyricsScroller;
             window.songManager = this.components.songManager;
+
+            // Sincronización con GitHub (necesita songManager ya disponible)
+            this.components.githubSync = new GitHubSync();
+            window.githubSync = this.components.githubSync;
             
             this.setupGlobalEventListeners();
             this.initializeKeyboardShortcuts();

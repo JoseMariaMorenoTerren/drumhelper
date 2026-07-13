@@ -35,7 +35,7 @@
         
         <div class="top-section-content">
             <div class="info-panel">
-                <div id="version-code">v1.4.8</div>
+                <div id="version-code">v1.4.9</div>
                 <div class="song-header-row">
                     <span id="current-song">Selecciona una canción</span>
                     <span id="current-bpm">BPM: 120</span>
@@ -462,6 +462,24 @@
                 </div>
 
                 <div class="data-options-section">
+                    <h3>☁️ Sincronizar con GitHub</h3>
+                    <div class="data-options-grid">
+                        <button id="github-publish-btn" class="data-option-btn">
+                            <span class="option-text">⬆️ Publicar en GitHub</span>
+                            <small>Sube canciones y repertorios al repositorio</small>
+                        </button>
+                        <button id="github-pull-btn" class="data-option-btn">
+                            <span class="option-text">⬇️ Recibir de GitHub</span>
+                            <small>Descarga y reemplaza los datos de este dispositivo</small>
+                        </button>
+                        <button id="github-token-btn" class="data-option-btn">
+                            <span class="option-text">🔑 Configurar token</span>
+                            <small>Necesario para publicar (no para recibir)</small>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="data-options-section">
                     <h3>📥 Importar</h3>
                     <div class="data-options-grid">
                         <button id="modal-import-json-btn" class="data-option-btn">
@@ -694,6 +712,7 @@
     <script src="js/metronome.js"></script>
     <script src="js/songManager.js"></script>
     <script src="js/lyricsScroller.js"></script>
+    <script src="js/githubSync.js"></script>
     <script src="js/app.js"></script>
 </body>
 </html>
