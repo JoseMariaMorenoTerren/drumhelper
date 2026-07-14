@@ -585,7 +585,9 @@ class LyricsScroller {
     }
     
     updateModeButton() {
-        this.modeToggleBtn.textContent = this.modeLabels[this.currentMode];
+        // Icono fijo de visualización; el modo actual se indica en el tooltip
+        this.modeToggleBtn.textContent = '👁';
+        this.modeToggleBtn.title = `Modo: ${this.modeLabels[this.currentMode]} (toca para cambiar)`;
     }
     
     toggleSonglist() {
