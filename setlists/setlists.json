@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "exportDate": "2026-07-13T15:32:58.874Z",
+  "exportDate": "2026-07-20T10:01:35.525Z",
   "currentRepertoireId": "default",
   "repertoires": {
     "default": {
@@ -762,6 +762,126 @@
       ],
       "createdAt": "2026-05-24T10:06:55.374733",
       "lastModified": "2026-05-24T10:06:55.374734"
+    },
+    "repertoire_cochera_agosto_26_mrt21stg": {
+      "id": "repertoire_cochera_agosto_26_mrt21stg",
+      "name": "Cochera agosto 26",
+      "setlistName": "Cochera agosto 26",
+      "showArtistBpm": false,
+      "hideNotes": false,
+      "activeSongId": "song_0003",
+      "entries": [
+        {
+          "songId": "song_0003",
+          "order": 10
+        },
+        {
+          "songId": "song_0008",
+          "order": 20
+        },
+        {
+          "songId": "song_0001",
+          "order": 30
+        },
+        {
+          "songId": "song_0101",
+          "order": 40
+        },
+        {
+          "songId": "song_0045",
+          "order": 50
+        },
+        {
+          "songId": "song_0051",
+          "order": 60
+        },
+        {
+          "songId": "song_0039",
+          "order": 70
+        },
+        {
+          "songId": "song_0050",
+          "order": 80
+        },
+        {
+          "songId": "song_0007",
+          "order": 90
+        },
+        {
+          "songId": "song_0004",
+          "order": 100
+        },
+        {
+          "songId": "song_0015",
+          "order": 110
+        },
+        {
+          "songId": "song_0034",
+          "order": 120
+        },
+        {
+          "songId": "song_0054",
+          "order": 130
+        },
+        {
+          "songId": "song_0025",
+          "order": 140
+        },
+        {
+          "songId": "song_0019",
+          "order": 150
+        },
+        {
+          "songId": "song_0032",
+          "order": 160
+        },
+        {
+          "songId": "song_0012",
+          "order": 170
+        },
+        {
+          "songId": "song_0006",
+          "order": 180
+        },
+        {
+          "songId": "song_0029",
+          "order": 190
+        },
+        {
+          "songId": "song_0042",
+          "order": 200
+        },
+        {
+          "songId": "song_0028",
+          "order": 210
+        },
+        {
+          "songId": "song_0023",
+          "order": 220
+        },
+        {
+          "songId": "song_0033",
+          "order": 230
+        },
+        {
+          "songId": "song_0010",
+          "order": 240
+        },
+        {
+          "songId": "song_0018",
+          "order": 250
+        },
+        {
+          "songId": "song_0020",
+          "order": 260
+        },
+        {
+          "songId": "song_0030",
+          "order": 270
+        }
+      ],
+      "createdAt": "2026-07-20T10:01:35.525Z",
+      "lastModified": "2026-07-20T10:01:35.525Z"
     }
   }
 }
