@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "exportDate": "2026-07-22T15:49:33.971Z",
+  "exportDate": "2026-07-20T10:01:35.525Z",
   "currentRepertoireId": "repertoire_cochera_agosto_26_mrt21stg",
   "repertoires": {
     "default": {
@@ -292,6 +292,10 @@
           "order": 10250
         },
         {
+          "songId": "song_0002",
+          "order": 10260
+        },
+        {
           "songId": "song_0006",
           "order": 10290
         },
@@ -309,7 +313,7 @@
         }
       ],
       "createdAt": "2026-05-24T10:06:55.374913",
-      "lastModified": "2026-07-22T15:45:24.324Z"
+      "lastModified": "2026-05-24T10:06:55.374914"
     },
     "repertoire_los_80s_02": {
       "id": "repertoire_los_80s_02",
@@ -765,15 +769,15 @@
       "setlistName": "Cochera agosto 26",
       "showArtistBpm": false,
       "hideNotes": false,
-      "activeSongId": "song_0030",
+      "activeSongId": "song_0003",
       "entries": [
         {
           "songId": "song_0003",
-          "order": 55
+          "order": 10
         },
         {
           "songId": "song_0008",
-          "order": 55
+          "order": 20
         },
         {
           "songId": "song_0001",
@@ -797,7 +801,7 @@
         },
         {
           "songId": "song_0050",
-          "order": 999
+          "order": 80
         },
         {
           "songId": "song_0007",
@@ -805,7 +809,7 @@
         },
         {
           "songId": "song_0004",
-          "order": 15
+          "order": 100
         },
         {
           "songId": "song_0015",
@@ -813,7 +817,7 @@
         },
         {
           "songId": "song_0034",
-          "order": 10
+          "order": 120
         },
         {
           "songId": "song_0054",
@@ -829,11 +833,11 @@
         },
         {
           "songId": "song_0032",
-          "order": 9999
+          "order": 160
         },
         {
           "songId": "song_0012",
-          "order": 145
+          "order": 170
         },
         {
           "songId": "song_0006",
@@ -874,14 +878,10 @@
         {
           "songId": "song_0030",
           "order": 270
-        },
-        {
-          "songId": "song_0002",
-          "order": 95
         }
       ],
       "createdAt": "2026-07-20T10:01:35.525Z",
-      "lastModified": "2026-07-22T15:45:24.324Z"
+      "lastModified": "2026-07-20T10:01:35.525Z"
     }
   }
 }
