@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "exportDate": "2026-09-11T17:32:40.931Z",
+  "exportDate": "2026-07-13T15:32:58.874Z",
   "songs": {
     "song_0001": {
       "id": "song_0001",
@@ -143,7 +143,7 @@
       "structure": "",
       "duration": "3:52",
       "htmlFile": "mediterraneo.html",
-      "fontSize": 1.2,
+      "fontSize": 2.4,
       "recordings": [],
       "createdAt": "2025-10-09T16:53:28.359000+00:00",
       "lastModified": "2026-04-02T08:48:04.594000+00:00"
@@ -737,7 +737,7 @@
       "title": "With or without you",
       "artist": "U2",
       "bpm": 110,
-      "lyrics": ":: PANDERETA 2-4\nSee the stone set in your eyes\nSee the thorn twist in your side\nI'll wait for you\nSleight of hand and twist of fate\nOn a bed of nails, she makes me wait\nAnd I wait without you\nWith or without you\nWith or without you\n:: TOM BASE\nThrough the storm, we reach the shore\nYou give it all, but I want more\nAnd I'm waiting for you\nWith or without you\nWith or without you, ah\nI can't live\nWith or without you\n:: ENTRA LA CAJA\nAnd you give yourself away\nAnd you give yourself away\nAnd you give, and you give\nAnd you give yourself away\nMy hands are tied\nMy body bruised\nShe's got me with\nNothing to win and nothing left to lose\nAnd you give yourself away\nAnd you give yourself away\nAnd you give, and you give\nAnd you give yourself away\nWith or without you\nWith or without you, oh\nI can't live with or without you\n:: DINÁMICA ALTA\nOhh ohhh ohhh\nWith or without you\nWith or without you, oh\nI can't live with or without you\n:: DINÁMICA BAJA\nuhhhhh, uhhhhh\nWith or without you\n\n:: Extra.\nLove will tears apart... again...\nTicket to ride",
+      "lyrics": "See the stone set in your eyes\nSee the thorn twist in your side\nI'll wait for you\nSleight of hand and twist of fate\nOn a bed of nails, she makes me wait\nAnd I wait without you\nWith or without you\nWith or without you\nThrough the storm, we reach the shore\nYou give it all, but I want more\nAnd I'm waiting for you\nWith or without you\nWith or without you, ah\nI can't live\nWith or without you\nAnd you give yourself away\nAnd you give yourself away\nAnd you give, and you give\nAnd you give yourself away\nMy hands are tied\nMy body bruised\nShe's got me with\nNothing to win and nothing left to lose\nAnd you give yourself away\nAnd you give yourself away\nAnd you give, and you give\nAnd you give yourself away\nWith or without you\nWith or without you, oh\nI can't live with or without you\nOhh ohhh ohhh\nWith or without you\nWith or without you, oh\nI can't live with or without you\nWith or without you\nLove will tears apart... again...\nTicket to ride",
       "notes": "",
       "structure": "",
       "duration": "4:53",
@@ -745,7 +745,7 @@
       "fontSize": 1.5999999999999999,
       "recordings": [],
       "createdAt": "2025-10-09T16:53:28.360000+00:00",
-      "lastModified": "2026-09-11T17:32:29.164Z"
+      "lastModified": "2025-10-09T16:53:28.360000+00:00"
     },
     "song_0018": {
       "id": "song_0018",
@@ -2058,15 +2058,15 @@
       "title": "Confortinable Numb",
       "artist": "Artista desconocido",
       "bpm": 63,
-      "lyrics": "Hello? (Hello, hello, hello)\nIs there anybody in there?\nJust nod if you can hear me\nIs there anyone at home?\n\nCome on (come on, come on) now\nI hear you're feeling down\nWell, I can ease your pain\nAnd get you on your feet again\n\nRelax (relax, relax, relax)\nI'll need some information first\nJust the basic facts\nCan you show me where it hurts?\n\n/3There is no pain, you are receding\n/3A distant ship's smoke on the horizon\n:: CONTRATIEMPOS\n/3You are only coming through in waves\n/3Your lips move, but I can't hear what you're saying\n\n/3When I was a child, I had a fever\n/3My hands felt just like two balloons\n:: CONTRATIEMPOS\n/3Now I've got that feeling once again\n/3I can't explain, you would not understand\n/3This is not how I am\n\n/3I have become comfortably numb\n:: SOLO\n/3I have become comfortably numb\n\nOkay (okay, okay, okay)\nJust a little pinprick\nThere'll be no more\nBut you may feel a little sick\nCan you stand up? (Stand up, stand up)\nI do believe it's working, good\nThat'll keep you going through the show\nCome on, it's time to go\n\n/3There is no pain, you are receding\n/3A distant ship's smoke on the horizon\n:: CONTRATIEMPOS\n\n/3You are only coming through in waves\n/3Your lips move, but I can't hear what you're saying\n\n/3When I was a child, I caught a fleeting glimpse\n/3Out of the corner of my eye\n:: CONTRATIEMPOS\n\n/3I turned to look, but it was gone\n/3I cannot put my finger on it now\n/3The child is grown\n/3The dream is gone\n/3And I have become\n/3Comfortably numb",
+      "lyrics": "Hello? (Hello, hello, hello)\nIs there anybody in there?\nJust nod if you can hear me\nIs there anyone at home?\n\nCome on (come on, come on) now\nI hear you're feeling down\nWell, I can ease your pain\nAnd get you on your feet again\n\nRelax (relax, relax, relax)\nI'll need some information first\nJust the basic facts\nCan you show me where it hurts?\n\nThere is no pain, you are receding\nA distant ship's smoke on the horizon\nYou are only coming through in waves\nYour lips move, but I can't hear what you're saying\n\nWhen I was a child, I had a fever\nMy hands felt just like two balloons\nNow I've got that feeling once again\nI can't explain, you would not understand\nThis is not how I am\n\nI have become comfortably numb\nI have become comfortably numb\n\nOkay (okay, okay, okay)\nJust a little pinprick\nThere'll be no more\nBut you may feel a little sick\nCan you stand up? (Stand up, stand up)\nI do believe it's working, good\nThat'll keep you going through the show\nCome on, it's time to go\n\nThere is no pain, you are receding\nA distant ship's smoke on the horizon\nYou are only coming through in waves\nYour lips move, but I can't hear what you're saying\n\nWhen I was a child, I caught a fleeting glimpse\nOut of the corner of my eye\nI turned to look, but it was gone\nI cannot put my finger on it now\nThe child is grown\nThe dream is gone\nAnd I have become\nComfortably numb",
       "notes": "",
       "structure": "",
       "duration": "6:21",
       "htmlFile": "",
-      "fontSize": 1,
+      "fontSize": 2.4,
       "recordings": [],
       "createdAt": "2025-11-29T18:29:52.264000+00:00",
-      "lastModified": "2026-09-11T17:22:38.787Z"
+      "lastModified": "2025-11-29T18:29:52.264000+00:00"
     },
     "song_0036": {
       "id": "song_0036",
@@ -2093,7 +2093,7 @@
       "structure": "",
       "duration": "",
       "htmlFile": "",
-      "fontSize": 1.2,
+      "fontSize": 1.5999999999999999,
       "recordings": [],
       "createdAt": "2025-10-09T16:53:28.360000+00:00",
       "lastModified": "2025-10-11T09:04:14.392000+00:00"
@@ -2288,7 +2288,7 @@
       "structure": "",
       "duration": "",
       "htmlFile": "",
-      "fontSize": 1.4,
+      "fontSize": 1.9999999999999998,
       "recordings": [],
       "createdAt": "2025-10-09T16:53:28.359000+00:00",
       "lastModified": "2025-10-09T16:53:28.359000+00:00"
