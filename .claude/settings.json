@@ -1,7 +1,12 @@
 {
   "permissions": {
     "allow": [
-      "WebSearch"
+      "WebSearch",
+      "Bash(curl -s -o /dev/null -w \"index: %{http_code}\\\\n\" http://localhost:8000/index.html)",
+      "Bash(curl -s http://localhost:8000/index.html)",
+      "Bash(curl -s http://localhost:8000/sw.js)",
+      "Bash(npm ls *)",
+      "Bash(node -e \"const s=require\\('/Users/josemariamorenoterren/Proyectos/drumhelper/setlists/setlists.json'\\);const g=require\\('/Users/josemariamorenoterren/Proyectos/drumhelper/setlists/songs.json'\\);console.log\\('songs',Object.keys\\(g.songs\\).length\\);for\\(const [id,r] of Object.entries\\(s.repertoires\\)\\)console.log\\(id,r.name,r.entries.length\\);console.log\\('current',s.currentRepertoireId\\)\")"
     ]
   }
 }

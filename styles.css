@@ -2071,6 +2071,18 @@ body.concert-mode .playback-controls {
     font-size: 0.9rem;
 }
 
+/* Marca de canción que ya está en el repertorio de la izquierda */
+.manager-song-tag {
+    margin-right: 12px;
+    padding: 2px 8px;
+    font-size: 0.75rem;
+    white-space: nowrap;
+    color: var(--ok);
+    background: rgba(39, 174, 96, 0.12);
+    border: 1px solid var(--ok);
+    border-radius: 10px;
+}
+
 .manager-song-checkbox {
     width: 20px;
     height: 20px;

@@ -103,6 +103,9 @@ class SongManager {
         this.leftRepertoireSelect = document.getElementById('left-repertoire-select');
         this.rightRepertoireSelect = document.getElementById('right-repertoire-select');
         this.leftManagerSearchInput = document.getElementById('left-manager-search');
+        this.rightManagerSearchInput = document.getElementById('right-manager-search');
+        // Valor especial del selector derecho: todas las canciones del catálogo (de todos los repertorios)
+        this.allSongsOptionId = '__all__';
         this.leftSongsList = document.getElementById('left-songs-list');
         this.rightSongsList = document.getElementById('right-songs-list');
         this.moveRightBtn = document.getElementById('move-right-btn');
@@ -395,15 +398,24 @@ class SongManager {
 
         this.leftRepertoireSelect.addEventListener('change', () => {
             this.loadManagerSongs('left');
+            // El panel derecho marca las canciones que ya están en el repertorio de la izquierda
+            this.loadManagerSongs('right');
         });
 
         this.rightRepertoireSelect.addEventListener('change', () => {
             this.loadManagerSongs('right');
+            this.updateManagerControls();
         });
 
         if (this.leftManagerSearchInput) {
             this.leftManagerSearchInput.addEventListener('input', () => {
                 this.loadManagerSongs('left');
+            });
+        }
+
+        if (this.rightManagerSearchInput) {
+            this.rightManagerSearchInput.addEventListener('input', () => {
+                this.loadManagerSongs('right');
             });
         }
 
@@ -3200,10 +3212,14 @@ Says, "Find a home"
         if (this.leftManagerSearchInput) {
             this.leftManagerSearchInput.value = '';
         }
-        
+        if (this.rightManagerSearchInput) {
+            this.rightManagerSearchInput.value = '';
+        }
+
         // Poblar los selectores de repertorios
         this.populateManagerRepertoireSelects();
-        
+        this.updateManagerControls();
+
         // Cargar canciones de los repertorios por defecto
         this.loadManagerSongs('left');
         this.loadManagerSongs('right');
@@ -3231,7 +3247,13 @@ Says, "Find a home"
         // Limpiar opciones actuales
         this.leftRepertoireSelect.innerHTML = '';
         this.rightRepertoireSelect.innerHTML = '';
-        
+
+        // El panel derecho puede mostrar todas las canciones del catálogo
+        const allSongsOption = document.createElement('option');
+        allSongsOption.value = this.allSongsOptionId;
+        allSongsOption.textContent = `📚 Todas las canciones (${this.catalog.size})`;
+        this.rightRepertoireSelect.appendChild(allSongsOption);
+
         // Agregar opciones para cada repertorio
         this.repertoires.forEach((repertoire, id) => {
             const leftOption = document.createElement('option');
@@ -3248,29 +3270,29 @@ Says, "Find a home"
         // Seleccionar el repertorio actual en el panel izquierdo
         this.leftRepertoireSelect.value = this.currentRepertoireId;
         
-        // Seleccionar otro repertorio en el derecho si hay más de uno
-        if (this.repertoires.size > 1) {
-            const otherRepertoire = Array.from(this.repertoires.keys()).find(id => id !== this.currentRepertoireId);
-            if (otherRepertoire) {
-                this.rightRepertoireSelect.value = otherRepertoire;
-            }
-        }
+        // Por defecto el panel derecho muestra todas las canciones
+        this.rightRepertoireSelect.value = this.allSongsOptionId;
         
         console.log(`📋 Repertorios cargados en selectores: ${this.repertoires.size}`);
+    }
+
+    // Normaliza texto para buscar: minúsculas y sin tildes
+    _normalizeSearch(text) {
+        return (text || '').toString().normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().trim();
     }
 
     loadManagerSongs(side) {
         const select = side === 'left' ? this.leftRepertoireSelect : this.rightRepertoireSelect;
         const list = side === 'left' ? this.leftSongsList : this.rightSongsList;
         const selectedSongs = side === 'left' ? this.selectedLeftSongs : this.selectedRightSongs;
-        const searchTerm = side === 'left' && this.leftManagerSearchInput
-            ? this.leftManagerSearchInput.value.trim().toLowerCase()
-            : '';
+        const searchInput = side === 'left' ? this.leftManagerSearchInput : this.rightManagerSearchInput;
+        const searchTerm = searchInput ? this._normalizeSearch(searchInput.value) : '';
         
         const repertoireId = select.value;
+        const isAllSongs = side === 'right' && repertoireId === this.allSongsOptionId;
         const repertoire = this.repertoires.get(repertoireId);
-        
-        if (!repertoire) {
+
+        if (!repertoire && !isAllSongs) {
             list.innerHTML = '<li style="color: #888; padding: 20px; text-align: center;">No hay repertorio seleccionado</li>';
             return;
         }
@@ -3278,18 +3300,21 @@ Says, "Find a home"
         // Limpiar la lista
         list.innerHTML = '';
         
-        if (!repertoire.entries || repertoire.entries.length === 0) {
+        if (!isAllSongs && (!repertoire.entries || repertoire.entries.length === 0)) {
             list.innerHTML = '<li style="color: #888; padding: 20px; text-align: center;">No hay canciones en este repertorio</li>';
             return;
         }
 
-        // Resolver entries → canciones del catálogo, con order inyectado
-        const repSongs = repertoire.entries
-            .map(e => {
-                const song = this.catalog.get(e.songId);
-                return song ? { ...song, order: e.order || 0 } : null;
-            })
-            .filter(Boolean);
+        // Resolver entries → canciones del catálogo, con order inyectado.
+        // "Todas las canciones" lista el catálogo entero (order 0 → se ordena por título).
+        const repSongs = isAllSongs
+            ? Array.from(this.catalog.values()).map(song => ({ ...song, order: 0 }))
+            : repertoire.entries
+                .map(e => {
+                    const song = this.catalog.get(e.songId);
+                    return song ? { ...song, order: e.order || 0 } : null;
+                })
+                .filter(Boolean);
 
         const sortedSongs = repSongs.sort((a, b) => {
             if (a.order !== b.order) return a.order - b.order;
@@ -3297,19 +3322,27 @@ Says, "Find a home"
         });
         const filteredSongs = searchTerm
             ? sortedSongs.filter(song => {
-                const title = (song.title || '').toLowerCase();
-                const artist = (song.artist || '').toLowerCase();
+                const title = this._normalizeSearch(song.title);
+                const artist = this._normalizeSearch(song.artist);
                 return title.includes(searchTerm) || artist.includes(searchTerm);
             })
             : sortedSongs;
 
         if (filteredSongs.length === 0) {
+            const emptyText = isAllSongs ? 'No hay canciones' : 'No hay canciones en este repertorio';
             list.innerHTML = `<li style="color: #888; padding: 20px; text-align: center;">${
-                searchTerm ? 'No hay coincidencias para la búsqueda' : 'No hay canciones en este repertorio'
+                searchTerm ? 'No hay coincidencias para la búsqueda' : emptyText
             }</li>`;
             return;
         }
-        
+
+        // En el panel derecho se marcan las canciones que ya están en el repertorio de la izquierda
+        const leftRepertoireId = this.leftRepertoireSelect.value;
+        const leftRepertoire = this.repertoires.get(leftRepertoireId);
+        const leftSongIds = side === 'right' && leftRepertoire && leftRepertoireId !== repertoireId
+            ? new Set((leftRepertoire.entries || []).map(e => e.songId))
+            : new Set();
+
         // Crear items de canciones
         filteredSongs.forEach(song => {
             const li = document.createElement('li');
@@ -3340,6 +3373,12 @@ Says, "Find a home"
             checkbox.checked = selectedSongs.has(song.id);
 
             li.appendChild(info);
+            if (leftSongIds.has(song.id)) {
+                const tag = document.createElement('span');
+                tag.className = 'manager-song-tag';
+                tag.textContent = '✓ en repertorio';
+                li.appendChild(tag);
+            }
             li.appendChild(checkbox);
             
             // Event listener para seleccionar/deseleccionar
@@ -3366,9 +3405,60 @@ Says, "Find a home"
         console.log(`📋 Cargadas ${filteredSongs.length} canciones en panel ${side}`);
     }
 
+    // Con "Todas las canciones" en el panel derecho solo se puede añadir hacia la izquierda:
+    // las canciones no salen del catálogo, así que mover equivale a añadir.
+    updateManagerControls() {
+        const fromAll = this.rightRepertoireSelect.value === this.allSongsOptionId;
+        this.moveRightBtn.disabled = fromAll;
+        this.copyRightBtn.disabled = fromAll;
+        this.moveLeftBtn.title = fromAll
+            ? 'Añadir al repertorio las canciones seleccionadas'
+            : 'Mover seleccionadas a la izquierda';
+        this.copyLeftBtn.title = fromAll
+            ? 'Añadir al repertorio las canciones seleccionadas'
+            : 'Copiar seleccionadas a la izquierda';
+    }
+
     updateSelectionCounts() {
         this.leftSelectionCount.textContent = `${this.selectedLeftSongs.size} seleccionada${this.selectedLeftSongs.size !== 1 ? 's' : ''}`;
         this.rightSelectionCount.textContent = `${this.selectedRightSongs.size} seleccionada${this.selectedRightSongs.size !== 1 ? 's' : ''}`;
+    }
+
+    // Coloca las entradas recién añadidas (`movedIds`) justo después de la última canción marcada
+    // en el panel destino (`markedIds`). Devuelve el título de esa canción, o null si no hay ninguna
+    // marcada (las nuevas se quedan al final del repertorio).
+    // Orden asignado: el de la marcada + 5 (+1 por cada canción adicional). Si no cabe antes de la
+    // siguiente canción (órdenes consecutivos o repetidos), se renumera el repertorio de 10 en 10
+    // conservando la secuencia visible.
+    _placeEntriesAfter(repertoire, movedIds, markedIds) {
+        if (movedIds.length === 0 || markedIds.size === 0) return null;
+
+        const movedSet = new Set(movedIds);
+        const titleOf = (e) => (this.catalog.get(e.songId) || {}).title || '';
+        // Mismo criterio que la lista: por orden y, a igualdad, por título
+        const bySequence = (a, b) => ((a.order || 0) - (b.order || 0)) || titleOf(a).localeCompare(titleOf(b));
+
+        const others = repertoire.entries.filter(e => !movedSet.has(e.songId)).sort(bySequence);
+        let anchorIdx = -1;
+        others.forEach((e, i) => { if (markedIds.has(e.songId)) anchorIdx = i; });
+        if (anchorIdx === -1) return null; // las marcadas no pertenecen a este repertorio
+
+        const anchor = others[anchorIdx];
+        const next = others[anchorIdx + 1];
+        const moved = movedIds
+            .map(id => repertoire.entries.find(e => e.songId === id))
+            .filter(Boolean);
+        const anchorOrder = anchor.order || 0;
+        const lastNewOrder = anchorOrder + 5 + (moved.length - 1);
+
+        if (!next || (next.order || 0) > lastNewOrder) {
+            moved.forEach((e, i) => { e.order = anchorOrder + 5 + i; });
+        } else {
+            const sequence = [...others.slice(0, anchorIdx + 1), ...moved, ...others.slice(anchorIdx + 1)];
+            sequence.forEach((e, i) => { e.order = (i + 1) * 10; });
+        }
+
+        return titleOf(anchor) || null;
     }
 
     transferSongs(fromSide, toSide, isCopy) {
@@ -3381,35 +3471,47 @@ Says, "Find a home"
             return;
         }
 
+        if (toRepertoireId === this.allSongsOptionId) {
+            this.showNotification('❌ No se puede transferir a "Todas las canciones"', 'error');
+            return;
+        }
+
         if (fromRepertoireId === toRepertoireId) {
             this.showNotification('❌ No puedes transferir canciones al mismo repertorio', 'error');
             return;
         }
 
-        const fromRepertoire = this.repertoires.get(fromRepertoireId);
+        const fromAll = fromRepertoireId === this.allSongsOptionId;
+        const fromRepertoire = fromAll ? null : this.repertoires.get(fromRepertoireId);
         const toRepertoire = this.repertoires.get(toRepertoireId);
 
-        if (!fromRepertoire || !toRepertoire) {
+        if ((!fromAll && !fromRepertoire) || !toRepertoire) {
             this.showNotification('❌ Error: Repertorio no encontrado', 'error');
             return;
         }
 
-        if (!Array.isArray(fromRepertoire.entries)) fromRepertoire.entries = [];
+        if (fromRepertoire && !Array.isArray(fromRepertoire.entries)) fromRepertoire.entries = [];
         if (!Array.isArray(toRepertoire.entries)) toRepertoire.entries = [];
 
         let transferred = 0;
+        let skipped = 0;
+        const addedIds = []; // canciones nuevas en el destino, en orden de selección
         const maxOrderTo = toRepertoire.entries.reduce((m, e) => Math.max(m, e.order || 0), 0);
         let nextOrder = maxOrderTo + 10;
 
         selectedSongs.forEach(songId => {
-            const fromEntry = fromRepertoire.entries.find(e => e.songId === songId);
-            if (!fromEntry) return;
+            // Desde "Todas las canciones" basta con que exista en el catálogo
+            const existsInSource = fromAll
+                ? this.catalog.has(songId)
+                : fromRepertoire.entries.some(e => e.songId === songId);
+            if (!existsInSource) return;
 
             const alreadyInTarget = toRepertoire.entries.some(e => e.songId === songId);
 
-            if (isCopy) {
-                if (alreadyInTarget) return; // no duplicar referencias
+            if (isCopy || fromAll) {
+                if (alreadyInTarget) { skipped++; return; } // no duplicar referencias
                 toRepertoire.entries.push({ songId, order: nextOrder });
+                addedIds.push(songId);
                 nextOrder += 10;
             } else {
                 // Mover = quitar del origen y, si no existía, añadir al destino
@@ -3417,20 +3519,26 @@ Says, "Find a home"
                 if (fromRepertoire.activeSongId === songId) fromRepertoire.activeSongId = null;
                 if (!alreadyInTarget) {
                     toRepertoire.entries.push({ songId, order: nextOrder });
+                    addedIds.push(songId);
                     nextOrder += 10;
                 }
             }
             transferred++;
         });
 
+        // Si hay canciones marcadas en el panel destino, las nuevas van a continuación de la última marcada
+        const markedInTarget = toSide === 'left' ? this.selectedLeftSongs : this.selectedRightSongs;
+        const anchorTitle = this._placeEntriesAfter(toRepertoire, addedIds, markedInTarget);
+
         const now = new Date().toISOString();
-        fromRepertoire.lastModified = now;
+        if (fromRepertoire) fromRepertoire.lastModified = now;
         toRepertoire.lastModified = now;
 
         this._saveRepertoiresV2();
 
         // Si el repertorio actual es uno de los afectados, refrescar la vista
         if (fromRepertoireId === this.currentRepertoireId || toRepertoireId === this.currentRepertoireId) {
+            this.updateCurrentRepertoireName();
             this._rebuildSongs();
             this.renderSongs();
             this.updateSongsTitle(this.songs.length);
@@ -3441,9 +3549,17 @@ Says, "Find a home"
         this.loadManagerSongs('right');
         this.updateSelectionCounts();
 
-        const verb = isCopy ? 'copiadas' : 'movidas';
-        this.showNotification(`✅ ${transferred} canción${transferred !== 1 ? 'es' : ''} ${verb} correctamente`, 'success');
-        console.log(`📋 ${transferred} canciones ${verb} de "${fromRepertoire.name}" a "${toRepertoire.name}"`);
+        const verb = fromAll ? 'añadidas' : (isCopy ? 'copiadas' : 'movidas');
+        if (transferred === 0 && skipped > 0) {
+            this.showNotification(`ℹ️ Las canciones seleccionadas ya estaban en "${toRepertoire.name}"`, 'info');
+        } else {
+            const verbText = transferred === 1 ? verb.slice(0, -1) : verb; // concordancia: añadida / añadidas
+            let message = `✅ ${transferred} canción${transferred !== 1 ? 'es' : ''} ${verbText} correctamente`;
+            if (anchorTitle && transferred > 0) message += ` tras "${anchorTitle}"`;
+            if (skipped > 0) message += ` (${skipped} ya estaba${skipped !== 1 ? 'n' : ''} en el destino)`;
+            this.showNotification(message, 'success');
+        }
+        console.log(`📋 ${transferred} canciones ${verb} de "${fromAll ? 'Todas las canciones' : fromRepertoire.name}" a "${toRepertoire.name}"`);
     }
 }
 
