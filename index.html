@@ -35,7 +35,7 @@
         
         <div class="top-section-content">
             <div class="info-panel">
-                <div id="version-code">v1.4.12</div>
+                <div id="version-code">v1.4.13</div>
                 <div class="song-header-row">
                     <span id="current-song">Selecciona una canción</span>
                     <span id="current-bpm">BPM: 120</span>
@@ -643,7 +643,13 @@
                 <!-- Panel izquierdo -->
                 <div class="repertoire-panel left-panel">
                     <div class="panel-header">
-                        <h3>Repertorio Origen</h3>
+                        <div class="panel-title-row">
+                            <h3>Repertorio Origen</h3>
+                            <div class="panel-order-controls">
+                                <button type="button" id="move-up-btn" class="manager-order-btn" title="Subir la canción seleccionada (intercambia posición con la anterior)">↑ Subir</button>
+                                <button type="button" id="move-down-btn" class="manager-order-btn" title="Bajar la canción seleccionada (intercambia posición con la siguiente)">↓ Bajar</button>
+                            </div>
+                        </div>
                         <select id="left-repertoire-select" class="panel-repertoire-select">
                             <!-- Se carga dinámicamente -->
                         </select>
@@ -675,7 +681,9 @@
                 <!-- Panel derecho -->
                 <div class="repertoire-panel right-panel">
                     <div class="panel-header">
-                        <h3>Repertorio Destino</h3>
+                        <div class="panel-title-row">
+                            <h3>Repertorio Destino</h3>
+                        </div>
                         <select id="right-repertoire-select" class="panel-repertoire-select">
                             <!-- Se carga dinámicamente -->
                         </select>

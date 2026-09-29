@@ -1,5 +1,5 @@
 // Service Worker para Drum Helper PWA
-const CACHE_NAME = 'drum-helper-v1.4.12';
+const CACHE_NAME = 'drum-helper-v1.4.13';
 const urlsToCache = [
     './',
     './index.html',

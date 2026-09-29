@@ -1988,6 +1988,47 @@ body.concert-mode .playback-controls {
     font-weight: 600;
 }
 
+/* Fila del título del panel (altura fija para que ambos paneles queden alineados) */
+.panel-title-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    min-height: 38px;
+    margin-bottom: 10px;
+}
+
+.panel-title-row h3 {
+    margin: 0;
+}
+
+.panel-order-controls {
+    display: flex;
+    gap: 8px;
+}
+
+.manager-order-btn {
+    padding: 7px 14px;
+    background: var(--surface-2);
+    color: var(--text);
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius-sm);
+    font-size: 0.9rem;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.manager-order-btn:hover {
+    background: var(--surface-3);
+    border-color: #4a90e2;
+    color: #4a90e2;
+}
+
+.manager-order-btn:active {
+    transform: scale(0.96);
+}
+
 .panel-repertoire-select {
     width: 100%;
     padding: 10px;

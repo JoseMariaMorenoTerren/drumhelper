@@ -112,6 +112,8 @@ class SongManager {
         this.moveLeftBtn = document.getElementById('move-left-btn');
         this.copyRightBtn = document.getElementById('copy-right-btn');
         this.copyLeftBtn = document.getElementById('copy-left-btn');
+        this.moveUpBtn = document.getElementById('move-up-btn');
+        this.moveDownBtn = document.getElementById('move-down-btn');
         this.leftSelectionCount = document.getElementById('left-selection-count');
         this.rightSelectionCount = document.getElementById('right-selection-count');
         
@@ -433,6 +435,15 @@ class SongManager {
 
         this.copyLeftBtn.addEventListener('click', () => {
             this.transferSongs('right', 'left', true);
+        });
+
+        // Subir / bajar la canción marcada en el repertorio de la izquierda
+        this.moveUpBtn.addEventListener('click', () => {
+            this.moveSelectedInRepertoire(-1);
+        });
+
+        this.moveDownBtn.addEventListener('click', () => {
+            this.moveSelectedInRepertoire(1);
         });
 
         // Eventos del modal de nombre de repertorio
@@ -3281,6 +3292,12 @@ Says, "Find a home"
         return (text || '').toString().normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().trim();
     }
 
+    // ¿La canción pasa el filtro del buscador del gestor? `term` ya viene normalizado.
+    _matchesManagerSearch(song, term) {
+        if (!term) return true;
+        return this._normalizeSearch(song.title).includes(term) || this._normalizeSearch(song.artist).includes(term);
+    }
+
     loadManagerSongs(side) {
         const select = side === 'left' ? this.leftRepertoireSelect : this.rightRepertoireSelect;
         const list = side === 'left' ? this.leftSongsList : this.rightSongsList;
@@ -3320,13 +3337,7 @@ Says, "Find a home"
             if (a.order !== b.order) return a.order - b.order;
             return a.title.localeCompare(b.title);
         });
-        const filteredSongs = searchTerm
-            ? sortedSongs.filter(song => {
-                const title = this._normalizeSearch(song.title);
-                const artist = this._normalizeSearch(song.artist);
-                return title.includes(searchTerm) || artist.includes(searchTerm);
-            })
-            : sortedSongs;
+        const filteredSongs = sortedSongs.filter(song => this._matchesManagerSearch(song, searchTerm));
 
         if (filteredSongs.length === 0) {
             const emptyText = isAllSongs ? 'No hay canciones' : 'No hay canciones en este repertorio';
@@ -3403,6 +3414,85 @@ Says, "Find a home"
         });
         
         console.log(`📋 Cargadas ${filteredSongs.length} canciones en panel ${side}`);
+    }
+
+    // Sube (direction = -1) o baja (direction = 1) una posición las canciones marcadas en el panel
+    // izquierdo, intercambiando su posición con la vecina. Con el buscador activo, la vecina es la
+    // anterior/siguiente de las que se ven en la lista. Cada posición conserva su número de orden:
+    // solo cambian las canciones que ocupan esas posiciones.
+    moveSelectedInRepertoire(direction) {
+        const repertoireId = this.leftRepertoireSelect.value;
+        const repertoire = this.repertoires.get(repertoireId);
+        if (!repertoire || !Array.isArray(repertoire.entries)) {
+            this.showNotification('❌ No hay repertorio seleccionado', 'error');
+            return;
+        }
+
+        const marked = this.selectedLeftSongs;
+        const searchTerm = this.leftManagerSearchInput ? this._normalizeSearch(this.leftManagerSearchInput.value) : '';
+        const titleOf = (e) => (this.catalog.get(e.songId) || {}).title || '';
+        // Mismo criterio que la lista: por orden y, a igualdad, por título
+        const bySequence = (a, b) => ((a.order || 0) - (b.order || 0)) || titleOf(a).localeCompare(titleOf(b));
+
+        // Solo las entradas que se ven en la lista (existen en el catálogo y pasan el filtro)
+        const seq = repertoire.entries
+            .filter(e => this.catalog.has(e.songId) && this._matchesManagerSearch(this.catalog.get(e.songId), searchTerm))
+            .sort(bySequence);
+
+        if (!seq.some(e => marked.has(e.songId))) {
+            this.showNotification('❌ Selecciona una canción del repertorio para moverla', 'error');
+            return;
+        }
+
+        // Cada marcada intercambia con su vecina (si esta no está también marcada), así un bloque
+        // de marcadas se desplaza entero y las que ya están en el extremo se quedan quietas.
+        const arranged = [...seq];
+        let moved = false;
+        if (direction < 0) {
+            for (let i = 1; i < arranged.length; i++) {
+                if (marked.has(arranged[i].songId) && !marked.has(arranged[i - 1].songId)) {
+                    [arranged[i - 1], arranged[i]] = [arranged[i], arranged[i - 1]];
+                    moved = true;
+                }
+            }
+        } else {
+            for (let i = arranged.length - 2; i >= 0; i--) {
+                if (marked.has(arranged[i].songId) && !marked.has(arranged[i + 1].songId)) {
+                    [arranged[i], arranged[i + 1]] = [arranged[i + 1], arranged[i]];
+                    moved = true;
+                }
+            }
+        }
+
+        if (!moved) {
+            this.showNotification(direction < 0 ? 'ℹ️ Ya está en la primera posición' : 'ℹ️ Ya está en la última posición', 'info');
+            return;
+        }
+
+        // Con órdenes repetidos el orden visible depende del título y un intercambio no tendría efecto:
+        // se renumera (10, 20, 30…) conservando la secuencia actual.
+        const all = [...repertoire.entries].sort(bySequence);
+        if (new Set(all.map(e => e.order || 0)).size !== all.length) {
+            all.forEach((e, i) => { e.order = (i + 1) * 10; });
+        }
+
+        const positionOrders = seq.map(e => e.order || 0);
+        arranged.forEach((e, i) => { e.order = positionOrders[i]; });
+
+        repertoire.lastModified = new Date().toISOString();
+        this._saveRepertoiresV2();
+
+        // Si es el repertorio actual, refrescar la lista lateral
+        if (repertoireId === this.currentRepertoireId) {
+            this._rebuildSongs();
+            this.renderSongs();
+            this.updateSongsTitle(this.songs.length);
+        }
+
+        // La selección se mantiene para poder seguir moviendo; se deja a la vista la primera marcada
+        this.loadManagerSongs('left');
+        const firstMarked = this.leftSongsList.querySelector('.manager-song-item.selected');
+        if (firstMarked) firstMarked.scrollIntoView({ block: 'nearest' });
     }
 
     // Con "Todas las canciones" en el panel derecho solo se puede añadir hacia la izquierda:
