@@ -1,4 +1,4 @@
-# Drum Helper v1.4.16 — tema «Espacial» (verde)
+# Drum Helper v1.4.17 — tema «Espacial» (verde)
 
 Copia de `~/Proyectos/drumhelper` (v1.4.13) adaptada al diseño aprobado. La app original no se ha tocado.
 
@@ -8,7 +8,7 @@ Copia de `~/Proyectos/drumhelper` (v1.4.13) adaptada al diseño aprobado. La app
 - **Dos modos:** Concierto y Edición (selector arriba al centro). El modo *prompter* se ha retirado (`lyricsScroller.modes`).
 - **Metrónomo:** panel flotante (Mostrar / Ajustar) y chip de BPM con pulso. Nuevo modal «Configuración del metrónomo» (sonido, volumen, destello), guardado en `localStorage` (`drumhelper-metronome-settings`).
 - **Ayuda:** ahora es accesible (Configuración → Mantenimiento y ayuda → «Ayuda y atajos», o clic en el rótulo de versión) y lista solo atajos realmente implementados.
-- Versión 1.4.16 sincronizada en `index.html`, `sw.js` y `manifest.json`.
+- Versión 1.4.17 sincronizada en `index.html`, `sw.js` y `manifest.json`.
 
 ## Mapa de opciones de los menús
 | Menú | Opción | Acción |
