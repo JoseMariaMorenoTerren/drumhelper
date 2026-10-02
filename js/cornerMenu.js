@@ -134,10 +134,10 @@
     };
 
     const MENUS = [
-        { key: 'M', corner: 'tl', icon: 'metro', label: 'Metrónomo', items: [
+        { key: 'M', corner: 'tr', icon: 'metro', label: 'Metrónomo', items: [
             ['eye', 'Mostrar metrónomo', 'metroShow'], ['plusMinus', 'Ajustar metrónomo', 'metroAdjust'],
             ['gear', 'Configuración metrónomo', 'metroConfig']] },
-        { key: 'S', corner: 'tr', icon: 'list', label: 'SetList', items: [
+        { key: 'S', corner: 'tl', icon: 'list', label: 'SetList', items: [
             ['list', 'Lista de canciones', 'listToggle'], ['edit', 'Gestión de canciones', 'songManage'],
             ['stack', 'Repertorios', 'repertoires'], ['sort', 'Orden del setlist', 'order'],
             ['cols', 'Gestor de repertorios', 'manager']] },

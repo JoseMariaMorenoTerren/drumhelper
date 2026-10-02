@@ -272,7 +272,7 @@ body .section-header {
     display: none !important;
     position: fixed;
     top: calc(var(--safe-t) + var(--corner) + 30px);
-    left: calc(var(--safe-l) + var(--corner-gap));
+    right: calc(var(--safe-r) + var(--corner-gap));
     z-index: 140;
     width: min(340px, calc(100vw - 32px));
     padding: 20px 18px !important;
@@ -313,7 +313,7 @@ body.metro-adjust .bpm-display { display: flex !important; flex-direction: row; 
 
 .cm-bpm {
     top: calc(var(--safe-t) + 18px);
-    left: calc(var(--safe-l) + var(--corner-gap) + var(--corner) + 14px);
+    right: calc(var(--safe-r) + var(--corner-gap) + var(--corner) + 14px);
     height: var(--corner);
     display: flex; align-items: center; gap: 10px; z-index: 120;
     pointer-events: none;
@@ -479,7 +479,7 @@ input:focus, textarea:focus, select:focus { outline: none; border-color: var(--a
 @media (max-width: 700px), (max-height: 500px) {
     :root { --corner: 52px; --corner-gap: 12px; }
     .top-section { padding-top: calc(var(--safe-t) + 128px) !important; }
-    .cm-bpm { left: 50%; transform: translateX(-50%); top: calc(var(--safe-t) + 72px); height: auto; }
+    .cm-bpm { left: 50%; right: auto; transform: translateX(-50%); top: calc(var(--safe-t) + 72px); height: auto; }
     .cm-seg { top: calc(var(--safe-t) + 14px); }
     .song-structure-container { max-width: calc(100vw - 32px); }
     .structure-bar { width: 8px !important; height: 10px !important; }
