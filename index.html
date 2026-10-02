@@ -18,6 +18,13 @@
     <!-- Manifest para PWA -->
     <link rel="manifest" href="manifest.json">
     
+    <!-- Tema de color guardado: se aplica antes de pintar para evitar un parpadeo -->
+    <script>
+        try {
+            var dhTheme = localStorage.getItem('drumhelper-theme');
+            if (dhTheme === 'blue' || dhTheme === 'red') document.documentElement.setAttribute('data-theme', dhTheme);
+        } catch (e) { /* sin almacenamiento: tema verde */ }
+    </script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&family=Sora:wght@200;300;400&display=swap" rel="stylesheet">
@@ -39,7 +46,7 @@
         
         <div class="top-section-content">
             <div class="info-panel">
-                <div id="version-code">v1.4.19</div>
+                <div id="version-code">v1.4.20</div>
                 <div class="song-header-row">
                     <span id="current-song">Selecciona una canción</span>
                     <span id="current-bpm">BPM: 120</span>
@@ -363,7 +370,7 @@
                     <div class="shortcut-item"><span class="key">↗ Metrónomo</span><span class="description">Mostrar · Ajustar · Configuración</span></div>
                     <div class="shortcut-item"><span class="key">↖ SetList</span><span class="description">Lista · Canciones · Repertorios · Orden · Gestor</span></div>
                     <div class="shortcut-item"><span class="key">↙ Notas y grabación</span><span class="description">Letra · Desplazamiento · Temporizador · Grabación · Modos · Estructura · Ficha</span></div>
-                    <div class="shortcut-item"><span class="key">↘ Configuración</span><span class="description">Visualización · Importar/exportar · Sincronización · MIDI · Mantenimiento</span></div>
+                    <div class="shortcut-item"><span class="key">↘ Configuración</span><span class="description">Visualización · Color · Importar/exportar · Sincronización · MIDI · Mantenimiento</span></div>
                 </div>
 
                 <div class="shortcut-section">

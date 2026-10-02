@@ -28,6 +28,7 @@
         import: '<path d="M12 4v11M12 15l-4-4M12 15l4-4M5 20h14"/>',
         cloud: '<path d="M7 18a4.5 4.5 0 0 1-.6-8.96A6 6 0 0 1 18 10.5 3.8 3.8 0 0 1 17.5 18z"/>',
         midi: '<circle cx="12" cy="12" r="9"/><circle cx="8" cy="10" r="1"/><circle cx="16" cy="10" r="1"/><circle cx="12" cy="16" r="1"/><circle cx="12" cy="6.5" r="1"/>',
+        palette: '<path d="M12 3a9 9 0 1 0 0 18c1.4 0 2-.9 2-1.8 0-1.4-1.5-1.7-1.5-3 0-1 .8-1.7 1.8-1.7H17a4 4 0 0 0 4-4C21 6.4 17 3 12 3z"/><circle cx="7.5" cy="11" r="1.2" fill="currentColor"/><circle cx="10" cy="7" r="1.2" fill="currentColor"/><circle cx="15" cy="7.2" r="1.2" fill="currentColor"/>',
         help: '<circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.7.4-1 .9-1 1.7M12 17h.01"/>'
     };
 
@@ -130,7 +131,8 @@
         io() { openDataOptions('Importar'); },
         sync() { openDataOptions('GitHub'); },
         midi() { const b = $('midi-toggle-btn'); if (b) b.click(); },
-        maintenance() { openDataOptions('Gestión'); }
+        maintenance() { openDataOptions('Gestión'); },
+        theme() { openThemePicker(); }
     };
 
     const MENUS = [
@@ -147,7 +149,8 @@
             ['modes', 'Modos de vista', 'modes'], ['bars', 'Estructura', 'structure'],
             ['doc', 'Ficha HTML', 'htmlSheet']] },
         { key: 'C', corner: 'br', icon: 'sliders', label: 'Configuración', items: [
-            ['typeSize', 'Visualización', 'display'], ['import', 'Importar y exportar', 'io'],
+            ['typeSize', 'Visualización', 'display'], ['palette', 'Color del tema', 'theme'],
+            ['import', 'Importar y exportar', 'io'],
             ['cloud', 'Sincronización', 'sync'], ['midi', 'Control MIDI', 'midi'],
             ['help', 'Mantenimiento y ayuda', 'maintenance']] }
     ];
@@ -419,9 +422,71 @@
         pills.appendChild(sheet);
     }
 
+    // ---------------------------------------------------------------- tema de color
+    const THEMES = [
+        { id: 'green', label: 'Verde', desc: 'Menta sobre verde bosque' },
+        { id: 'blue', label: 'Azul', desc: 'Hielo sobre azul noche' },
+        { id: 'red', label: 'Rojo', desc: 'Coral sobre burdeos' }
+    ];
+
+    function currentTheme() {
+        return document.documentElement.getAttribute('data-theme') || 'green';
+    }
+
+    function applyTheme(id) {
+        if (id === 'blue' || id === 'red') document.documentElement.setAttribute('data-theme', id);
+        else document.documentElement.removeAttribute('data-theme');
+        try { localStorage.setItem('drumhelper-theme', id); } catch (e) { /* sin almacenamiento */ }
+        // Barra de estado / color del navegador acorde al fondo del tema
+        const meta = document.querySelector('meta[name="theme-color"]');
+        if (meta) {
+            const t = getComputedStyle(document.documentElement).getPropertyValue('--tc-07120d').trim();
+            if (t) meta.setAttribute('content', `rgb(${t})`);
+        }
+        if (themeModal) {
+            themeModal.querySelectorAll('.theme-swatch').forEach((b) => {
+                const on = b.dataset.theme === id;
+                b.classList.toggle('is-active', on);
+                b.setAttribute('aria-pressed', on ? 'true' : 'false');
+            });
+        }
+    }
+
+    let themeModal;
+    function openThemePicker() {
+        if (!themeModal) {
+            themeModal = document.createElement('div');
+            themeModal.className = 'modal';
+            themeModal.id = 'theme-modal';
+            themeModal.innerHTML =
+                '<div class="modal-content" style="max-width:560px">' +
+                '<div class="modal-header"><h2>Color del tema</h2><span class="close" id="theme-close">&times;</span></div>' +
+                '<div class="theme-grid" role="group" aria-label="Color del tema"></div>' +
+                '<p class="ms-note">Se guarda en este dispositivo y se aplica al instante.</p></div>';
+            body.appendChild(themeModal);
+            const grid = themeModal.querySelector('.theme-grid');
+            THEMES.forEach((t) => {
+                const b = document.createElement('button');
+                b.type = 'button';
+                b.className = 'theme-swatch';
+                b.dataset.theme = t.id;
+                b.innerHTML = `<span class="theme-preview theme-preview-${t.id}"><i></i></span>` +
+                    `<span class="theme-name">${t.label}</span><span class="theme-desc">${t.desc}</span>`;
+                b.addEventListener('click', () => applyTheme(t.id));
+                grid.appendChild(b);
+            });
+            const close = () => { themeModal.style.display = 'none'; };
+            themeModal.querySelector('#theme-close').addEventListener('click', close);
+            themeModal.addEventListener('click', (e) => { if (e.target === themeModal) close(); });
+        }
+        applyTheme(currentTheme());
+        themeModal.style.display = 'block';
+    }
+
     // ---------------------------------------------------------------- arranque
     function init() {
         readSafeAreas();
+        applyTheme(currentTheme());
         try { if (localStorage.getItem('drumhelper-hide-structure') === '1') body.classList.add('hide-structure'); } catch (e) { /* ok */ }
         if (window.innerWidth <= 768) body.classList.add('list-collapsed');
         build();
