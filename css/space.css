@@ -516,3 +516,7 @@ body.cm-open .cm-corner { z-index: 170; }
     .scroll-btn { width: 40px !important; height: 40px !important; }
     #play-pause-btn { width: 50px !important; height: 50px !important; }
 }
+
+/* Barra de estado de iOS (PWA a pantalla completa): fondo verde oscuro bajo ella, nunca blanco */
+html { background: #07120d; min-height: 100%; }
+body { padding-top: 0 !important; }   /* la cabecera ya suma el safe-area superior */
