@@ -388,56 +388,44 @@ document.head.appendChild(toastStyles);
 
 // Funcionalidad del modal de ayuda
 function initializeHelpModal() {
-    const helpBtn = document.getElementById('help-btn');
+    const helpBtn = document.getElementById('help-btn');          // ya no existe en el HTML; se admite si vuelve
+    const helpOpenBtn = document.getElementById('help-open-btn'); // botón dentro de Opciones → Gestión
     const versionCode = document.getElementById('version-code');
     const helpModal = document.getElementById('help-modal');
     const helpClose = document.querySelector('.help-close');
-    
-    if (helpBtn && helpModal && helpClose) {
-        // Abrir modal con botón de ayuda
-        helpBtn.addEventListener('click', () => {
-            helpModal.style.display = 'block';
-        });
-        
-        // Abrir modal con código de versión
-        if (versionCode) {
-            let clickCount = 0;
-            versionCode.addEventListener('click', () => {
-                clickCount++;
-                if (clickCount === 1) {
-                    setTimeout(() => {
-                        if (clickCount === 1) {
-                            // Un clic - abrir ayuda
-                            helpModal.style.display = 'block';
-                        } else if (clickCount === 2) {
-                            // Doble clic - forzar actualización
-                            forceAppUpdate();
-                        }
-                        clickCount = 0;
-                    }, 300);
-                }
-            });
-        }
-        
-        // Cerrar modal con X
-        helpClose.addEventListener('click', () => {
-            helpModal.style.display = 'none';
-        });
-        
-        // Cerrar modal clickeando fuera
-        window.addEventListener('click', (e) => {
-            if (e.target === helpModal) {
-                helpModal.style.display = 'none';
-            }
-        });
-        
-        // Cerrar modal con ESC
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && helpModal.style.display === 'block') {
-                helpModal.style.display = 'none';
-            }
+    if (!helpModal) return;
+
+    const openHelp = () => { helpModal.style.display = 'block'; };
+    const closeHelp = () => { helpModal.style.display = 'none'; };
+    window.openHelp = openHelp;
+
+    if (helpBtn) helpBtn.addEventListener('click', openHelp);
+    if (helpOpenBtn) {
+        helpOpenBtn.addEventListener('click', () => {
+            if (window.songManager) window.songManager.closeDataOptionsModalFunc();
+            openHelp();
         });
     }
+
+    // Rótulo de versión: un clic abre la ayuda, doble clic fuerza la actualización
+    if (versionCode) {
+        let timer = null;
+        versionCode.addEventListener('click', () => {
+            if (timer) {
+                clearTimeout(timer);
+                timer = null;
+                forceAppUpdate();
+                return;
+            }
+            timer = setTimeout(() => { timer = null; openHelp(); }, 300);
+        });
+    }
+
+    if (helpClose) helpClose.addEventListener('click', closeHelp);
+    window.addEventListener('click', (e) => { if (e.target === helpModal) closeHelp(); });
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && helpModal.style.display === 'block') closeHelp();
+    });
 }
 
 // Función para registrar Service Worker

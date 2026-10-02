@@ -10,7 +10,7 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="Drum Helper">
     <meta name="mobile-web-app-capable" content="yes">
-    <meta name="theme-color" content="#000000">
+    <meta name="theme-color" content="#07120d">
     
     <!-- Prevenir zoom adicional en dispositivos iOS -->
     <meta name="format-detection" content="telephone=no">
@@ -18,7 +18,11 @@
     <!-- Manifest para PWA -->
     <link rel="manifest" href="manifest.json">
     
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&family=Sora:wght@200;300;400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="css/space.css">
 </head>
 <body>
     <!-- Marco luminoso del metrónomo (parpadea con cada beat) -->
@@ -35,7 +39,7 @@
         
         <div class="top-section-content">
             <div class="info-panel">
-                <div id="version-code">v1.4.13</div>
+                <div id="version-code">v1.4.15</div>
                 <div class="song-header-row">
                     <span id="current-song">Selecciona una canción</span>
                     <span id="current-bpm">BPM: 120</span>
@@ -337,65 +341,31 @@
             </div>
             <div class="help-modal-body">
                 <div class="shortcut-section">
-                    <h4>Reproducción</h4>
-                    <div class="shortcut-item">
-                        <span class="key">Espacio</span>
-                        <span class="description">Reproducir/Pausar</span>
-                    </div>
-                    <div class="shortcut-item">
-                        <span class="key">S</span>
-                        <span class="description">Detener</span>
-                    </div>
-                    <div class="shortcut-item">
-                        <span class="key">↑ ↓</span>
-                        <span class="description">Ajustar velocidad</span>
-                    </div>
+                    <h4>Metrónomo</h4>
+                    <div class="shortcut-item"><span class="key">Ctrl/Cmd + Espacio</span><span class="description">Reproducir / pausar</span></div>
+                    <div class="shortcut-item"><span class="key">Esc</span><span class="description">Parar</span></div>
+                    <div class="shortcut-item"><span class="key">Ctrl/Cmd + T</span><span class="description">Tap tempo</span></div>
+                    <div class="shortcut-item"><span class="key">Ctrl/Cmd + ← →</span><span class="description">BPM ∓1</span></div>
+                    <div class="shortcut-item"><span class="key">Shift + ← →</span><span class="description">BPM ∓10</span></div>
                 </div>
-                
+
                 <div class="shortcut-section">
-                    <h4>Navegación</h4>
-                    <div class="shortcut-item">
-                        <span class="key">← →</span>
-                        <span class="description">Cambiar canción</span>
-                    </div>
-                    <div class="shortcut-item">
-                        <span class="key">R</span>
-                        <span class="description">Grabar desplazamiento</span>
-                    </div>
-                    <div class="shortcut-item">
-                        <span class="key">P</span>
-                        <span class="description">Reproducir grabación</span>
-                    </div>
+                    <h4>Letra y canciones</h4>
+                    <div class="shortcut-item"><span class="key">← →</span><span class="description">Canción anterior / siguiente</span></div>
+                    <div class="shortcut-item"><span class="key">↑ ↓</span><span class="description">Desplazar la letra</span></div>
+                    <div class="shortcut-item"><span class="key">Ctrl/Cmd + +/−</span><span class="description">Tamaño de letra</span></div>
+                    <div class="shortcut-item"><span class="key">Ctrl/Cmd + N</span><span class="description">Nueva canción</span></div>
+                    <div class="shortcut-item"><span class="key">Ctrl/Cmd + E</span><span class="description">Editar canción actual</span></div>
                 </div>
-                
+
                 <div class="shortcut-section">
-                    <h4>Modos de Vista</h4>
-                    <div class="shortcut-item">
-                        <span class="key">E</span>
-                        <span class="description">Edición</span>
-                    </div>
-                    <div class="shortcut-item">
-                        <span class="key">C</span>
-                        <span class="description">Concierto</span>
-                    </div>
-                    <div class="shortcut-item">
-                        <span class="key">T</span>
-                        <span class="description">Prompter</span>
-                    </div>
+                    <h4>Menús de esquina</h4>
+                    <div class="shortcut-item"><span class="key">↖ Metrónomo</span><span class="description">Mostrar · Ajustar · Configuración</span></div>
+                    <div class="shortcut-item"><span class="key">↗ SetList</span><span class="description">Lista · Canciones · Repertorios · Orden · Gestor</span></div>
+                    <div class="shortcut-item"><span class="key">↙ Notas y grabación</span><span class="description">Letra · Desplazamiento · Temporizador · Grabación · Modos · Estructura · Ficha</span></div>
+                    <div class="shortcut-item"><span class="key">↘ Configuración</span><span class="description">Visualización · Importar/exportar · Sincronización · MIDI · Mantenimiento</span></div>
                 </div>
-                
-                <div class="shortcut-section">
-                    <h4>Orden de Canciones</h4>
-                    <div class="shortcut-item">
-                        <span class="key">O</span>
-                        <span class="description">Activar modo orden</span>
-                    </div>
-                    <div class="shortcut-item">
-                        <span class="key">Shift + R</span>
-                        <span class="description">Resetear orden</span>
-                    </div>
-                </div>
-                
+
                 <div class="shortcut-section">
                     <h4>Comandos en Letras</h4>
                     <div class="shortcut-item">
@@ -517,6 +487,10 @@
                         <button id="modal-clear-all-btn" class="data-option-btn danger">
                             <span class="option-text">Borrar Todas</span>
                             <small>Eliminar todas las canciones</small>
+                        </button>
+                        <button id="help-open-btn" class="data-option-btn">
+                            <span class="option-text">❔ Ayuda y atajos</span>
+                            <small>Atajos de teclado, comandos de letra y resaltados</small>
                         </button>
                         <button id="modal-reset-app-btn" class="data-option-btn danger">
                             <span class="option-text">🔄 Reiniciar App</span>
@@ -723,5 +697,6 @@
     <script src="js/lyricsScroller.js"></script>
     <script src="js/githubSync.js"></script>
     <script src="js/app.js"></script>
+    <script src="js/cornerMenu.js"></script>
 </body>
 </html>

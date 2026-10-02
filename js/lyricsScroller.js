@@ -32,8 +32,8 @@ class LyricsScroller {
         this.autoScrollInterval = null;
         this.currentBPM = 120;
         this.fontSize = 2.4; // Tamaño inicial en rem (doble del original)
-        this.currentMode = 'edition'; // Modos: 'edition', 'concert', 'prompter'
-        this.modes = ['edition', 'concert', 'prompter'];
+        this.currentMode = 'edition'; // Modos: 'edition', 'concert' (el prompter se retiró en el diseño «Espacial»)
+        this.modes = ['edition', 'concert'];
         /*
         this.modeLabels = {
             'edition': '📝 Edición',
@@ -522,13 +522,19 @@ class LyricsScroller {
     toggleMode() {
         const currentIndex = this.modes.indexOf(this.currentMode);
         const nextIndex = (currentIndex + 1) % this.modes.length;
-        this.currentMode = this.modes[nextIndex];
-        
+        this.setMode(this.modes[nextIndex]);
+    }
+
+    setMode(mode) {
+        if (!this.modes.includes(mode)) return;
+        this.currentMode = mode;
+
         this.applyMode();
         this.updateModeButton();
-        
+
         // Guardar preferencia de modo
         localStorage.setItem('drumhelper-mode', this.currentMode);
+        window.dispatchEvent(new CustomEvent('mode-change', { detail: { mode: this.currentMode } }));
     }
     
     applyMode() {

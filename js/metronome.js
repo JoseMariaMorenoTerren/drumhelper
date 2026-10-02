@@ -13,6 +13,17 @@ class Metronome {
         this.schedulerTimerId = null;   // setInterval del scheduler
         this.scheduledVisuals = [];     // timeouts pendientes para parpadeo visual
 
+        // Ajustes de sonido y destello (persistentes en este dispositivo)
+        this.soundOptions = [
+            { id: 'seno',    label: 'Seno 400 Hz',  wave: 'sine',     freq: 400 },
+            { id: 'agudo',   label: 'Agudo 800 Hz', wave: 'sine',     freq: 800 },
+            { id: 'grave',   label: 'Grave 220 Hz', wave: 'sine',     freq: 220 },
+            { id: 'madera',  label: 'Madera',       wave: 'triangle', freq: 600 },
+            { id: 'cencerro', label: 'Cencerro',    wave: 'square',   freq: 540 }
+        ];
+        this.settingsKey = 'drumhelper-metronome-settings';
+        this.settings = this.loadSettings();
+
         this.beatIndicator = document.getElementById('beat-indicator');
         this.beatFrame = document.getElementById('beat-frame');
         this.compactBtn = document.getElementById('metronome-compact-btn');
@@ -189,9 +200,12 @@ class Metronome {
             osc.connect(gain);
             gain.connect(this.audioContext.destination);
 
-            osc.frequency.setValueAtTime(400, time);
-            gain.gain.setValueAtTime(0.3, time);
-            gain.gain.exponentialRampToValueAtTime(0.01, time + 0.1);
+            const snd = this.getSound();
+            osc.type = snd.wave;
+            osc.frequency.setValueAtTime(snd.freq, time);
+            const vol = Math.max(0.001, this.settings.volume);
+            gain.gain.setValueAtTime(vol, time);
+            gain.gain.exponentialRampToValueAtTime(Math.max(0.0001, vol / 30), time + 0.1);
 
             osc.start(time);
             osc.stop(time + 0.1);
@@ -240,7 +254,7 @@ class Metronome {
 
     // El beat se ilumina en el marco alrededor de la pantalla (móvil, tablet y PC)
     visualBeat() {
-        if (!this.beatFrame) return;
+        if (!this.beatFrame || !this.settings.flash) return;
         this.beatFrame.classList.add('active');
         setTimeout(() => {
             this.beatFrame.classList.remove('active');
@@ -291,6 +305,54 @@ class Metronome {
                 this.setBPM(calculatedBPM);
             }
         }
+    }
+
+    // ---------- Ajustes ----------
+    loadSettings() {
+        const defaults = { sound: 'seno', volume: 0.3, flash: true };
+        try {
+            const saved = JSON.parse(localStorage.getItem(this.settingsKey) || '{}');
+            const merged = { ...defaults, ...saved };
+            if (!this.soundOptions.some(o => o.id === merged.sound)) merged.sound = defaults.sound;
+            merged.volume = Math.min(1, Math.max(0, Number(merged.volume)));
+            if (isNaN(merged.volume)) merged.volume = defaults.volume;
+            merged.flash = merged.flash !== false;
+            return merged;
+        } catch (e) {
+            return defaults;
+        }
+    }
+
+    updateSettings(partial) {
+        this.settings = { ...this.settings, ...partial };
+        try { localStorage.setItem(this.settingsKey, JSON.stringify(this.settings)); } catch (e) { /* sin almacenamiento */ }
+    }
+
+    getSound() {
+        return this.soundOptions.find(o => o.id === this.settings.sound) || this.soundOptions[0];
+    }
+
+    // Un click de prueba (también arranca el contexto de audio si estaba suspendido)
+    playTestClick() {
+        if (!this.audioContext) return;
+        if (this.audioContext.state === 'suspended') this.audioContext.resume();
+        this.scheduleTestClick(this.audioContext.currentTime + 0.02);
+        this.visualBeat();
+    }
+
+    scheduleTestClick(time) {
+        const osc = this.audioContext.createOscillator();
+        const gain = this.audioContext.createGain();
+        osc.connect(gain);
+        gain.connect(this.audioContext.destination);
+        const snd = this.getSound();
+        osc.type = snd.wave;
+        osc.frequency.setValueAtTime(snd.freq, time);
+        const vol = Math.max(0.001, this.settings.volume);
+        gain.gain.setValueAtTime(vol, time);
+        gain.gain.exponentialRampToValueAtTime(Math.max(0.0001, vol / 30), time + 0.1);
+        osc.start(time);
+        osc.stop(time + 0.1);
     }
 
     dispatchBPMChange() {

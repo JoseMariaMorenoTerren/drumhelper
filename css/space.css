@@ -1,0 +1,518 @@
+/* ============================================================
+   Drum Helper — tema «Espacial» (verde)
+   Se carga DESPUÉS de styles.css y lo reemplaza visualmente.
+   Estructura: 1 tokens · 2 fondo · 3 cabecera · 4 lista · 5 letras
+   · 6 barra inferior · 7 metrónomo flotante · 8 menús de esquina
+   · 9 modos · 10 modales y formularios · 11 responsive
+   ============================================================ */
+
+/* ---------- 1. Tokens ---------- */
+:root {
+    --bg: #07120d;
+    --surface: rgba(14, 44, 32, 0.55);
+    --surface-2: rgba(18, 58, 42, 0.62);
+    --surface-3: rgba(30, 84, 62, 0.62);
+    --border: rgba(190, 255, 220, 0.16);
+    --border-strong: rgba(190, 255, 220, 0.30);
+    --text: #effff6;
+    --text-dim: #9ccbb4;
+    --text-faint: #6a9a84;
+    --accent: #7eecb0;
+    --accent-soft: rgba(126, 236, 176, 0.14);
+    --accent-ink: #06231a;
+    --danger: #ffb3b3;
+    --ok: #7eecb0;
+    --lyric: #d3f2e3;
+    --lyric-strong: #ffffff;
+    --indicator: #ffdcae;
+    --section: #cdb8ff;
+    --glass: rgba(14, 44, 32, 0.50);
+    --glass-strong: rgba(10, 32, 23, 0.82);
+    --radius: 18px;
+    --radius-sm: 12px;
+    --safe-t: env(safe-area-inset-top, 0px);
+    --safe-b: env(safe-area-inset-bottom, 0px);
+    --safe-l: env(safe-area-inset-left, 0px);
+    --safe-r: env(safe-area-inset-right, 0px);
+    --corner: 56px;
+    --corner-gap: 16px;
+}
+
+/* ---------- 2. Fondo espacial ---------- */
+body {
+    font-family: 'Manrope', -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', sans-serif;
+    color: var(--text);
+    background:
+        radial-gradient(1100px 720px at 8% -12%, rgba(22, 150, 96, 0.42), transparent 62%),
+        radial-gradient(900px 640px at 98% 108%, rgba(14, 120, 120, 0.32), transparent 62%),
+        radial-gradient(760px 520px at 72% 28%, rgba(70, 180, 120, 0.13), transparent 66%),
+        linear-gradient(162deg, #09150f 0%, #08110d 48%, #050a07 100%) !important;
+    background-attachment: fixed;
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background:
+        radial-gradient(1.2px 1.2px at 8% 14%, rgba(255,255,255,.8), transparent),
+        radial-gradient(1.2px 1.2px at 17% 62%, rgba(255,255,255,.5), transparent),
+        radial-gradient(1.2px 1.2px at 23% 30%, rgba(255,255,255,.6), transparent),
+        radial-gradient(1.2px 1.2px at 31% 82%, rgba(255,255,255,.4), transparent),
+        radial-gradient(1.2px 1.2px at 38% 12%, rgba(255,255,255,.5), transparent),
+        radial-gradient(1.2px 1.2px at 46% 48%, rgba(255,255,255,.35), transparent),
+        radial-gradient(1.2px 1.2px at 52% 90%, rgba(255,255,255,.5), transparent),
+        radial-gradient(1.2px 1.2px at 58% 22%, rgba(255,255,255,.7), transparent),
+        radial-gradient(1.2px 1.2px at 64% 70%, rgba(255,255,255,.4), transparent),
+        radial-gradient(1.2px 1.2px at 71% 8%, rgba(255,255,255,.6), transparent),
+        radial-gradient(1.2px 1.2px at 77% 54%, rgba(255,255,255,.5), transparent),
+        radial-gradient(1.2px 1.2px at 84% 34%, rgba(255,255,255,.7), transparent),
+        radial-gradient(1.2px 1.2px at 91% 78%, rgba(255,255,255,.45), transparent),
+        radial-gradient(1.2px 1.2px at 95% 16%, rgba(255,255,255,.55), transparent),
+        radial-gradient(1.2px 1.2px at 12% 92%, rgba(255,255,255,.4), transparent),
+        radial-gradient(1.2px 1.2px at 88% 94%, rgba(255,255,255,.35), transparent);
+}
+
+body > * { position: relative; z-index: 1; }
+/* Elementos fijos conservan su propio posicionamiento */
+body > .beat-frame, body > .modal, body > .help-modal, body > .repertoire-manager-modal,
+body > .html-viewer-modal, body > .notes-lightbox, body > .cm-layer, body > .cm-corner,
+body > .cm-bpm, body > .cm-seg, body > #version-code, body > .general-nav-btn,
+body > .mode-toggle-btn, body > .songlist-toggle-btn, body > .concert-control-btn,
+body > .prompter-control-btn, body > .prompter-song-title { position: fixed; }
+
+/* Marco de beat */
+.beat-frame {
+    box-shadow: inset 0 0 0 3px rgba(190, 255, 220, 0.55),
+                inset 0 0 90px 6px rgba(110, 230, 160, 0.30) !important;
+}
+
+/* Cristal esmerilado */
+.song-list-panel, .scroll-controls, .metronome-container, .song-structure-container,
+.modal-content, .help-modal-content, .repertoire-manager-content, .data-option-btn,
+.repertoire-item, .manager-song-item {
+    -webkit-backdrop-filter: blur(18px);
+    backdrop-filter: blur(18px);
+}
+
+/* ---------- 3. Cabecera centrada ---------- */
+.top-section {
+    background: transparent !important;
+    border-bottom: 0 !important;
+    padding: calc(var(--safe-t) + 74px) 24px 6px !important;
+    align-items: center;
+    text-align: center;
+}
+
+.top-section-content { justify-content: center; }
+
+.info-panel { align-items: center; text-align: center; }
+.song-header-row { justify-content: center; }
+
+#current-song {
+    font-size: clamp(1.5rem, 3.4vw, 2.6rem) !important;
+    font-weight: 300 !important;
+    letter-spacing: -0.01em;
+    white-space: normal;
+}
+
+.song-info { justify-content: center; }
+.song-notes {
+    color: var(--text-dim);
+    text-align: center;
+}
+
+.notes-toggle-btn, .open-html-btn {
+    background: var(--glass) !important;
+    color: var(--text-dim) !important;
+    border: 1px solid var(--border) !important;
+    border-radius: 99px !important;
+    font-weight: 600;
+    letter-spacing: .06em;
+}
+.notes-toggle-btn:hover, .open-html-btn:hover { color: var(--text) !important; border-color: var(--border-strong) !important; }
+
+/* Estructura de la canción: barra de compases */
+.song-structure-container {
+    background: transparent !important;
+    border: 0 !important;
+    max-width: 640px;
+    padding: 4px 0 !important;
+    margin: 4px auto 8px !important;
+}
+.song-structure { gap: 3px; justify-content: center; flex-wrap: wrap; }
+.structure-bar { width: 12px !important; height: 12px !important; border-radius: 3px !important; opacity: .55; }
+.structure-bar.silence    { background-color: #ffe9a6 !important; }
+.structure-bar.chorus     { background-color: #d8f5a8 !important; }
+.structure-bar.verse      { background-color: #eefff5 !important; }
+.structure-bar.bridge     { background-color: #ffb3c1 !important; }
+.structure-bar.intro      { background-color: #9ff0d8 !important; }
+.structure-bar.outro      { background-color: #e8b0ff !important; }
+.structure-bar.solo       { background-color: #ffd9a8 !important; }
+.structure-bar.pre-chorus { background-color: #d6c6ff !important; }
+.structure-bar.unknown    { background-color: #6a9a84 !important; }
+.structure-bar:hover { opacity: 1; }
+body.hide-structure .song-structure-container { display: none !important; }
+
+/* Código de versión: discreto, abajo en el centro */
+#version-code, .version-code {
+    top: auto !important; right: auto !important;
+    bottom: calc(var(--safe-b) + 4px); left: 50%; transform: translateX(-50%);
+    background: transparent !important; border: 0 !important;
+    color: var(--text-faint) !important; opacity: .55; z-index: 5;
+}
+
+/* ---------- 4. Lista de canciones ---------- */
+.main-container { padding: 0 16px; gap: 16px; }
+
+.song-list-panel {
+    background: var(--glass) !important;
+    border: 1px solid var(--border) !important;
+    border-radius: 26px;
+    margin: 4px 0 calc(var(--corner) + 40px);
+    padding: 18px 12px !important;
+}
+
+.active-setlist-label {
+    color: var(--text);
+    font-weight: 600;
+    letter-spacing: .02em;
+}
+
+.song-search input {
+    background: rgba(8, 26, 18, .55) !important;
+    border: 1px solid var(--border) !important;
+    border-radius: 99px !important;
+    color: var(--text);
+    padding: 10px 16px;
+}
+
+.song-item {
+    border-radius: 16px !important;
+    border: 1px solid transparent !important;
+    background: transparent !important;
+    margin-bottom: 4px;
+}
+.song-item:hover { background: rgba(126, 236, 176, .06) !important; }
+.song-item.active {
+    background: var(--accent-soft) !important;
+    border-color: rgba(126, 236, 176, .38) !important;
+    box-shadow: 0 0 24px rgba(126, 236, 176, .10);
+}
+.song-title { color: var(--text); font-weight: 600; }
+.song-artist, .song-bpm { color: var(--text-dim); }
+
+.add-btn, .edit-btn, .data-btn, .order-mode-btn {
+    border-radius: 99px !important;
+    border: 1px solid var(--border) !important;
+    background: rgba(8, 26, 18, .45) !important;
+    color: var(--text-dim) !important;
+}
+.add-btn:hover, .edit-btn:hover:not(:disabled), .data-btn:hover { color: var(--text) !important; border-color: var(--border-strong) !important; }
+/* El engranaje ahora vive en el menú de esquina */
+#data-options-btn { display: none; }
+
+/* ---------- 5. Letras ---------- */
+.lyrics-container {
+    padding: 8px 20px !important;
+    -webkit-mask-image: linear-gradient(transparent 0, #000 9%, #000 88%, transparent 100%);
+    mask-image: linear-gradient(transparent 0, #000 9%, #000 88%, transparent 100%);
+}
+.lyrics-content { color: var(--lyric); font-weight: 500; }
+body .lyric-line { color: var(--lyric); }
+body .special-line {
+    color: var(--indicator) !important;
+    font-weight: 600 !important;
+    letter-spacing: .06em;
+    text-shadow: none !important;
+}
+body .section-header {
+    color: var(--section) !important;
+    letter-spacing: .28em;
+    font-size: .5em !important;
+    font-weight: 600 !important;
+    margin: .9em 0 .2em !important;
+}
+.highlight-yellow { color: #ffeeb0 !important; background: rgba(255, 238, 176, .08) !important; }
+.highlight-blue   { color: #bfe0ff !important; background: rgba(191, 224, 255, .08) !important; }
+.highlight-green  { color: #d8f5a8 !important; background: rgba(216, 245, 168, .08) !important; }
+.welcome-message { color: var(--text-dim); }
+.wait-instruction-active { background: var(--accent) !important; color: var(--accent-ink) !important; box-shadow: 0 0 14px rgba(126,236,176,.6) !important; }
+
+/* ---------- 6. Barra inferior ---------- */
+.scroll-controls {
+    background: var(--glass) !important;
+    border: 1px solid var(--border) !important;
+    border-radius: 99px;
+    margin: 0 0 calc(var(--safe-b) + 14px);
+    padding: 8px 14px !important;
+    align-self: center;
+    flex-wrap: nowrap !important;
+}
+.scroll-btn {
+    background: rgba(8, 26, 18, .45) !important;
+    border: 1px solid var(--border) !important;
+    color: var(--text-dim) !important;
+}
+.scroll-btn:hover { color: var(--text) !important; border-color: var(--border-strong) !important; }
+.scroll-btn.active { background: var(--accent-soft) !important; border-color: var(--accent) !important; color: var(--accent) !important; }
+#play-pause-btn {
+    background: var(--accent) !important; color: var(--accent-ink) !important; border-color: var(--accent) !important;
+    box-shadow: 0 0 28px rgba(126, 236, 176, .45);
+    width: 54px; height: 54px;
+}
+#record-btn.recording { background: #ffb3b3 !important; border-color: #ffb3b3 !important; color: #2a0a0a !important; }
+.timer-display { background: transparent !important; border: 0 !important; }
+.timer-display span { color: var(--text) !important; font-family: 'Sora', 'Manrope', sans-serif !important; font-weight: 300 !important; letter-spacing: .04em; font-size: 1.15rem !important; }
+
+/* ---------- 7. Metrónomo: panel flotante + chip de BPM ---------- */
+.metronome-container {
+    display: none !important;
+    position: fixed;
+    top: calc(var(--safe-t) + var(--corner) + 30px);
+    left: calc(var(--safe-l) + var(--corner-gap));
+    z-index: 140;
+    width: min(340px, calc(100vw - 32px));
+    padding: 20px 18px !important;
+    background: var(--glass-strong) !important;
+    border: 1px solid var(--border-strong);
+    border-radius: 28px;
+    box-shadow: 0 0 60px rgba(70, 220, 140, .18);
+}
+body.metro-open .metronome-container { display: flex !important; }
+.metronome-display { flex-direction: column; gap: 14px; width: 100%; }
+.beat-indicator {
+    width: 150px !important; height: 150px !important;
+    border: 1px solid var(--border-strong) !important;
+    background: radial-gradient(circle at 50% 40%, rgba(80, 220, 150, .16), rgba(10, 36, 26, .55) 62%) !important;
+    box-shadow: 0 0 60px rgba(70, 220, 140, .22), inset 0 0 40px rgba(126, 236, 176, .10);
+    color: var(--text) !important;
+}
+.beat-indicator.playing { border-color: var(--accent) !important; }
+.bpm-text { font-family: 'Sora', 'Manrope', sans-serif !important; font-weight: 200 !important; font-size: 3.2rem !important; color: var(--text) !important; }
+.bpm-display { display: none !important; }
+body.metro-adjust .bpm-display { display: flex !important; flex-direction: row; flex-wrap: wrap; justify-content: center; gap: 8px; }
+.bpm-btn, .control-btn {
+    background: rgba(8, 26, 18, .55) !important;
+    border: 1px solid var(--border-strong) !important;
+    color: var(--text) !important;
+    border-radius: 99px !important;
+}
+.bpm-display input {
+    background: rgba(8, 26, 18, .55) !important; color: var(--text) !important;
+    border: 1px solid var(--border-strong) !important; border-radius: 12px !important;
+}
+.metronome-compact-btn { background: var(--glass) !important; border-color: var(--border-strong) !important; color: var(--text) !important; }
+.metronome-compact-btn.playing { background: var(--accent) !important; color: var(--accent-ink) !important; }
+.cm-panel-close {
+    position: absolute; top: 12px; right: 14px; width: 30px; height: 30px; border-radius: 50%;
+    background: transparent; border: 1px solid var(--border); color: var(--text-dim); font-size: 18px; line-height: 1; cursor: pointer;
+}
+
+.cm-bpm {
+    top: calc(var(--safe-t) + 18px);
+    left: calc(var(--safe-l) + var(--corner-gap) + var(--corner) + 14px);
+    height: var(--corner);
+    display: flex; align-items: center; gap: 10px; z-index: 120;
+    pointer-events: none;
+}
+.cm-bpm i { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 12px 2px rgba(126, 236, 176, .8); opacity: .45; transition: opacity .12s; }
+.cm-bpm i.on { opacity: 1; }
+.cm-bpm b { font-family: 'Sora', 'Manrope', sans-serif; font-weight: 300; font-size: 1.3rem; letter-spacing: .04em; }
+.cm-bpm span { font-size: .7rem; font-weight: 600; letter-spacing: .2em; color: var(--text-faint); }
+
+/* ---------- 8. Menús de esquina ---------- */
+.cm-corner, .cm-child {
+    position: fixed; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    color: #dcfdea; cursor: pointer; padding: 0;
+    background: rgba(18, 58, 42, .62);
+    border: 1px solid rgba(190, 255, 220, .26);
+    -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px);
+    box-shadow: 0 0 26px rgba(70, 220, 140, .22), inset 0 0 14px rgba(110, 230, 160, .12);
+    transition: background .15s, color .15s, box-shadow .15s, transform .18s;
+}
+.cm-corner { width: var(--corner); height: var(--corner); z-index: 150; }
+.cm-corner.on { color: var(--accent-ink); background: #c9f7de; border-color: #e4fff0; box-shadow: 0 0 38px rgba(120, 236, 176, .6); }
+.cm-corner svg, .cm-child svg { width: 24px; height: 24px; stroke: currentColor; fill: none; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+.cm-child { width: 46px; height: 46px; z-index: 162; background: rgba(24, 76, 56, .78); transform: scale(.4); opacity: 0; pointer-events: none; }
+.cm-child svg { width: 21px; height: 21px; }
+.cm-child:hover, .cm-child:focus-visible { background: #c9f7de; color: var(--accent-ink); outline: none; }
+.cm-layer.open .cm-child { transform: scale(1); opacity: 1; pointer-events: auto; }
+.cm-label {
+    position: fixed; z-index: 162; font-size: 13px; font-weight: 500; letter-spacing: .02em; color: #e6fff1;
+    white-space: nowrap; padding: 6px 12px; border-radius: 99px;
+    background: rgba(8, 28, 20, .78); border: 1px solid rgba(190, 255, 220, .14);
+    opacity: 0; pointer-events: none; transition: opacity .15s;
+}
+.cm-layer.open .cm-label { opacity: 1; }
+.cm-scrim { position: fixed; inset: 0; z-index: 160; display: none; background: radial-gradient(ellipse at 50% 50%, rgba(3, 14, 9, .62), rgba(3, 14, 9, .86)); }
+.cm-layer.open .cm-scrim { display: block; }
+.cm-layer { position: fixed; inset: 0; z-index: 160; pointer-events: none; }
+.cm-layer.open { pointer-events: auto; }
+.cm-layer .cm-child, .cm-layer .cm-label { pointer-events: none; }
+.cm-layer.open .cm-child { pointer-events: auto; }
+
+/* Selector de modo (solo Concierto / Edición) */
+.cm-seg {
+    top: calc(var(--safe-t) + 18px); left: 50%; transform: translateX(-50%);
+    display: flex; padding: 4px; border-radius: 99px; z-index: 120;
+    background: var(--glass); border: 1px solid var(--border);
+    -webkit-backdrop-filter: blur(20px); backdrop-filter: blur(20px);
+}
+.cm-seg button {
+    padding: 9px 18px; border-radius: 99px; border: 0; background: transparent;
+    color: var(--text-dim); font-size: 13px; font-weight: 600; letter-spacing: .06em; cursor: pointer; font-family: inherit;
+}
+.cm-seg button.a { background: #d4fae6; color: var(--accent-ink); }
+
+/* ---------- 9. Modos: edición y concierto ---------- */
+/* Se retiran los botones flotantes antiguos (ahora están en los menús) */
+.mode-toggle-btn, .songlist-toggle-btn, .concert-control-btn,
+.prompter-control-btn, .prompter-song-title { display: none !important; }
+
+/* Edición (sin clase): lista acoplada a la izquierda */
+body.list-collapsed:not(.concert-mode) .song-list-panel { display: none !important; }
+body:not(.concert-mode) .scroll-controls { margin-right: calc(var(--corner) + 28px); }
+body:not(.concert-mode) .general-nav-btn { display: none !important; }
+
+/* Concierto: lista oculta (cajón al abrirla), barra reducida al transporte */
+body.concert-mode .scroll-controls {
+    display: flex !important;
+    position: fixed; left: 50%; transform: translateX(-50%);
+    bottom: calc(var(--safe-b) + 22px); margin: 0; z-index: 120;
+    padding: 8px 16px !important;
+}
+body.concert-mode .playback-controls { display: flex !important; margin: 0; }
+body.concert-mode #record-btn,
+body.concert-mode #scroll-up-btn, body.concert-mode #scroll-down-btn,
+body.concert-mode #scroll-to-top-btn, body.concert-mode .font-size-controls { display: none !important; }
+/* «Desplazamiento» abre los controles de scroll también en concierto */
+body.concert-mode.scroll-panel #scroll-up-btn, body.concert-mode.scroll-panel #scroll-down-btn,
+body.concert-mode.scroll-panel #scroll-to-top-btn, body.concert-mode.scroll-panel .font-size-controls { display: inline-flex !important; }
+body.concert-mode.scroll-panel .font-size-controls { display: flex !important; }
+body.concert-mode.rec-visible #record-btn { display: inline-flex !important; }
+body.concert-mode .song-list-panel {
+    display: none !important;
+}
+body.concert-mode.list-open .song-list-panel {
+    display: flex !important;
+    position: fixed; left: calc(var(--safe-l) + 16px); top: calc(var(--safe-t) + 86px);
+    bottom: calc(var(--safe-b) + var(--corner) + 40px); width: min(340px, calc(100vw - 32px));
+    margin: 0; z-index: 130; background: var(--glass-strong) !important;
+}
+body.concert-mode .lyrics-content { text-align: center; }
+body.concert-mode .lyrics-container { padding-bottom: 100px !important; }
+body.concert-mode .main-container { padding-bottom: 0; }
+
+/* Navegación de canción dentro de la pastilla de transporte (concierto) */
+.general-nav-btn {
+    position: static !important; transform: none !important; top: auto !important; right: auto !important;
+    width: 44px !important; height: 44px !important; border-radius: 50% !important;
+    background: rgba(8, 26, 18, .45) !important; border: 1px solid var(--border) !important; color: var(--text-dim) !important;
+}
+body #general-prev-btn, body #general-next-btn { top: auto !important; right: auto !important; transform: none !important; }
+body.concert-mode .scroll-controls .general-nav-btn { display: flex !important; }
+
+/* ---------- 10. Modales y formularios ---------- */
+.modal, .help-modal, .repertoire-manager-modal {
+    background: radial-gradient(ellipse at 50% 30%, rgba(6, 28, 18, .72), rgba(2, 10, 6, .90)) !important;
+    -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+}
+.modal-content, .help-modal-content, .repertoire-manager-content {
+    background: var(--glass-strong) !important;
+    border: 1px solid var(--border-strong) !important;
+    border-radius: 30px !important;
+    box-shadow: 0 0 80px rgba(40, 180, 110, .12);
+    color: var(--text);
+}
+.modal-content h2, .modal-content h3, .modal-content h4, .help-modal-header h3, .repertoire-manager-header h2 { color: var(--text); font-weight: 600; }
+.form-group label, .info-label, .shortcut-section h4, .data-options-section h3 {
+    color: var(--text-dim); letter-spacing: .1em; text-transform: uppercase; font-size: .72rem; font-weight: 600;
+}
+input[type="text"], input[type="number"], textarea, select {
+    background: rgba(6, 24, 16, .60) !important;
+    color: var(--text) !important;
+    border: 1px solid var(--border) !important;
+    border-radius: 14px !important;
+}
+input:focus, textarea:focus, select:focus { outline: none; border-color: var(--accent) !important; box-shadow: 0 0 0 3px rgba(126, 236, 176, .14); }
+.form-actions button, .repertoire-action-btn, .copy-btn, .transfer-btn, .modal-btn, .repertoire-item-btn, .manager-order-btn, .btn-primary, .btn-secondary {
+    background: rgba(18, 58, 42, .55) !important;
+    color: var(--text) !important;
+    border: 1px solid var(--border-strong) !important;
+    border-radius: 99px !important;
+}
+.form-actions button[type="submit"], .btn-primary { background: #c9f7de !important; color: var(--accent-ink) !important; border-color: #e4fff0 !important; font-weight: 700; }
+.delete-btn, .repertoire-action-btn.danger, .data-option-btn.danger { color: var(--danger) !important; }
+.data-option-btn, .repertoire-item, .manager-song-item {
+    background: rgba(14, 44, 32, .50) !important;
+    border: 1px solid var(--border) !important;
+    border-radius: 18px !important;
+    color: var(--text) !important;
+}
+.data-option-btn small { color: var(--text-dim) !important; }
+.data-option-btn:hover, .repertoire-item:hover, .manager-song-item:hover { border-color: var(--border-strong) !important; }
+.data-option-btn.active, .repertoire-item.active, .manager-song-item.selected { background: var(--accent-soft) !important; border-color: rgba(126, 236, 176, .45) !important; }
+.manager-song-tag { color: #d8f5a8 !important; }
+.close, .help-close, .close-btn { color: var(--text-dim) !important; }
+.key { background: rgba(126, 236, 176, .12) !important; color: var(--accent) !important; border: 1px solid var(--border) !important; }
+.html-viewer-modal { background: rgba(2, 10, 6, .94) !important; }
+
+/* Gestión de metrónomo (modal propio) */
+.ms-row { display: flex; align-items: center; justify-content: space-between; gap: 18px; padding: 16px 0; border-bottom: 1px solid var(--border); }
+.ms-row:last-child { border-bottom: 0; }
+.ms-row label { font-size: 1rem; color: var(--text); letter-spacing: 0; text-transform: none; }
+.ms-row input[type="range"] { width: 200px; accent-color: var(--accent); }
+.ms-row output { min-width: 56px; text-align: right; color: var(--text-dim); font-variant-numeric: tabular-nums; }
+.ms-note { font-size: .8rem; color: var(--text-faint); margin-top: 14px; }
+
+/* ---------- 11. Responsive ---------- */
+@media (max-width: 768px) {
+    .main-container { padding: 0 10px; }
+    .song-list-panel { margin-bottom: 8px; flex: 0 0 min(40vh, 320px) !important; }
+    body:not(.concert-mode) .scroll-controls { margin-right: 0; margin-bottom: calc(var(--safe-b) + var(--corner) + 28px); }
+    .cm-bpm { top: calc(var(--safe-t) + 14px); }
+}
+@media (max-width: 700px), (max-height: 500px) {
+    :root { --corner: 52px; --corner-gap: 12px; }
+    .top-section { padding-top: calc(var(--safe-t) + 128px) !important; }
+    .cm-bpm { left: 50%; transform: translateX(-50%); top: calc(var(--safe-t) + 72px); height: auto; }
+    .cm-seg { top: calc(var(--safe-t) + 14px); }
+    .song-structure-container { max-width: calc(100vw - 32px); }
+    .structure-bar { width: 8px !important; height: 10px !important; }
+    body.concert-mode .scroll-controls { bottom: calc(var(--safe-b) + var(--corner) + 38px); }
+    #current-song { font-size: 1.5rem !important; }
+    .metronome-compact-btn { display: inline-flex !important; }
+    .beat-indicator { display: none !important; }
+}
+
+body.cm-open .cm-corner { z-index: 170; }
+
+/* La lista no debe comprimir sus cabeceras al quedarse sin altura */
+.active-setlist-label, .song-search, .add-song-section { flex-shrink: 0; }
+.song-list { flex: 1 1 auto; min-height: 0; }
+.active-setlist-label { padding: 2px 10px 10px; font-size: .95rem; }
+
+/* Restos de colores del tema antiguo (azul/rojo) */
+.repertoire-panel { background: rgba(10, 36, 26, .55) !important; border-color: var(--border-strong) !important; border-radius: 22px !important; }
+.left-panel, .right-panel { border-color: var(--border-strong) !important; }
+.panel-header { background: rgba(0, 0, 0, .18) !important; }
+.selection-info span { background: var(--accent-soft) !important; border: 1px solid rgba(126, 236, 176, .35) !important; border-radius: 99px !important; color: var(--text) !important; }
+.order-mode-btn.active, .repertoire-action-btn.active { background: var(--accent) !important; color: var(--accent-ink) !important; }
+.manager-song-checkbox, input[type="checkbox"] { accent-color: var(--accent); }
+.repertoire-manager-header, .repertoire-manager-footer { border-color: var(--border) !important; }
+
+/* iPhone, modo Edición: la barra de controles pasa a dos filas en vez de desbordar */
+@media (max-width: 700px) {
+    body:not(.concert-mode) .scroll-controls {
+        flex-wrap: wrap !important; justify-content: center; border-radius: 28px;
+        row-gap: 6px; column-gap: 8px; max-width: calc(100vw - 20px); padding: 8px 12px !important;
+    }
+    body:not(.concert-mode) .playback-controls { margin: 0; flex: 0 0 100%; justify-content: center; }
+    body:not(.concert-mode) .font-size-controls { margin-left: 0; }
+    .scroll-btn { width: 40px !important; height: 40px !important; }
+    #play-pause-btn { width: 50px !important; height: 50px !important; }
+}
