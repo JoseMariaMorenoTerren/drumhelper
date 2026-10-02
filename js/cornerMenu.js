@@ -483,6 +483,14 @@
         themeModal.style.display = 'block';
     }
 
+    // Muestra la versión (tomada del rótulo #version-code) en Opciones y Ayuda
+    function fillVersion() {
+        const code = $('version-code');
+        const v = code ? code.textContent.trim().replace(/^v/i, '') : '';
+        if (!v) return;
+        document.querySelectorAll('.dh-version').forEach((el) => { el.textContent = v; });
+    }
+
     // ---------------------------------------------------------------- arranque
     function init() {
         readSafeAreas();
@@ -495,6 +503,7 @@
         buildMetronomePanelClose();
         moveSongNav();
         groupSongPills();
+        fillVersion();
         window.addEventListener('resize', () => { readSafeAreas(); place(); });
         document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && openKey) closeMenu(); });
     }

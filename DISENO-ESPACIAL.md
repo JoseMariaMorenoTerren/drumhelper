@@ -1,4 +1,4 @@
-# Drum Helper v1.4.20 — tema «Espacial» (verde)
+# Drum Helper v2.0.0 — tema «Espacial» (verde)
 
 Copia de `~/Proyectos/drumhelper` (v1.4.13) adaptada al diseño aprobado. La app original no se ha tocado.
 
@@ -8,7 +8,7 @@ Copia de `~/Proyectos/drumhelper` (v1.4.13) adaptada al diseño aprobado. La app
 - **Dos modos:** Concierto y Edición (selector arriba al centro). El modo *prompter* se ha retirado (`lyricsScroller.modes`).
 - **Metrónomo:** panel flotante (Mostrar / Ajustar) y chip de BPM con pulso. Nuevo modal «Configuración del metrónomo» (sonido, volumen, destello), guardado en `localStorage` (`drumhelper-metronome-settings`).
 - **Ayuda:** ahora es accesible (Configuración → Mantenimiento y ayuda → «Ayuda y atajos», o clic en el rótulo de versión) y lista solo atajos realmente implementados.
-- Versión 1.4.20 sincronizada en `index.html`, `sw.js` y `manifest.json`.
+- Versión 2.0.0 sincronizada en `index.html`, `sw.js` y `manifest.json`.
 
 ## Mapa de opciones de los menús
 | Menú | Opción | Acción |
@@ -30,7 +30,7 @@ Copia de `~/Proyectos/drumhelper` (v1.4.13) adaptada al diseño aprobado. La app
 ## Sin cambiar (heredado de la v1.4.13)
 Los defectos del Anexo A del análisis funcional que no afectan al diseño siguen presentes (auto-scroll por tempo inactivo, `Ctrl+S/O`, MIDI 65/67, eliminar repertorio…).
 
-## Pulido estético (v1.4.20)
+## Pulido estético (v2.0.0)
 - **Iconos unificados** (`js/icons.js`): todos los controles usan el mismo trazo SVG; se eliminan emojis y glifos (▶️ ⏸️ 🔴 ⏹️ « ⇑ ✎ 📁 📋…), también los que la app reinsertaba al cambiar de estado. Tamaño de letra con «A» pequeña/grande.
 - **Iconos de esquina** rediseñados: metrónomo más reconocible; «Notas y grabación» = líneas de letra + punto de grabación; «Ajustar metrónomo» = ±; «Visualización» = tamaño de texto (ya no repiten el ojo/deslizadores de otras opciones).
 - **Cabecera**: título y artista en dos niveles (artista en versalitas); «Notas» y «Ficha» como píldoras en la misma fila.
@@ -40,7 +40,10 @@ Los defectos del Anexo A del análisis funcional que no afectan al diseño sigue
 - **Concierto**: la letra se desvanece antes de la pastilla de transporte; barras de scroll discretas.
 - **Corrección**: al arrancar, el botón «Ficha» no aparecía hasta cambiar de canción (`selectActiveSong`).
 
-## Color del tema (v1.4.20)
+## Color del tema (v2.0.0)
 - Nueva opción **Configuración ↘ → Color del tema**: Verde (por defecto), Azul o Rojo, con vista previa. Se aplica al instante y se guarda en el dispositivo (`localStorage['drumhelper-theme']`).
 - Implementación: los 37 colores propios del tema en `css/space.css` son variables `--tc-*` (tripletes `r, g, b`); `html[data-theme="blue"|"red"]` redefine cada una con las paletas de los bocetos (y rotación de tono para los pocos colores que no estaban en ellos). Los colores con significado (indicaciones `::`, secciones, resaltados, estructura, peligro) no cambian con el tema.
 - El tema se aplica en `<head>` antes de pintar (sin parpadeo) y actualiza `meta theme-color`.
+
+## Versión 2.0.0
+Salto de versión mayor a petición del propietario: agrupa el rediseño completo (1.4.14–1.4.20). La versión se ve en Configuración → Mantenimiento y ayuda, en la ventana de Ayuda y en el rótulo inferior.

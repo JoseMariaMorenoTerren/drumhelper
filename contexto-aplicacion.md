@@ -13,3 +13,4 @@ Permite gestionar repertorios y canciones, con orden del setlist, letras, notas 
 
 ## Historial de instrucciones
 - 2026-04-02: Se solicita incrementar siempre el tercer dígito de versión en cada corrección menor y documentarlo en este archivo.
+- 2026-10-02: A petición del propietario se pasa a la versión 2.0.0 (rediseño «Espacial»). La regla del tercer dígito sigue vigente a partir de aquí (2.0.1, 2.0.2…). La versión se muestra en Configuración → Mantenimiento y ayuda, en la Ayuda y en el rótulo inferior.

@@ -283,7 +283,8 @@ body.hide-structure .song-structure-container { display: none !important; }
     top: auto !important; right: auto !important;
     bottom: calc(var(--safe-b) + 4px); left: 50%; transform: translateX(-50%);
     background: transparent !important; border: 0 !important;
-    color: var(--text-faint) !important; opacity: .55; z-index: 5;
+    color: var(--text-dim) !important; opacity: .8; z-index: 5;
+    font-family: 'Sora', 'Manrope', sans-serif !important; font-size: .72rem !important; letter-spacing: .08em;
 }
 
 /* ---------- 4. Lista de canciones ---------- */
@@ -822,3 +823,8 @@ button:focus-visible, .cm-corner:focus-visible, .cm-child:focus-visible { outlin
 .theme-name { font-weight: 600; font-size: 1rem; }
 .theme-desc { font-size: .76rem; color: var(--text-dim); text-align: center; }
 @media (max-width: 480px) { .theme-grid { gap: 8px; } .theme-desc { display: none; } }
+
+/* Versión visible */
+.dh-about { margin: 26px 0 4px; text-align: center; font-size: .8rem; color: var(--text-dim); letter-spacing: .04em; }
+.dh-about .dh-version, .dh-about-inline .dh-version { font-family: 'Sora', 'Manrope', sans-serif; color: var(--accent); font-weight: 400; }
+.dh-about-inline { display: block; margin-top: 4px; font-size: .72rem; font-weight: 500; color: var(--text-dim); letter-spacing: .06em; text-transform: none; }
