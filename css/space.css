@@ -533,3 +533,149 @@ body {
 @media (display-mode: fullscreen), (display-mode: standalone), (display-mode: minimal-ui) {
     body { height: auto !important; }
 }
+
+/* ============================================================
+   12. Pulido estético (v1.5)
+   ============================================================ */
+
+/* --- Iconos comunes (js/icons.js) --- */
+.dh-icon { width: 20px; height: 20px; stroke: currentColor; fill: none; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; flex: 0 0 auto; }
+.dh-icon-text { font-size: .86rem; font-weight: 600; letter-spacing: .02em; }
+.scroll-btn, .general-nav-btn, .transfer-btn, .manager-order-btn, .add-btn, .edit-btn, .close-html-viewer {
+    display: inline-flex !important; align-items: center; justify-content: center; gap: 8px;
+}
+#play-pause-btn .dh-icon { width: 22px; height: 22px; }
+#record-btn { color: #ff9f9f !important; }
+#record-btn.recording { color: #2a0a0a !important; }
+.general-nav-btn .dh-icon { width: 17px; height: 17px; }
+.transfer-btn .dh-icon { width: 22px; height: 22px; }
+.close-html-viewer .dh-icon { width: 22px; height: 22px; }
+.add-btn, .edit-btn { font-size: .9rem !important; }
+.aa { font-family: 'Sora', 'Manrope', sans-serif; font-weight: 400; line-height: 1; }
+.aa-s { font-size: .78rem; }
+.aa-l { font-size: 1.28rem; }
+
+/* --- Título y artista en dos niveles --- */
+#current-song { display: flex !important; flex-direction: column; align-items: center; gap: 8px; line-height: 1.05; }
+.song-t { font-weight: 300; }
+.song-a {
+    font-size: max(.75rem, .3em); font-weight: 600; letter-spacing: .3em; text-transform: uppercase;
+    color: var(--text-dim);
+}
+.song-header-row { gap: 14px; }
+
+/* Botón Notas con chevron y botón Ficha */
+.notes-toggle-btn { align-items: center; gap: 4px; padding: 5px 9px 5px 13px !important; font-size: .74rem !important; text-transform: uppercase; }
+.dh-chevron { width: 14px; height: 14px; transform: rotate(90deg); transition: transform .2s; }
+.notes-toggle-btn.is-collapsed .dh-chevron { transform: rotate(0deg); }
+.open-html-btn { padding: 6px 14px !important; font-size: .78rem !important; margin: 6px auto 0; }
+.open-html-btn .dh-icon { width: 16px; height: 16px; }
+
+/* --- Cabecera de la lista: nombre y duración --- */
+.active-setlist-label { display: flex !important; flex-direction: column; gap: 3px; text-transform: none !important; letter-spacing: 0 !important; }
+.setlist-name { font-size: 1.05rem; font-weight: 600; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.setlist-meta { font-size: .78rem; font-weight: 500; color: var(--text-dim); }
+.song-item { padding: 11px 14px !important; }
+.song-title { font-size: .98rem; }
+
+/* --- Notificaciones: cristal del tema, centradas bajo el selector de modo --- */
+.notification, .error-toast, .welcome-toast {
+    top: auto !important; bottom: calc(var(--safe-b) + 104px) !important; right: auto !important; left: 50% !important;
+    transform: translateX(-50%) !important;
+    background: var(--glass-strong) !important; color: var(--text) !important;
+    border: 1px solid var(--border-strong) !important; border-radius: 99px !important;
+    padding: 12px 22px 12px 40px !important; font-size: .92rem !important; font-weight: 500;
+    max-width: min(560px, calc(100vw - 32px)) !important; z-index: 3000 !important;
+    -webkit-backdrop-filter: blur(18px); backdrop-filter: blur(18px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, .45), 0 0 30px rgba(70, 220, 140, .12) !important;
+    animation: dhToastIn .25s ease !important;
+}
+.notification::before, .error-toast::before {
+    content: ""; position: absolute; left: 17px; top: 50%; width: 9px; height: 9px; margin-top: -4.5px;
+    border-radius: 50%; background: var(--accent); box-shadow: 0 0 10px rgba(126, 236, 176, .8);
+}
+.notification-error::before, .error-toast::before { background: var(--danger); box-shadow: 0 0 10px rgba(255, 179, 179, .7); }
+.notification-warning::before { background: var(--indicator); box-shadow: 0 0 10px rgba(255, 220, 174, .7); }
+.notification-info::before { background: var(--section); box-shadow: 0 0 10px rgba(205, 184, 255, .7); }
+@keyframes dhToastIn { from { opacity: 0; margin-top: -8px; } to { opacity: 1; margin-top: 0; } }
+
+/* --- Interruptores en lugar de casillas nativas --- */
+.checkbox-label { display: flex !important; align-items: center; gap: 14px; padding: 10px 0; cursor: pointer; color: var(--text); }
+.checkbox-label input[type="checkbox"], #ms-flash {
+    -webkit-appearance: none; appearance: none; width: 46px; height: 28px; margin: 0;
+    border-radius: 99px; background: rgba(190, 255, 220, .18); border: 0 !important;
+    position: relative; flex: 0 0 auto; cursor: pointer; transition: background .2s;
+}
+.checkbox-label input[type="checkbox"]::after, #ms-flash::after {
+    content: ""; position: absolute; top: 3px; left: 3px; width: 22px; height: 22px; border-radius: 50%;
+    background: #9ccbb4; transition: left .2s, background .2s;
+}
+.checkbox-label input[type="checkbox"]:checked, #ms-flash:checked { background: var(--accent); }
+.checkbox-label input[type="checkbox"]:checked::after, #ms-flash:checked::after { left: 21px; background: var(--accent-ink); }
+
+/* --- Barras de desplazamiento discretas --- */
+* { scrollbar-width: thin; scrollbar-color: rgba(190, 255, 220, .22) transparent; }
+*::-webkit-scrollbar { width: 6px; height: 6px; }
+*::-webkit-scrollbar-track { background: transparent; }
+*::-webkit-scrollbar-thumb { background: rgba(190, 255, 220, .22); border-radius: 6px; }
+.lyrics-container { scrollbar-width: none; }
+.lyrics-container::-webkit-scrollbar { display: none; }
+
+/* --- Concierto: la letra se desvanece antes de llegar a la pastilla de transporte --- */
+body.concert-mode .lyrics-container {
+    -webkit-mask-image: linear-gradient(transparent 0, #000 8%, #000 72%, transparent 88%);
+    mask-image: linear-gradient(transparent 0, #000 8%, #000 72%, transparent 88%);
+}
+
+/* --- Modales --- */
+.modal-header { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 16px; }
+.modal-header .close { float: none; }
+.modal-header h2, .modal-header h3, .modal-content > h2 { font-size: 1.4rem !important; font-weight: 500 !important; letter-spacing: -.01em; margin: 0 0 18px; }
+.modal-header h2, .modal-header h3 { margin: 0; }
+#add-song-modal .modal-content, #edit-song-modal .modal-content { max-width: 980px !important; width: min(94vw, 980px) !important; }
+.form-group label { display: block; margin-bottom: 7px; }
+.form-group input, .form-group textarea, .form-group select { padding: 11px 14px; font-size: 1rem; width: 100%; }
+.form-actions { display: flex; gap: 10px; justify-content: flex-end; flex-wrap: wrap; }
+.form-actions .delete-btn { margin-right: auto; background: transparent !important; border-color: rgba(255, 179, 179, .35) !important; }
+.form-actions button { padding: 11px 22px !important; font-weight: 600; }
+.repertoire-management-section h4, .repertoire-display-section h4, .repertoire-ordering-section h4, .repertoire-list-section h4, .form-copy-section h3 {
+    font-size: .72rem !important; font-weight: 600 !important; letter-spacing: .12em; text-transform: uppercase;
+    color: var(--text-dim) !important; margin: 22px 0 10px !important;
+}
+.repertoire-management-section > h4:first-child { font-size: 1rem !important; text-transform: none; letter-spacing: 0; color: var(--text) !important; margin-top: 0 !important; }
+.repertoire-action-btn { padding: 10px 18px !important; font-weight: 600; }
+.repertoire-item-btn.is-active { background: var(--accent) !important; color: var(--accent-ink) !important; border-color: var(--accent) !important; opacity: 1; cursor: default; }
+.data-options-section h3 { margin: 24px 0 10px !important; }
+.data-options-section:first-child h3 { margin-top: 4px !important; }
+.option-text { font-weight: 600; }
+
+/* --- Mensaje de bienvenida y metrónomo --- */
+.welcome-message { font-size: 1.5rem !important; font-weight: 300 !important; line-height: 1.5; color: var(--text-faint) !important; }
+.beat-indicator.playing { box-shadow: 0 0 70px rgba(126, 236, 176, .35), inset 0 0 40px rgba(126, 236, 176, .18) !important; }
+
+/* --- Foco visible con teclado --- */
+button:focus-visible, .cm-corner:focus-visible, .cm-child:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+/* El botón de auto-scroll sigue oculto (no tiene efecto, ver análisis H1) */
+#auto-scroll-btn { display: none !important; }
+@media (max-width: 700px) {
+    .notification, .error-toast, .welcome-toast { bottom: calc(var(--safe-b) + 196px) !important; }
+}
+
+/* «Notas» y «Ficha» solo cuando la canción las tiene (la app los oculta con display:none en línea) */
+.notes-toggle-btn:not([style*="none"]), .open-html-btn:not([style*="none"]) { display: inline-flex !important; align-items: center; gap: 6px; }
+
+/* Formulario de canción: BPM · Orden · Duración en una fila */
+.form-left { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); column-gap: 12px; align-content: start; }
+.form-left > .form-group { grid-column: 1 / -1; }
+.form-left > .form-group:nth-child(3), .form-left > .form-group:nth-child(4), .form-left > .form-group:nth-child(5) { grid-column: auto; }
+
+/* iPhone: «Notas» debajo del título para no descentrarlo */
+@media (max-width: 700px) {
+    .song-header-row { flex-direction: column; gap: 10px; }
+    .song-a { font-size: .7rem; }
+}
+
+.song-pills { display: flex; align-items: center; gap: 8px; }
+.song-pills .open-html-btn { margin: 0 !important; }
+.open-html-btn { text-transform: uppercase; font-size: .74rem !important; letter-spacing: .06em; padding: 5px 13px !important; }

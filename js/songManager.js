@@ -1177,7 +1177,7 @@ Says, "Find a home"
         const notesElement = document.getElementById('current-notes');
         
         // El título de la canción siempre debe estar visible
-        songElement.textContent = `${song.title} - ${song.artist}`;
+        this.renderSongTitle(songElement, song);
         songElement.style.display = 'block';
         
         if (song.notes && song.notes.trim()) {
@@ -1261,7 +1261,7 @@ Says, "Find a home"
             const notesElement = document.getElementById('current-notes');
             
             // El título de la canción siempre debe estar visible
-            songElement.textContent = `${activeSong.title} - ${activeSong.artist}`;
+            this.renderSongTitle(songElement, activeSong);
             songElement.style.display = 'block';
             
             if (activeSong.notes && activeSong.notes.trim()) {
@@ -1309,6 +1309,11 @@ Says, "Find a home"
             if (this.editCurrentSongBtn) {
                 this.editCurrentSongBtn.disabled = false;
             }
+
+            // Botón de ficha HTML (antes solo se actualizaba en selectSong)
+            if (this.openHtmlBtn) {
+                this.openHtmlBtn.style.display = (activeSong.htmlFile && activeSong.htmlFile.trim()) ? 'block' : 'none';
+            }
             
             // Actualizar clases activas en la lista
             setTimeout(() => {
@@ -1331,6 +1336,14 @@ Says, "Find a home"
         }
     }
     
+    // Título y artista en dos niveles tipográficos (antes: «Título - Artista» en una sola línea)
+    renderSongTitle(el, song) {
+        if (!el) return;
+        const artist = (song.artist || '').trim();
+        el.innerHTML = `<span class="song-t">${this.escapeHtml(song.title)}</span>` +
+            (artist ? `<span class="song-a">${this.escapeHtml(artist)}</span>` : '');
+    }
+
     escapeHtml(text) {
         if (text === null || text === undefined) return '';
         return String(text)
@@ -2030,7 +2043,9 @@ Says, "Find a home"
     showNotification(message, type = 'info') {
         const notification = document.createElement('div');
         notification.className = `notification notification-${type}`;
-        notification.textContent = message;
+        // Se retira el emoji inicial (✅ ❌ ⏳ ℹ️ …): el tipo ya se indica con el color
+        notification.textContent = String(message).replace(/^[\p{Extended_Pictographic}\uFE0F\u200D\s]+/u, '');
+        notification.setAttribute('role', type === 'error' ? 'alert' : 'status');
         
         const backgroundColor = type === 'error' ? '#ff4444' : 
                                type === 'success' ? '#44ff44' : 
@@ -2250,7 +2265,7 @@ Says, "Find a home"
         
         if (this.isOrderMode) {
             this.orderModeBtn.classList.add('active');
-            this.orderModeBtn.innerHTML = '🔢 Modo Activo';
+            this.orderModeBtn.textContent = 'Modo ordenamiento activo';
             this.orderModeBtn.title = 'Modo ordenamiento activo - Clic para desactivar';
             this.resetOrderBtn.style.display = 'block'; // Mostrar botón de reset
             this.tempOrderCounter = 0; // Reiniciar contador temporal a 0
@@ -2262,7 +2277,7 @@ Says, "Find a home"
             this.showNotification('Modo ordenamiento activado. Haz clic en las canciones para ordenar.', 'info');
         } else {
             this.orderModeBtn.classList.remove('active');
-            this.orderModeBtn.innerHTML = '📋 Modo Ordenamiento';
+            this.orderModeBtn.textContent = 'Modo ordenamiento';
             this.orderModeBtn.title = 'Activar modo ordenamiento';
             this.resetOrderBtn.style.display = 'none'; // Ocultar botón de reset
             console.log('📋 Modo ordenamiento DESACTIVADO');
@@ -2739,12 +2754,14 @@ Says, "Find a home"
         }
         if (currentRepertoire && this.activeSetlistName) {
             const dur = this.getRepertoireDuration(currentRepertoire);
-            let txt = currentRepertoire.name;
+            let durTxt = '';
             if (dur.totalSongs > 0) {
                 const approx = dur.counted < dur.totalSongs ? '~' : '';
-                txt += ` · ${approx}${this.formatDuration(dur.seconds)}`;
+                durTxt = `${dur.totalSongs} canciones · ${approx}${this.formatDuration(dur.seconds)}`;
             }
-            this.activeSetlistName.textContent = txt;
+            this.activeSetlistName.innerHTML = `<span class="setlist-name">${this.escapeHtml(currentRepertoire.name)}</span>` +
+                (durTxt ? `<span class="setlist-meta">${durTxt}</span>` : '');
+            this.activeSetlistName.title = currentRepertoire.name;
         }
     }
 
@@ -2799,7 +2816,10 @@ Says, "Find a home"
 
             const button = document.createElement('button');
             button.className = 'repertoire-item-btn';
-            button.textContent = 'Activar';
+            const isActive = id === this.currentRepertoireId;
+            button.textContent = isActive ? 'Activo' : 'Activar';
+            button.disabled = isActive;
+            if (isActive) button.classList.add('is-active');
             button.addEventListener('click', () => this.switchRepertoire(id));
 
             actions.appendChild(button);
@@ -3262,7 +3282,7 @@ Says, "Find a home"
         // El panel derecho puede mostrar todas las canciones del catálogo
         const allSongsOption = document.createElement('option');
         allSongsOption.value = this.allSongsOptionId;
-        allSongsOption.textContent = `📚 Todas las canciones (${this.catalog.size})`;
+        allSongsOption.textContent = `Todas las canciones (${this.catalog.size})`;
         this.rightRepertoireSelect.appendChild(allSongsOption);
 
         // Agregar opciones para cada repertorio

@@ -6,7 +6,10 @@
     'use strict';
 
     const ICONS = {
-        metro: '<path d="M8 21h8l-2.2-15h-3.6z"/><path d="M12 17 16 8"/><path d="M10 21h4"/>',
+        metro: '<path d="M9.2 3.5h5.6l3.6 16.5H5.6z"/><path d="M4.5 20h15"/><path d="M12 16.5 16.8 7"/><circle cx="15.6" cy="9.4" r="1.3" fill="currentColor"/>',
+        lyricsRec: '<path d="M4 6h11M4 10h11M4 14h6"/><circle cx="17" cy="16.5" r="4"/><circle cx="17" cy="16.5" r="1.5" fill="currentColor"/>',
+        plusMinus: '<path d="M4 9h6M7 6v6M14 15h6"/><path d="m16 4-8 16" opacity=".5"/>',
+        typeSize: '<path d="M3.5 18 8 6l4.5 12M5.2 14h5.6"/><path d="M14.5 18l2.8-7.5 2.7 7.5M15.5 15.6h3.6"/>',
         eye: '<path d="M2 12s3.5-6.5 10-6.5S22 12 22 12s-3.5 6.5-10 6.5S2 12 2 12z"/><circle cx="12" cy="12" r="2.6"/>',
         sliders: '<path d="M4 7h10M18 7h2M4 17h2M10 17h10"/><circle cx="16" cy="7" r="2"/><circle cx="8" cy="17" r="2"/>',
         gear: '<circle cx="12" cy="12" r="3"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M18.4 5.6l-2.1 2.1M7.7 16.3l-2.1 2.1"/>',
@@ -132,19 +135,19 @@
 
     const MENUS = [
         { key: 'M', corner: 'tl', icon: 'metro', label: 'Metrónomo', items: [
-            ['eye', 'Mostrar metrónomo', 'metroShow'], ['sliders', 'Ajustar metrónomo', 'metroAdjust'],
+            ['eye', 'Mostrar metrónomo', 'metroShow'], ['plusMinus', 'Ajustar metrónomo', 'metroAdjust'],
             ['gear', 'Configuración metrónomo', 'metroConfig']] },
         { key: 'S', corner: 'tr', icon: 'list', label: 'SetList', items: [
             ['list', 'Lista de canciones', 'listToggle'], ['edit', 'Gestión de canciones', 'songManage'],
             ['stack', 'Repertorios', 'repertoires'], ['sort', 'Orden del setlist', 'order'],
             ['cols', 'Gestor de repertorios', 'manager']] },
-        { key: 'N', corner: 'bl', icon: 'text', label: 'Notas y grabación', items: [
+        { key: 'N', corner: 'bl', icon: 'lyricsRec', label: 'Notas y grabación', items: [
             ['text', 'Letra y notas', 'notes'], ['scroll', 'Desplazamiento', 'scrollPanel'],
             ['timer', 'Temporizador', 'timer'], ['rec', 'Grabación', 'record'],
             ['modes', 'Modos de vista', 'modes'], ['bars', 'Estructura', 'structure'],
             ['doc', 'Ficha HTML', 'htmlSheet']] },
         { key: 'C', corner: 'br', icon: 'sliders', label: 'Configuración', items: [
-            ['eye', 'Visualización', 'display'], ['import', 'Importar y exportar', 'io'],
+            ['typeSize', 'Visualización', 'display'], ['import', 'Importar y exportar', 'io'],
             ['cloud', 'Sincronización', 'sync'], ['midi', 'Control MIDI', 'midi'],
             ['help', 'Mantenimiento y ayuda', 'maintenance']] }
     ];
@@ -403,6 +406,19 @@
         next.setAttribute('aria-label', 'Canción siguiente');
     }
 
+    // «Notas» y «Ficha» en una misma fila de píldoras junto al título
+    function groupSongPills() {
+        const row = document.querySelector('.song-header-row');
+        const notes = $('notes-toggle-btn');
+        const sheet = $('open-html-btn');
+        if (!row || !notes || !sheet) return;
+        const pills = document.createElement('div');
+        pills.className = 'song-pills';
+        row.appendChild(pills);
+        pills.appendChild(notes);
+        pills.appendChild(sheet);
+    }
+
     // ---------------------------------------------------------------- arranque
     function init() {
         readSafeAreas();
@@ -413,6 +429,7 @@
         buildBpmChip();
         buildMetronomePanelClose();
         moveSongNav();
+        groupSongPills();
         window.addEventListener('resize', () => { readSafeAreas(); place(); });
         document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && openKey) closeMenu(); });
     }

@@ -638,8 +638,8 @@ class LyricsScroller {
     
     startTimer() {
         this.timerRunning = true;
-        this.playPauseBtn.textContent = '⏸️';
-        this.concertPlayBtn.textContent = '⏸️';
+        this.setIcon(this.playPauseBtn, 'pause', 'Pausar');
+        this.setIcon(this.concertPlayBtn, 'pause', 'Pausar');
         
         console.log('▶️ TIMER INICIADO');
         
@@ -939,7 +939,7 @@ class LyricsScroller {
         console.log('🔴 GRABACIÓN INICIADA');
         this.isRecording = true;
         this.recordBtn.classList.add('recording');
-        this.recordBtn.textContent = '⏹️';
+        this.setIcon(this.recordBtn, 'stop', 'Detener grabación');
         
         // Limpiar array de eventos anteriores
         this.recordingEvents = [];
@@ -959,7 +959,7 @@ class LyricsScroller {
         console.log('⏹️ GRABACIÓN DETENIDA');
         this.isRecording = false;
         this.recordBtn.classList.remove('recording');
-        this.recordBtn.textContent = '🔴';
+        this.setIcon(this.recordBtn, 'rec', 'Grabar desplazamiento');
         
         // Pausar el temporizador cuando se detenga la grabación
         this.pauseTimer();
@@ -1053,8 +1053,8 @@ class LyricsScroller {
     pauseTimer() {
         this.timerRunning = false;
         this.isPlaying = false;
-        this.playPauseBtn.textContent = '▶️';
-        this.concertPlayBtn.textContent = '▶️';
+        this.setIcon(this.playPauseBtn, 'play', 'Reproducir');
+        this.setIcon(this.concertPlayBtn, 'play', 'Reproducir');
         
         console.log('⏸️ TIMER PAUSADO');
         
@@ -1095,6 +1095,14 @@ class LyricsScroller {
         console.log('🔄 Timer reiniciado - volviendo al inicio');
     }
     
+    // Icono SVG del juego común (js/icons.js); si no está cargado, cae a un glifo de texto
+    setIcon(btn, name, label) {
+        if (!btn) return;
+        if (window.DHIcons) { window.DHIcons.set(btn, name, label); return; }
+        const fallback = { play: '▶', pause: '❚❚', stop: '■', rec: '●' };
+        btn.textContent = fallback[name] || '';
+    }
+
     goToPreviousSong() {
         if (window.songManager) {
             window.songManager.selectPreviousSong();

@@ -39,7 +39,7 @@
         
         <div class="top-section-content">
             <div class="info-panel">
-                <div id="version-code">v1.4.17</div>
+                <div id="version-code">v1.4.18</div>
                 <div class="song-header-row">
                     <span id="current-song">Selecciona una canción</span>
                     <span id="current-bpm">BPM: 120</span>
@@ -48,7 +48,7 @@
                 <div class="song-info">
                     <span id="current-notes" class="song-notes"></span>
                 </div>
-                <button id="open-html-btn" class="open-html-btn" style="display: none;" title="Abrir archivo HTML de la canción">📄 Ver Notas</button>
+                <button id="open-html-btn" class="open-html-btn" style="display: none;" title="Abrir archivo HTML de la canción">Ver Notas</button>
             </div>
 
             <!-- Metrónomo -->
@@ -94,8 +94,8 @@
             </ul>
             <div class="add-song-section">
                 <button id="add-song-btn" class="add-btn" title="Agregar canción">+</button>
-                <button id="edit-current-song-btn" class="edit-btn" disabled title="Editar canción">✎</button>
-                <button id="data-options-btn" class="data-btn" title="Opciones">⚙︎</button>
+                <button id="edit-current-song-btn" class="edit-btn" disabled title="Editar canción"></button>
+                <button id="data-options-btn" class="data-btn" title="Opciones">︎</button>
                 <input type="file" id="import-file-input" accept=".json" style="display: none;">
                 <input type="file" id="import-txt-file-input" accept=".txt" style="display: none;">
                 <input type="file" id="import-complete-file-input" accept=".txt" style="display: none;">
@@ -121,7 +121,7 @@
                 <div class="playback-controls">
                     <button id="restart-btn" class="scroll-btn">«</button>
                     <button id="play-pause-btn" class="scroll-btn">▶</button>
-                    <button id="record-btn" class="scroll-btn">🔴</button>
+                    <button id="record-btn" class="scroll-btn"></button>
                     <div class="timer-display">
                         <span id="timer-text">00:00</span>
                     </div>
@@ -131,7 +131,7 @@
                 <button id="scroll-down-btn" class="scroll-btn">↓</button>
                 <button id="scroll-to-top-btn" class="scroll-btn">⇑</button>
                 <div class="scroll-speed">
-                    <label for="scroll-speed">Velocidad:</label>
+                    <label for="scroll-speed">Velocidad</label>
                     <input type="range" id="scroll-speed" min="1" max="10" value="5">
                 </div>
                 <div class="font-size-controls">
@@ -151,35 +151,35 @@
                 <div class="form-layout">
                     <div class="form-left">
                         <div class="form-group">
-                            <label for="song-title">Título:</label>
+                            <label for="song-title">Título</label>
                             <input type="text" id="song-title" required>
                         </div>
                         <div class="form-group">
-                            <label for="song-artist">Artista:</label>
+                            <label for="song-artist">Artista</label>
                             <input type="text" id="song-artist">
                         </div>
                         <div class="form-group">
-                            <label for="song-bpm">BPM:</label>
+                            <label for="song-bpm">BPM</label>
                             <input type="number" id="song-bpm" min="40" max="300" value="120">
                         </div>
                         <div class="form-group">
-                            <label for="song-order">Orden:</label>
+                            <label for="song-order">Orden</label>
                             <input type="number" id="song-order" min="0" value="0" placeholder="Orden en la lista (0 por defecto)">
                         </div>
                         <div class="form-group">
-                            <label for="song-duration">Duración (mm:ss):</label>
+                            <label for="song-duration">Duración (mm:ss)</label>
                             <input type="text" id="song-duration" placeholder="3:50 (opcional)" pattern="^[0-9]{1,2}:[0-5][0-9]$" title="Formato: mm:ss (ej: 3:50)">
                         </div>
                         <div class="form-group">
-                            <label for="song-notes">Notas:</label>
+                            <label for="song-notes">Notas</label>
                             <textarea id="song-notes" rows="3" placeholder="Notas y comentarios sobre la canción..."></textarea>
                         </div>
                         <div class="form-group">
-                            <label for="song-html-file">Archivo HTML:</label>
+                            <label for="song-html-file">Archivo HTML</label>
                             <input type="text" id="song-html-file" placeholder="Ej: canciones/baby-can-i-hold-you/baby-can-i-hold-you.html">
                         </div>
                         <div class="form-group">
-                            <label for="song-structure-input">Estructura (gráfica):</label>
+                            <label for="song-structure-input">Estructura (gráfica)</label>
                             <input type="text" id="song-structure-input" placeholder="Ej: ____EEEEEEEEEEEVVVVEEEEEEEEEE" title="_ = Silencio, E = Estribillo, V = Estrofa, B = Puente, I = Intro, O = Outro, S = Solo, P = Pre-estribillo">
                             <small style="color: #999; display: block; margin-top: 5px;">
                                 Cada letra = 1 compás. _ silencio, E estribillo, V estrofa, B puente, I intro, O outro, S solo, P pre-estribillo
@@ -188,7 +188,7 @@
                     </div>
                     <div class="form-right">
                         <div class="form-group">
-                            <label for="song-lyrics">Letras:</label>
+                            <label for="song-lyrics">Letras</label>
                             <textarea id="song-lyrics" rows="12" placeholder="Introduce las letras de la canción..."></textarea>
                         </div>
                     </div>
@@ -211,42 +211,42 @@
                 <div class="form-layout">
                     <div class="form-left">
                         <div class="form-group">
-                            <label for="edit-song-title">Título:</label>
+                            <label for="edit-song-title">Título</label>
                             <input type="text" id="edit-song-title" required>
                         </div>
                         <div class="form-group">
-                            <label for="edit-song-artist">Artista:</label>
+                            <label for="edit-song-artist">Artista</label>
                             <input type="text" id="edit-song-artist">
                         </div>
                         <div class="form-group">
-                            <label for="edit-song-bpm">BPM:</label>
+                            <label for="edit-song-bpm">BPM</label>
                             <input type="number" id="edit-song-bpm" min="40" max="300" value="120">
                         </div>
                         <div class="form-group">
-                            <label for="edit-song-order">Orden:</label>
+                            <label for="edit-song-order">Orden</label>
                             <input type="number" id="edit-song-order" min="0" value="0" placeholder="Orden en la lista">
                         </div>
                         <div class="form-group">
-                            <label for="edit-song-duration">Duración (mm:ss):</label>
+                            <label for="edit-song-duration">Duración (mm:ss)</label>
                             <input type="text" id="edit-song-duration" placeholder="3:50 (opcional)" pattern="^[0-9]{1,2}:[0-5][0-9]$" title="Formato: mm:ss (ej: 3:50)">
                         </div>
                         <div class="form-group">
-                            <label for="edit-song-notes">Notas:</label>
+                            <label for="edit-song-notes">Notas</label>
                             <textarea id="edit-song-notes" rows="3" placeholder="Notas y comentarios sobre la canción..."></textarea>
                         </div>
                         <div class="form-group">
-                            <label for="edit-song-html-file">Archivo HTML:</label>
+                            <label for="edit-song-html-file">Archivo HTML</label>
                             <input type="text" id="edit-song-html-file" placeholder="Ej: canciones/baby-can-i-hold-you/baby-can-i-hold-you.html">
                         </div>
                         <div class="form-group">
-                            <label for="edit-song-structure">Estructura (gráfica):</label>
+                            <label for="edit-song-structure">Estructura (gráfica)</label>
                             <input type="text" id="edit-song-structure" placeholder="Ej: ____EEEEEEEEEEEVVVVEEEEEEEEEE" title="_ = Silencio, E = Estribillo, V = Estrofa, B = Puente, I = Intro, O = Outro, S = Solo, P = Pre-estribillo">
                             <small style="color: #999; display: block; margin-top: 5px;">
                                 Cada letra = 1 compás. _ silencio, E estribillo, V estrofa, B puente, I intro, O outro, S solo, P pre-estribillo
                             </small>
                         </div>
                         <div class="form-group">
-                            <label>Información:</label>
+                            <label>Información</label>
                             <div class="song-info-display">
                                 <div class="info-item">
                                     <span class="info-label">Última modificación:</span>
@@ -257,7 +257,7 @@
                     </div>
                     <div class="form-right">
                         <div class="form-group">
-                            <label for="edit-song-lyrics">Letras:</label>
+                            <label for="edit-song-lyrics">Letras</label>
                             <textarea id="edit-song-lyrics" rows="12" placeholder="Introduce las letras de la canción..."></textarea>
                         </div>
                     </div>
@@ -274,7 +274,7 @@
                             <!-- Opciones se cargan dinámicamente -->
                         </select>
                         <button type="button" id="copy-song-btn" class="copy-btn" disabled>
-                            📄 Copiar Canción
+                            Copiar Canción
                         </button>
                     </div>
                 </div>
@@ -284,7 +284,7 @@
 
     <!-- Botones flotantes para control de modos -->
     <button id="mode-toggle-btn" class="mode-toggle-btn" title="Cambiar modo de visualización">
-        👁
+        
     </button>
     
     <button id="songlist-toggle-btn" class="songlist-toggle-btn" style="display: none;">
@@ -293,7 +293,7 @@
     
     <!-- Botones de control para modos concierto/prompter -->
     <button id="concert-goto-top-btn" class="concert-control-btn" style="display: none;">
-        🔝
+        
     </button>
     
     <button id="concert-play-btn" class="concert-control-btn" style="display: none;">
@@ -311,7 +311,7 @@
 
     <!-- Botones de control de reproducción para modo prompter -->
     <button id="prompter-goto-top-btn" class="prompter-control-btn" style="display: none;">
-        🔝
+        
     </button>
     
     <button id="prompter-play-btn" class="prompter-control-btn" style="display: none;">
@@ -414,43 +414,43 @@
             </div>
             <div class="modal-body">
                 <div class="data-options-section">
-                    <h3>🎼 Repertorios</h3>
+                    <h3>Repertorios</h3>
                     <div class="data-options-grid">
                         <button id="repertoire-options-btn" class="data-option-btn">
-                            <span class="option-text">⚙️ Opciones de repertorio</span>
+                            <span class="option-text">Opciones de repertorio</span>
                             <small>Crear, duplicar, renombrar, ordenamiento y visualización</small>
                         </button>
                         <button id="repertoire-manager-btn" class="data-option-btn">
-                            <span class="option-text">📋 Editar repertorios</span>
+                            <span class="option-text">Editar repertorios</span>
                             <small>Mover o copiar canciones entre repertorios</small>
                         </button>
                         <button id="midi-toggle-btn" class="data-option-btn" title="Habilitar MIDI">
-                            <span class="option-text">🎹 Control MIDI</span>
+                            <span class="option-text">Control MIDI</span>
                             <small>Habilitar o deshabilitar el control por MIDI</small>
                         </button>
                     </div>
                 </div>
 
                 <div class="data-options-section">
-                    <h3>☁️ Sincronizar con GitHub</h3>
+                    <h3>Sincronizar con GitHub</h3>
                     <div class="data-options-grid">
                         <button id="github-publish-btn" class="data-option-btn">
-                            <span class="option-text">⬆️ Publicar en GitHub</span>
+                            <span class="option-text">Publicar en GitHub</span>
                             <small>Sube canciones y repertorios al repositorio</small>
                         </button>
                         <button id="github-pull-btn" class="data-option-btn">
-                            <span class="option-text">⬇️ Recibir de GitHub</span>
+                            <span class="option-text">Recibir de GitHub</span>
                             <small>Descarga y reemplaza los datos de este dispositivo</small>
                         </button>
                         <button id="github-token-btn" class="data-option-btn">
-                            <span class="option-text">🔑 Configurar token</span>
+                            <span class="option-text">Configurar token</span>
                             <small>Necesario para publicar (no para recibir)</small>
                         </button>
                     </div>
                 </div>
 
                 <div class="data-options-section">
-                    <h3>📥 Importar</h3>
+                    <h3>Importar</h3>
                     <div class="data-options-grid">
                         <button id="modal-import-json-btn" class="data-option-btn">
                             <span class="option-text">Importar JSON</span>
@@ -468,7 +468,7 @@
                 </div>
                 
                 <div class="data-options-section">
-                    <h3>📤 Exportar</h3>
+                    <h3>Exportar</h3>
                     <div class="data-options-grid">
                         <button id="modal-export-songs-btn" class="data-option-btn">
                             <span class="option-text">Exportar Canciones</span>
@@ -482,18 +482,18 @@
                 </div>
                 
                 <div class="data-options-section">
-                    <h3>🗑️ Gestión</h3>
+                    <h3>Gestión</h3>
                     <div class="data-options-grid">
                         <button id="modal-clear-all-btn" class="data-option-btn danger">
                             <span class="option-text">Borrar Todas</span>
                             <small>Eliminar todas las canciones</small>
                         </button>
                         <button id="help-open-btn" class="data-option-btn">
-                            <span class="option-text">❔ Ayuda y atajos</span>
+                            <span class="option-text">Ayuda y atajos</span>
                             <small>Atajos de teclado, comandos de letra y resaltados</small>
                         </button>
                         <button id="modal-reset-app-btn" class="data-option-btn danger">
-                            <span class="option-text">🔄 Reiniciar App</span>
+                            <span class="option-text">Reiniciar App</span>
                             <small>Borra datos locales y recarga el catálogo desde el servidor</small>
                         </button>
                     </div>
@@ -515,16 +515,16 @@
                     
                     <div class="repertoire-actions">
                         <button id="new-repertoire-btn" class="repertoire-action-btn">
-                            📁 Nuevo Repertorio
+                            Nuevo Repertorio
                         </button>
                         <button id="duplicate-repertoire-btn" class="repertoire-action-btn">
-                            📄 Duplicar Actual
+                            Duplicar Actual
                         </button>
                         <button id="rename-repertoire-btn" class="repertoire-action-btn">
-                            ✏️ Renombrar
+                            Renombrar
                         </button>
                         <button id="delete-repertoire-btn" class="repertoire-action-btn danger" style="display: none;">
-                            🗑️ Eliminar
+                            Eliminar
                         </button>
                     </div>
 
@@ -546,13 +546,13 @@
                         <h4>Ordenamiento de Canciones</h4>
                         <div class="ordering-actions">
                             <button id="order-mode-btn" class="repertoire-action-btn" title="Activar modo ordenamiento">
-                                📋 Modo Ordenamiento
+                                Modo Ordenamiento
                             </button>
                             <button id="reset-order-btn" class="repertoire-action-btn" style="display: none;" title="Resetear todos los valores de orden a 0">
-                                🗑️ Resetear Orden
+                                Resetear Orden
                             </button>
                             <button id="alphabetical-sort-btn" class="repertoire-action-btn" title="Ordenar alfabéticamente por nombre">
-                                🔤 Orden Alfabético
+                                Orden Alfabético
                             </button>
                         </div>
                     </div>
@@ -593,7 +593,7 @@
             <div class="modal-body">
                 <form id="repertoire-name-form">
                     <div class="form-group">
-                        <label for="repertoire-name-input">Nombre del repertorio:</label>
+                        <label for="repertoire-name-input">Nombre del repertorio</label>
                         <input type="text" id="repertoire-name-input" required maxlength="50">
                     </div>
                     <div class="form-buttons">
@@ -609,7 +609,7 @@
     <div id="repertoire-manager-modal" class="repertoire-manager-modal" style="display: none;">
         <div class="repertoire-manager-content">
             <div class="repertoire-manager-header">
-                <h2>📋 Gestión de Repertorios</h2>
+                <h2>Gestión de Repertorios</h2>
                 <button id="close-repertoire-manager" class="close-btn">×</button>
             </div>
             
@@ -684,13 +684,14 @@
     <!-- Modal para mostrar HTML de canciones -->
     <div id="html-viewer-modal" class="html-viewer-modal">
         <div class="html-viewer-container">
-            <button id="close-html-viewer" class="close-html-viewer">✕</button>
+            <button id="close-html-viewer" class="close-html-viewer"></button>
             <button id="prev-song-html" class="nav-song-html nav-song-prev" title="Canción anterior">‹</button>
             <button id="next-song-html" class="nav-song-html nav-song-next" title="Siguiente canción">›</button>
             <iframe id="html-viewer-iframe" class="html-viewer-iframe" sandbox="allow-same-origin"></iframe>
         </div>
     </div>
 
+    <script src="js/icons.js"></script>
     <script src="js/midiHandler.js"></script>
     <script src="js/metronome.js"></script>
     <script src="js/songManager.js"></script>

@@ -1,4 +1,4 @@
-# Drum Helper v1.4.17 — tema «Espacial» (verde)
+# Drum Helper v1.4.18 — tema «Espacial» (verde)
 
 Copia de `~/Proyectos/drumhelper` (v1.4.13) adaptada al diseño aprobado. La app original no se ha tocado.
 
@@ -8,7 +8,7 @@ Copia de `~/Proyectos/drumhelper` (v1.4.13) adaptada al diseño aprobado. La app
 - **Dos modos:** Concierto y Edición (selector arriba al centro). El modo *prompter* se ha retirado (`lyricsScroller.modes`).
 - **Metrónomo:** panel flotante (Mostrar / Ajustar) y chip de BPM con pulso. Nuevo modal «Configuración del metrónomo» (sonido, volumen, destello), guardado en `localStorage` (`drumhelper-metronome-settings`).
 - **Ayuda:** ahora es accesible (Configuración → Mantenimiento y ayuda → «Ayuda y atajos», o clic en el rótulo de versión) y lista solo atajos realmente implementados.
-- Versión 1.4.17 sincronizada en `index.html`, `sw.js` y `manifest.json`.
+- Versión 1.4.18 sincronizada en `index.html`, `sw.js` y `manifest.json`.
 
 ## Mapa de opciones de los menús
 | Menú | Opción | Acción |
@@ -29,3 +29,13 @@ Copia de `~/Proyectos/drumhelper` (v1.4.13) adaptada al diseño aprobado. La app
 
 ## Sin cambiar (heredado de la v1.4.13)
 Los defectos del Anexo A del análisis funcional que no afectan al diseño siguen presentes (auto-scroll por tempo inactivo, `Ctrl+S/O`, MIDI 65/67, eliminar repertorio…).
+
+## Pulido estético (v1.4.18)
+- **Iconos unificados** (`js/icons.js`): todos los controles usan el mismo trazo SVG; se eliminan emojis y glifos (▶️ ⏸️ 🔴 ⏹️ « ⇑ ✎ 📁 📋…), también los que la app reinsertaba al cambiar de estado. Tamaño de letra con «A» pequeña/grande.
+- **Iconos de esquina** rediseñados: metrónomo más reconocible; «Notas y grabación» = líneas de letra + punto de grabación; «Ajustar metrónomo» = ±; «Visualización» = tamaño de texto (ya no repiten el ojo/deslizadores de otras opciones).
+- **Cabecera**: título y artista en dos niveles (artista en versalitas); «Notas» y «Ficha» como píldoras en la misma fila.
+- **Lista**: nombre del repertorio y «N canciones · duración» en dos líneas (antes se truncaba); botones «Añadir» / «Editar» con icono.
+- **Notificaciones** en cristal del tema, con punto de color por tipo, centradas sobre la barra de reproducción (antes verde lima con texto negro, tapando el título).
+- **Modales**: sin emojis, cabeceras alineadas, interruptores en lugar de casillas nativas, repertorio activo marcado «Activo», formulario de canción más ancho con BPM · Orden · Duración en una fila y etiquetas sin dos puntos.
+- **Concierto**: la letra se desvanece antes de la pastilla de transporte; barras de scroll discretas.
+- **Corrección**: al arrancar, el botón «Ficha» no aparecía hasta cambiar de canción (`selectActiveSong`).

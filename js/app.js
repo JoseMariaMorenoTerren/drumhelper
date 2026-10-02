@@ -582,7 +582,8 @@ function initializeNotesPanel() {
     const updateToggleLabel = () => {
         if (!toggleBtn) return;
         const collapsed = document.body.classList.contains('notes-collapsed');
-        toggleBtn.textContent = collapsed ? 'Notas ▸' : 'Notas ▾';
+        toggleBtn.innerHTML = '<span>Notas</span>' + (window.DHIcons ? window.DHIcons.svg('chevron', 'dh-chevron') : '');
+        toggleBtn.classList.toggle('is-collapsed', collapsed);
         toggleBtn.title = collapsed ? 'Mostrar notas' : 'Ocultar notas para dar más espacio';
     };
 
